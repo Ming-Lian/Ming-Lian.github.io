@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Schematic diagram of the MeRIP-seq protocol   由于m6A-seq数据分析的原理与过程和ChIP-seq十分相似，所以这里略过前面的质控，简单说明比对和peak calling步骤，具体内容可以参考ChIP-seq分析流程 m6A背景知识目前已知有100多种RNA修饰，涉及到mRNAs、tRNAs、rRNAs、small nuclear RNA (sn">
+<meta name="keywords" content="NGS,ChIPseq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MeRIP&#x2F;ChIP-seq分析流程">
+<meta property="og:url" content="http://yoursite.com/2019/02/17/MeRIP-seq/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="Schematic diagram of the MeRIP-seq protocol   由于m6A-seq数据分析的原理与过程和ChIP-seq十分相似，所以这里略过前面的质控，简单说明比对和peak calling步骤，具体内容可以参考ChIP-seq分析流程 m6A背景知识目前已知有100多种RNA修饰，涉及到mRNAs、tRNAs、rRNAs、small nuclear RNA (sn">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq.jpg">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq-workflow.jpg">
+<meta property="og:image" content="http://homer.ucsd.edu/homer/ngs/peakMotifs.output.png">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq-meme-principle-1.png">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq-meme-principle-2.png">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq-meme-principle-3.png">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq-GOenrich-dotplot.png">
+<meta property="og:image" content="http://yoursite.com/images/MeRIP-seq-GOtop-graph.png">
+<meta property="og:updated_time" content="2019-02-17T08:11:32.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MeRIP&#x2F;ChIP-seq分析流程">
+<meta name="twitter:description" content="Schematic diagram of the MeRIP-seq protocol   由于m6A-seq数据分析的原理与过程和ChIP-seq十分相似，所以这里略过前面的质控，简单说明比对和peak calling步骤，具体内容可以参考ChIP-seq分析流程 m6A背景知识目前已知有100多种RNA修饰，涉及到mRNAs、tRNAs、rRNAs、small nuclear RNA (sn">
+<meta name="twitter:image" content="http://yoursite.com/images/MeRIP-seq.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/17/MeRIP-seq/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MeRIP/ChIP-seq分析流程 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/MeRIP-seq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MeRIP/ChIP-seq分析流程
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-17 07:47:05 / Modified: 08:11:32" itemprop="dateCreated datePublished" datetime="2019-02-17T07:47:05+00:00">2019-02-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/MeRIP-seq.jpg" alt title="MeRIP-seq"></p>
+<p align="center"><strong>Schematic diagram of the MeRIP-seq protocol</strong></p>
+
+<p><img src="/images/MeRIP-seq-workflow.jpg" alt title="Workflow"></p>
+<p>由于m6A-seq数据分析的原理与过程和ChIP-seq十分相似，所以这里略过前面的质控，简单说明比对和peak calling步骤，具体内容可以参考<a href="https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md" target="_blank" rel="noopener"><strong>ChIP-seq分析流程</strong></a></p>
+<h2 id="m6A背景知识"><a href="#m6A背景知识" class="headerlink" title="m6A背景知识"></a>m6A背景知识</h2><p>目前已知有100多种RNA修饰，涉及到mRNAs、tRNAs、rRNAs、small nuclear RNA (snRNAs) 以及 small nucleolar RNAs (snoRNAs)等。其中甲基化修饰是一种非常广泛的修饰，N6-methyl adenosine (m6A)是真核生物mRNA上最为广泛的甲基化修饰之一，并存在于多种多样的物种中。</p>
+<p>腺嘌呤可以被<strong>编码器</strong>METTL3、METTL14和WTAP及其他组分组成的甲基转移酶复合体甲基化，甲基化的腺嘌呤可以被<strong>读码器</strong>（目前发现m6A读码器主要有四个，定位于细胞核内的YTHDC1以及定位在细胞质中的YTHDF1、YTHDF2、YTHDF3、YTHDC2）识别，同时m6A可以被<strong>擦除器</strong>FTO和ALKBH5这两个去甲基化酶催化去甲基化。</p>
+<p>在哺乳动物mRNA中，m6A修饰存在于7000多个基因中，<strong>保守基序为RRACH</strong> (R = G, A; H = A, C, U)。m6A修饰富集在mRNA<strong>终止密码子</strong>附近。</p>
+<h2 id="比对参考基因组"><a href="#比对参考基因组" class="headerlink" title="比对参考基因组"></a>比对参考基因组</h2><p>在 ChIP-seq 中一般用 BWA 或者 Bowtie 进行完全比对就可以了，但是在 MeRIP-seq 中，由于分析的 RNA ，那么就存在<strong>可变剪切</strong>，对于存在可变剪切的 mapping 用 <strong>Tophat</strong> 或者 Tophat 的升级工具 <strong>HISAT2</strong> 更合适</p>
+<h3 id="Tophat"><a href="#Tophat" class="headerlink" title="Tophat"></a>Tophat</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># build reference index</span><br><span class="line">## &lt;1&gt; build genome index</span><br><span class="line">$ bowtie2-build  hg19.fa hg19</span><br><span class="line">## &lt;2&gt; build transcriptome index</span><br><span class="line">$ tophat -p 8 -G hg19.gtf --transcriptome-index=Ref/hg19/hg19_trans/know hg19</span><br><span class="line"></span><br><span class="line"># mapping</span><br><span class="line">$ tophat -p 8 --transcriptome-index=Ref/hg19/hg19_trans/know -o outdir hg19 reads1_1.fastq reads1_2.fastq</span><br><span class="line"># Only uniquely mapped reads with mapping quality score ≥20 were kept for the subsequent analysis for each sample</span><br><span class="line">$ samtools view -q 20 -O bam -o outdir/accepted_hits.highQual.bam outdir/accepted_hits.bam</span><br></pre></td></tr></table></figure>
+<p>Tophat参数</p>
+<blockquote>
+<ul>
+<li>-p Number of threads to use</li>
+<li>-G Supply TopHat with a set of gene model annotations and/or known transcripts, as a GTF 2.2 or GFF3 formatted file. </li>
+<li>–transcriptome-index TopHat should be first run with the -G/–GTF option together with the –transcriptome-index option pointing to a directory and a name prefix which will indicate where the transcriptome data files will be stored. Then subsequent TopHat runs using the same –transcriptome-index option value will directly use the transcriptome data created in the first run (no -G option needed after the first run). </li>
+<li>-o Sets the name of the directory in which TopHat will write all of its output</li>
+</ul>
+</blockquote>
+<p>samtools view 参数</p>
+<blockquote>
+<ul>
+<li>-q only include reads with mapping quality &gt;= INT [0]</li>
+</ul>
+</blockquote>
+<h3 id="HISAT2"><a href="#HISAT2" class="headerlink" title="HISAT2"></a>HISAT2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># build reference index</span><br><span class="line">##  using the python scripts included in the HISAT2 package, extract splice-site and exon information from the gene</span><br><span class="line">annotation fle</span><br><span class="line">$ extract_splice_sites.py chrX_data/genes/chrX.gtf &gt;chrX.ss</span><br><span class="line">$ extract_exons.py chrX_data/genes/chrX.gtf &gt;chrX.exon</span><br><span class="line">##  build a HISAT2 index</span><br><span class="line">$ hisat2-build --ss chrX.ss --exon chrX.exon chrX_data/genome/chrX.fa chrX_tran</span><br><span class="line"></span><br><span class="line"># mapping</span><br><span class="line">$ hisat2 -p 10 --dta -x chrX_tran -1 reads1_1.fastq -2 reads1_2.fastq | samtools sort -@ 8 -O bam -o reads1.sort.bam 1&gt;map.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p><code>Usage: hisat2 [options]* -x &lt;ht2-idx&gt; {-1 &lt;m1&gt; -2 &lt;m2&gt; | -U &lt;r&gt;} [-S &lt;sam&gt;]</code></p>
+<blockquote>
+<ul>
+<li>-p Number of threads to use</li>
+<li>–dta reports alignments tailored for transcript assemblers</li>
+<li>-x Hisat2 index</li>
+<li>-1 The 1st input fastq file of paired-end reads</li>
+<li>-2 The 2nd input fastq file of paired-end reads</li>
+<li>-S File for SAM output (default: stdout)</li>
+</ul>
+</blockquote>
+<h2 id="Peak-calling"><a href="#Peak-calling" class="headerlink" title="Peak calling"></a>Peak calling</h2><hr>
+<h3 id="MACS2"><a href="#MACS2" class="headerlink" title="MACS2"></a>MACS2</h3><p>参考ChIP-seq分析流程中的<a href="https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md#peak-calling" target="_blank" rel="noopener">peak calling</a>过程</p>
+<h3 id="PeakRanger"><a href="#PeakRanger" class="headerlink" title="PeakRanger"></a>PeakRanger</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">peakranger ccat --format bam SRR1042594.sorted.bam SRR1042593.sorted.bam  \</span><br><span class="line">Xu_MUT_rep1_ccat_report --report --gene_annot_file hg19refGene.txt -q 0.05 -t 4</span><br></pre></td></tr></table></figure>
+<h2 id="Peaks注释"><a href="#Peaks注释" class="headerlink" title="Peaks注释"></a>Peaks注释</h2><hr>
+<h3 id="CEAS"><a href="#CEAS" class="headerlink" title="CEAS"></a>CEAS</h3><p>哈佛刘小乐实验室出品的软件，可以跟MACS软件call到的peaks文件无缝连接，实现peaks的注释以及可视化分析</p>
+<p>CEAS需要三种输入文件：</p>
+<blockquote>
+<ul>
+<li>Gene annotation table file (sqlite3)<blockquote>
+<p>可以到CEAS官网上下载：<a href="http://liulab.dfci.harvard.edu/CEAS/src/hg18.refGene.gz" target="_blank" rel="noopener">http://liulab.dfci.harvard.edu/CEAS/src/hg18.refGene.gz</a> ，也可以自己构建：到UCSC上下载，然后用<code>build_genomeBG</code>脚本转换成split3格式</p>
+</blockquote>
+</li>
+<li>BED file with ChIP regions (TXT)<blockquote>
+<p>需要包含chromosomes, start, and end locations，这样文件可以由 peak-caller （如MACS2）得到</p>
+</blockquote>
+</li>
+<li>WIG file with ChiP enrichment signal (TXT)<blockquote>
+<p> 如何得到wig文件可以参考<a href="https://github.com/Ming-Lian/NGS-analysis/blob/master/samtools%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97.md#output-wig" target="_blank" rel="noopener">samtools操作指南：以WIG文件输出测序深度</a></p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<p>CEAS的使用方法很简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ceas --name=H3K36me3_ceas --pf-res=20 --gn-group-names=&apos;Top 10%,Bottom 10%&apos;  \</span><br><span class="line">-g hg19.refGene -b  ../paper_results/GSM1278641_Xu_MUT_rep1_BAF155_MUT.peaks.bed \</span><br><span class="line">-w ../rawData/SRR1042593.wig</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>–name Experiment name. This will be used to name the output files.</li>
+<li>–pf-res Wig profiling resolution, DEFAULT: 50bp</li>
+<li>–gn-group-names The names of the gene groups in –gn-groups. The gene group names are separated by commas. (eg, –gn-group-names=’top 10%,bottom 10%’).</li>
+<li>-g Gene annotation table</li>
+<li>-b BED file of ChIP regions</li>
+<li>-w WIG file for either wig profiling or genome background annotation.</li>
+</ul>
+</blockquote>
+<h2 id="Motif识别"><a href="#Motif识别" class="headerlink" title="Motif识别"></a>Motif识别</h2><h3 id="HOMER"><a href="#HOMER" class="headerlink" title="HOMER"></a>HOMER</h3><p>安装旧版本的HOMER比较复杂，因为旧版依赖于调用其他几个工具：</p>
+<blockquote>
+<ul>
+<li>blat</li>
+<li>Ghostscript</li>
+<li>weblogo<br><strong>Does NOT work with version 3.0!!!!</strong></li>
+</ul>
+</blockquote>
+<p>新版HOMER安装很简单，主要是通过<code>configureHomer.pl</code>脚本来安装和管理HOMER<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd ~/biosoft</span><br><span class="line">mkdir homer &amp;&amp;  cd homer</span><br><span class="line">wget http://homer.salk.edu/homer/configureHomer.pl</span><br><span class="line"></span><br><span class="line"># Installing the basic HOMER software</span><br><span class="line">perl configureHomer.pl -install</span><br><span class="line"></span><br><span class="line"># Download the hg19 version of the human genome</span><br><span class="line">perl configureHomer.pl -install hg19</span><br></pre></td></tr></table></figure></p>
+<p>安装好后可以进行 Motif Identification<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 提取对应的列给HOMER作为输入文件</span><br><span class="line"># change </span><br><span class="line">#		chr1	1454086	1454256	MACS_peak_1	59.88 </span><br><span class="line">#to   </span><br><span class="line">#		MACS_peak_1	chr1	1454086	1454256	+</span><br><span class="line">$ awk &apos;&#123;print $4&quot;\t&quot;$1&quot;\t&quot;$2&quot;\t&quot;$3&quot;\t+&quot;&#125;&apos; macs_peaks.bed &gt;homer_peaks.bed</span><br><span class="line"></span><br><span class="line"># MeRIP-seq 中 motif 的长度为6个 nt</span><br><span class="line">$ findMotifsGenome.pl homer_peaks.bed hg19 motifDir -size 200 -len 8,10,12</span><br><span class="line"></span><br><span class="line"># 自己指定background sequences，用bedtools shuffle构造随机的suffling peaks</span><br><span class="line">$ bedtools shuffle -i peaks.bed -g &lt;GENOME&gt; &gt;peaks_shuffle.bed</span><br><span class="line"># 用参数&quot;-bg&quot;指定background sequences</span><br><span class="line">$ findMotifsGenome.pl homer_peaks.bed hg19 motifDir -bg peaks_shuffle.bed -size 200 -len 8,10,12</span><br></pre></td></tr></table></figure></p>
+<p><code>Usage: findMotifsGenome.pl &lt;pos file&gt; &lt;genome&gt; &lt;output directory&gt; [additional options]</code></p>
+<p>注意：</p>
+<blockquote>
+<ul>
+<li><code>&lt;genome&gt;</code> 参数只需要写出genome的序号，不需要写出具体路径</li>
+<li><code>bedtools shuffle</code>中的genome文件的格式要求：<chromname><tab><chromsize><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; For example, Human (hg19):</span><br><span class="line">&gt;        chr1    249250621</span><br><span class="line">&gt;        chr2    243199373</span><br><span class="line">&gt;        ...</span><br><span class="line">&gt;        chr18_gl000207_random   4262</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</chromsize></tab></chromname></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>可以使用 UCSC Genome Browser’s MySQL database 来获取 chromosome sizes 信息并构建genome文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; mysql --user=genome --host=genome-mysql.cse.ucsc.edu -A -e &quot;select chrom, size from hg19.chromInfo&quot; &gt;hg19.genome</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>最后得到的文件夹里面有一个详细的网页版报告</p>
+<p><img src="http://homer.ucsd.edu/homer/ngs/peakMotifs.output.png" alt></p>
+<h3 id="MEME"><a href="#MEME" class="headerlink" title="MEME"></a>MEME</h3><h4 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h4><p><img src="/images/MeRIP-seq-meme-principle-1.png" alt></p>
+<p><img src="/images/MeRIP-seq-meme-principle-2.png" alt></p>
+<p><img src="/images/MeRIP-seq-meme-principle-3.png" alt></p>
+<h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><p>下载安装MEME</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd ~/biosoft</span><br><span class="line">mkdir MEMEsuite &amp;&amp;  cd MEMEsuite</span><br><span class="line">## http://meme-suite.org/doc/download.html</span><br><span class="line">wget  http://meme-suite.org/meme-software/4.11.2/meme_4.11.2_1.tar.gz</span><br><span class="line">tar zxvf meme_4.11.2_1.tar.gz </span><br><span class="line">cd meme_4.11.2/</span><br><span class="line">./configure --prefix=$HOME/my-bin/meme --with-url=&quot;http://meme-suite.org&quot;</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 先提取peaks区域所对应的序列</span><br><span class="line">bedtools getfasta -fi input.fasta -bed input.bed -fo output.fasta</span><br><span class="line"># Motif identification</span><br><span class="line">meme output.fasta -dna -mod oops -pal</span><br></pre></td></tr></table></figure>
+<p><code>Usage: meme &lt;dataset&gt; [optional arguments]</code></p>
+<blockquote>
+<ul>
+<li>&lt; dataset &gt; File containing sequences in FASTA format</li>
+<li>-dna Sequences use DNA alphabet</li>
+<li>-mod Distribution of motifs,3 options: oops | zoops | anr</li>
+<li>-pal Force palindromes (requires -dna)</li>
+</ul>
+</blockquote>
+<h2 id="Differential-binding-analysis"><a href="#Differential-binding-analysis" class="headerlink" title="Differential binding analysis"></a>Differential binding analysis</h2><h3 id="Merge-peaks"><a href="#Merge-peaks" class="headerlink" title="Merge peaks"></a>Merge peaks</h3><p>当ChIP-seq数据中有多分组，多样本以及多个重复时，需要进行样本间peaks的merge</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bedtools intersect -a Mcf7H3k27acUcdAlnRep1_peaks.filtered.bed -b Mcf7H3k27acUcdAlnRep2_peaks.filtered.bed -wa | cut -f1-3 | sort | uniq &gt; Mcf7Rep1_peaks.bed</span><br><span class="line">bedtools intersect -a Mcf7H3k27acUcdAlnRep1_peaks.filtered.bed -b Mcf7H3k27acUcdAlnRep2_peaks.filtered.bed -wb | cut -f1-3 | sort | uniq &gt; Mcf7Rep2_peaks.bed</span><br><span class="line">bedtools intersect -a Panc1H3k27acUcdAlnRep1_peaks.filtered.bed -b Panc1H3k27acUcdAlnRep2_peaks.filtered.bed -wa | cut -f1-3 | sort | uniq &gt; Panc1Rep1_peaks.bed</span><br><span class="line">bedtools intersect -a Panc1H3k27acUcdAlnRep1_peaks.filtered.bed -b Panc1H3k27acUcdAlnRep2_peaks.filtered.bed -wb | cut -f1-3 | sort | uniq &gt; Panc1Rep2_peaks.bed</span><br><span class="line"></span><br><span class="line">rm *filtered*</span><br><span class="line"></span><br><span class="line">cat *bed | sort -k1,1 -k2,2n | bedtools merge &gt; merge.bed</span><br></pre></td></tr></table></figure>
+<h3 id="Preparing-ChIP-seq-count-table"><a href="#Preparing-ChIP-seq-count-table" class="headerlink" title="Preparing ChIP-seq count table"></a>Preparing ChIP-seq count table</h3><p>用<strong>bedtools</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Make a bed file adding peak id as the fourth colum</span><br><span class="line">$ awk &apos;&#123;$3=$3&quot;\t&quot;&quot;peak_&quot;NR&#125;1&apos; OFS=&quot;\t&quot; merge.bed &gt; bed_for_multicov.bed</span><br><span class="line"># 输入的bam文件要提前做好index，可同时提供多个bam文件</span><br><span class="line">$ samtools sort -@ 8 -O BAM -o input1.sort.bam input1.bam </span><br><span class="line">$ samtools index -@ 8 input1.sort.bam input1.sort.bam.bai # 注意：生成的索引文件的文件名必须为在原bam文件名后追加&quot;.bai&quot;，否则bedtools multicov无法识别</span><br><span class="line">$ bedtools multicov -bams input1.bam input2.bam ... -bed bed_for_multicov.bed &gt; counts_multicov.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>NR 表示awk开始执行程序后所读取的数据行数</li>
+<li>OFS Out of Field Separator，输出字段分隔符</li>
+</ul>
+</blockquote>
+<p>用<strong>featureCounts</strong> (subread工具包中的组件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Make a saf(simplified annotation format) file for featureCount in the subread package,</span><br><span class="line"></span><br><span class="line">shown below:</span><br><span class="line">GeneID	Chr	Start	End	Strand</span><br><span class="line">497097	chr1	3204563	3207049	-</span><br><span class="line">497097	chr1	3411783	3411982	-</span><br><span class="line">497097	chr1	3660633	3661579	-</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">$ awk -F &quot;\t&quot; &apos;&#123;$1=&quot;peak_&quot;NR FS$1;$4=$4FS&quot;.&quot;&#125;1&apos; merge.bed &gt; subread.saf</span><br><span class="line">$ featureCounts -T 4 -a subread.saf -F SAF -o counts_subread.txt ../../data/*bam</span><br></pre></td></tr></table></figure>
+<p><code>Usage: featureCounts [options] -a &lt;annotation_file&gt; -o &lt;output_file&gt; input_file1 [input_file2] ...</code></p>
+<blockquote>
+<ul>
+<li>-a Name of an annotation file</li>
+<li>-F Specify format of the provided annotation file. Acceptable formats include ‘GTF’ (or compatible GFF format) and ‘SAF’. ‘GTF’ by default</li>
+<li>-o Name of the output file including read counts</li>
+<li>-T Number of the threads</li>
+</ul>
+</blockquote>
+<h3 id="Differential-binding-by-DESeq2"><a href="#Differential-binding-by-DESeq2" class="headerlink" title="Differential binding by DESeq2"></a>Differential binding by DESeq2</h3><ul>
+<li>对 contrast 构建一个 counts 矩阵，第一组的每个样本占据一列，紧接着的是第二组的样本，也是每个样本一列。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 做好表达矩阵</span><br><span class="line">count_table&lt;-read.delim(&quot;count_multicov.txt&quot;,header=F)</span><br><span class="line">count_matrix&lt;-as.matrix(count_table[,c(-1,-2,-3,-4)])</span><br><span class="line">rownames(count_matrix)&lt;-count_table$V4</span><br><span class="line"># 做好分组因子即可</span><br><span class="line">group_list&lt;-factor(c(&quot;control&quot;,&quot;control&quot;,&quot;control&quot;,&quot;treat&quot;,&quot;treat&quot;,&quot;treat&quot;))</span><br><span class="line">colData &lt;- data.frame(row.names=colnames(count_matrix), group_list=group_list))</span><br><span class="line"># 构建 DESeqDataSet 对象</span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = count_matrix,</span><br><span class="line">	colData = colData,</span><br><span class="line">	design = ~ group_list)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>接着计算每个样本的 library size 用于后续的标准化。library size 等于落在该样本所有peaks上的reads的总数，即 counts 矩阵中每列的加和。如果bFullLibrarySize设为TRUE，则会使用library的总reads数（根据原BAM/BED文件统计获得）。然后使用<code>estimateDispersions</code>估计统计分布，需要将参数<code>fitType</code>设为’local’</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dds&lt;-estimateSizeFactors(dds)</span><br><span class="line">dds&lt;-estimateDispersions(dds,fitType=&quot;local&quot;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对负二项分布进行显著性检验（Negative Binomial GLM fitting and Wald statistics）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">dds &lt;- nbinomWaldTest(dds)</span><br><span class="line">res &lt;- results(dds)</span><br><span class="line">res</span><br><span class="line"></span><br><span class="line">## log2 fold change (MLE): condition treated vs untreated </span><br><span class="line">## Wald test p-value: condition treated vs untreated </span><br><span class="line">## DataFrame with 9921 rows and 6 columns</span><br><span class="line">##                baseMean log2FoldChange     lfcSE        stat     pvalue</span><br><span class="line">##               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt;  &lt;numeric&gt;</span><br><span class="line">## FBgn0000008   95.144292    0.002276428 0.2237292  0.01017493 0.99188172</span><br><span class="line">## FBgn0000014    1.056523   -0.495113878 2.1431096 -0.23102593 0.81729466</span><br><span class="line">## FBgn0000017 4352.553569   -0.239918945 0.1263378 -1.89902705 0.05756092</span><br><span class="line">## FBgn0000018  418.610484   -0.104673913 0.1484903 -0.70492106 0.48085936</span><br><span class="line">## FBgn0000024    6.406200    0.210848562 0.6895923  0.30575830 0.75978868</span><br><span class="line">## ...                 ...            ...       ...         ...        ...</span><br><span class="line">## FBgn0261570 3208.388610     0.29553289 0.1273514  2.32061001  0.0203079</span><br><span class="line">## FBgn0261572    6.197188    -0.95882276 0.7753130 -1.23669125  0.2162017</span><br><span class="line">## FBgn0261573 2240.979511     0.01271946 0.1133028  0.11226079  0.9106166</span><br><span class="line">## FBgn0261574 4857.680373     0.01539243 0.1925619  0.07993497  0.9362890</span><br><span class="line">## FBgn0261575   10.682520     0.16356865 0.9308661  0.17571663  0.8605166</span><br><span class="line">##                  padj</span><br><span class="line">##             &lt;numeric&gt;</span><br><span class="line">## FBgn0000008 0.9972093</span><br><span class="line">## FBgn0000014        NA</span><br><span class="line">## FBgn0000017 0.2880108</span><br><span class="line">## FBgn0000018 0.8268644</span><br><span class="line">## FBgn0000024 0.9435005</span><br><span class="line">## ...               ...</span><br><span class="line">## FBgn0261570 0.1442486</span><br><span class="line">## FBgn0261572 0.6078453</span><br><span class="line">## FBgn0261573 0.9826550</span><br><span class="line">## FBgn0261574 0.9881787</span><br><span class="line">## FBgn0261575 0.9679223</span><br></pre></td></tr></table></figure>
+<p>若存在多个分组需要进行两两比较，则需要提取指定的两个分组之间的比较结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## 提取你想要的差异分析结果，我们这里是treated组对untreated组进行比较</span><br><span class="line">res &lt;-  results(dds2, contrast=c(&quot;group_list&quot;,&quot;treated&quot;,&quot;untreated&quot;))</span><br><span class="line">resOrdered &lt;- res[order(res$padj),]</span><br><span class="line">resOrdered=as.data.frame(resOrdered)</span><br></pre></td></tr></table></figure></p>
+<p>注意两个概念：</p>
+<blockquote>
+<ul>
+<li><p>Full library size: bam文件中reads的总数</p>
+</li>
+<li><p>Effective library size: 落在peaks区域的reads的总数</p>
+</li>
+</ul>
+<p>DESeq2中默认使用 Full library size bam (bFullLibrarySize =TRUE)，在ChIP-seq中使用 Effective library size 更合适，所有应该设置为bFullLibrarySize =FALSE</p>
+</blockquote>
+<h3 id="4-Differential-binding-peaks-annotation"><a href="#4-Differential-binding-peaks-annotation" class="headerlink" title="4. Differential binding peaks annotation"></a>4. Differential binding peaks annotation</h3><p>在<code>Differential binding analysis: 2. Preparing ChIP-seq count table</code>得到的<code>bed_for_multicov.bed</code>中找DiffBind peaks的bed格式信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 用R进行取交集操作</span><br><span class="line">merge_bed&lt;-read.delim(&quot;m6A_seq/CallPeak/bed_for_multicov.bed&quot;,header=F)</span><br><span class="line">peaks_diffbind&lt;-read.delim(&quot;m6A_seq/CallPeak/res_diffBind.txt&quot;,header=T)</span><br><span class="line">peaks_diffbind_bed&lt;-merge_bed[merge_bed$V4 %in% rownames(peaks_diffbind),]</span><br><span class="line"># 保存文件</span><br><span class="line">write.table(peaks_diffbind_bed,&quot;m6A_seq/CallPeak/peaks_diffBind.bed&quot;,sep=&quot;\t&quot;,col.names=F,row.names=F,quote=F)</span><br></pre></td></tr></table></figure>
+<p>接着，用基因组注释文件GFF/GTF注释peaks</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ bedtools intersect -wa -wb -a m6A_seq/CallPeak/peaks_diffBind.bed -b Ref/mm10/mm10_trans/Mus_musculus.GRCm38.91.gtf &gt;m6A_seq/CallPeak/peaks_diffbind.anno.bed</span><br><span class="line"></span><br><span class="line">$ head m6A_seq/CallPeak/peaks_diffbind.anno.bed</span><br><span class="line"></span><br><span class="line">## 1       7120312 7120526 peak_9  1       ensembl_havana  exon    7120194 7120615 .       +       .       gene_id &quot;ENSMUSG00000051285&quot;; gene_version &quot;17&quot;; transcript_id &quot;ENSMUST00000061280&quot;; transcript_version &quot;16&quot;; exon_number &quot;2&quot;; gene_name &quot;Pcmtd1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;protein_coding&quot;; havana_gene &quot;OTTMUSG00000043373&quot;; havana_gene_version &quot;5&quot;; transcript_name &quot;Pcmtd1-201&quot;; transcript_source &quot;ensembl_havana&quot;; transcript_biotype &quot;protein_coding&quot;; tag &quot;CCDS&quot;; ccds_id &quot;CCDS35508&quot;; havana_transcript &quot;OTTMUST00000113805&quot;; havana_transcript_version &quot;2&quot;; exon_id &quot;ENSMUSE00000553965&quot;; exon_version &quot;2&quot;; tag &quot;basic&quot;; transcript_support_level &quot;1&quot;;</span><br><span class="line">## 1       7120312 7120526 peak_9  1       ensembl_havana  CDS     7120309 7120615 .       +       0       gene_id &quot;ENSMUSG00000051285&quot;; gene_version &quot;17&quot;; transcript_id &quot;ENSMUST00000061280&quot;; transcript_version &quot;16&quot;; exon_number &quot;2&quot;; gene_name &quot;Pcmtd1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;protein_coding&quot;; havana_gene &quot;OTTMUSG00000043373&quot;; havana_gene_version &quot;5&quot;; transcript_name &quot;Pcmtd1-201&quot;; transcript_source &quot;ensembl_havana&quot;; transcript_biotype &quot;protein_coding&quot;; tag &quot;CCDS&quot;; ccds_id &quot;CCDS35508&quot;; havana_transcript &quot;OTTMUST00000113805&quot;; havana_transcript_version &quot;2&quot;; protein_id &quot;ENSMUSP00000059261&quot;; protein_version &quot;9&quot;; tag &quot;basic&quot;; transcript_support_level &quot;1&quot;;</span><br><span class="line">## 1       7120312 7120526 peak_9  1       ensembl_havana  gene    7088920 7173628 .       +       .       gene_id &quot;ENSMUSG00000051285&quot;; gene_version &quot;17&quot;; gene_name &quot;Pcmtd1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;protein_coding&quot;; havana_gene &quot;OTTMUSG00000043373&quot;; havana_gene_version &quot;5&quot;;</span><br><span class="line">## 1       7120312 7120526 peak_9  1       ensembl_havana  transcript      7088920 7173628 .       +       .       gene_id &quot;ENSMUSG00000051285&quot;; gene_version &quot;17&quot;; transcript_id &quot;ENSMUST00000061280&quot;; transcript_version &quot;16&quot;; gene_name &quot;Pcmtd1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;protein_coding&quot;; havana_gene &quot;OTTMUSG00000043373&quot;; havana_gene_version &quot;5&quot;; transcript_name &quot;Pcmtd1-201&quot;; transcript_source &quot;ensembl_havana&quot;; transcript_biotype &quot;protein_coding&quot;; tag &quot;CCDS&quot;; ccds_id &quot;CCDS35508&quot;; havana_transcript &quot;OTTMUST00000113805&quot;; havana_transcript_version &quot;2&quot;; tag &quot;basic&quot;; transcript_support_level &quot;1&quot;;</span><br><span class="line">## 1       7120312 7120526 peak_9  1       havana  transcript      7088930 7169598 .       +       .       gene_id &quot;ENSMUSG00000051285&quot;; gene_version &quot;17&quot;; transcript_id &quot;ENSMUST00000182114&quot;; transcript_version &quot;7&quot;; gene_name &quot;Pcmtd1&quot;; gene_source &quot;ensembl_havana&quot;; gene_biotype &quot;protein_coding&quot;; havana_gene &quot;OTTMUSG00000043373&quot;; havana_gene_version &quot;5&quot;; transcript_name &quot;Pcmtd1-202&quot;; transcript_source &quot;havana&quot;; transcript_biotype &quot;protein_coding&quot;; havana_transcript &quot;OTTMUST00000113813&quot;; havana_transcript_version &quot;2&quot;; tag &quot;cds_end_NF&quot;; tag &quot;mRNA_end_NF&quot;; transcript_support_level &quot;1&quot;;</span><br></pre></td></tr></table></figure>
+<h2 id="peaks注释基因的富集分析"><a href="#peaks注释基因的富集分析" class="headerlink" title="peaks注释基因的富集分析"></a>peaks注释基因的富集分析</h2><h3 id="clusterProfiler-GO-enrichment-analysis"><a href="#clusterProfiler-GO-enrichment-analysis" class="headerlink" title="clusterProfiler: GO enrichment analysis"></a>clusterProfiler: GO enrichment analysis</h3><p>多数人进行GO富集分析时喜欢使用DAVID，但是由于DAVID的最新版本是在2016年更新的，数据并不是最新的，所以不推荐使用DAVID。</p>
+<p>推荐使用bioconductor包<strong>clusterProfiler</strong></p>
+<p><strong>准备geneList</strong></p>
+<p>从<code>DiffBind peaks annotation</code>中获得的peaks_diffbind.anno.bed文件中提取geneID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cut -f 13 m6A_seq/CallPeak/peaks_diffbind.anno.bed | \</span><br><span class="line">	awk &apos;BEGIN&#123;FS=&quot;;&quot;&#125; &#123;print $1&#125;&apos; | \</span><br><span class="line">	perl -ane &apos;chomp;$F[1]=~ s/\&quot;//g;print &quot;$F[1]\n&quot;&apos; | sort | uniq &gt;m6A_seq/CallPeak/peaks_diffbind_geneList.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 载入geneList，最终提供给enrichGO的gene list应该是一个geneID的向量</span><br><span class="line">gene_list &lt;- read.table(&quot;peaks_diffbind_geneList.txt&quot;,header=F)</span><br><span class="line"></span><br><span class="line"># ID转换，转换需要的信息来自于对应物种的数据包（orgDB），所以使用前需要提前安装好数据包</span><br><span class="line">eg = bitr(gene_list$V1, fromType=&quot;SYMBOL&quot;, toType=&quot;ENTREZID&quot;, OrgDb=&quot;org.Hs.eg.db&quot;)</span><br><span class="line"></span><br><span class="line">## ID转换支持的ID类型可以通过以下方式查看</span><br><span class="line">keytypes(org.Hs.eg.db)</span><br><span class="line"></span><br><span class="line">## 当ID转换涉及KEGG ID时需要使用特殊的函数bitr_kegg，只能在kegg，ncbi-geneid，ncbi-proteinid和uniprot之间进行转换</span><br><span class="line">eg2np &lt;- bitr_kegg(hg, fromType=&apos;kegg&apos;, toType=&apos;ncbi-proteinid&apos;, organism=&apos;hsa&apos;)</span><br></pre></td></tr></table></figure>
+<p><strong>GO over-representation test</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 需要使用到相应物种的基因组注释数据包（org.Xx.eg.db），请提前安装好，下面以老鼠为例</span><br><span class="line">ego &lt;- enrichGO(gene         = gene_list$V1,</span><br><span class="line">                OrgDb         = org.Mm.eg.db,</span><br><span class="line">        		keytype       = &apos;ENSEMBL&apos;,</span><br><span class="line">                ont           = &quot;CC&quot;,</span><br><span class="line">                pAdjustMethod = &quot;BH&quot;,</span><br><span class="line">                pvalueCutoff  = 0.01,</span><br><span class="line">                qvalueCutoff  = 0.05,</span><br><span class="line">                readable      = TRUE)</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<blockquote>
+<ul>
+<li>gene: a vector of entrez gene id</li>
+<li>OrgDb: OrgDb</li>
+<li>keytype: keytype of input gene</li>
+<li>ont: One of “MF”, “BP”, and “CC” subontologies</li>
+<li>pvalueCutoff: Cutoff value of pvalue</li>
+<li>pAdjustMethod: one of “holm”, “hochberg”, “hommel”, “bonferroni”, “BH”, “BY”, “fdr”, “none”</li>
+<li>qvalueCutoff: qvalue cutoff</li>
+<li>readable: whether mapping gene ID to gene Name</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">head(ego)</span><br><span class="line"></span><br><span class="line">##                    ID                              Description GeneRatio</span><br><span class="line">## GO:0005819 GO:0005819                                  spindle    25/198</span><br><span class="line">## GO:0000779 GO:0000779 condensed chromosome, centromeric region    15/198</span><br><span class="line">## GO:0000775 GO:0000775           chromosome, centromeric region    18/198</span><br><span class="line">## GO:0000776 GO:0000776                              kinetochore    15/198</span><br><span class="line">## GO:0000793 GO:0000793                     condensed chromosome    18/198</span><br><span class="line">## GO:0005876 GO:0005876                      spindle microtubule    10/198</span><br><span class="line">##              BgRatio       pvalue     p.adjust       qvalue</span><br><span class="line">## GO:0005819 238/11745 2.090374e-13 5.518588e-11 4.950886e-11</span><br><span class="line">## GO:0000779  90/11745 2.241220e-11 2.958411e-09 2.654077e-09</span><br><span class="line">## GO:0000775 152/11745 7.936845e-11 6.984424e-09 6.265930e-09</span><br><span class="line">## GO:0000776 103/11745 1.649359e-10 8.919109e-09 8.001593e-09</span><br><span class="line">## GO:0000793 159/11745 1.689225e-10 8.919109e-09 8.001593e-09</span><br><span class="line">## GO:0005876  45/11745 2.821374e-09 1.241405e-07 1.113700e-07</span><br><span class="line">##                                                                                                                                                         geneID</span><br><span class="line">## GO:0005819 CDCA8/CDC20/KIF23/CENPE/ASPM/DLGAP5/SKA1/NUSAP1/TPX2/TACC3/NEK2/CDK1/MAD2L1/KIF18A/BIRC5/KIF11/TTK/AURKB/PRC1/KIFC1/KIF18B/KIF20A/AURKA/CCNB1/KIF4A</span><br><span class="line">## GO:0000779                                                            CENPE/NDC80/HJURP/SKA1/NEK2/CENPM/CENPN/ERCC6L/MAD2L1/CDT1/BIRC5/NCAPG/AURKB/AURKA/CCNB1</span><br><span class="line">## GO:0000775                                           CDCA8/CENPE/NDC80/HJURP/SKA1/NEK2/CENPM/CENPN/ERCC6L/MAD2L1/KIF18A/CDT1/BIRC5/TTK/NCAPG/AURKB/AURKA/CCNB1</span><br><span class="line">## GO:0000776                                                             CENPE/NDC80/HJURP/SKA1/NEK2/CENPM/CENPN/ERCC6L/MAD2L1/KIF18A/CDT1/BIRC5/TTK/AURKB/CCNB1</span><br><span class="line">## GO:0000793                                          CENPE/NDC80/TOP2A/NCAPH/HJURP/SKA1/NEK2/CENPM/CENPN/ERCC6L/MAD2L1/CDT1/BIRC5/NCAPG/AURKB/CHEK1/AURKA/CCNB1</span><br><span class="line">## GO:0005876                                                                                         SKA1/NUSAP1/CDK1/KIF18A/KIF11/AURKB/PRC1/KIF18B/AURKA/KIF4A</span><br><span class="line">##            Count</span><br><span class="line">## GO:0005819    25</span><br><span class="line">## GO:0000779    15</span><br><span class="line">## GO:0000775    18</span><br><span class="line">## GO:0000776    15</span><br><span class="line">## GO:0000793    18</span><br><span class="line">## GO:0005876    10</span><br></pre></td></tr></table></figure>
+<p>富集分析结果可视化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 绘制气泡图</span><br><span class="line"></span><br><span class="line">## 可以使用clusterProfiler中提供的绘图函数dotplot</span><br><span class="line">dotplot(ego)</span><br><span class="line"></span><br><span class="line">## 也可以使用ggplot2进行自定义绘图</span><br><span class="line">library(ggplot2)</span><br><span class="line">p&lt;-ggplot(ego)+geom_point(aes(x=)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/MeRIP-seq-GOenrich-dotplot.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 绘制GOterm拓扑关系网，依赖topGO和Rgraphviz</span><br><span class="line">library(topGO)</span><br><span class="line">library(Rgraphviz)</span><br><span class="line"># 画出来的拓扑图中节点的文字太小，看不清，这是一个问题</span><br><span class="line">plotGOgraph(ego)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/MeRIP-seq-GOtop-graph.png" alt></p>
+<hr>
+<p>参考资料：</p>
+<p>(1) Zhang C, Chen Y, Sun B, et al. m(6)A modulates haematopoietic stem and progenitor cell specification[J]. Nature, 2017, 549(7671):273.</p>
+<p>(2) <a href="http://mp.weixin.qq.com/s/TKwWKEgfZWskP9NWjYO_Ug" target="_blank" rel="noopener">BIG科研 | 细胞质内的m6A结合蛋白YTHDF3促进mRNA的翻译</a></p>
+<p>(3) Pertea M, Kim D, Pertea G, et al. Transcript-level expression analysis of RNA-seq experiments with HISAT, StringTie, and Ballgown[J]. Nature Protocols, 2016, 11(9):1650. </p>
+<p>(4) <a href="https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md" target="_blank" rel="noopener">ChIP-seq-pipeline</a></p>
+<p>(5) <a href="https://github.com/jmzeng1314/NGS-pipeline/tree/master/CHIPseq" target="_blank" rel="noopener">ChIPseq pipeline on jmzeng1314’s github</a></p>
+<p>(6) <a href="https://github.com/crazyhottommy/ChIP-seq-analysis" target="_blank" rel="noopener">ChIPseq pipeline on crazyhottommy’s github</a></p>
+<p>(7) <a href="https://github.com/crazyhottommy/ChIP-seq-analysis/blob/master/part3.1_Differential_binding_DiffBind_lib_size.md" target="_blank" rel="noopener">library size and normalization for ChIP-seq</a></p>
+<p>(8) <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html" target="_blank" rel="noopener">Bioconductor tutorial: Analyzing RNA-seq data with DESeq2</a></p>
+<p>(9) <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html#introduction" target="_blank" rel="noopener">Bioconductor tutorial: clusterProfiler</a></p>
+<p>(10) 国科大-韩春生《生物信息学应用 - 模序搜索》ppt</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NGS/" rel="tag"># NGS</a>
+          
+            <a href="/tags/ChIPseq/" rel="tag"># ChIPseq</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/17/InAction-PHP-MySQL-lincRNA-Database/" rel="next" title="PHP+MySQL实战：小鼠与人类lincRNA数据库">
+                <i class="fa fa-chevron-left"></i> PHP+MySQL实战：小鼠与人类lincRNA数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/17/Practical-Scripts/" rel="prev" title="实用小脚本">
+                实用小脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#m6A背景知识"><span class="nav-number">1.</span> <span class="nav-text">m6A背景知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比对参考基因组"><span class="nav-number">2.</span> <span class="nav-text">比对参考基因组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tophat"><span class="nav-number">2.1.</span> <span class="nav-text">Tophat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HISAT2"><span class="nav-number">2.2.</span> <span class="nav-text">HISAT2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Peak-calling"><span class="nav-number">3.</span> <span class="nav-text">Peak calling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MACS2"><span class="nav-number">3.1.</span> <span class="nav-text">MACS2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PeakRanger"><span class="nav-number">3.2.</span> <span class="nav-text">PeakRanger</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Peaks注释"><span class="nav-number">4.</span> <span class="nav-text">Peaks注释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CEAS"><span class="nav-number">4.1.</span> <span class="nav-text">CEAS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Motif识别"><span class="nav-number">5.</span> <span class="nav-text">Motif识别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HOMER"><span class="nav-number">5.1.</span> <span class="nav-text">HOMER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MEME"><span class="nav-number">5.2.</span> <span class="nav-text">MEME</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法原理"><span class="nav-number">5.2.1.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作"><span class="nav-number">5.2.2.</span> <span class="nav-text">操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Differential-binding-analysis"><span class="nav-number">6.</span> <span class="nav-text">Differential binding analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge-peaks"><span class="nav-number">6.1.</span> <span class="nav-text">Merge peaks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preparing-ChIP-seq-count-table"><span class="nav-number">6.2.</span> <span class="nav-text">Preparing ChIP-seq count table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Differential-binding-by-DESeq2"><span class="nav-number">6.3.</span> <span class="nav-text">Differential binding by DESeq2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Differential-binding-peaks-annotation"><span class="nav-number">6.4.</span> <span class="nav-text">4. Differential binding peaks annotation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#peaks注释基因的富集分析"><span class="nav-number">7.</span> <span class="nav-text">peaks注释基因的富集分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clusterProfiler-GO-enrichment-analysis"><span class="nav-number">7.1.</span> <span class="nav-text">clusterProfiler: GO enrichment analysis</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

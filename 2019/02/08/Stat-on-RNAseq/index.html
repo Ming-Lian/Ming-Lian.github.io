@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="数据预处理过滤低表达的基因 所有数据集将包括表达的基因和不表达的基因的组合。 虽然检查在一种条件下表达但不在另一种条件下表达的基因是有意义的，但是一些基因在所有样品中都未表达   标准化 由于不同文库测序深度不同，比较前当然要进行均一化！用总reads进行均一化可能最简单，其基于以下两个基本假设：  绝大多数的gene表达量不变； 高表达量的gene表达量不发生改变；  但在转录组中，通常一小部分">
+<meta name="keywords" content="NGS,RNAseq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNA-seq中的那些统计学问题">
+<meta property="og:url" content="http://yoursite.com/2019/02/08/Stat-on-RNAseq/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="数据预处理过滤低表达的基因 所有数据集将包括表达的基因和不表达的基因的组合。 虽然检查在一种条件下表达但不在另一种条件下表达的基因是有意义的，但是一些基因在所有样品中都未表达   标准化 由于不同文库测序深度不同，比较前当然要进行均一化！用总reads进行均一化可能最简单，其基于以下两个基本假设：  绝大多数的gene表达量不变； 高表达量的gene表达量不发生改变；  但在转录组中，通常一小部分">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-filtData.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-House-keeping-genes.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-spike-in.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-CPM.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-TCS-1.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-TCS-2.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-quantile.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-DESeq2.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-TMM-1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-TMM-2.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-TMM-3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-TMM-4.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-1.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-2.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-3.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-4.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-5.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-6.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-7.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-8.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-9.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-10.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-11.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-12.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-normalization-analysis-FPKM-RPKM-13.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/BioStat-introduction-common-distributions-poisson-distribution-curve.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-1.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-binomial-distribution.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-binomial-distribution-curve.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-1.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-2.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-expectation.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-diff.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-3.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-4.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-negative-binomial-distribution-5.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-2.png">
+<meta property="og:image" content="http://yoursite.com/images/DiffExpAna-statistic-principle-3.png">
+<meta property="og:updated_time" content="2019-02-17T06:22:29.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RNA-seq中的那些统计学问题">
+<meta name="twitter:description" content="数据预处理过滤低表达的基因 所有数据集将包括表达的基因和不表达的基因的组合。 虽然检查在一种条件下表达但不在另一种条件下表达的基因是有意义的，但是一些基因在所有样品中都未表达   标准化 由于不同文库测序深度不同，比较前当然要进行均一化！用总reads进行均一化可能最简单，其基于以下两个基本假设：  绝大多数的gene表达量不变； 高表达量的gene表达量不发生改变；  但在转录组中，通常一小部分">
+<meta name="twitter:image" content="http://yoursite.com/images/DiffExpAna-filtData.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/08/Stat-on-RNAseq/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RNA-seq中的那些统计学问题 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/Stat-on-RNAseq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RNA-seq中的那些统计学问题
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-08 00:38:20" itemprop="dateCreated datePublished" datetime="2019-02-08T00:38:20+00:00">2019-02-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:22:29" itemprop="dateModified" datetime="2019-02-17T06:22:29+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><h3 id="过滤低表达的基因"><a href="#过滤低表达的基因" class="headerlink" title="过滤低表达的基因"></a>过滤低表达的基因</h3><blockquote>
+<p>所有数据集将包括表达的基因和不表达的基因的组合。 虽然检查在一种条件下表达但不在另一种条件下表达的基因是有意义的，但是一些基因在所有样品中都未表达</p>
+</blockquote>
+<p><img src="/images/DiffExpAna-filtData.png" alt></p>
+<h3 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h3><p><img src="/images/DiffExpAna-normalization.png" alt></p>
+<p>由于不同文库测序深度不同，比较前当然要进行均一化！用总reads进行均一化可能最简单，其基于以下两个基本假设：</p>
+<ul>
+<li>绝大多数的gene表达量不变；</li>
+<li>高表达量的gene表达量不发生改变；</li>
+</ul>
+<p>但在转录组中，通常一小部分极高丰度基因往往会贡献很多reads，如果这些“位高权重”的基因还是差异表达的，则会影响所有其它基因分配到的reads数，而且，两个样本总mRNA量完全相同的前提假设也过于理想了。那如何比较呢，各个方家使出浑身解数，有用中位数的，有用75分位数的，有用几何平均数的，有用TMM(trimmed mean of Mvalues)的等等，总之要<strong>找一个更稳定的参考</strong>值。</p>
+<h4 id="House-keeping-gene-s"><a href="#House-keeping-gene-s" class="headerlink" title="House-keeping gene(s)"></a>House-keeping gene(s)</h4><p>矫正的思路很简单，就是在变化的样本中寻找不变的量</p>
+<p>那么在不同RNA-seq样本中，那些是不变的量呢？一个很容易想到的就是<strong>管家基因</strong> (House-keeping gene(s)) </p>
+<p>那么 Human 常用的 House-keeping gene 怎么确定？</p>
+<p>目前大家用的比较多的一个human housekeeping gene list 来源于下面这篇文章，是2013年发表在 Cell系列的 Trends in Genetics 部分的一篇文章</p>
+<p><img src="/images/DiffExpAna-normalization-House-keeping-genes.jpg" alt></p>
+<h4 id="spike-in"><a href="#spike-in" class="headerlink" title="spike-in"></a>spike-in</h4><p>使用Housekeeping gene的办法来进行相对定量，这种办法在一定程度上能够解决我们遇到的问题。但其实这种办法有一个<strong>非常强的先验假设</strong>：housekeeping gene的表达量不怎么发生变化。其实housekeeping gene list有几千个，这几千个基因有一定程度上的变化是有可能的</p>
+<p><strong>spike-in方法</strong>：在RNA-Seq建库的过程中掺入一些预先知道序列信息以及序列绝对数量的内参。这样在进行RNA-Seq测序的时候就可以通过不同样本之间内参（spike-in）的量来做一条标准曲线，就可以非常准确地对不同样本之间的表达量进行矫正</p>
+<p>比较常用的spike-in类型：ERCC Control RNA</p>
+<blockquote>
+<p>ERCC = External RNA Controls Consortium</p>
+<p>ERCC就是一个专门为了定制一套spike-in RNA而成立的组织，这个组织早在2003年的时候就已经宣告成立。主要的工作就是设计了一套非常好用的spike-in RNA，方便microarray，以及RNA-Seq进行内参定量</p>
+<p><img src="/images/DiffExpAna-normalization-spike-in.jpg" alt></p>
+</blockquote>
+<h4 id="CPM"><a href="#CPM" class="headerlink" title="CPM"></a>CPM</h4><p>CPM(count-per-million)</p>
+<p><img src="/images/DiffExpAna-normalization-CPM.png" alt></p>
+<h4 id="TCS-Total-Count-Scaling"><a href="#TCS-Total-Count-Scaling" class="headerlink" title="TCS (Total Count Scaling)"></a>TCS (Total Count Scaling)</h4><p>简单来说，就是找出多个样本中library size为中位数的样本，作为参考样本，将所有的样本的library size按比例缩放到参考样本的水平</p>
+<p>选择一个library size为中位数的sample，以它为baseline，计算出其它sample对于baseline的normalization factor，即一个缩放因子：</p>
+<p><img src="/images/DiffExpAna-normalization-TCS-1.png" alt></p>
+<p>然后基于该缩放因子对特定的sample中的每个基因的read count进行标准化（缩放）：</p>
+<p><img src="/images/DiffExpAna-normalization-TCS-2.png" alt></p>
+<h4 id="Quantile"><a href="#Quantile" class="headerlink" title="Quantile"></a>Quantile</h4><p>简单来说，就是排序后求平均，然后再回序</p>
+<p><img src="/images/DiffExpAna-normalization-quantile.png" alt></p>
+<p>在R里面，推荐用preprocessCore 包来做quantile normalization，不需要自己造轮子啦！<br>但是需要明白什么时候该用quantile normalization，什么时候不应该用，就复杂很多了</p>
+<h4 id="Median-of-Ratio-DESeq2"><a href="#Median-of-Ratio-DESeq2" class="headerlink" title="Median of Ratio (DESeq2)"></a>Median of Ratio (DESeq2)</h4><p>该方法基于的假设是，即使处在不同条件下的不同个样本，大多数基因的表达是不存在差异的，实际存在差异的基因只占很小的部分那么我们只需要将这些稳定的部分找出来，作为标准化的内参，依据内参算出各个样本的标准化因子</p>
+<p>（1）对每个基因计算几何平均数，得到一个假设的参考样本(pseudo-reference sample)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">gene</th>
+<th style="text-align:left">sampleA</th>
+<th style="text-align:left">sampleB</th>
+<th style="text-align:left">pseudo-reference sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">EF2A</td>
+<td style="text-align:left">1489</td>
+<td style="text-align:left">906</td>
+<td style="text-align:left">sqrt(1489 * 906) = 1161.5</td>
+</tr>
+<tr>
+<td style="text-align:left">ABCD1</td>
+<td style="text-align:left">22</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">sqrt(22 * 13) = 17.7</td>
+</tr>
+<tr>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+</tr>
+</tbody>
+</table>
+<p>（2）对每个样本的每个基因对于参考样本计算Fold Change</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">gene</th>
+<th style="text-align:left">sampleA</th>
+<th style="text-align:left">sampleB</th>
+<th style="text-align:left">pseudo-reference sample</th>
+<th style="text-align:left">ratio of sampleA/ref</th>
+<th style="text-align:left">ratio of sampleB/ref</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">EF2A</td>
+<td style="text-align:left">1489</td>
+<td style="text-align:left">906</td>
+<td style="text-align:left">1161.5</td>
+<td style="text-align:left">1489/1161.5 = 1.28</td>
+<td style="text-align:left">906/1161.5 = 0.78</td>
+</tr>
+<tr>
+<td style="text-align:left">ABCD1</td>
+<td style="text-align:left">22</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">16.9</td>
+<td style="text-align:left">22/16.9 = 1.30</td>
+<td style="text-align:left">13/16.9 = 0.77</td>
+</tr>
+<tr>
+<td style="text-align:left">MEFV</td>
+<td style="text-align:left">793</td>
+<td style="text-align:left">410</td>
+<td style="text-align:left">570.2</td>
+<td style="text-align:left">793/570.2 = 1.39</td>
+<td style="text-align:left">410/570.2 = 0.72</td>
+</tr>
+<tr>
+<td style="text-align:left">BAG1</td>
+<td style="text-align:left">76</td>
+<td style="text-align:left">42</td>
+<td style="text-align:left">56.5</td>
+<td style="text-align:left">76/56.5 = 1.35</td>
+<td style="text-align:left">42/56.5 = 0.74</td>
+</tr>
+<tr>
+<td style="text-align:left">MOV10</td>
+<td style="text-align:left">521</td>
+<td style="text-align:left">1196</td>
+<td style="text-align:left">883.7</td>
+<td style="text-align:left">521/883.7 = 0.590</td>
+<td style="text-align:left">1196/883.7 = 1.35</td>
+</tr>
+<tr>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+<td style="text-align:left">…</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/DiffExpAna-normalization-DESeq2.png" alt></p>
+<p>（3）获取每个样本中Fold Change的中位数，我们就得到了非DE基因代表的Fold Change，该基因就是我们选择的该样本的内参基因，它的Fold Change就是该样本的标准化因子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">normalization_factor_sampleA &lt;- median(c(1.28, 1.3, 1.39, 1.35, 0.59))</span><br><span class="line"></span><br><span class="line">normalization_factor_sampleB &lt;- median(c(0.78, 0.77, 0.72, 0.74, 1.35))</span><br></pre></td></tr></table></figure>
+<h4 id="TMM-Trimmed-Mean-of-M-value-edgeR"><a href="#TMM-Trimmed-Mean-of-M-value-edgeR" class="headerlink" title="TMM (Trimmed Mean of M value, edgeR)"></a>TMM (Trimmed Mean of M value, edgeR)</h4><p>该方法的思想与DESeq2的Median of Ratio相同，假设前提都是：大多数基因的表达是不存在差异的</p>
+<p>它与DESeq2的不同之处在于对内参的选择上：</p>
+<blockquote>
+<ul>
+<li><p>DESeq2选择一个内参基因，它的Ratio/Fold-Change就是标准化因子</p>
+</li>
+<li><p>edgeR选择一组内参基因集合，它们对标准化因子的计算均有贡献：加权平均</p>
+</li>
+</ul>
+</blockquote>
+<p>（1）移除所有未表达基因</p>
+<p>（2）从众多样本中找出一个数据趋势较为平均的样本作为参考样本</p>
+<blockquote>
+<ul>
+<li><p>对所有样本求总Read数；</p>
+</li>
+<li><p>各样本除以各自的总Read数，得到修正Read数；</p>
+</li>
+<li><p>求出各自样本修正Read数的Q3值（第3个四分位数）；</p>
+</li>
+<li><p>所有的Q3值求平均，与平均Q3相差最小的样本即是参考样本。</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="/images/DiffExpAna-normalization-TMM-1.jpg" alt></p>
+<p>（3）找出每个样本中的代表基因集，参考这些代表基因集的fold change，计算出该样本的标准化因子</p>
+<p>寻找样本的代表基因集：依据基因的<strong>偏倚程度</strong>和<strong>Reads数</strong>大小选出——偏倚程度小、reads数居中的基因</p>
+<blockquote>
+<ul>
+<li><strong>衡量偏倚度的量：LFC (log fold change)</strong></li>
+</ul>
+<p><img src="/images/DiffExpAna-normalization-TMM-2.png" alt></p>
+<p>LFC过大或过小都表示具有偏倚性，LFC越大表示reads数在sample<sub>i</sub>中越高，即偏向sample<sub>i</sub>；LFC越小表示reads数在ref中越高，即偏向ref</p>
+<ul>
+<li><strong>衡量reads数的量：read的几何平均数 (read geometric mean, RGM)</strong></li>
+</ul>
+<p>RGM越大表示基因reads越多，RGM越小表示基因reads越少</p>
+<p>结合偏倚度、read数画出散点图：</p>
+<p><img src="/images/DiffExpAna-normalization-TMM-3.jpg" alt></p>
+<p>偏倚度小、表达量居中的那些基因落在图中的红线附近</p>
+</blockquote>
+<p>由参考代表基因集计算样本的标准化因子：</p>
+<blockquote>
+<p>对这些代表基因集计算加权平均数：</p>
+<p><img src="/images/DiffExpAna-normalization-TMM-4.png" alt></p>
+<p>该加权平均数就能代表该样本的标准化因子，只是经过了log变换，所以需要恢复为它的正值：</p>
+<p align="center">Scaling-Factor = 2 <sup>weight-average</sup></p>
+</blockquote>
+<h3 id="为什么说FPKM和RPKM都错了？"><a href="#为什么说FPKM和RPKM都错了？" class="headerlink" title="为什么说FPKM和RPKM都错了？"></a>为什么说FPKM和RPKM都错了？</h3><h4 id="FPKM和RPKM分别是什么"><a href="#FPKM和RPKM分别是什么" class="headerlink" title="FPKM和RPKM分别是什么"></a>FPKM和RPKM分别是什么</h4><p>FPKM和RPKM分别是什么</p>
+<blockquote>
+<p><strong>RPKM</strong>是Reads Per Kilobase per Million的缩写，它的计算方程非常简单：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-1.png" alt></p>
+<p><strong>FPKM</strong>是Fregments Per Kilobase per Million的缩写，它的计算与RPKM极为类似，如下：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-2.png" alt></p>
+<p>与RPKM唯一的区别为：F是fragments，R是reads，如果是PE(Pair-end)测序，每个fragments会有两个reads，FPKM只计算两个reads能比对到同一个转录本的fragments数量，而RPKM计算的是可以比对到转录本的reads数量而不管PE的两个reads是否能比对到同一个转录本上。如果是SE(single-end)测序，那么FPKM和RPKM计算的结果将是一致的。</p>
+</blockquote>
+<p>这两个量的计算方式的目的是为了解决计算RNA-seq转录本丰度时的两个bias：</p>
+<ul>
+<li>相同表达丰度的转录本，往往会由于其基因长度上的差异，导致测序获得的Read（Fregment）数不同。总的来说，越长的转录本，测得的Read（Fregment）数越多；</li>
+<li>由测序文库的不同大小而引来的差异。即同一个转录本，其测序深度越深，通过测序获得的Read（Fregment）数就越多。</li>
+</ul>
+<h4 id="什么样才算好的统计量"><a href="#什么样才算好的统计量" class="headerlink" title="什么样才算好的统计量"></a>什么样才算好的统计量</h4><p>首先，到底什么是RNA转录本的表达丰度这个问题</p>
+<p>对于样本X，其有一个基因g被转录了mRNA_g次，同时样本X中所有基因的转录总次数假定是mRNA_total, 那么正确描述基因g转录丰度的值应该是：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-3.png" alt></p>
+<p>则一个样本中基因表达丰度的均值为</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-4.png" alt></p>
+<p>而</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-5.png" alt></p>
+<p>所以</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-6.png" alt></p>
+<p>这个期望值竟然和测序状态无关！仅仅由样本中基因的总数所决定的</p>
+<p>也就是说，对于同一个物种，不管它的样本是哪种组织（正常的或病变的），也不管有多少个不同的样本，只要它们都拥有相同数量的基因，那么它们的r_mean都将是一致的</p>
+<p>由于上面的结果是在理论情况下推导出来的，实际上我们无法直接计算这个r，那么我们可以尝试通过其他方法来近似估计r，<strong>只要这些近似统计量可以隐式地包含这一恒等关系即可</strong></p>
+<h4 id="FPKM和RPKM犯的错"><a href="#FPKM和RPKM犯的错" class="headerlink" title="FPKM和RPKM犯的错"></a>FPKM和RPKM犯的错</h4><p>实际数据来证明</p>
+<blockquote>
+<p>假定有两个来自同一个个体不同组织的样本X和Y，这个个体只有5个基因，分别为A、B、C、D和E它们的长度分别如下：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-7.png" alt></p>
+<p>r_mean值是:</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-8.png" alt></p>
+<p>如果FPKM或RPKM是一个合适的统计量的话，那么，样本X和Y的平均FPKM（或RPKM）应该相等。</p>
+<p>以下这个表格列出的分别是样本X和Y在这5个基因分别比对上的fregment数和各自总的fregment数量：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-9.jpg" alt></p>
+<p>可以算出：样本X在这5个基因上的FPKM均值FPKM_mean = 5,680;样本Y在这5个基因上的FPKM均值FPKM_mean = 161,840</p>
+<p>很明显，它们根本不同，而且差距相当大</p>
+</blockquote>
+<p>究竟为什么会有如此之大的差异？</p>
+<p>可以从其公式上找到答案</p>
+<blockquote>
+<p>首先，我们可以把FPKM的计算式拆分成如下两部分。</p>
+<p>第一部分的统计量是对一个基因转录本数量的一个等价描述（虽然严格来讲也没那么等价）：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-10.png" alt></p>
+<p>第二部分的统计量是测序获得的总有效Fregment数量的百万分之一：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-11.png" alt></p>
+<p>这么一拆，就可以看出这个公式的问题了：逻辑上根本说不通嘛！</p>
+<p>尤其是第二部分（N/10^6），本来式子的第一部分是为了描述一个基因的转录本数量，那么正常来讲，第二部分就应该是样本的转录本总数量（或至少是其总数量的等价描述）才能形成合理的比例关系，而且可以看出来FPKM/RPMK是有此意的，这本来就是这个统计量的目的。</p>
+<p>但是N/10^6并不能描述样本的转录本总数量。N/10^6的大小其实是由RNA-seq测序深度所决定的，并且是一个和总转录本数量无直接线性关系的统计量——N与总转录本数量之间的关系还受转录本的长度分布所决定，而这个分布往往在不同样本中是有差异的！</p>
+</blockquote>
+<h4 id="TPM是一个合适的选择"><a href="#TPM是一个合适的选择" class="headerlink" title="TPM是一个合适的选择"></a>TPM是一个合适的选择</h4><p>这个统计量在2012年所发表的一篇讨论RPKM的文章（RPKM measure is inconsistent among samples. Wagner GP, Kin K, Lynch VJ. Theory Biosci. 2012.）中就被提出来了，称之为TPM —— Transcripts Per Million，它的计算是：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-12.png" alt></p>
+<p>简单计算之后我们就可以发现TPM的均值是一个独立于样本之外的恒定值，它等于：</p>
+<p><img src="/images/DiffExpAna-normalization-analysis-FPKM-RPKM-13.png" alt></p>
+<p>这个值刚好是r_mean的一百万倍，满足等价描述的关系。</p>
+<h2 id="统计学原理"><a href="#统计学原理" class="headerlink" title="统计学原理"></a>统计学原理</h2><h3 id="转录组数据统计推断的难题"><a href="#转录组数据统计推断的难题" class="headerlink" title="转录组数据统计推断的难题"></a>转录组数据统计推断的难题</h3><p>在RNA-seq中进行两组间的差异分析是最正常不过的了。</p>
+<p>我们在其它实验中同样会遇到类似的分析，通常，我们可以用方差分析判定两组“分布”数据间是否存在显著差异。原理是：当组间方差大于组内方差（误差效应），并且统计学显著时，则认为组间处理是可以引起差异的。</p>
+<p>有伙伴肯定要问，转录组数据到底有什么了不起的？它们为什么不能用我们熟悉的算法简单地进行计算？</p>
+<p>其实统计学家也很无奈啊，看看我们转录组实验得到的这些数据吧：我们的实验只进行少得可怜的生物学重复（n&lt;10），而且，任何基因的表达量都不能是负数，这些数据并不符合正态分布，用于表征表达量的counts是非连续的（芯片信号是连续的），RNA-seq数据的离散通常是高度扭曲的，方差往往会大于均值……，就这些奇怪的特征，使得准确估计方差并没有想象的那么容易。</p>
+<p>我们面临两个核心问题：</p>
+<ul>
+<li>基因表达数据适合用什么统计学分布进行差异显著性检验？</li>
+<li>如何利用少量生物学重复数据估算基因表达的标准差？</li>
+</ul>
+<h3 id="泊松分布-or-负二项分布？"><a href="#泊松分布-or-负二项分布？" class="headerlink" title="泊松分布 or 负二项分布？"></a>泊松分布 or 负二项分布？</h3><p>从统计学的角度出发，进行差异分析肯定会需要假设检验，通常对于分布已知的数据，运用参数检验结果的假阳性率会更低。转录组数据中，raw count值符合什么样的分布呢？</p>
+<p>count值本质是reads的数目，是一个非零整数，而且是离散的，其分布肯定也是离散型分布。对于转录组数据，学术界常用的分布包括<strong>泊松分布 (poisson)</strong>和<strong>负二项分布 (negative binomial)</strong>两种。</p>
+<h4 id="为什么泊松分布不行？"><a href="#为什么泊松分布不行？" class="headerlink" title="为什么泊松分布不行？"></a>为什么泊松分布不行？</h4><p>首先有必要简单地介绍一下泊松分布</p>
+<blockquote>
+<p>泊松分布适合于描述单位时间（或空间）内随机事件发生的次数（事件发生的次数只能是离散的整数）。如某一服务设施在一定时间内到达的人数，电话交换机接到呼叫的次数，汽车站台的候客人数，机器出现的故障数，自然灾害发生的次数，一块产品上的缺陷数，显微镜下单位分区内的细菌分布数等等。</p>
+</blockquote>
+<blockquote>
+<p><img src="/images/DiffExpAna-statistic-principle-4.jpg" alt></p>
+<p>泊松分布大概长这样：</p>
+<p><img src="/images/BioStat-introduction-common-distributions-poisson-distribution-curve.png" alt></p>
+<p>λ是波松分布所依赖的唯一参数。 λ值愈小分布愈偏倚， 随着λ的增大 ， 分布趋于对称。 当λ=20时分布接近于正态分布；当λ=50时， 可以认为波松分布呈正态分布。</p>
+</blockquote>
+<p>在数据分析的早期，确实有学者采用泊松分布进行差异分析，但是发展到现在，几乎全部都是基于负二项分布了，究竟是什么因素导致了这种现象呢？为了解释这个问题，我们必须提到一个概念 <strong>overdispersion</strong>。</p>
+<p>dispersion指的是离散程度，研究一个数据分布的离散程度，我们常用方差这个指标。<strong>对于泊松分布而言，其均值和方差是相等的，但是我们的数据确不符合这样的规律</strong>。通过计算所有基因的均值和方差，可以绘制如下的图片：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-1.png" alt></p>
+<p>横坐标为基因在所有样本中的均值，纵坐标为基因在所有样本中的方差，直线的斜率为1，代表泊松分布的均值和方差的分布。可以看到，真实数据的分布是偏离了泊松分布的，方差明显比均值要大。</p>
+<p>如果假定总体分布为泊松分布， 根据我们的定量数据是无法估计出一个合理的参数，能够符合上图中所示分布的，这样的现象就称之为overdispersion。</p>
+<p>由于真实数据与泊松分布之间的overdispersion，<strong>选择泊松分布分布作为总体的分布是不合理</strong>。</p>
+<p>以上只证明了泊松分布是个不太恰当的分布估计，那<strong>怎么证明负二项分布就是合适的分布估计呢？</strong></p>
+<h4 id="为什么负二项分布行？"><a href="#为什么负二项分布行？" class="headerlink" title="为什么负二项分布行？"></a>为什么负二项分布行？</h4><p>主要是从均值与方差之间的关系去证明</p>
+<p>同样的，也先简单介绍一下负二项分布：</p>
+<blockquote>
+<p>二项分布描述的是n重伯努利实验，在n重贝努利试验中，事件A恰好发生x(0≤x≤n)次的概率为：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-binomial-distribution.png" alt></p>
+<p>它的概率分布图如下：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-binomial-distribution-curve.jpg" alt></p>
+<p>负二项分布描述的<strong>也是伯努利实验</strong>，不过它的目标事件变成了：对于Bernoulli过程，我们设定，当某个结果出现固定次数的时候，整个过程的数量，比如我们生产某个零件，假设每个零件的合格与否都是相互独立的，且分布相同，那么当我们生产出了五个不合格零件时，一共生产了多少合格的零件，这个数量就是一个<strong>负二项分布</strong>，公式如下：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-1.png" alt></p>
+<p>该公式描述的是，在合格率为p的一堆产品中，进行连续有放回的抽样，当抽到r个次品时，停止抽样，此时抽到的正品正好为k个的概率</p>
+<p>它的概率分布如下：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-2.png" alt="p=0.5, r=5"></p>
+</blockquote>
+<p>负二项分布的均值和方差分别为：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-expectation.png" alt></p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-diff.png" alt></p>
+<p>将p用μ表示，得到：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-3.png" alt></p>
+<p>将上一步推出的p和1-p带入到方差的表达式中，得到：</p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-4.png" alt></p>
+<p>记<code>1/r=α</code>，则</p>
+<p><img src="/images/DiffExpAna-statistic-principle-negative-binomial-distribution-5.png" alt></p>
+<p>从上面的式子可以看出，均值是方差的二次函数，方差随着均值的增加而进行二次函数形式的递增，正好符合上文 <a href="#reason-to-deny-poisson-distribution">2.2.1. 为什么泊松分布不行？</a>部分均值与方差分布图的情况</p>
+<p>其中<code>α</code>和<code>r</code>被称为<strong>dispersion parameter</strong></p>
+<p>负二项分布与泊松分布的关系，可以用<code>α</code>或<code>r</code>推出：</p>
+<blockquote>
+<p>当 <code>r -∞</code> 时，<code>α -0</code>，此时 σ<sup>2&lt;/sup= μ，为泊松分布；</sup></p>
+<p>当 <code>r -&gt; 0</code> 时，<code>α -&gt; ∞</code>，此时overdispersion</p>
+</blockquote>
+<h3 id="方差估计"><a href="#方差估计" class="headerlink" title="方差估计"></a>方差估计</h3><p>在生物学重复很少时，我们是很难准确计算每个基因表达的标准差的（相当于这个数据集的离散程度）。我们<strong>很可能会低估数据的离散程度</strong>。</p>
+<p>被逼无奈的科学家提出了一个假设：表达丰度相似的基因，在总体上标准差应该也是相似的。我们把不同生物学重复中表达丰度相同的基因的总标准差取个平均值，低于这个值的都用这个值，高于这个值的就用算出来的值。</p>
+<p><img src="/images/DiffExpAna-statistic-principle-2.png" alt></p>
+<p><img src="/images/DiffExpAna-statistic-principle-3.png" alt="（以上图来自 H. J. Pimentel, et al. Differential analysis of RNA-Seq incorporatingquantification uncertainty. bioRxiv, 2016）"></p>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="http://www.bio-info-trainee.com/2043.html" target="_blank" rel="noopener">【生信菜鸟团】quantile normalization到底对数据做了什么？</a></p>
+<p>(2) <a href="https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html" target="_blank" rel="noopener">Introduction to DGE</a></p>
+<p>(3) <a href="https://mp.weixin.qq.com/s?__biz=MzUzMTEwODk0Ng==&amp;mid=2247485369&amp;idx=1&amp;sn=791cb8c26b19a1181ceccf586787f078&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">生信菜鸟团：StatQuest生物统计学专题 - library normalization进阶之edgeR的标准化方法 </a></p>
+<p>(4) <a href="https://www.jianshu.com/p/35e861b76486" target="_blank" rel="noopener">【简书】为什么说FPKM和RPKM都错了？</a></p>
+<p>(5) <a href="https://mp.weixin.qq.com/s/m2ydqpKofYo2bK61A9hZWw" target="_blank" rel="noopener">【生信修炼手册】负二项分布在差异分析中的应用</a></p>
+<p>(6) <a href="https://mp.weixin.qq.com/s/VcjnvI5FqwOFEC9wSUfdSw" target="_blank" rel="noopener">【 生信百科】转录组差异表达筛选的真相</a></p>
+<p>(7) <a href="https://mp.weixin.qq.com/s/UTmSzCgDIFYbG2WByzaqQQ" target="_blank" rel="noopener">【生信媛】RNA-seq分析中的dispersion，你知道吗？</a></p>
+<p>(8) H. J. Pimentel, et al. Differential analysis of RNA-Seq incorporatingquantification uncertainty. bioRxiv, 2016</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NGS/" rel="tag"># NGS</a>
+          
+            <a href="/tags/RNAseq/" rel="tag"># RNAseq</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/08/call-snp/" rel="next" title="深入了解snp-calling流程">
+                <i class="fa fa-chevron-left"></i> 深入了解snp-calling流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/08/RNA-seq/" rel="prev" title="多套RNA-seq分析流程">
+                多套RNA-seq分析流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理"><span class="nav-number">1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤低表达的基因"><span class="nav-number">1.1.</span> <span class="nav-text">过滤低表达的基因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准化"><span class="nav-number">1.2.</span> <span class="nav-text">标准化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#House-keeping-gene-s"><span class="nav-number">1.2.1.</span> <span class="nav-text">House-keeping gene(s)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spike-in"><span class="nav-number">1.2.2.</span> <span class="nav-text">spike-in</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CPM"><span class="nav-number">1.2.3.</span> <span class="nav-text">CPM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCS-Total-Count-Scaling"><span class="nav-number">1.2.4.</span> <span class="nav-text">TCS (Total Count Scaling)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quantile"><span class="nav-number">1.2.5.</span> <span class="nav-text">Quantile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Median-of-Ratio-DESeq2"><span class="nav-number">1.2.6.</span> <span class="nav-text">Median of Ratio (DESeq2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TMM-Trimmed-Mean-of-M-value-edgeR"><span class="nav-number">1.2.7.</span> <span class="nav-text">TMM (Trimmed Mean of M value, edgeR)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么说FPKM和RPKM都错了？"><span class="nav-number">1.3.</span> <span class="nav-text">为什么说FPKM和RPKM都错了？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FPKM和RPKM分别是什么"><span class="nav-number">1.3.1.</span> <span class="nav-text">FPKM和RPKM分别是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么样才算好的统计量"><span class="nav-number">1.3.2.</span> <span class="nav-text">什么样才算好的统计量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FPKM和RPKM犯的错"><span class="nav-number">1.3.3.</span> <span class="nav-text">FPKM和RPKM犯的错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TPM是一个合适的选择"><span class="nav-number">1.3.4.</span> <span class="nav-text">TPM是一个合适的选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计学原理"><span class="nav-number">2.</span> <span class="nav-text">统计学原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转录组数据统计推断的难题"><span class="nav-number">2.1.</span> <span class="nav-text">转录组数据统计推断的难题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泊松分布-or-负二项分布？"><span class="nav-number">2.2.</span> <span class="nav-text">泊松分布 or 负二项分布？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么泊松分布不行？"><span class="nav-number">2.2.1.</span> <span class="nav-text">为什么泊松分布不行？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么负二项分布行？"><span class="nav-number">2.2.2.</span> <span class="nav-text">为什么负二项分布行？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方差估计"><span class="nav-number">2.3.</span> <span class="nav-text">方差估计</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

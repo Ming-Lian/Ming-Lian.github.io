@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Lianm&#39; Blog">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lianm&#39; Blog">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/page/2/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Andrew-Ng-Coursera-Homework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/07/Andrew-Ng-Coursera-Homework/" class="post-title-link" itemprop="url">Andrew NG Coursera 课程编程作业</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 23:56:50" itemprop="dateCreated datePublished" datetime="2019-02-07T23:56:50+00:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用课程推荐的<code>Octave</code>进行编程实现，可以将<code>Octave</code>理解为开源版本的<code>MATLAB</code></p>
+<h2 id="Ex1-Linear-Regression"><a href="#Ex1-Linear-Regression" class="headerlink" title="Ex1: Linear Regression"></a>Ex1: Linear Regression</h2><ol>
+<li><p>读入数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = load(&apos;ex1data1.txt&apos;); % 导入的数据文件为用逗号隔开的两列，第一列为x，第二列为y</span><br><span class="line">X = data(:, 1);</span><br><span class="line">y = data(:, 2);</span><br><span class="line">% 可以尝试绘图</span><br><span class="line">% figure;plot(x,y);</span><br><span class="line">m = length(y);</span><br></pre></td></tr></table></figure>
+<p> 数据分布图如下：</p>
+<p> <img src="/images/AndrewNG-homework-ex1-1.png" alt></p>
+</li>
+<li><p>梯度下降前的数据预处理与设置</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X = [ones(m,1),data(:,1)]; % 添加x0列，都设为1</span><br><span class="line">theta = zeros(2,1); % 初始化θ值</span><br><span class="line"></span><br><span class="line">% 梯度下降的一些设置信息</span><br><span class="line">iterations = 1500; % 迭代次数</span><br><span class="line">alpha = 0.01; % 学习率α</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算损失函数</p>
+<p> 线性回归的损失函数为：</p>
+<p> <img src="/images/AndrewNG-homework-ex1-2.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">% 定义一个函数computeCost来计算损失函数</span><br><span class="line">function J = computeCost(X, y, theta)</span><br><span class="line">	m = length(y);</span><br><span class="line">	predictions = X*theta; % 计算预测值hθ</span><br><span class="line">	sqerrors = (predictions - y).^2; % 计算平方误，矩阵的点乘运算得到的是一个向量</span><br><span class="line">	J = 1/(2*m)* sum(sqerrors);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行梯度下降</p>
+<p> <img src="/images/AndrewNG-homework-ex1-3.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">% 定义一个函数gradientDescent来执行梯度下降，为了后面观察梯度下降过程中损失函数的变化，记录每一步迭代后的损失函数值</span><br><span class="line">function [theta, J_history] = gradientDescent(X, y, theta, alpha, iterations)</span><br><span class="line">	m = length(y);</span><br><span class="line">	J_history = zeros(num_iters, 1);</span><br><span class="line">	% 以迭代次数为唯一迭代终止条件</span><br><span class="line">	for iter = 1:num_iters</span><br><span class="line">		% 计算梯度</span><br><span class="line">		predictions = X*theta;</span><br><span class="line">		updates = X&apos;*(predictions - y);</span><br><span class="line">		theta = theta - alpha*(1/m)*updates;</span><br><span class="line">		J_history(iter) = computeCost(X, y, theta);</span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>绘制拟合直线</p>
+<p> <img src="/images/AndrewNG-homework-ex1-4.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hold on; % 保留之前的绘图窗口，在这个绘图窗口继续画出拟合直线</span><br><span class="line">plot(X(:,2), X*theta, &apos;-&apos;);</span><br><span class="line">legend(&apos;Training data&apos;, &apos;Linear regression&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Ex2-Logistic回归"><a href="#Ex2-Logistic回归" class="headerlink" title="Ex2: Logistic回归"></a>Ex2: Logistic回归</h2><p>目标：</p>
+<blockquote>
+<p>构建一个logistics回归模型，依据学生两次考试的成绩来预测一个学生能否被大学录取</p>
+</blockquote>
+<p>通过的输入数据文件为<code>ex2data1.txt</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 为用逗号隔开的3列，分别为：exam1Score,exam2Score,lable</span><br><span class="line"></span><br><span class="line">34.62365962451697,78.0246928153624,0</span><br><span class="line">30.28671076822607,43.89499752400101,0</span><br><span class="line">35.84740876993872,72.90219802708364,0</span><br><span class="line">60.18259938620976,86.30855209546826,1</span><br><span class="line">79.0327360507101,75.3443764369103,1</span><br><span class="line">45.08327747668339,56.3163717815305,0</span><br><span class="line">61.10666453684766,96.51142588489624,1</span><br><span class="line">75.02474556738889,46.55401354116538,1</span><br><span class="line">76.09878670226257,87.42056971926803,1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>读入数据，并画出数据分布散点图</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">data = load(&apos;ex2data1.txt&apos;);</span><br><span class="line">x = data(:,:2);</span><br><span class="line">y = data(:,3);</span><br><span class="line"></span><br><span class="line">% 画图</span><br><span class="line">%% 区分出两类样本</span><br><span class="line">pos = find(y==1);</span><br><span class="line">neg = find(y==0);</span><br><span class="line">figure;</span><br><span class="line">%% 画出pos类样本</span><br><span class="line">plot(x(pos,1), x(pos,2),&apos;k+&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">hold on;</span><br><span class="line">%% 画出neg类样本</span><br><span class="line">plot(x(neg,1), x(neg,2),&apos;ko&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">xlab(&apos;Exam 1 score&apos;);</span><br><span class="line">ylab(&apos;Exam 2 score&apos;);</span><br><span class="line">legend(&apos;Admitted&apos;, &apos;Not admitted&apos;);</span><br><span class="line">hold off;</span><br></pre></td></tr></table></figure>
+<p> <img src="/images/AndrewNG-homework-ex2-1.png" alt></p>
+<p> 要得到的目标函数为 sigmoid 函数：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-2.png" alt></p>
+<p> <img src="/images/AndrewNG-homework-ex2-3.png" alt></p>
+</li>
+<li><p>计算Cost和gradient</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[m,n] = size(x);</span><br><span class="line">X = [ones(m),data(:,:2)];</span><br><span class="line">initialTheta = zeros(1,n+1);</span><br><span class="line">% 计算初始的Cost和gradient</span><br><span class="line">[initalCost,initialGradient] = costFunction(X,y,initialTheta);</span><br><span class="line">% 打印出初始时的Cost和gradient</span><br><span class="line">fprintf(&apos;Cost at initial theta(zeros): %f\n&quot;,initialCost);</span><br><span class="line">fprintf(&apos;Gradient at initial theta(zeros): %f\n&quot;,initialGradient);</span><br></pre></td></tr></table></figure>
+<p> 在计算初始的Cost (initalCost) 和 gradient (initialGradient) 时，调用了自定义的函数costFunction</p>
+<p> 损失函数为：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-4.png" alt></p>
+<p> 梯度的计算公式为：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-5.png" alt></p>
+<p> 下面给出costFunction函数的定义：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function [jVal,gradient] = costFunction(x,y,theta)</span><br><span class="line">	predict = sigmoid(x*theta);</span><br><span class="line">	leftCost = -y&apos;*log(predict);</span><br><span class="line">	rightCost = -(1-y)&apos;*log(1-predict);</span><br><span class="line">	jVal = (1/m)*(leftCost+rightCost);</span><br><span class="line">	gradient = (1/m)*((predict-y)&apos;*x);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p> 在上面的costFunction函数中又调用了sigmoid函数，定义为：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function g = sigmoid(x)</span><br><span class="line">	g = 1./(1+exp(-x));</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>优化目标函数</p>
+<p> 使其目标函数的Cost最小化，即</p>
+<p> <img src="/images/AndrewNG-homework-ex2-6.png" alt></p>
+<p> 可以像<strong>练习一</strong>那样使用传统的梯度下降方法进行参数的优化，但Octave内部自带了<code>fminunc</code>函数，可以用于非约束优化问题（unconstrained optimization problem）的求解</p>
+<p> fminunc函数的用法为：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%% 设置fminunc函数的内部选项</span><br><span class="line">options = optmset(&apos;GradObj&apos;, &apos;on&apos;, &apos;MaxIter&apos;, 400);</span><br><span class="line">% &apos;GradObj&apos;, &apos;on&apos; 设置梯度目标参数为打开状态，即需要给这个算法提供一个梯度</span><br><span class="line">% &apos;MaxIter&apos;, 400 设置最大迭代次数</span><br><span class="line"></span><br><span class="line">%% 使用fminunc函数执行非约束优化</span><br><span class="line">[optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options);</span><br></pre></td></tr></table></figure>
+<p> 一般情况下costFunction函数和它的函数名一样，只计算Cost值，不过由于这里要用到fminunc这个非约束优化函数，该函数需要提供Cost和gradient，所以在前面costFunction函数时，增加了一个计算梯度值的功能</p>
+</li>
+<li><p>画出决策分界面 (Decision Boundary)</p>
+<p> 先像前面的第一步那样，画出原始数据分布散点图</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% 画图</span><br><span class="line">%% 区分出两类样本</span><br><span class="line">pos = find(y==1);</span><br><span class="line">neg = find(y==0);</span><br><span class="line">figure;</span><br><span class="line">%% 画出pos类样本</span><br><span class="line">plot(x(pos,1), x(pos,2),&apos;k+&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">%% 画出neg类样本</span><br><span class="line">plot(x(neg,1), x(neg,2),&apos;ko&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">xlab(&apos;Exam 1 score&apos;);</span><br><span class="line">ylab(&apos;Exam 2 score&apos;);</span><br></pre></td></tr></table></figure>
+<p> 然后在散点图的基础上，把分界线画出来</p>
+<p> 分界线满足：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-7.png" alt></p>
+<p> 得到x1和x2直接的关系为：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-8.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hold on;</span><br><span class="line">% 只需要选择两个点即可将直线画出</span><br><span class="line">plot_x = [min(X(:,2))-2, max(X(:,2))+2];</span><br><span class="line">plot_y = (-1./theta(3)).*(theta(2).*plot_x + theta(1));</span><br><span class="line">plot(plot_x, plot_y)</span><br><span class="line">legend(&apos;Admitted&apos;, &apos;Not admitted&apos;, &apos;Decision Boundary&apos;)</span><br><span class="line">hold off;</span><br></pre></td></tr></table></figure>
+<p> <img src="/images/AndrewNG-homework-ex2-9.png" alt></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Advanced-knowledge-of-SAM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/07/Advanced-knowledge-of-SAM/" class="post-title-link" itemprop="url">SAM/BAM相关的进阶知识</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 23:40:09" itemprop="dateCreated datePublished" datetime="2019-02-07T23:40:09+00:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="samtools和picard的排序问题"><a href="#samtools和picard的排序问题" class="headerlink" title="samtools和picard的排序问题"></a>samtools和picard的排序问题</h2><p><code>samtools</code>和<code>picard</code>都有对SAM/BAM文件进行排序的功能，一般都是基于坐标排序（还提供了<code>-n</code>选项来设定用reads名进行排序），先是对chromosome/contig进行排序，再在chromosome/contig内部基于start site从小到大排序，对start site排序很好理解，可是对chromosome/contig排序的时候是基于什么标准呢？</p>
+<p><strong>基于你提供的<code>ref.fa</code>文件中的chromosome/contig的顺序</strong>。当你使用比对工具将fastq文件中的reads比对上参考基因组后会生成SAM文件，SAM文件包含头信息，其中有以<code>@SQ</code>开头的头信息记录，reference中有多少条chromosome/contig就会有多少条这样的记录，而且它们的顺序与<code>ref.fa</code>是一致的。</p>
+<blockquote>
+<p>SAM/BAM文件的头信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt; @HD     VN:1.3  SO:coordinate</span><br><span class="line">&gt; @SQ     SN:chr1 LN:195471971</span><br><span class="line">&gt; @SQ     SN:chr2 LN:182113224</span><br><span class="line">&gt; @SQ     SN:chr3 LN:160039680</span><br><span class="line">&gt; @SQ     SN:chr4 LN:156508116</span><br><span class="line">&gt; @SQ     SN:chr5 LN:151834684</span><br><span class="line">&gt; @SQ     SN:chr6 LN:149736546</span><br><span class="line">&gt; @SQ     SN:chr7 LN:145441459</span><br><span class="line">&gt; @SQ     SN:chr8 LN:129401213</span><br><span class="line">&gt; @SQ     SN:chr9 LN:124595110</span><br><span class="line">&gt; @SQ     SN:chr10        LN:130694993</span><br><span class="line">&gt; @SQ     SN:chr11        LN:122082543</span><br><span class="line">&gt; @SQ     SN:chr12        LN:120129022</span><br><span class="line">&gt; @SQ     SN:chr13        LN:120421639</span><br><span class="line">&gt; @SQ     SN:chr14        LN:124902244</span><br><span class="line">&gt; @SQ     SN:chr15        LN:104043685</span><br><span class="line">&gt; @SQ     SN:chr16        LN:98207768</span><br><span class="line">&gt; @SQ     SN:chr17        LN:94987271</span><br><span class="line">&gt; @SQ     SN:chr18        LN:90702639</span><br><span class="line">&gt; @SQ     SN:chr19        LN:61431566</span><br><span class="line">&gt; @SQ     SN:chrX LN:171031299</span><br><span class="line">&gt; @SQ     SN:chrY LN:91744698</span><br><span class="line">&gt; @SQ     SN:chrM LN:16299</span><br><span class="line">&gt; @RG     ID:ERR144849    LB:ERR144849    SM:A_J  PL:ILLUMINA</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p><code>ref.fa</code>中chromosome/contig的排列顺序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt;chr1</span><br><span class="line">&gt; &gt;chr2</span><br><span class="line">&gt; &gt;chr3</span><br><span class="line">&gt; &gt;chr4</span><br><span class="line">&gt; &gt;chr5</span><br><span class="line">&gt; &gt;chr6</span><br><span class="line">&gt; &gt;chr7</span><br><span class="line">&gt; &gt;chr8</span><br><span class="line">&gt; &gt;chr9</span><br><span class="line">&gt; &gt;chr10</span><br><span class="line">&gt; &gt;chr11</span><br><span class="line">&gt; &gt;chr12</span><br><span class="line">&gt; &gt;chr13</span><br><span class="line">&gt; &gt;chr14</span><br><span class="line">&gt; &gt;chr15</span><br><span class="line">&gt; &gt;chr16</span><br><span class="line">&gt; &gt;chr17</span><br><span class="line">&gt; &gt;chr18</span><br><span class="line">&gt; &gt;chr19</span><br><span class="line">&gt; &gt;chrX</span><br><span class="line">&gt; &gt;chrY</span><br><span class="line">&gt; &gt;chrM</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>它们的顺序一致</p>
+</blockquote>
+<p>当使用samtools或picard对SAM/BAM文件进行排序时，这些工具就会读取头信息，按照头信息指定的顺序来排chromosome/contig。所以进行排序时需要提供包含头信息的SAM/BAM文件。</p>
+<p>那么<strong>普通情况下我们的chromosome/contig排序情况是什么样的?</strong></p>
+<blockquote>
+<p>一般情况下我们获取参考基因组序列文件的来源有三个：</p>
+<ul>
+<li>NCBI</li>
+<li>ENSEMBEL</li>
+<li>UCSC Genome Browser</li>
+</ul>
+<p>这里以UCSC FTP下载源为例：</p>
+<p><img src="/images/Advanced-knowledge-SAM-1-1.png" alt></p>
+<p>这是一个压缩文件，使用<code>tar zxvf chromFa.tar.gz</code>解压后，会得到多个fasta文件，每条chromosome/contig一个fasta文件：chr1.fa, chr2.fa …</p>
+<p>之后我们会将它们用<code>cat *.fa &gt;ref.fa</code>合并成一个包含多条chromosome/contig的物种参考基因组序列文件</p>
+<p>用<code>grep &quot;&gt;&quot; ref.fa</code>可以查看合并后发ref.fa文件中染色体的排列顺序为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt;chr10</span><br><span class="line">&gt; &gt;chr11</span><br><span class="line">&gt; &gt;chr12</span><br><span class="line">&gt; &gt;chr13</span><br><span class="line">&gt; &gt;chr14</span><br><span class="line">&gt; &gt;chr15</span><br><span class="line">&gt; &gt;chr16</span><br><span class="line">&gt; &gt;chr17</span><br><span class="line">&gt; &gt;chr18</span><br><span class="line">&gt; &gt;chr19</span><br><span class="line">&gt; &gt;chr1</span><br><span class="line">&gt; &gt;chr1_GL456210_random</span><br><span class="line">&gt; &gt;chr1_GL456211_random</span><br><span class="line">&gt; &gt;chr1_GL456212_random</span><br><span class="line">&gt; &gt;chr1_GL456213_random</span><br><span class="line">&gt; &gt;chr1_GL456221_random</span><br><span class="line">&gt; &gt;chr2</span><br><span class="line">&gt; &gt;chr3</span><br><span class="line">&gt; &gt;chr4</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这和我们平时想象的染色体的排列顺序是不是有一些出入？难道不应该是从chr1开始到chr22，最后是chrX和chrY这样的顺序吗？</p>
+<p>想象归想象，实际上它是按照字符顺序进行的，chr11就应该排在chr2前面</p>
+</blockquote>
+<p>一般情况下在进行SAM文件的排序时，染色体的排序到底是按照哪种规则进行排序的，不是一个很重要的问题，也不会对后续的分析产生影响，但是在执行GATK流程时，GATK对染色体的排序是有要求的，必须按照从chr1开始到chr22，最后是chrX和chrY这样的顺序，否则会报错</p>
+<p>面对这样变态的要求，我们怎么解决？</p>
+<p>在构造ref.fa文件时，让它按照从chr1开始到chr22，最后是chrX和chrY这样的顺序进行组织就可以了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i in $(seq 1 22) X Y M;</span><br><span class="line">do cat chr$&#123;i&#125;.fa &gt;&gt; hg19.fasta;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="SAM文件中FLAG值的理解"><a href="#SAM文件中FLAG值的理解" class="headerlink" title="SAM文件中FLAG值的理解"></a>SAM文件中FLAG值的理解</h2><p>FLAG列在SAM文件的第二列，这是一个很重要的列，包含了很多mapping过程中的有用信息，但很多初学者在学习SAM文件格式的介绍时，遇到FLAG列的说明，常常会一头雾水</p>
+<p><img src="/images/Advanced-knowledge-SAM-2-1.png" alt></p>
+<p>what?还二进制，这也太反人类的设计了吧！</p>
+<p>不过如果你站在开发者的角度去思考这个问题，就会豁然开朗</p>
+<p>在mapping过程中，我们想记录一条read的mapping的信息包括：</p>
+<ul>
+<li>这条read是read1 (forward-read) 还是read2 (reverse-read)？</li>
+<li>这条read比对上了吗？与它对应的另一头read比对上了吗？</li>
+<li>…</li>
+</ul>
+<p>这些信息总结起来总共包括以下12项：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:left">简写</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">PAIRED</td>
+<td style="text-align:left">paired-end (or multiple-segment) sequencing technology</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">PROPER_PAIR</td>
+<td style="text-align:left">each segment properly aligned according to the aligner</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">UNMAP</td>
+<td style="text-align:left">segment unmapped</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">MUNMAP</td>
+<td style="text-align:left">next segment in the template unmapped</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">REVERSE</td>
+<td style="text-align:left">SEQ is reverse complemented</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left">MREVERSE</td>
+<td style="text-align:left">SEQ of the next segment in the template is reversed</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left">READ1</td>
+<td style="text-align:left">the first segment in the template</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left">READ2</td>
+<td style="text-align:left">the last segment in the template</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left">SECONDARY</td>
+<td style="text-align:left">secondary alignment</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left">QCFAIL</td>
+<td style="text-align:left">not passing quality controls</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:left">DUP</td>
+<td style="text-align:left">PCR or optical duplicate</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:left">SUPPLEMENTARY</td>
+<td style="text-align:left">supplementary alignment</td>
+</tr>
+</tbody>
+</table>
+<p>而每一项又只有两种情况，是或否，那么我可以用一个12位的二进制数来记录所有的信息，每一位表示某一项的情况，这就是原始FLAG信息的由来，但是二进制数适合给计算机看，不适合人看，需要转换成对应的十进制数，也就有了我们在SAM文件中看到的FLAG值</p>
+<p>但是FLAG值所包含信息的解读还是要转换为12位的二进制数</p>
+<p><img src="/images/Advanced-knowledge-SAM-2-2.png" alt></p>
+<h2 id="SAM文件中那些未比对的reads"><a href="#SAM文件中那些未比对的reads" class="headerlink" title="SAM文件中那些未比对的reads"></a>SAM文件中那些未比对的reads</h2><p>SAM格式文件的第3和第7列，可以用来判断某条reads是否比对成功到了基因组的染色体，左右两条reads是否比对到同一条染色体</p>
+<p><img src="/images/Advanced-knowledge-SAM-3-1.png" alt></p>
+<p>有两个方法可以提取未比对成功的测序数据：</p>
+<blockquote>
+<ul>
+<li>SAM文件的第3列是*的(如果是PE数据，需要考虑第3,7列)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ samtools view sample.bam | perl -alne &apos;&#123;print if $F[2] eq &quot;*&quot; or $F[6] eq &quot;*&quot; &#125;&apos; sample.unmapped.sam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li>或者SAM文件的flag标签包含0x4的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 小写的f是提取，大写的F是过滤</span><br><span class="line">&gt; $ samtools view -f4 sample.bam sample.unmapped.sam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>虽然上面两个方法得到的结果是一模一样的，但是这个perl脚本运行速度远远比不上上面的samtools自带的参数</p>
+</blockquote>
+<p>对于PE数据，在未比对成功的测序数据可以分成3类：</p>
+<blockquote>
+<ul>
+<li><strong>仅reads1没有比对成功</strong></li>
+</ul>
+<p>该提取条件包括：</p>
+<blockquote>
+<ul>
+<li>该read是read1，对应于二进制FLAG的第7位，该位取1，其十进制值为64；</li>
+<li>该read未成功比对到参考基因组，对应于二进制FLAG的第3位，该位取1，其十进制值为4；</li>
+<li>另一配对read成功比对到参考基因组，对应于二进制FLAG的第4位，该位取0，其十进制值为8；</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 对于取1的位点采用提取的策略，用-f参数，值设为64+4=68</span><br><span class="line">&gt; # 对于取0的位点采取过滤的策略，用-F参数，值设为8</span><br><span class="line">&gt; $ samtools view -u -f 68 -F 8 alignments.bam &gt;read1_unmap.bam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>仅reads2没有比对成功</strong></li>
+</ul>
+<p>该提取条件包括：</p>
+<blockquote>
+<ul>
+<li>该read是read2，对应于二进制FLAG的第8位，该位取1，其十进制值为128；</li>
+<li>该read未成功比对到参考基因组，对应于二进制FLAG的第3位，该位取1，其十进制值为4；</li>
+<li>另一配对read成功比对到参考基因组，对应于二进制FLAG的第4位，该位取0，其十进制值为8；</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 对于取1的位点采用提取的策略，用-f参数，值设为128+4=132</span><br><span class="line">&gt; # 对于取0的位点采取过滤的策略，用-F参数，值设为8</span><br><span class="line">&gt; $ samtools view -u -f 132 -F 8 alignments.bam &gt;read2_unmap.bam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>两端reads都没有比对成功</strong></li>
+</ul>
+<p>该提取条件包括：</p>
+<blockquote>
+<ul>
+<li>该read未成功比对到参考基因组，对应于二进制FLAG的第3位，该位取1，其十进制值为4；</li>
+<li>另一配对read未成功比对到参考基因组，对应于二进制FLAG的第4位，该位取1，其十进制值为8；</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 对于取1的位点采用提取的策略，用-f参数，值设为4+8=12</span><br><span class="line">&gt; $ samtools view -u -f 12 alignments.bam &gt;pairs_unmap.bam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>看完这一部分，是不是有一个感觉：<strong>FLAG玩得溜，SAM文件可以处理得出神入化</strong></p>
+<h2 id="为什么一条read会有多条比对记录？"><a href="#为什么一条read会有多条比对记录？" class="headerlink" title="为什么一条read会有多条比对记录？"></a>为什么一条read会有多条比对记录？</h2><p>首先，思考一个问题：对于PE数据，一条测序片段（fragment）有read1和read2两条测序片段，它们俩的名字相同，那么对于这一条测序片段，对它进行mapping之后得到的SAM文件中会出现几条记录呢？</p>
+<blockquote>
+<p>先声明以下只对BWA比对得到的SAM文件进行讨论，对其他比对工具输出的SAM文件可能不适用</p>
+<p>首先，基于经验积累告诉我，它会得到<strong>有且只有两条记录</strong>，原因在于，BWA在对每条read执行比对时只会给出一个hit，若这条read是multiple mapping的情况，它会从中选择MAPQ值最高的那个hit作为输出，若存在多个hit的MAPQ值相等且最高，那么BWA会从中随机选择一个作为输出</p>
+</blockquote>
+<p>对于我的这个假设可以用以下的方法进行验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 将SAM文件的第一列提出来，排序去重，同时统计每个QNAME出现的次数</span><br><span class="line">$ samtools view alignment.bam | cut -f1 | sort | uniq -c &gt;record.count</span><br><span class="line"></span><br><span class="line">得到的统计结果如下：</span><br><span class="line">      2 ERR144849.1</span><br><span class="line">      2 ERR144849.10</span><br><span class="line">      2 ERR144849.100</span><br><span class="line">      2 ERR144849.1000</span><br><span class="line">      2 ERR144849.10000</span><br><span class="line">      2 ERR144849.100000</span><br><span class="line">      2 ERR144849.1000000</span><br><span class="line">      2 ERR144849.10000000</span><br><span class="line">      2 ERR144849.10000001</span><br><span class="line">      2 ERR144849.10000002</span><br><span class="line">      2 ERR144849.10000003</span><br><span class="line">      2 ERR144849.10000004</span><br><span class="line">      2 ERR144849.10000005</span><br><span class="line">      ...</span><br></pre></td></tr></table></figure>
+<p>上面的测试结果与我们的假设吻合</p>
+<p>但是在一次处理三代测序数据（三代测序数据是Single-End）中发现了不同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在输出中出现了一些不太和谐的结果：有极少部分的QNAME对应2条以上的记录，这意味着存在一条read会有多条比对记录的情况，why？</p>
+<p>对这个与预期不完全相符的结果，尝试去寻找里面的原因，其间进行了各种各样的推理、假设、验证，最终在李恒的github中找到了答案</p>
+<blockquote>
+<p>2. Why does a read appear multiple times in the output SAM?</p>
+<p>BWA-SW and BWA-MEM perform local alignments. If there is a translocation, a gene fusion or a long deletion, a read bridging the break point may have two hits, occupying two lines in the SAM output. With the default setting of BWA-MEM, one and only one line is primary and is soft clipped; other lines are tagged with 0x800 SAM flag (supplementary alignment) and are hard clipped.</p>
+</blockquote>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://www.jianshu.com/p/364e640d3c9f" target="_blank" rel="noopener">【简书】从零开始完整学习全基因组测序数据分析：第5节 理解并操作BAM文件</a></p>
+<p>(2) <a href="https://mp.weixin.qq.com/s?__biz=MzAxMDkxODM1Ng==&amp;mid=2247483782&amp;idx=1&amp;sn=a2c7bac48e03195b646ae34f3b82ac29&amp;chksm=9b48413dac3fc82b61f9868c4385609af3eba9bf68dc026ab78a3f14980ce750cb35623195ce&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">【生信技能树】【直播】我的基因组（十五）:提取未比对的测序数据</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/30/Setup-private-BlogSite/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/30/Setup-private-BlogSite/" class="post-title-link" itemprop="url">Hexo + GitHub Homepage 搭建个人博客</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-30 22:52:39" itemprop="dateCreated datePublished" datetime="2019-01-30T22:52:39+00:00">2019-01-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前后端技术/" itemprop="url" rel="index"><span itemprop="name">前后端技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
+<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
+<p><img src="/images/Setup-private-BlogSite-homepage.png" alt></p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>看GitHub某一个页面的URL：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md</span><br></pre></td></tr></table></figure>
+<p>从它的URL里就可以看出服务器端的文件夹组织形式，<code>https://github.com</code>对应于其web服务器的家目录，以<code>~</code>表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~</span><br><span class="line">|---- User1 # 用户名</span><br><span class="line">	|---- repo1 # 仓库名</span><br><span class="line">		|---- blob # 固定文件夹，意义不明</span><br><span class="line">			|---- branch1 # 仓库下的分支名，默认分支为master</span><br><span class="line">			|---- branch2</span><br><span class="line">			...</span><br><span class="line">	|---- repo2</span><br><span class="line">	|---- repo3</span><br><span class="line">	...</span><br><span class="line">|---- User2</span><br><span class="line">|---- User3</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>一般情况下，GitHub对每个仓库地下的文件是有一些限制的，对于纯文本形式的脚本文件可以以纯文本形式进行查看，若提交的是以<code>*.md</code>形式命名的文本，会进行Markdown语法解析，若是图片、pdf这样的文件也能进行查看，但是如果提交的是类似于可执行脚本或二进制程序，那么它是禁止它们执行的</p>
+<p>但是若你建立的仓库是作为GitHub Homepage，GitHub服务器会给你破个例，这个仓库对应的文件夹下的文件，若是php、js这样的脚本文件，允许你执行（当然还是会有一些限制的）——这就好办了，那我就可以像在本地搭建网站那样，在GitHub服务器上搭建一个属于自己的网页，只需要在我的GitHub账号下创建一个GitHub Homepage类型的仓库，然后将我的这个网站需要的文件统统上传到这个仓库下就可以了</p>
+<p>所以，如果想要利用GitHub Homepage搭建属于自己的博客，问题就变成了：</p>
+<ul>
+<li>如何在本地把我的博客网站搭好？</li>
+<li>如何把我在本地搭好的网站提交到GitHub上？</li>
+</ul>
+<h2 id="搭建本地博客网站"><a href="#搭建本地博客网站" class="headerlink" title="搭建本地博客网站"></a>搭建本地博客网站</h2><h3 id="搭建Hexo博客网站"><a href="#搭建Hexo博客网站" class="headerlink" title="搭建Hexo博客网站"></a>搭建Hexo博客网站</h3><p>大家常用与博客网站搭建的开源框架就是WordPress了，但是WordPress比较大，这里我选择了用Hexo框架，Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<ul>
+<li><p><strong>安装Hexo</strong></p>
+<p>  Hexo 基于 Node.js，因此需要先安装 Node.js</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ https://raw.github.com/creationix/nvm/v0.33.11/install.sh</span><br><span class="line">$ sh install.sh</span><br></pre></td></tr></table></figure>
+<p>  安装完成后，重启终端并执行下列命令即可安装 Node.js</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nvm install stable</span><br></pre></td></tr></table></figure>
+<p>  所有必备的应用程序安装完成后，即可使用 npm 安装 Hexo</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Hexo使用</strong></p>
+<p>  首先初始化博客</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init myBlog</span><br></pre></td></tr></table></figure>
+<p>  会在工作目录下生成myBlog文件夹，该文件夹下的内容如下图所示：</p>
+<p>  <img src="/images/Setup-private-BlogSite-1.png" alt></p>
+<p>  接下来，进入文件夹 myBlog，输入</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s # hexo server 的简写形式，两种写法都可以</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>这样你已经搭好了本地的博客网站，且启动了本地预览服务，在浏览器地址栏中输入`localhost:4000`即可查看
+
+![](/images/Setup-private-BlogSite-2.png)
+
+到这里，基于Hexo的博客网站就搭好了，剩下的就是如何编辑博客，以及如何修改Hexo主题
+</code></pre><h3 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h3><p>博客文章保存在<code>myBlog/source/_post</code>文件夹下，注意文章类型得是<strong>md格式</strong></p>
+<p>可以执行下列命令来创建一篇新文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new [layout] &lt;title&gt;</span><br><span class="line"></span><br><span class="line">例如：</span><br><span class="line">$ hexo new testBlog</span><br><span class="line">INFO  Created: ~/myBlog/source/_posts/testBlog.md</span><br></pre></td></tr></table></figure>
+<p>生成的md文件会自动生成以下的头信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: testBlog</span><br><span class="line">date: 2019-01-30 20:31:50</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>默认文章的标题与文件名一致，若想改动，比如在标题里加上一些汉字，则可以在头信息的<code>title</code>栏进行修改</p>
+<p>编辑文章就可以直接使用vim编辑器对这个md文件进行修改</p>
+<h3 id="修改Hexo主"><a href="#修改Hexo主" class="headerlink" title="修改Hexo主"></a>修改Hexo主</h3><h2 id="部署本地网站至GitHub"><a href="#部署本地网站至GitHub" class="headerlink" title="部署本地网站至GitHub"></a>部署本地网站至GitHub</h2><p>首先，你得有一个GitHub账号，登录后，新建一个命名为<code>&lt;username&gt;.github.io</code>的仓库</p>
+<p>接着是要在本地连接GitHub远程仓库</p>
+<blockquote>
+<p>由于你的本地Git仓库和GitHub仓库之间的传输是通过SSH加密的，所以我们需要配置验证信息，即提供本地仓库与GitHub仓库之间能够相互识别校验的SSH key</p>
+<p>先检查一下本地是否已经存在SSH key。检查方法为在<code>~/.ssh</code>文件夹下是否存在<code>id_dsa.pub</code>文件</p>
+<p>若没有SSH key，需要新建一个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>新建的SSH key需要用户提供邮箱来进行标记（是否需要与GitHub中提供的邮箱一致，目前还不清楚，所以谨慎起见，还是用GitHub中提供的邮箱）</p>
+<p>执行该命令后，会询问你SSH key信息文件的保存位置，直接回车会保存在默认位置<code>~/.ssh</code>。然后会询问你passphrase</p>
+<p>这样就在<code>~/.ssh</code>文件夹下生成了以下两个文件：</p>
+<ul>
+<li>id_rsa</li>
+<li>id_rsa.pub</li>
+</ul>
+<p>打开并复制<code>id_rsa.pub</code>中的信息至剪切板中，然后用电脑浏览器进入GitHub网站，进入Setting菜单，左边选择 SSH and GPG keys，然后点击 New SSH key 按钮,title 设置标题，可以随便填，粘贴在你电脑上生成的 key。</p>
+<p>为了验证是否成功，输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>随后你会看到以下的警告信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host &apos;github.com (IP ADDRESS)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>输入yes然后回车，若输出以下信息则说明连接成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi username! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>从GitHub的 <code>Account</code> =&gt;<code>Settings</code> =&gt;<code>SSH and GPG keys</code> 也可以看到，原先灰色的钥匙图标被点亮激活了，变成了绿色的</p>
+<p><img src="/images/Setup-private-BlogSite-3.png" alt></p>
+</blockquote>
+<p>最后就是GitHub服务器端的部署了</p>
+<blockquote>
+<p>Hexo 提供了快速方便的一键部署功能，只需一条命令就能将网站部署到服务器上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy # 也可以简写成 &quot;hexo d&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>在开始之前，必须先在 <code>myBlog/_config.yml</code> 中修改参数</p>
+<p><img src="/images/Setup-private-BlogSite-4.png" alt></p>
+<p>这一步的目的是将 Hexo 与 GitHub 进行关联</p>
+<p>在执行<code>hexo d</code>进行远程部署时，可能出现以下形式的报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; ERROR Deployer not found: git</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>报错信息说明未安装针对git的远程部署工具，那就安装吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ npm install hexo-deployer-git --save</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>在执行git远程部署工具<code>hexo-deployer-git</code>的安装时，可能又会遇到下面的报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; npm ERR! Error: UNABLE_TO_VERIFY_LEAF_SIGNATURE</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这个报错信息的分析与解决请看 <a href="#deal-with-nodejs-error">node.js请求HTTPS报错</a></p>
+</blockquote>
+<h2 id="番外"><a href="#番外" class="headerlink" title="番外"></a>番外</h2><h3 id="本地图片加载"><a href="#本地图片加载" class="headerlink" title="本地图片加载"></a>本地图片加载</h3><p>虽然在官方语法中，Markdown插入图片的格式是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg)</span><br></pre></td></tr></table></figure>
+<p>然而，如果你用了Hexo框架，那你得小心了。</p>
+<p>首先，你不可能在网页里用绝对路径，这样怎么部署到服务器上呢？所以必定是相对路径。Markdown本来的语法中，只要img和md文件的相对路径是对的就行，然而Hexo不知道对路径做了什么处理，你需要在source文件夹中新建一个images文件夹，然后把图片放在images文件夹里。路径也必须是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![Alt text](../../images/img.jpg)</span><br></pre></td></tr></table></figure>
+<h3 id="node-js请求HTTPS报错"><a href="#node-js请求HTTPS报错" class="headerlink" title="node.js请求HTTPS报错"></a>node.js请求HTTPS报错</h3><p>在用Nodejs发送https请求时候，出现<code>Error: UNABLE_TO_VERIFY_LEAF_SIGNATURE</code>的错误</p>
+<p>错误的原因是：对方数字证书设置不正确</p>
+<p>解决方案，设置不进行证书的验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm config set strict-ssl false</span><br></pre></td></tr></table></figure>
+<p>这个设置只是为了临时解决这个证书不正确而我们又不得不用的网站的问题，为了安全起见，执行完上面的操作之后，最好再开启证书验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm config set strict-ssl true</span><br></pre></td></tr></table></figure>
+<h3 id="修改默认的style-css"><a href="#修改默认的style-css" class="headerlink" title="修改默认的style.css"></a>修改默认的style.css</h3><p>当我搭好Hexo框架，把一篇md笔记上传到对应目录中，启动本地Hexo预览服务，最好兴冲冲地在浏览器中打开<code>https://localhost:4000</code>预览效果时，发现了一点异常：</p>
+<p>我的md文件并没有渲染出我预期的效果，特别是区块注释部分 (blockquote)</p>
+<p>预期效果是这样的</p>
+<p><img src="/images/Setup-private-BlogSite-5.png" alt></p>
+<p>实际效果是这样的</p>
+<p><img src="../../pictures/Setup-private-BlogSite-6.png" alt></p>
+<p>差别体现在：</p>
+<ul>
+<li><p>区块注释左侧标志性的竖线没有了；</p>
+<p>  左侧竖线的实现需要的css语句为：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">blockquote &#123;</span><br><span class="line">    border-left:.5em solid #eee;</span><br><span class="line">    padding: 0 0 0 2em;</span><br><span class="line">    margin-left:0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  主要是要有<code>border-left:.5em solid #eee;</code>语句</p>
+</li>
+<li><p>区块中的文本莫名其妙地字体放大且居中了；</p>
+<p>  这个的原因是因为style.css文件中有这样一段</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.article-entry blockquote &#123;</span><br><span class="line">  font-family: Georgia, &quot;Times New Roman&quot;, serif;</span><br><span class="line">  font-size: 1.4em;</span><br><span class="line">  margin: 1.6em 20px;</span><br><span class="line">  text-align: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  主要是要将<code>text-align: center;</code>改为<code>text-align: left;</code></p>
+<p>  将<code>font-size: 1.4em;</code>这句话删除，就能关闭字体放大</p>
+</li>
+</ul>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://mp.weixin.qq.com/s/uxt3NX760gdNN-xld7fmZA" target="_blank" rel="noopener">【五分钟学算法】【新手向】从零开始搭建一个酷炫免费的个人博客</a></p>
+<p>(2) <a href="https://www.cnblogs.com/ccf-fly/p/4873379.html" target="_blank" rel="noopener">Hexo中如何用Markdown插入本地图片</a></p>
+<p>(3) <a href="https://stackoverflow.com/questions/20747817/error-unable-to-verify-leaf-signature-phonegap-installation" target="_blank" rel="noopener">Error: UNABLE_TO_VERIFY_LEAF_SIGNATURE Phonegap Installation</a></p>
+<p>(4) <a href="https://www.jb51.net/article/100415.htm" target="_blank" rel="noopener">node.js请求HTTPS报错：UNABLE_TO_VERIFY_LEAF_SIGNATURE\的解决方法</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

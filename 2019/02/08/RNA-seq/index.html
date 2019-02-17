@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1. 测序数据下载参见： https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md#get-data 2. 比对与定量2.1. Salmon流程不需要比对，直接对转录水平进行定量 2.1.1. 创建索引1$ salmon index -t Arabidopsis_thaliana.TAIR10.28.cdna.all.f">
+<meta name="keywords" content="NGS,RNAseq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多套RNA-seq分析流程">
+<meta property="og:url" content="http://yoursite.com/2019/02/08/RNA-seq/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="1. 测序数据下载参见： https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md#get-data 2. 比对与定量2.1. Salmon流程不需要比对，直接对转录水平进行定量 2.1.1. 创建索引1$ salmon index -t Arabidopsis_thaliana.TAIR10.28.cdna.all.f">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/hisat2-stringtie-ballgown.png">
+<meta property="og:image" content="http://yoursite.com/images/RNA-seq-RSEM.png">
+<meta property="og:updated_time" content="2019-02-17T06:12:08.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多套RNA-seq分析流程">
+<meta name="twitter:description" content="1. 测序数据下载参见： https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md#get-data 2. 比对与定量2.1. Salmon流程不需要比对，直接对转录水平进行定量 2.1.1. 创建索引1$ salmon index -t Arabidopsis_thaliana.TAIR10.28.cdna.all.f">
+<meta name="twitter:image" content="http://yoursite.com/images/hisat2-stringtie-ballgown.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/08/RNA-seq/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>多套RNA-seq分析流程 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/RNA-seq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">多套RNA-seq分析流程
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-08 23:29:11" itemprop="dateCreated datePublished" datetime="2019-02-08T23:29:11+00:00">2019-02-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/hisat2-stringtie-ballgown.png" alt></p>
+<h2 id="1-测序数据下载"><a href="#1-测序数据下载" class="headerlink" title="1. 测序数据下载"></a>1. 测序数据下载</h2><p>参见： <a href="https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md#get-data" target="_blank" rel="noopener">https://github.com/Ming-Lian/Memo/blob/master/ChIP-seq-pipeline.md#get-data</a></p>
+<h2 id="2-比对与定量"><a href="#2-比对与定量" class="headerlink" title="2. 比对与定量"></a>2. 比对与定量</h2><h3 id="2-1-Salmon流程"><a href="#2-1-Salmon流程" class="headerlink" title="2.1. Salmon流程"></a>2.1. Salmon流程</h3><p>不需要比对，直接对转录水平进行定量</p>
+<h4 id="2-1-1-创建索引"><a href="#2-1-1-创建索引" class="headerlink" title="2.1.1. 创建索引"></a>2.1.1. 创建索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ salmon index -t Arabidopsis_thaliana.TAIR10.28.cdna.all.fa.gz -i athal_index_salmon</span><br></pre></td></tr></table></figure>
+<h4 id="2-1-2-定量"><a href="#2-1-2-定量" class="headerlink" title="2.1.2. 定量"></a>2.1.2. 定量</h4><p>salmon quant 有两种运行模式：</p>
+<blockquote>
+<ul>
+<li><strong>Salmon’s quasi-mapping-based mode</strong>： using raw reads</li>
+</ul>
+<p>输入以下命令查看该模式下的help文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; salmon quant --help-reads</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>Salmon’s alignment-based mode</strong>： makes use of already-aligned reads (in BAM/SAM format)</li>
+</ul>
+<p>当使用参数<code>-a</code>时，启用该模式，否则默认使用quasi-mapping-based mode</p>
+<p>输入以下命令查看该模式下的help文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; salmon quant --help-alignment</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line">index=~/rna_seq_practice_2/data/ref/athal_index_salmon ## 指定索引文件夹</span><br><span class="line">quant=~/rna_seq_practice_2/work/quant_salmon # 指定定量文件输出文件夹</span><br><span class="line">for fn in ERR1698&#123;194..209&#125;;</span><br><span class="line">do</span><br><span class="line">	sample=`basename $&#123;fn&#125;` # basename命令用于去掉路径信息，返回纯粹的文件名，如果指定的文件的扩展名，则将扩展名也一并去掉。</span><br><span class="line">	echo &quot;Processin sample $&#123;sampe&#125;&quot;</span><br><span class="line">	salmon quant -i $index -l A \</span><br><span class="line">		-1 $&#123;sample&#125;_1.fastq.gz \</span><br><span class="line">		-2 $&#123;sample&#125;_2.fastq.gz \</span><br><span class="line">		-p 5 -o $quant/$&#123;sample&#125;_quant</span><br><span class="line">done</span><br><span class="line"># quant_salmon.sh</span><br></pre></td></tr></table></figure>
+<p>salmon quant 参数：</p>
+<blockquote>
+<ul>
+<li>-i Salmon index</li>
+<li>-l Format string describing the library type. <code>-l A</code> tells salmon that it should automatically determine the library type of the sequencing reads (e.g. stranded vs. unstranded etc.)</li>
+<li>-1 File containing the #1 mates</li>
+<li>-2 File containing the #2 mates</li>
+<li>-p The number of threads to use</li>
+<li>-o Output quantification file.</li>
+</ul>
+</blockquote>
+<h3 id="2-2-subread流程"><a href="#2-2-subread流程" class="headerlink" title="2.2. subread流程"></a>2.2. subread流程</h3><h4 id="2-2-1-创建索引"><a href="#2-2-1-创建索引" class="headerlink" title="2.2.1. 创建索引"></a>2.2.1. 创建索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gunzip Arabidopsis_thaliana.TAIR10.28.dna.genome.fa.gz</span><br><span class="line">$ subread-buildindex -o athal_index_subread   Arabidopsis_thaliana.TAIR10.28.dna.genome.fa</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-比对"><a href="#2-2-2-比对" class="headerlink" title="2.2.2. 比对"></a>2.2.2. 比对</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line">index=~/rna_seq_practice_2/data/ref/athal_index_subread</span><br><span class="line">map=~/rna_seq_practice_2/work/map</span><br><span class="line">for fn in ERR1698&#123;194..209&#125;;</span><br><span class="line">do</span><br><span class="line">	sample=`basename $&#123;fn&#125;`</span><br><span class="line">	echo &quot;Processin sample $&#123;sampe&#125;&quot; </span><br><span class="line">	subjunc -i $index \</span><br><span class="line">		-r $&#123;sample&#125;_1.fastq.gz \</span><br><span class="line">		-R $&#123;sample&#125;_2.fastq.gz \</span><br><span class="line">		-T 5 -o $map/$&#123;sample&#125;_subjunc.bam</span><br><span class="line"># 比对的sam自动转为bam，但是并不按照参考基因组坐标排序</span><br><span class="line">done</span><br><span class="line"># map_subjunc.sh</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3-定量"><a href="#2-2-3-定量" class="headerlink" title="2.2.3. 定量"></a>2.2.3. 定量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">featureCounts=~/anaconda2/bin</span><br><span class="line"># gff3=~/rna_seq_practice_2/data/ref/Arabidopsis_thaliana.TAIR10.28.gff3.gz</span><br><span class="line">gtf=~/rna_seq_practice_2/data/ref/Arabidopsis_thaliana.TAIR10.28.gtf</span><br><span class="line">count=~/rna_seq_practice_2/work/quant_subjunc</span><br><span class="line">nohup $featureCounts/featureCounts  -T 5 -p -t exon -g gene_name -a $gtf -o  $count/counts.txt   *.bam &amp;</span><br><span class="line">nohup $featureCounts/featureCounts  -T 5 -p -t exon -g gene_id -a $gtf -o  $count/counts_id.txt   *.bam &amp;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-hisat2-stringtie流程"><a href="#2-3-hisat2-stringtie流程" class="headerlink" title="2.3. hisat2-stringtie流程"></a>2.3. hisat2-stringtie流程</h3><h4 id="2-3-1-hisat2创建索引"><a href="#2-3-1-hisat2创建索引" class="headerlink" title="2.3.1. hisat2创建索引"></a>2.3.1. hisat2创建索引</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># build reference index</span><br><span class="line">##  using the python scripts included in the HISAT2 package, extract splice-site and exon information from the gene</span><br><span class="line">annotation fle</span><br><span class="line">$ extract_splice_sites.py chrX_data/genes/chrX.gtf &gt;chrX.ss</span><br><span class="line">$ extract_exons.py chrX_data/genes/chrX.gtf &gt;chrX.exon</span><br><span class="line">##  build a HISAT2 index</span><br><span class="line">$ hisat2-build --ss chrX.ss --exon chrX.exon chrX_data/genome/chrX.fa chrX_tran</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-2-hisat2比对"><a href="#2-3-2-hisat2比对" class="headerlink" title="2.3.2. hisat2比对"></a>2.3.2. hisat2比对</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hisat2 -p 10 --dta -x chrX_tran -1 reads1_1.fastq -2 reads1_2.fastq | samtools sort -@ 8 -O bam -o reads1.sort.bam 1&gt;map.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p><code>Usage: hisat2 [options]* -x &lt;ht2-idx&gt; {-1 &lt;m1&gt; -2 &lt;m2&gt; | -U &lt;r&gt;} [-S &lt;sam&gt;]</code></p>
+<blockquote>
+<ul>
+<li>-p Number of threads to use</li>
+<li>–dta reports alignments tailored for transcript assemblers</li>
+<li>-x Hisat2 index</li>
+<li>-1 The 1st input fastq file of paired-end reads</li>
+<li>-2 The 2nd input fastq file of paired-end reads</li>
+<li>-S File for SAM output (default: stdout)</li>
+</ul>
+</blockquote>
+<h4 id="2-3-3-stringtie转录本拼接"><a href="#2-3-3-stringtie转录本拼接" class="headerlink" title="2.3.3. stringtie转录本拼接"></a>2.3.3. stringtie转录本拼接</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ stringtie -p 16 -G Ref/hg19/grch37_tran/Homo_sapiens.GRCh37.75.gtf -o Asm/read1.gtf -l prefix Map/read1.bam 1&gt;Asm/read1_strg_assm.log 2&gt;&amp;1</span><br><span class="line"># 样本间转录本合并</span><br><span class="line">$ stringtie --merge -p 16 -G Ref/hg19/grch37_tran/Homo_sapiens.GRCh37.75.gtf -o Asm/merge.gtf Asm/mergelist.txt 1&gt;Asm/strg_merge.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p><code>Transcript merge usage mode: stringtie --merge [Options] { gtf_list | strg1.gtf ...}</code></p>
+<blockquote>
+<ul>
+<li>-p number of threads (CPUs) to use</li>
+<li>-G reference annotation to include in the merging (GTF/GFF3)</li>
+<li>-o output path/file name for the assembled transcripts GTF</li>
+<li>-l name prefix for output transcripts (default: STRG)</li>
+</ul>
+</blockquote>
+<h4 id="2-3-4-stringtie定量"><a href="#2-3-4-stringtie定量" class="headerlink" title="2.3.4. stringtie定量"></a>2.3.4. stringtie定量</h4><ol>
+<li><p>以ballgown格式输出</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ stringtie -e -B -p 16 -G Asm/merge.gtf -o quant/read1/read1.gtf \</span><br><span class="line">	Map/read1.bam 1&gt;quant/read1/read1_strg_quant.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>-e only estimate the abundance of given reference transcripts (requires -G)</li>
+<li>-B enable output of Ballgown table files which will be created in the same directory as the output GTF (requires -G, -o recommended)</li>
+</ul>
+</blockquote>
+</li>
+<li><p>以read count进行定量，作为DESeq2或edgeR的输入</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ stringtie -e -p 16 -G Asm/merge.gtf -o quant/read1/read1.gtf \</span><br><span class="line">	Map/read1.bam 1&gt;quant/read1/read1_strg_quant.log 2&gt;&amp;1</span><br><span class="line">$ python prepDE.py -i sample_lst.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>注意：
+- stringtie的用法与上面相同，除了少了一个参数`-B`
+- `prepDE.py`脚本需要到stringtie官网下载：http://ccb.jhu.edu/software/stringtie/dl/prepDE.py ，注意该脚本是用**python2**编写的
+- `prepDE.py` 会以csv格式，分别输出基因和转录本的count matrices
+
+prepDE.py参数
+
+&gt; - -i the parent directory of the sample sub-directories or a textfile listing the paths to GTF files [default: ballgown]
+&gt; - -g where to output the gene count matrix [default: gene_count_matrix.csv]
+&gt; - -t where to output the transcript count matrix [default: transcript_count_matrix.csv]
+
+samplelist textfile 格式如下：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ERR188021 &lt;PATH_TO_ERR188021.gtf&gt;</span><br><span class="line">ERR188023 &lt;PATH_TO_ERR188023.gtf&gt;</span><br><span class="line">ERR188024 &lt;PATH_TO_ERR188024.gtf&gt;</span><br><span class="line">ERR188025 &lt;PATH_TO_ERR188025.gtf&gt;</span><br><span class="line">ERR188027 &lt;PATH_TO_ERR188027.gtf&gt;</span><br><span class="line">ERR188028 &lt;PATH_TO_ERR188028.gtf&gt;</span><br><span class="line">ERR188030 &lt;PATH_TO_ERR188030.gtf&gt;</span><br><span class="line">ERR188033 &lt;PATH_TO_ERR188033.gtf&gt;</span><br><span class="line">ERR188034 &lt;PATH_TO_ERR188034.gtf&gt;</span><br><span class="line">ERR188037 &lt;PATH_TO_ERR188037.gtf&gt;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="2-4-RSEM流程"><a href="#2-4-RSEM流程" class="headerlink" title="2.4. RSEM流程"></a>2.4. RSEM流程</h3><p>RSEM属于Alignment-based transcript quantification的转录本定量工具的一种，也就是先比对后定量</p>
+<p>RSEM最早被广泛应用于无参转录组的定量分析，因为无参转录组需要对reads进行拼接，然后将reads比对至拼接的转录本上，再通过定量获得其表达丰度</p>
+<p>RSEM是在2010年发表的，最新更新是在2016年，下载地址则 <code>http://deweylab.github.io/RSEM/</code>，下载后编译下即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install # 默认安装在/usr/local/bin目录下</span><br><span class="line"># 自定义安装路径</span><br><span class="line"># 若要修改安装路径需要设置DESRDIR和prefix参数，默认情况下DESRDIR=&apos;&apos;，prefix=/usr/local，最终的安装目录为 $DESTDIR/$prefix/bin</span><br><span class="line">make install DESRDIR=/Path/To/Destdir prefix=</span><br></pre></td></tr></table></figure>
+<p>RSEM整体上来说是属于定量软件，但其支持调用其他比对软件，如Bowtie，Bowtie2和STAR，来将reads比对至转录本上，所以必须至少预先安装上述3款比对软件中的一种，且要将它们的安装路径加入到环境变量<code>PATH</code>中</p>
+<h4 id="2-4-1-创建索引"><a href="#2-4-1-创建索引" class="headerlink" title="2.4.1. 创建索引"></a>2.4.1. 创建索引</h4><p>这步可以理解为是对转录本建索引，RSEM支持两种方式：</p>
+<blockquote>
+<ol>
+<li><p><strong>提供参考基因组fa序列和GTF注释文件</strong></p>
+<p> RSEM则会通过GTF注释文件从参考基因组序列中提取出各个转录本的序列，然后利用Bowtie2 or STAR等软件来建索引</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; 	$ ~/biosoft/rsem/RSEM-1.3.0/rsem-prepare-reference \</span><br><span class="line">&gt; 		-gtf ~/annotation/hg38/gencode.v27.annotation.gtf \</span><br><span class="line">&gt; 		--bowtie2 \</span><br><span class="line">&gt; 		~/reference/genome/hg38/GRCh38.p10.genome.fa ~/reference/index/RSEM/hg38/hg38</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li><p><strong>直接提供转录本序列，然后再建索引</strong></p>
+<p> 无参转录组一般是这样的</p>
+<p> 参数与上面的情况相似，只是不需要设置<code>-gtf</code>参数，若用户不指定<code>-gtf</code>参数，则RSEM会将后面提供的参考序列作为转录本</p>
+<p> 如果还想有基于基因水平的定量结果，则需再加–transcript-to-gene-map参数，用于导入转录本和基因的对应关系的文件（一列基因ID，一列对应的转录本ID）</p>
+</li>
+</ol>
+</blockquote>
+<p>在~/reference/index/RSEM/hg38/目录下包含有从参考基因组提取出来的转录本的序列文件以及bowtie2的索引文件（以.bt2结尾）等</p>
+<h4 id="2-4-2-转录本定量"><a href="#2-4-2-转录本定量" class="headerlink" title="2.4.2. 转录本定量"></a>2.4.2. 转录本定量</h4><p>用RSEM的<code>rsem-calculate-expression</code>命令来对reads进行bowtie2比对以及表达水平的定量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ~/biosoft/rsem/RSEM-1.3.0/rsem-calculate-expression \</span><br><span class="line">	-p 6 \</span><br><span class="line">	--bowtie2 \</span><br><span class="line">	--append-names \</span><br><span class="line">	--output-genome-bam \</span><br><span class="line">	--paired-end sample_R1.fastq sample_R2.fastq \</span><br><span class="line">	~/reference/index/RSEM/hg38/ \</span><br><span class="line">	RSEM/sample</span><br></pre></td></tr></table></figure>
+<p>该命令有以下三种命令行形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 1. Single-end，比对与定量</span><br><span class="line">rsem-calculate-expression [options] upstream_read_file(s) reference_name sample_name</span><br><span class="line"># 2. Paired-end，比对与定量</span><br><span class="line">rsem-calculate-expression [options] --paired-end upstream_read_file(s) downstream_read_file(s) reference_name sample_name</span><br><span class="line"># 3. 用户提供SAM/BAM/CRAM格式的比对文件，只进行定量</span><br><span class="line">rsem-calculate-expression [options] --alignments [--paired-end] input reference_name sample_name</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<blockquote>
+<ul>
+<li><code>–paired-end</code> 表明是双端测序数据</li>
+<li><code>–bowtie2</code> 指定bowtie2来用于reads比对</li>
+<li><code>–append-names</code> 用于在结果中附加上gene name和transcript name</li>
+<li><code>–output-genome-bam</code> 结果中输出基于基因水平的bam文件（默认只有转录水平的bam文件）</li>
+<li><code>–estimate-rspd</code> 文档中的例子还加了这个参数，用于estimate the read start position distribution，看是否有positional biases</li>
+</ul>
+</blockquote>
+<p>RSEM通过调用bowtie2来完成mapping，其调用bowtie2时使用的默认参数为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ bowtie2 \</span><br><span class="line">	-q \</span><br><span class="line">	--phred33 \</span><br><span class="line">	--sensitive \</span><br><span class="line">	--dpad 0 \</span><br><span class="line">	--gbar 99999999 \	# 不支持有gap的比对</span><br><span class="line">	--mp 1,1 \</span><br><span class="line">	--np 1 \</span><br><span class="line">	--score-min L,0,-0.1 \</span><br><span class="line">	-I 1 -X 1000 --no-mixed \</span><br><span class="line">	--no-discordant \	# 不支持paired reads discordant的比对</span><br><span class="line">	-p 6 \</span><br><span class="line">	-k 200 \	# 输出最佳的200个比对结果</span><br><span class="line">	-x /home/anlan/reference/index/RSEM/hg38/ \</span><br><span class="line">	-1 SRR6269049.clean_1.fastq \</span><br><span class="line">	-2 SRR6269049.clean_2.fastq | samtools view -S -b -o RSEM/SRR6269049.temp/SRR6269049.bam</span><br></pre></td></tr></table></figure>
+<p>也可以自己用bowtie2进行mapping将mapping得到的文件作为RSEM定量的输入，但是必须保证：</p>
+<blockquote>
+<ul>
+<li>不支持有gap的比对</li>
+<li>不支持paired reads discordant的比对</li>
+<li>输出最佳的200个比对结果</li>
+</ul>
+</blockquote>
+<p>否则RSEM会报错！</p>
+<p><strong>RSEM对multiple mapping结果的处理是这款工具的亮点</strong>：</p>
+<blockquote>
+<p>对于RSEM如何处理multimapping reads，RSEM官方教程特意讲了一点</p>
+<p>以Ccl6基因的3个转录本的比对结果为例，其第2个转录本全长与第1个转录本重叠，所以在这重叠区域会产生大量的multimapping reads，黑色表示uniquely aligned reads，红色表示multi-mapping reads</p>
+<p>RSEM的处理方法是这样的：RSEM先尽量让第1个转录本在其重叠区域的reads（包括unique reads和multimapping reads）分布趋于平滑？因此再将在区域的剩下multimapping reads算在第2个转录本上；至于第3个转录本，其没有reads比对上，所以就空的；总体上如下图所示</p>
+</blockquote>
+<p><img src="/images/RNA-seq-RSEM.png" alt></p>
+<h2 id="3-差异表达分析"><a href="#3-差异表达分析" class="headerlink" title="3. 差异表达分析"></a>3. 差异表达分析</h2><h3 id="3-1-使用DESeq2进行差异分析"><a href="#3-1-使用DESeq2进行差异分析" class="headerlink" title="3.1. 使用DESeq2进行差异分析"></a>3.1. 使用DESeq2进行差异分析</h3><p>DESeq2要求输入的表达矩阵是<strong>read counts</strong></p>
+<p>构建 DESeqDataSet 对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 构建表达矩阵</span><br><span class="line">count_table&lt;-read.csv(&quot;/path/to/gene_count_matrix.csv&quot;,row.names=&quot;gene_id&quot;)</span><br><span class="line">count_matrix&lt;-as.matrix(count_table)</span><br><span class="line"># 构建分组矩阵</span><br><span class="line">group_list&lt;-factor(rep(c(&quot;control&quot;,&quot;treat&quot;),c(3,3)))</span><br><span class="line">colData &lt;- data.frame(row.names=colnames(count_matrix), group_list=group_list)</span><br><span class="line"># 构建 DESeqDataSet 对象</span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = count_matrix,</span><br><span class="line">	colData = colData,</span><br><span class="line">	design = ~ group_list)</span><br></pre></td></tr></table></figure>
+<p>表达矩阵的格式为：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><code></code></th>
+<th style="text-align:center">SRR1039508</th>
+<th style="text-align:center">SRR1039509</th>
+<th style="text-align:center">SRR1039512</th>
+<th style="text-align:center">SRR1039513</th>
+<th style="text-align:center">SRR1039516</th>
+<th style="text-align:center">SRR1039517</th>
+<th style="text-align:center">SRR1039520</th>
+<th style="text-align:center">SRR1039521</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ENSG00000000003</td>
+<td style="text-align:center">679</td>
+<td style="text-align:center">448</td>
+<td style="text-align:center">873</td>
+<td style="text-align:center">408</td>
+<td style="text-align:center">1138</td>
+<td style="text-align:center">1047</td>
+<td style="text-align:center">770</td>
+<td style="text-align:center">572</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000000005</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000000419</td>
+<td style="text-align:center">467</td>
+<td style="text-align:center">515</td>
+<td style="text-align:center">621</td>
+<td style="text-align:center">365</td>
+<td style="text-align:center">587</td>
+<td style="text-align:center">799</td>
+<td style="text-align:center">417</td>
+<td style="text-align:center">508</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000000457</td>
+<td style="text-align:center">260</td>
+<td style="text-align:center">211</td>
+<td style="text-align:center">263</td>
+<td style="text-align:center">164</td>
+<td style="text-align:center">245</td>
+<td style="text-align:center">331</td>
+<td style="text-align:center">233</td>
+<td style="text-align:center">229</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000000460</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">55</td>
+<td style="text-align:center">40</td>
+<td style="text-align:center">35</td>
+<td style="text-align:center">78</td>
+<td style="text-align:center">63</td>
+<td style="text-align:center">76</td>
+<td>60</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000000938</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000000971</td>
+<td style="text-align:center">3251</td>
+<td style="text-align:center">3679</td>
+<td style="text-align:center">6177</td>
+<td style="text-align:center">4252</td>
+<td style="text-align:center">6721</td>
+<td style="text-align:center">11027</td>
+<td style="text-align:center">5176</td>
+<td style="text-align:center">7995</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001036</td>
+<td style="text-align:center">1433</td>
+<td style="text-align:center">1062</td>
+<td style="text-align:center">1733</td>
+<td style="text-align:center">881</td>
+<td style="text-align:center">1424</td>
+<td style="text-align:center">1439</td>
+<td style="text-align:center">1359</td>
+<td style="text-align:center">1109</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001084</td>
+<td style="text-align:center">519</td>
+<td style="text-align:center">380</td>
+<td style="text-align:center">595</td>
+<td style="text-align:center">493</td>
+<td style="text-align:center">820</td>
+<td style="text-align:center">714</td>
+<td style="text-align:center">696</td>
+<td style="text-align:center">704</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001167</td>
+<td style="text-align:center">394</td>
+<td style="text-align:center">236</td>
+<td style="text-align:center">464</td>
+<td style="text-align:center">175</td>
+<td style="text-align:center">658</td>
+<td style="text-align:center">584</td>
+<td style="text-align:center">360</td>
+<td style="text-align:center">269</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001460</td>
+<td style="text-align:center">172</td>
+<td style="text-align:center">168</td>
+<td style="text-align:center">264</td>
+<td style="text-align:center">118</td>
+<td style="text-align:center">241</td>
+<td style="text-align:center">210</td>
+<td style="text-align:center">155</td>
+<td style="text-align:center">177</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001461</td>
+<td style="text-align:center">2112</td>
+<td style="text-align:center">1867</td>
+<td style="text-align:center">5137</td>
+<td style="text-align:center">2657</td>
+<td style="text-align:center">2735</td>
+<td style="text-align:center">2751</td>
+<td style="text-align:center">2467</td>
+<td style="text-align:center">2905</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001497</td>
+<td style="text-align:center">524</td>
+<td style="text-align:center">488</td>
+<td style="text-align:center">638</td>
+<td style="text-align:center">357</td>
+<td style="text-align:center">676</td>
+<td style="text-align:center">806</td>
+<td style="text-align:center">493</td>
+<td style="text-align:center">475</td>
+</tr>
+<tr>
+<td style="text-align:center">ENSG00000001561</td>
+<td style="text-align:center">71</td>
+<td style="text-align:center">51</td>
+<td style="text-align:center">211</td>
+<td style="text-align:center">156</td>
+<td style="text-align:center">23</td>
+<td style="text-align:center">38</td>
+<td style="text-align:center">134</td>
+<td style="text-align:center">172</td>
+</tr>
+</tbody>
+</table>
+<p>分组矩阵的格式为：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><code></code></th>
+<th style="text-align:center">dex</th>
+<th style="text-align:center">SampleName</th>
+<th style="text-align:center">cell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SRR1039508</td>
+<td style="text-align:center">untrt</td>
+<td style="text-align:center">GSM1275862</td>
+<td style="text-align:center">N61311</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039509</td>
+<td style="text-align:center">trt</td>
+<td style="text-align:center">GSM1275863</td>
+<td style="text-align:center">N61311</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039512</td>
+<td style="text-align:center">untrt</td>
+<td style="text-align:center">GSM1275866</td>
+<td style="text-align:center">N052611</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039513</td>
+<td style="text-align:center">trt</td>
+<td style="text-align:center">GSM1275867</td>
+<td style="text-align:center">N052611</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039516</td>
+<td style="text-align:center">untrt</td>
+<td style="text-align:center">GSM1275870</td>
+<td style="text-align:center">N080611</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039517</td>
+<td style="text-align:center">trt</td>
+<td style="text-align:center">GSM1275871</td>
+<td style="text-align:center">N080611</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039520</td>
+<td style="text-align:center">untrt</td>
+<td style="text-align:center">GSM1275874</td>
+<td style="text-align:center">N061011</td>
+</tr>
+<tr>
+<td style="text-align:center">SRR1039521</td>
+<td style="text-align:center">trt</td>
+<td style="text-align:center">GSM1275875</td>
+<td style="text-align:center">N061011</td>
+</tr>
+</tbody>
+</table>
+<p>差异表达分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 数据过滤</span><br><span class="line"># dds &lt;- dds[ rowSums(counts(dds)) &gt; 1 ,]</span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line"># plotDispEsts(dds, main=&quot;Dispersion plot&quot;)</span><br><span class="line"># rld &lt;- rlogTransformation(dds)</span><br><span class="line"># xprMatrix_rlog=assay(rld)</span><br><span class="line">## 若有多组，可以用参数contrast提取指定两组的比较结果</span><br><span class="line">res &lt;- results(dds, contrast=c(&quot;group_list&quot;,&apos;control&apos;,&apos;treat&apos;))</span><br><span class="line">## 将比较结果依据p-adjust进行排序</span><br><span class="line">resOrdered &lt;- res[order(res$padj),] </span><br><span class="line">res_Day1_Day0=as.data.frame(resOrdered)</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-使用Ballgown进行差异分析"><a href="#3-2-使用Ballgown进行差异分析" class="headerlink" title="3.2. 使用Ballgown进行差异分析"></a>3.2. 使用Ballgown进行差异分析</h3><p>紧接着stringtie的定量结果进行分析</p>
+<p>stringtie的定量结果提供多种表达值的表示方法，有read counts, RPKM/FPKM, TPM 。其中read counts是原始reads计算，RPKM/FPKM 和 TPM 都是基因表达值的归一化后的，因为本身的某些缺点，主流科学家强烈要求它就被TPM取代了。</p>
+<p>下面对 RPKM/FPKM 和 TPM 的说明摘抄自健明大大的简书：<code>https://www.jianshu.com/p/e9d5d7206124</code> ，说得通俗易懂</p>
+<blockquote>
+<p><strong>TPM是什么？</strong></p>
+<p>我不喜欢看公式，直接说事情，我有一个基因A，它在这个样本的转录组数据中被测序而且mapping到基因组了 5000个的reads，而这个基因A长度是10K，我们总测序文库是50M，所以这个基因A的RPKM值是 5000除以10，再除以50，为10. 就是把基因的reads数量根据基因长度和样本测序文库来normalization 。</p>
+<p>那么它的TPM值是多少呢？ 这个时候这些信息已经不够了，需要知道该样本其它基因的RPKM值是多少，加上该样本有3个基因，另外两个基因的RPKM值是5和35，那么我们的基因A的RPKM值为10需要换算成TPM值就是 1,000,000 *10/(5+10+35)=200,000， 看起来是不是有点大呀！其实主要是因为我们假设的基因太少了，一般个体里面都有两万多个基因的，总和会大大的增加，这样TPM值跟RPKM值差别不会这么恐怖的。</p>
+</blockquote>
+<ul>
+<li>载入R包</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require(ballgown)</span><br><span class="line">require(dplyr)</span><br><span class="line">require(genefilter)</span><br><span class="line">setwd(&quot;/share/disk5/lianm&quot;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>载入stringtie输出的表达数据，并设置表型信息（即分组信息）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bg_Z1Z4&lt;-ballgown(dataDir=&quot;SingleCell_process/Cleandata/Expression&quot;,samplePattern=“Z[14]T&quot;,meas=&quot;FPKM&quot;)</span><br><span class="line">pData(bg_Z1Z4)&lt;-data.frame(id=sampleNames(bg_Z1Z4),group=c(rep(1,num_group1),rep(0,num_group2)))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>过滤低丰度的基因</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bg_Z1Z4_filt&lt;-subset(bg_Z1Z4,&quot;rowVars(texpr(bg_Z1Z4))&gt;1&quot;,genomesubset=T)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>差异表达基因分析</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result_genes&lt;-stattest(bg_Z1Z4_filt,feature=&quot;gene&quot;,covariate=&quot;group&quot;,getFC=T)</span><br><span class="line">result_genes&lt;-data.frame(geneNames=geneNames(bg_Z1Z4_filt)[match(result_genes$id,geneIDs(bg_Z1Z4_filt))],geneIDs=geneIDs(bg_Z1Z4_filt)[match(result_genes$id,geneIDs(bg_Z1Z4_filt))],result_genes)</span><br><span class="line">result_genes_sort&lt;-arrange(result_genes,pval)</span><br><span class="line">write.csv(result_genes_sort,file=paste(&quot;SingleCell_process/Cleandata/Expression/&quot;,name_group1,&quot;_VS_&quot;,name_group2,&quot;_geneDiff_results.csv&quot;,sep=&quot;&quot;),row.names=F)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分组设置对差异表达分析的影响：</p>
+<ul>
+<li>FC = group_1/group_0，所以分组标签互换后FC会变为原来的倒数</li>
+</ul>
+</blockquote>
+<ul>
+<li>差异转录本分析</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result_trans&lt;-stattest(bg_Z1Z4_filt,feature=&quot;transcript&quot;,covariate=&quot;group&quot;,getFC=T)</span><br><span class="line">result_trans&lt;-data.frame(geneNames=geneNames(bg_Z1Z4_filt),geneIDs=geneIDs(bg_Z1Z4_filt),result_trans)</span><br><span class="line">result_trans_sort&lt;-arrange(result_transs,pval)</span><br><span class="line">write.csv(result_trans_sort,file=paste(&quot;SingleCell_process/Cleandata/Expression/&quot;,name_group1,&quot;_VS_&quot;,name_group2,&quot;_transDiff_results.csv&quot;,sep=&quot;&quot;),row.names=F)</span><br></pre></td></tr></table></figure>
+<h2 id="4-几点思考"><a href="#4-几点思考" class="headerlink" title="4. 几点思考"></a>4. 几点思考</h2><ol>
+<li>为什么要进行转录本拼接？不是都有参考转录组了吗？</li>
+</ol>
+<ul>
+<li><strong>无参考基因组</strong>：对于无参考转录组的物种来说，往往需要通过RNA-Seq的数据自己拼出参考转录组，然后再进行下游的数据分析。所以，对于无参分析来说，往往需要自己拼装转录本，生成自己的参考转录组信息</li>
+<li><strong>注释完备的基因组</strong>：例如human，不同的细胞条件可能不同，一些永生化的细胞系往往都具有“癌症”的特征，这些细胞的转录组，基因组或多或少都有结构的变异，以及转录本的差异。</li>
+</ul>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://mp.weixin.qq.com/s/74xmKy30ecQ2ciCqOq8MdQ" target="_blank" rel="noopener">【PANDA姐的转录组入门】拟南芥实战项目-定量、差异表达、功能分析</a></p>
+<p>(2) <a href="https://github.com/jmzeng1314/my-R/tree/master/DEG_scripts" target="_blank" rel="noopener">一步法差异分析</a></p>
+<p>(3) Pertea M, Kim D, Pertea G M, et al. Transcript-level expression analysis of RNA-seq experiments with HISAT, StringTie and Ballgown.[J]. Nature Protocols, 2016, 11(9):1650.</p>
+<p>(4) <a href="http://www.bioinfo-scrounger.com/archives/482" target="_blank" rel="noopener">Alignment-based的转录本定量-RSEM</a></p>
+<p>(5) <a href="https://github.com/bli25broad/RSEM_tutorial" target="_blank" rel="noopener">RSEM官方教程</a></p>
+<p>(6) <a href="https://zhuanlan.zhihu.com/p/36065699" target="_blank" rel="noopener">知乎《高通量测序技术》专栏：生物信息学100个基础问题 —— 第25题 GTF/GFF的注释是怎么来的，应该从哪里下载？</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NGS/" rel="tag"># NGS</a>
+          
+            <a href="/tags/RNAseq/" rel="tag"># RNAseq</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/08/Stat-on-RNAseq/" rel="next" title="RNA-seq中的那些统计学问题">
+                <i class="fa fa-chevron-left"></i> RNA-seq中的那些统计学问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/09/Helpdoc-for-different-languages/" rel="prev" title="在Perl、Shell和Python中传参与输出帮助文档">
+                在Perl、Shell和Python中传参与输出帮助文档 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-测序数据下载"><span class="nav-number">1.</span> <span class="nav-text">1. 测序数据下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-比对与定量"><span class="nav-number">2.</span> <span class="nav-text">2. 比对与定量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Salmon流程"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. Salmon流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-创建索引"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1. 创建索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-定量"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2. 定量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-subread流程"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. subread流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-创建索引"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1. 创建索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-比对"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2. 比对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-定量"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3. 定量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-hisat2-stringtie流程"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. hisat2-stringtie流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-hisat2创建索引"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1. hisat2创建索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-hisat2比对"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2. hisat2比对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-stringtie转录本拼接"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3. stringtie转录本拼接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-4-stringtie定量"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4. stringtie定量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-RSEM流程"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. RSEM流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-创建索引"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 创建索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-转录本定量"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 转录本定量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-差异表达分析"><span class="nav-number">3.</span> <span class="nav-text">3. 差异表达分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-使用DESeq2进行差异分析"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 使用DESeq2进行差异分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-使用Ballgown进行差异分析"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. 使用Ballgown进行差异分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-几点思考"><span class="nav-number">4.</span> <span class="nav-text">4. 几点思考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

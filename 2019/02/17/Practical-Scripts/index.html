@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+<meta name="keywords" content="Perl,Python,R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实用小脚本">
+<meta property="og:url" content="http://yoursite.com/2019/02/17/Practical-Scripts/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-02-17T08:31:02.937Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实用小脚本">
+<meta name="twitter:description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/17/Practical-Scripts/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>实用小脚本 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/Practical-Scripts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实用小脚本
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-17 08:14:59 / Modified: 08:31:02" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h2><h3 id="1-拆分FASTA文件"><a href="#1-拆分FASTA文件" class="headerlink" title="1. 拆分FASTA文件"></a>1. 拆分FASTA文件</h3><p>将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同</p>
+<p>脚本名：<code>splitFasta.pl</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/perl</span><br><span class="line">use strict;</span><br><span class="line">use warnings;</span><br><span class="line">use Getopt::Long;</span><br><span class="line">use POSIX;</span><br><span class="line"></span><br><span class="line"># 帮助文档</span><br><span class="line">=head1 Description</span><br><span class="line"></span><br><span class="line">	This script is used to split fasta file, which is too large with thosands of sequence</span><br><span class="line"></span><br><span class="line">=head1 Usage</span><br><span class="line"></span><br><span class="line">	$0 -i &lt;input&gt; -o &lt;output_dir&gt; [-n &lt;seq_num_per_file&gt;] [-m &lt;output_file_num&gt;]</span><br><span class="line">	</span><br><span class="line">=head1 Parameters</span><br><span class="line"></span><br><span class="line">	-i	[str]	Input raw fasta file</span><br><span class="line">	-o	[str]	Output file to which directory</span><br><span class="line">	-n	[int]	Sequence number per file, alternate chose paramerter &quot;-n&quot; or &quot;-m&quot;, if set &quot;-n&quot; and &quot;-m&quot; at the same time, only take &quot;-n&quot; parameter</span><br><span class="line">	-m	[int]	Output file number (default:100)</span><br><span class="line">=cut</span><br><span class="line"></span><br><span class="line">my ($input,$output_dir,$seq_num,$file_num);</span><br><span class="line">GetOptions(</span><br><span class="line">	&quot;i:s&quot;=&gt;\$input,</span><br><span class="line">	&quot;o:s&quot;=&gt;\$output_dir,</span><br><span class="line">	&quot;n:i&quot;=&gt;\$seq_num,</span><br><span class="line">	&quot;m:i&quot;=&gt;\$file_num</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">die `pod2text $0` if ((!$input) or (!$output_dir));</span><br><span class="line"></span><br><span class="line"># 设置每个文件的序列条数</span><br><span class="line">if(!defined($seq_num))&#123;</span><br><span class="line">	if(!defined($file_num))&#123;</span><br><span class="line">		$file_num=100;</span><br><span class="line">		my $total_seq_num=`awk &apos;BEGIN&#123;n=0&#125; /^&gt;/&#123;n++&#125; END&#123;print n&#125;&apos; $input`;</span><br><span class="line">		chomp $total_seq_num;</span><br><span class="line">		$seq_num=ceil($total_seq_num/$file_num);</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		my $total_seq_num=`awk &apos;BEGIN&#123;n=0&#125; /^&gt;/&#123;n++&#125; END&#123;print n&#125;&apos; $input`;</span><br><span class="line">		chomp $total_seq_num;</span><br><span class="line">		$seq_num=ceil($total_seq_num/$file_num);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open IN,&quot;&lt;$input&quot; or die &quot;Cann&apos;t open $input\n&quot;;</span><br><span class="line"></span><br><span class="line">my $n_seq=0;	# 该变量用于记录当前扫描到的序列数</span><br><span class="line">my $n_file=1;	# 该变量用于记录当前真正写入的文件的计数</span><br><span class="line">my $input_base=`basename $input`;</span><br><span class="line">chomp $input_base;</span><br><span class="line"></span><br><span class="line">open OUT,&quot;&gt;$output_dir/$&#123;input_base&#125;_$&#123;n_file&#125;&quot; or die &quot;Cann&apos;t create $output_dir/$&#123;input_base&#125;_$&#123;n_file&#125;\n&quot;;</span><br><span class="line"></span><br><span class="line">while(&lt;IN&gt;)&#123;</span><br><span class="line">	next if (/^\s+$/);	# 跳过空行</span><br><span class="line">	chomp;</span><br><span class="line">	if (/^&gt;/)&#123;</span><br><span class="line">		$n_seq++;</span><br><span class="line">		# 判断目前已经扫描到的序列数，若大于设定的split的序列数，则创建新文件</span><br><span class="line">		if ($n_seq&gt;$seq_num)&#123;</span><br><span class="line">			$n_seq=1;</span><br><span class="line">			$n_file++;</span><br><span class="line">			close OUT;</span><br><span class="line">			open OUT,&quot;&gt;$output_dir/$&#123;input_base&#125;_$&#123;n_file&#125;&quot; or die &quot;Cann&apos;t create $output_dir/$&#123;input_base&#125;_$&#123;n_file&#125;\n&quot;;</span><br><span class="line">			print OUT &quot;$_\n&quot;;</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			print OUT &quot;$_\n&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		print OUT &quot;$_\n&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">close IN;</span><br></pre></td></tr></table></figure></p>
+<p>执行方法： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl splitFasta.pl -i &lt;input&gt; -o &lt;output_dir&gt; [-n &lt;seq_num_per_file&gt;] [-m &lt;output_file_num&gt;]</span><br></pre></td></tr></table></figure>
+<p>具体的参数使用说明可以执行 <code>perl splitFasta.pl</code>，查看脚本使用文档</p>
+<h3 id="2-从双端FASTQ文件中抽取指定数据量-bp-的序列"><a href="#2-从双端FASTQ文件中抽取指定数据量-bp-的序列" class="headerlink" title="2. 从双端FASTQ文件中抽取指定数据量(bp)的序列"></a>2. 从双端FASTQ文件中抽取指定数据量(bp)的序列</h3><p>按照用户指定的数据量，即多少bp，从原始的双端FASTQ文件中随机抽取序列，要求双端FASTQ文件中的序列必须配对</p>
+<p>脚本名：<code>extractFastq.pl</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/perl</span><br><span class="line">use strict;</span><br><span class="line">use warnings;</span><br><span class="line">use Getopt::Long;</span><br><span class="line"></span><br><span class="line"># 脚本帮助文档</span><br><span class="line">=head1 Description</span><br><span class="line"></span><br><span class="line">	Thise script is used to extract a number of fastq recorders from original input fastq file</span><br><span class="line"></span><br><span class="line">=head1 Usage</span><br><span class="line"></span><br><span class="line">	$0 -n &lt;totalReads&gt; -e &lt;base-pairs to extract&gt; -l &lt;readLength&gt; -1 &lt;input1.fastq&gt; -2 &lt;input2.fastq&gt; [-o &lt;outdir&gt;]</span><br><span class="line"></span><br><span class="line">=head1 Parameters</span><br><span class="line"></span><br><span class="line">	-n	[int]	Total reads number of input.fastq</span><br><span class="line">	-e	[int]	Base-pairs per end you want to extract</span><br><span class="line">	-l	[int]	The reads length</span><br><span class="line">	-1	[str]	Input 1st-end fastq file</span><br><span class="line">	-2	[str]	Input 2nd-end fastq file</span><br><span class="line">	-o	[str]	Output directory [default: current folder]</span><br><span class="line"></span><br><span class="line">=cut</span><br><span class="line"></span><br><span class="line">my ($totalReads,$bpNum,$length,$Input1,$Input2,$Outdir);</span><br><span class="line">GetOptions(</span><br><span class="line">	&quot;n:i&quot;=&gt;\$totalReads,</span><br><span class="line">	&quot;e:i&quot;=&gt;\$bpNum,</span><br><span class="line">	&quot;l:i&quot;=&gt;\$length,</span><br><span class="line">	&quot;1:s&quot;=&gt;\$Input1,</span><br><span class="line">	&quot;2:s&quot;=&gt;\$Input2,</span><br><span class="line">	&quot;o:s&quot;=&gt;\$Outdir</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">$Outdir=`pwd` unless (defined($Outdir));</span><br><span class="line">die `pod2text $0` if ((!$totalReads) or (!$bpNum)) or (!$length) or (!$Input1) or (!$Input2);</span><br><span class="line"></span><br><span class="line">open FQ1,&quot;&lt;$Input1&quot; or die &quot;$!\n&quot;;</span><br><span class="line">open FQ2,&quot;&lt;$Input2&quot; or die &quot;$!\n&quot;;</span><br><span class="line"></span><br><span class="line">my $Input1_basename=`basename $Input1`;</span><br><span class="line">chomp $Input1_basename;</span><br><span class="line">my $Input2_basename=`basename $Input2`;</span><br><span class="line">chomp $Input2_basename;</span><br><span class="line">open OUT1,&quot;&gt;$Outdir/$&#123;Input1_basename&#125;.extract&quot; or die &quot;$!\n&quot;;</span><br><span class="line">open OUT2,&quot;&gt;$Outdir/$&#123;Input2_basename&#125;.extract&quot; or die &quot;$!\n&quot;;</span><br><span class="line"></span><br><span class="line">my $readsRemain=$bpNum/$length;</span><br><span class="line"></span><br><span class="line">my $remainCount=0;</span><br><span class="line"></span><br><span class="line">while(! eof($FQ1))&#123;</span><br><span class="line">	# 读入1st-end fastq 文件的四行</span><br><span class="line">	my $fq1_1=&lt;FQ1&gt;;</span><br><span class="line">	my $fq1_2=&lt;FQ1&gt;;</span><br><span class="line">	my $fq1_3=&lt;FQ1&gt;;</span><br><span class="line">	my $fq1_4=&lt;FQ1&gt;;</span><br><span class="line">	chomp($fq1_1,$fq1_2,$fq1_3,$fq1_4);</span><br><span class="line">	# 读入2nd-end fastq 文件的四行</span><br><span class="line">	my $fq2_1=&lt;FQ2&gt;;</span><br><span class="line">	my $fq2_2=&lt;FQ2&gt;;</span><br><span class="line">	my $fq2_3=&lt;FQ2&gt;;</span><br><span class="line">	my $fq2_4=&lt;FQ2&gt;;</span><br><span class="line">	chomp($fq2_1,$fq2_2,$fq2_3,$fq2_4);</span><br><span class="line"></span><br><span class="line">	# 随机抽取</span><br><span class="line">	if (rand()&lt;$readsRemain/$totalReads)&#123;</span><br><span class="line">		$remainCount++;</span><br><span class="line">		print OUT1 &quot;$fq1_1\n$fq1_2\n$fq1_3\n$fq1_4\n&quot;;</span><br><span class="line">		print OUT2 &quot;$fq2_1\n$fq2_2\n$fq2_3\n$fq2_4\n&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">print &quot;Total reads: $totalReads\n&quot;;</span><br><span class="line">print &quot;Theorical remained reads: $readsRemain\n&quot;;</span><br><span class="line">print &quot;Practical remained reads: $remainCount\n&quot;;</span><br><span class="line"></span><br><span class="line">close FQ1;</span><br><span class="line">close FQ2;</span><br><span class="line">close OUT1;</span><br><span class="line">close OUT2;</span><br></pre></td></tr></table></figure>
+<p>执行方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl extractFastq.pl -n &lt;totalReads&gt; -e &lt;base-pairs to extract&gt; -l &lt;readLength&gt; -1 &lt;input1.fastq&gt; -2 &lt;input2.fastq&gt; [-o &lt;outdir&gt;]</span><br></pre></td></tr></table></figure>
+<p>具体的参数使用说明可以执行 <code>perl extractFastq.pl</code>，查看脚本使用文档</p>
+<h3 id="3-双端FASTQ文件进行双端配对"><a href="#3-双端FASTQ文件进行双端配对" class="headerlink" title="3. 双端FASTQ文件进行双端配对"></a>3. 双端FASTQ文件进行双端配对</h3><p>脚本名：<code>PairsMate.pl</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/perl</span><br><span class="line">use strict;</span><br><span class="line">use warnings;</span><br><span class="line">use Getopt::Long;</span><br><span class="line"></span><br><span class="line"># 脚本帮助文档</span><br><span class="line">=head1 Description</span><br><span class="line"></span><br><span class="line">Thise script is used to match the pair-end reads from one sample</span><br><span class="line"></span><br><span class="line">=head1 Usage</span><br><span class="line"></span><br><span class="line">$0 -1 &lt;input1.fastq&gt; -2 &lt;input2.fastq&gt; [-o &lt;outdir&gt;]</span><br><span class="line"></span><br><span class="line">=head1 Parameters</span><br><span class="line"></span><br><span class="line">-1	[str]	Input 1st-end fastq file</span><br><span class="line">-2	[str]	Input 2nd-end fastq file</span><br><span class="line">-o	[str]	Output directory [default: current folder]</span><br><span class="line"></span><br><span class="line">=cut</span><br><span class="line"></span><br><span class="line">my ($Input1,$Input2,$Outdir);</span><br><span class="line">GetOptions(</span><br><span class="line">&quot;1:s&quot;=&gt;\$Input1,</span><br><span class="line">&quot;2:s&quot;=&gt;\$Input2,</span><br><span class="line">&quot;o:s&quot;=&gt;\$Outdir</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$Outdir=`pwd` unless (defined($Outdir));</span><br><span class="line">die `pod2text $0` if (!$Input1) or (!$Input2);</span><br><span class="line"></span><br><span class="line">open FQ1,&quot;&lt;$Input1&quot; or die &quot;Cann&apos;t open $Input1\n&quot;;</span><br><span class="line">open FQ2,&quot;&lt;$Input2&quot; or die &quot;Cann&apos;t open $Input2\n&quot;;</span><br><span class="line"></span><br><span class="line">my $Input1_basename=`basename $Input1`;</span><br><span class="line">chomp $Input1_basename;</span><br><span class="line">my $Input2_basename=`basename $Input2`;</span><br><span class="line">chomp $Input2_basename;</span><br><span class="line">open OUT1,&quot;&gt;$Outdir/$&#123;Input1_basename&#125;.match&quot; or die &quot;Cann&apos;t create $Outdir/$&#123;Input1_basename&#125;.match\n&quot;;</span><br><span class="line">open OUT2,&quot;&gt;$Outdir/$&#123;Input2_basename&#125;.match&quot; or die &quot;Cann&apos;t create $Outdir/$&#123;Input2_basename&#125;.match\n&quot;;</span><br><span class="line"></span><br><span class="line"># 载入两个fastq文件，保存成哈希</span><br><span class="line">my (%fq1_seq,%fq1_qua,%fq2_seq,%fq2_qua);</span><br><span class="line">while (!eof(FQ1))&#123;</span><br><span class="line">        my ($id,)=split(/\s/,&lt;FQ1&gt;);</span><br><span class="line">        $fq1_seq&#123;$id&#125;=&lt;FQ1&gt;;</span><br><span class="line">        &lt;FQ1&gt;;</span><br><span class="line">        $fq1_qua&#123;$id&#125;=&lt;FQ1&gt;;</span><br><span class="line">        chomp ($fq1_seq&#123;$id&#125;,$fq1_qua&#123;$id&#125;);</span><br><span class="line">&#125;</span><br><span class="line">while (!eof(FQ2))&#123;</span><br><span class="line">        my ($id,)=split(/\s/,&lt;FQ2&gt;);</span><br><span class="line">        $fq2_seq&#123;$id&#125;=&lt;FQ2&gt;;</span><br><span class="line">        &lt;FQ2&gt;;</span><br><span class="line">        $fq2_qua&#123;$id&#125;=&lt;FQ2&gt;;</span><br><span class="line">        chomp ($fq2_seq&#123;$id&#125;,$fq2_qua&#123;$id&#125;);</span><br><span class="line">&#125;</span><br><span class="line">close FQ1;</span><br><span class="line">close FQ2;</span><br><span class="line"></span><br><span class="line"># 双端配对</span><br><span class="line">foreach my $key (sort keys %fq1_seq)&#123;</span><br><span class="line">        if(defined($fq2_seq&#123;$key&#125;))&#123;</span><br><span class="line">                print OUT1 &quot;$key\n$fq1_seq&#123;$key&#125;\n+\n$fq1_qua&#123;$key&#125;\n&quot;;</span><br><span class="line">                print OUT2 &quot;$key\n$fq2_seq&#123;$key&#125;\n+\n$fq2_qua&#123;$key&#125;\n&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">close OUT1;</span><br><span class="line">close OUT2;</span><br></pre></td></tr></table></figure>
+<p>执行方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl PairsMate.pl -1 &lt;input1.fastq&gt; -2 &lt;input2.fastq&gt; [-o &lt;outdir&gt;]</span><br></pre></td></tr></table></figure>
+<p>具体的参数使用说明可以执行 <code>perl PairsMate.pl</code>，查看脚本使用文档</p>
+<h3 id="4-根据序列Id提取FASTA序列"><a href="#4-根据序列Id提取FASTA序列" class="headerlink" title="4. 根据序列Id提取FASTA序列"></a>4. 根据序列Id提取FASTA序列</h3><p>提供FASTA文件，和包含序列Id的文件（有多列，用制表符隔开，其中一列为序列Id），提取该序列Id对应的FASTA序列</p>
+<h3 id="5-统计FastQC输出"><a href="#5-统计FastQC输出" class="headerlink" title="5. 统计FastQC输出"></a>5. 统计FastQC输出</h3><p>统计FastQC结果，注意脚本需要在FastQC输出结果所在目录下运行。脚本的统计项目及输出如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Sample</th>
+<th style="text-align:left">Total Reads</th>
+<th style="text-align:left">GC Content</th>
+<th style="text-align:left">Q20</th>
+<th style="text-align:left">Q30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">NP006_RRS05401_1.clean.fq.extract_fastqc</td>
+<td style="text-align:left">39998924</td>
+<td style="text-align:left">49</td>
+<td style="text-align:left">0.999430935</td>
+<td style="text-align:left">0.946251454</td>
+</tr>
+<tr>
+<td style="text-align:left">NP006_RRS05401_2.clean.fq.extract_fastqc</td>
+<td style="text-align:left">39998924</td>
+<td style="text-align:left">49</td>
+<td style="text-align:left">0.986292131</td>
+<td style="text-align:left">0.883245809</td>
+</tr>
+<tr>
+<td style="text-align:left">NP007_RRS05402_1.clean.fq.extract_fastqc</td>
+<td style="text-align:left">40003323</td>
+<td style="text-align:left">49</td>
+<td style="text-align:left">0.999429311</td>
+<td style="text-align:left">0.946197936</td>
+</tr>
+</tbody>
+</table>
+<p>脚本名：<code>fastqc_stat.pl</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">opendir (DIR, &quot;./&quot;) or die &quot;can&apos;t open the directory!&quot;;</span><br><span class="line">@dir = readdir DIR;</span><br><span class="line">foreach $file ( sort  @dir) </span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"># 跳过不需要的文件/文件夹，留下需要的文件夹</span><br><span class="line">next unless -d $file;</span><br><span class="line">next if $file eq &apos;.&apos;;</span><br><span class="line">next if $file eq &apos;..&apos;;</span><br><span class="line"></span><br><span class="line"># 提取total reads</span><br><span class="line">$total_reads=  `grep &apos;^Total&apos; ./$file/fastqc_data.txt`;</span><br><span class="line">$total_reads=(split(/\s+/,$total_reads))[2];</span><br><span class="line"># 提取%GC</span><br><span class="line">$GC= `grep &apos;%GC&apos; ./$file/fastqc_data.txt`;</span><br><span class="line">$GC=(split(/\s+/,$GC))[1];</span><br><span class="line">chomp $GC;</span><br><span class="line"></span><br><span class="line"># 提取Q20，Q30</span><br><span class="line">## 读入Per sequence quality scores部分的信息，保存成哈希</span><br><span class="line">open FH , &quot;&lt;./$file/fastqc_data.txt&quot;;</span><br><span class="line">while (&lt;FH&gt;)</span><br><span class="line">    &#123;</span><br><span class="line">    next unless /#Quality/;</span><br><span class="line">    while (&lt;FH&gt;)</span><br><span class="line">        &#123;</span><br><span class="line">        @F=split;</span><br><span class="line">        $hash&#123;$F[0]&#125;=$F[1];</span><br><span class="line">        last if /&gt;&gt;END_MODULE/;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">## 统计Q20，Q30</span><br><span class="line">$all=0;$Q20=0;$Q30=0;</span><br><span class="line">$all+=$hash&#123;$_&#125; foreach keys %hash;</span><br><span class="line">$Q20+=$hash&#123;$_&#125; foreach 0..20;</span><br><span class="line">$Q30+=$hash&#123;$_&#125; foreach 0..30;</span><br><span class="line">$Q20=1-$Q20/$all;</span><br><span class="line">$Q30=1-$Q30/$all;</span><br><span class="line">print &quot;$file\t$total_reads\t$GC\t$Q20\t$Q30\n&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl fastqc_stat.pl</span><br></pre></td></tr></table></figure>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="1-格式化FASTA文件"><a href="#1-格式化FASTA文件" class="headerlink" title="1. 格式化FASTA文件"></a>1. 格式化FASTA文件</h3><p>在规范的Fasta文件中，你看到的一条序列记录包括两部分：</p>
+<ul>
+<li>以<code>&gt;</code>起始的序列名称，占一行；</li>
+<li>由核苷酸ATCGN（核酸序列）或氨基酸字符组成的字符串，一般每60个字符一行，若一条序列很长，那么它可能会占多行；</li>
+</ul>
+<p>有的时候因为一些原因（一般都是自己在上游分析时图方便生成的）你得到的fasta文件中的序列部分没有按照60个字符一行的形式进行组织，而是将整条序列放在一行里，虽然一般来说这并不会对你的分析产生太大的影响，但是进行查看的时候会有一些不方便，比如</p>
+<p>这个时候如果想将它调整组成规范的格式，要怎么实现呢？</p>
+<p>用BioPython将原始FASTA文件读入，然后在写出，就能得到你想要的效果</p>
+<p>这个脚本很简单，只有四行代码</p>
+<p>脚本名：<code>formatFasta.py</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from Bio import SeqIO</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">Seq = [ seq for seq in SeqIO.parse(sys.argv[1],&apos;fasta&apos;)]</span><br><span class="line"></span><br><span class="line">SeqIO.write(Seq,sys.argv[2],&apos;fasta&apos;)</span><br></pre></td></tr></table></figure>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python formatFasta.py &lt;in.fa&gt; &lt;out.fa&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="R"><a href="#R" class="headerlink" title="R"></a>R</h2><h3 id="1-对profiles进行wilcox检验"><a href="#1-对profiles进行wilcox检验" class="headerlink" title="1. 对profiles进行wilcox检验"></a>1. 对profiles进行wilcox检验</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># 三个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file </span><br><span class="line"># - outfile name</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">statOut &lt;- apply(data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"># 转换成数据框</span><br><span class="line">statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line"># 写入文件</span><br><span class="line">write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Perl/" rel="tag"># Perl</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/17/MeRIP-seq/" rel="next" title="MeRIP/ChIP-seq分析流程">
+                <i class="fa fa-chevron-left"></i> MeRIP/ChIP-seq分析流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">1.</span> <span class="nav-text">Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-拆分FASTA文件"><span class="nav-number">1.1.</span> <span class="nav-text">1. 拆分FASTA文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-从双端FASTQ文件中抽取指定数据量-bp-的序列"><span class="nav-number">1.2.</span> <span class="nav-text">2. 从双端FASTQ文件中抽取指定数据量(bp)的序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-双端FASTQ文件进行双端配对"><span class="nav-number">1.3.</span> <span class="nav-text">3. 双端FASTQ文件进行双端配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-根据序列Id提取FASTA序列"><span class="nav-number">1.4.</span> <span class="nav-text">4. 根据序列Id提取FASTA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-统计FastQC输出"><span class="nav-number">1.5.</span> <span class="nav-text">5. 统计FastQC输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.</span> <span class="nav-text">Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式化FASTA文件"><span class="nav-number">2.1.</span> <span class="nav-text">1. 格式化FASTA文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R"><span class="nav-number">3.</span> <span class="nav-text">R</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对profiles进行wilcox检验"><span class="nav-number">3.1.</span> <span class="nav-text">1. 对profiles进行wilcox检验</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

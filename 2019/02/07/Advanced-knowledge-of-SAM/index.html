@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="samtools和picard的排序问题samtools和picard都有对SAM/BAM文件进行排序的功能，一般都是基于坐标排序（还提供了-n选项来设定用reads名进行排序），先是对chromosome/contig进行排序，再在chromosome/contig内部基于start site从小到大排序，对start site排序很好理解，可是对chromosome/contig排序的时候是基">
+<meta name="keywords" content="NGS,SAM,FLAG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAM&#x2F;BAM相关的进阶知识">
+<meta property="og:url" content="http://yoursite.com/2019/02/07/Advanced-knowledge-of-SAM/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="samtools和picard的排序问题samtools和picard都有对SAM/BAM文件进行排序的功能，一般都是基于坐标排序（还提供了-n选项来设定用reads名进行排序），先是对chromosome/contig进行排序，再在chromosome/contig内部基于start site从小到大排序，对start site排序很好理解，可是对chromosome/contig排序的时候是基">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/Advanced-knowledge-SAM-1-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Advanced-knowledge-SAM-2-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Advanced-knowledge-SAM-2-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Advanced-knowledge-SAM-3-1.png">
+<meta property="og:updated_time" content="2019-02-17T06:12:08.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SAM&#x2F;BAM相关的进阶知识">
+<meta name="twitter:description" content="samtools和picard的排序问题samtools和picard都有对SAM/BAM文件进行排序的功能，一般都是基于坐标排序（还提供了-n选项来设定用reads名进行排序），先是对chromosome/contig进行排序，再在chromosome/contig内部基于start site从小到大排序，对start site排序很好理解，可是对chromosome/contig排序的时候是基">
+<meta name="twitter:image" content="http://yoursite.com/images/Advanced-knowledge-SAM-1-1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/07/Advanced-knowledge-of-SAM/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SAM/BAM相关的进阶知识 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Advanced-knowledge-of-SAM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SAM/BAM相关的进阶知识
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 23:40:09" itemprop="dateCreated datePublished" datetime="2019-02-07T23:40:09+00:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="samtools和picard的排序问题"><a href="#samtools和picard的排序问题" class="headerlink" title="samtools和picard的排序问题"></a>samtools和picard的排序问题</h2><p><code>samtools</code>和<code>picard</code>都有对SAM/BAM文件进行排序的功能，一般都是基于坐标排序（还提供了<code>-n</code>选项来设定用reads名进行排序），先是对chromosome/contig进行排序，再在chromosome/contig内部基于start site从小到大排序，对start site排序很好理解，可是对chromosome/contig排序的时候是基于什么标准呢？</p>
+<p><strong>基于你提供的<code>ref.fa</code>文件中的chromosome/contig的顺序</strong>。当你使用比对工具将fastq文件中的reads比对上参考基因组后会生成SAM文件，SAM文件包含头信息，其中有以<code>@SQ</code>开头的头信息记录，reference中有多少条chromosome/contig就会有多少条这样的记录，而且它们的顺序与<code>ref.fa</code>是一致的。</p>
+<blockquote>
+<p>SAM/BAM文件的头信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&gt; @HD     VN:1.3  SO:coordinate</span><br><span class="line">&gt; @SQ     SN:chr1 LN:195471971</span><br><span class="line">&gt; @SQ     SN:chr2 LN:182113224</span><br><span class="line">&gt; @SQ     SN:chr3 LN:160039680</span><br><span class="line">&gt; @SQ     SN:chr4 LN:156508116</span><br><span class="line">&gt; @SQ     SN:chr5 LN:151834684</span><br><span class="line">&gt; @SQ     SN:chr6 LN:149736546</span><br><span class="line">&gt; @SQ     SN:chr7 LN:145441459</span><br><span class="line">&gt; @SQ     SN:chr8 LN:129401213</span><br><span class="line">&gt; @SQ     SN:chr9 LN:124595110</span><br><span class="line">&gt; @SQ     SN:chr10        LN:130694993</span><br><span class="line">&gt; @SQ     SN:chr11        LN:122082543</span><br><span class="line">&gt; @SQ     SN:chr12        LN:120129022</span><br><span class="line">&gt; @SQ     SN:chr13        LN:120421639</span><br><span class="line">&gt; @SQ     SN:chr14        LN:124902244</span><br><span class="line">&gt; @SQ     SN:chr15        LN:104043685</span><br><span class="line">&gt; @SQ     SN:chr16        LN:98207768</span><br><span class="line">&gt; @SQ     SN:chr17        LN:94987271</span><br><span class="line">&gt; @SQ     SN:chr18        LN:90702639</span><br><span class="line">&gt; @SQ     SN:chr19        LN:61431566</span><br><span class="line">&gt; @SQ     SN:chrX LN:171031299</span><br><span class="line">&gt; @SQ     SN:chrY LN:91744698</span><br><span class="line">&gt; @SQ     SN:chrM LN:16299</span><br><span class="line">&gt; @RG     ID:ERR144849    LB:ERR144849    SM:A_J  PL:ILLUMINA</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p><code>ref.fa</code>中chromosome/contig的排列顺序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt;chr1</span><br><span class="line">&gt; &gt;chr2</span><br><span class="line">&gt; &gt;chr3</span><br><span class="line">&gt; &gt;chr4</span><br><span class="line">&gt; &gt;chr5</span><br><span class="line">&gt; &gt;chr6</span><br><span class="line">&gt; &gt;chr7</span><br><span class="line">&gt; &gt;chr8</span><br><span class="line">&gt; &gt;chr9</span><br><span class="line">&gt; &gt;chr10</span><br><span class="line">&gt; &gt;chr11</span><br><span class="line">&gt; &gt;chr12</span><br><span class="line">&gt; &gt;chr13</span><br><span class="line">&gt; &gt;chr14</span><br><span class="line">&gt; &gt;chr15</span><br><span class="line">&gt; &gt;chr16</span><br><span class="line">&gt; &gt;chr17</span><br><span class="line">&gt; &gt;chr18</span><br><span class="line">&gt; &gt;chr19</span><br><span class="line">&gt; &gt;chrX</span><br><span class="line">&gt; &gt;chrY</span><br><span class="line">&gt; &gt;chrM</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>它们的顺序一致</p>
+</blockquote>
+<p>当使用samtools或picard对SAM/BAM文件进行排序时，这些工具就会读取头信息，按照头信息指定的顺序来排chromosome/contig。所以进行排序时需要提供包含头信息的SAM/BAM文件。</p>
+<p>那么<strong>普通情况下我们的chromosome/contig排序情况是什么样的?</strong></p>
+<blockquote>
+<p>一般情况下我们获取参考基因组序列文件的来源有三个：</p>
+<ul>
+<li>NCBI</li>
+<li>ENSEMBEL</li>
+<li>UCSC Genome Browser</li>
+</ul>
+<p>这里以UCSC FTP下载源为例：</p>
+<p><img src="/images/Advanced-knowledge-SAM-1-1.png" alt></p>
+<p>这是一个压缩文件，使用<code>tar zxvf chromFa.tar.gz</code>解压后，会得到多个fasta文件，每条chromosome/contig一个fasta文件：chr1.fa, chr2.fa …</p>
+<p>之后我们会将它们用<code>cat *.fa &gt;ref.fa</code>合并成一个包含多条chromosome/contig的物种参考基因组序列文件</p>
+<p>用<code>grep &quot;&gt;&quot; ref.fa</code>可以查看合并后发ref.fa文件中染色体的排列顺序为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt;chr10</span><br><span class="line">&gt; &gt;chr11</span><br><span class="line">&gt; &gt;chr12</span><br><span class="line">&gt; &gt;chr13</span><br><span class="line">&gt; &gt;chr14</span><br><span class="line">&gt; &gt;chr15</span><br><span class="line">&gt; &gt;chr16</span><br><span class="line">&gt; &gt;chr17</span><br><span class="line">&gt; &gt;chr18</span><br><span class="line">&gt; &gt;chr19</span><br><span class="line">&gt; &gt;chr1</span><br><span class="line">&gt; &gt;chr1_GL456210_random</span><br><span class="line">&gt; &gt;chr1_GL456211_random</span><br><span class="line">&gt; &gt;chr1_GL456212_random</span><br><span class="line">&gt; &gt;chr1_GL456213_random</span><br><span class="line">&gt; &gt;chr1_GL456221_random</span><br><span class="line">&gt; &gt;chr2</span><br><span class="line">&gt; &gt;chr3</span><br><span class="line">&gt; &gt;chr4</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这和我们平时想象的染色体的排列顺序是不是有一些出入？难道不应该是从chr1开始到chr22，最后是chrX和chrY这样的顺序吗？</p>
+<p>想象归想象，实际上它是按照字符顺序进行的，chr11就应该排在chr2前面</p>
+</blockquote>
+<p>一般情况下在进行SAM文件的排序时，染色体的排序到底是按照哪种规则进行排序的，不是一个很重要的问题，也不会对后续的分析产生影响，但是在执行GATK流程时，GATK对染色体的排序是有要求的，必须按照从chr1开始到chr22，最后是chrX和chrY这样的顺序，否则会报错</p>
+<p>面对这样变态的要求，我们怎么解决？</p>
+<p>在构造ref.fa文件时，让它按照从chr1开始到chr22，最后是chrX和chrY这样的顺序进行组织就可以了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for i in $(seq 1 22) X Y M;</span><br><span class="line">do cat chr$&#123;i&#125;.fa &gt;&gt; hg19.fasta;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="SAM文件中FLAG值的理解"><a href="#SAM文件中FLAG值的理解" class="headerlink" title="SAM文件中FLAG值的理解"></a>SAM文件中FLAG值的理解</h2><p>FLAG列在SAM文件的第二列，这是一个很重要的列，包含了很多mapping过程中的有用信息，但很多初学者在学习SAM文件格式的介绍时，遇到FLAG列的说明，常常会一头雾水</p>
+<p><img src="/images/Advanced-knowledge-SAM-2-1.png" alt></p>
+<p>what?还二进制，这也太反人类的设计了吧！</p>
+<p>不过如果你站在开发者的角度去思考这个问题，就会豁然开朗</p>
+<p>在mapping过程中，我们想记录一条read的mapping的信息包括：</p>
+<ul>
+<li>这条read是read1 (forward-read) 还是read2 (reverse-read)？</li>
+<li>这条read比对上了吗？与它对应的另一头read比对上了吗？</li>
+<li>…</li>
+</ul>
+<p>这些信息总结起来总共包括以下12项：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:left">简写</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">PAIRED</td>
+<td style="text-align:left">paired-end (or multiple-segment) sequencing technology</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">PROPER_PAIR</td>
+<td style="text-align:left">each segment properly aligned according to the aligner</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">UNMAP</td>
+<td style="text-align:left">segment unmapped</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">MUNMAP</td>
+<td style="text-align:left">next segment in the template unmapped</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">REVERSE</td>
+<td style="text-align:left">SEQ is reverse complemented</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left">MREVERSE</td>
+<td style="text-align:left">SEQ of the next segment in the template is reversed</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left">READ1</td>
+<td style="text-align:left">the first segment in the template</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left">READ2</td>
+<td style="text-align:left">the last segment in the template</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left">SECONDARY</td>
+<td style="text-align:left">secondary alignment</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left">QCFAIL</td>
+<td style="text-align:left">not passing quality controls</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:left">DUP</td>
+<td style="text-align:left">PCR or optical duplicate</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:left">SUPPLEMENTARY</td>
+<td style="text-align:left">supplementary alignment</td>
+</tr>
+</tbody>
+</table>
+<p>而每一项又只有两种情况，是或否，那么我可以用一个12位的二进制数来记录所有的信息，每一位表示某一项的情况，这就是原始FLAG信息的由来，但是二进制数适合给计算机看，不适合人看，需要转换成对应的十进制数，也就有了我们在SAM文件中看到的FLAG值</p>
+<p>但是FLAG值所包含信息的解读还是要转换为12位的二进制数</p>
+<p><img src="/images/Advanced-knowledge-SAM-2-2.png" alt></p>
+<h2 id="SAM文件中那些未比对的reads"><a href="#SAM文件中那些未比对的reads" class="headerlink" title="SAM文件中那些未比对的reads"></a>SAM文件中那些未比对的reads</h2><p>SAM格式文件的第3和第7列，可以用来判断某条reads是否比对成功到了基因组的染色体，左右两条reads是否比对到同一条染色体</p>
+<p><img src="/images/Advanced-knowledge-SAM-3-1.png" alt></p>
+<p>有两个方法可以提取未比对成功的测序数据：</p>
+<blockquote>
+<ul>
+<li>SAM文件的第3列是*的(如果是PE数据，需要考虑第3,7列)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ samtools view sample.bam | perl -alne &apos;&#123;print if $F[2] eq &quot;*&quot; or $F[6] eq &quot;*&quot; &#125;&apos; sample.unmapped.sam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li>或者SAM文件的flag标签包含0x4的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 小写的f是提取，大写的F是过滤</span><br><span class="line">&gt; $ samtools view -f4 sample.bam sample.unmapped.sam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>虽然上面两个方法得到的结果是一模一样的，但是这个perl脚本运行速度远远比不上上面的samtools自带的参数</p>
+</blockquote>
+<p>对于PE数据，在未比对成功的测序数据可以分成3类：</p>
+<blockquote>
+<ul>
+<li><strong>仅reads1没有比对成功</strong></li>
+</ul>
+<p>该提取条件包括：</p>
+<blockquote>
+<ul>
+<li>该read是read1，对应于二进制FLAG的第7位，该位取1，其十进制值为64；</li>
+<li>该read未成功比对到参考基因组，对应于二进制FLAG的第3位，该位取1，其十进制值为4；</li>
+<li>另一配对read成功比对到参考基因组，对应于二进制FLAG的第4位，该位取0，其十进制值为8；</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 对于取1的位点采用提取的策略，用-f参数，值设为64+4=68</span><br><span class="line">&gt; # 对于取0的位点采取过滤的策略，用-F参数，值设为8</span><br><span class="line">&gt; $ samtools view -u -f 68 -F 8 alignments.bam &gt;read1_unmap.bam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>仅reads2没有比对成功</strong></li>
+</ul>
+<p>该提取条件包括：</p>
+<blockquote>
+<ul>
+<li>该read是read2，对应于二进制FLAG的第8位，该位取1，其十进制值为128；</li>
+<li>该read未成功比对到参考基因组，对应于二进制FLAG的第3位，该位取1，其十进制值为4；</li>
+<li>另一配对read成功比对到参考基因组，对应于二进制FLAG的第4位，该位取0，其十进制值为8；</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 对于取1的位点采用提取的策略，用-f参数，值设为128+4=132</span><br><span class="line">&gt; # 对于取0的位点采取过滤的策略，用-F参数，值设为8</span><br><span class="line">&gt; $ samtools view -u -f 132 -F 8 alignments.bam &gt;read2_unmap.bam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ul>
+<li><strong>两端reads都没有比对成功</strong></li>
+</ul>
+<p>该提取条件包括：</p>
+<blockquote>
+<ul>
+<li>该read未成功比对到参考基因组，对应于二进制FLAG的第3位，该位取1，其十进制值为4；</li>
+<li>另一配对read未成功比对到参考基因组，对应于二进制FLAG的第4位，该位取1，其十进制值为8；</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; # 对于取1的位点采用提取的策略，用-f参数，值设为4+8=12</span><br><span class="line">&gt; $ samtools view -u -f 12 alignments.bam &gt;pairs_unmap.bam</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>看完这一部分，是不是有一个感觉：<strong>FLAG玩得溜，SAM文件可以处理得出神入化</strong></p>
+<h2 id="为什么一条read会有多条比对记录？"><a href="#为什么一条read会有多条比对记录？" class="headerlink" title="为什么一条read会有多条比对记录？"></a>为什么一条read会有多条比对记录？</h2><p>首先，思考一个问题：对于PE数据，一条测序片段（fragment）有read1和read2两条测序片段，它们俩的名字相同，那么对于这一条测序片段，对它进行mapping之后得到的SAM文件中会出现几条记录呢？</p>
+<blockquote>
+<p>先声明以下只对BWA比对得到的SAM文件进行讨论，对其他比对工具输出的SAM文件可能不适用</p>
+<p>首先，基于经验积累告诉我，它会得到<strong>有且只有两条记录</strong>，原因在于，BWA在对每条read执行比对时只会给出一个hit，若这条read是multiple mapping的情况，它会从中选择MAPQ值最高的那个hit作为输出，若存在多个hit的MAPQ值相等且最高，那么BWA会从中随机选择一个作为输出</p>
+</blockquote>
+<p>对于我的这个假设可以用以下的方法进行验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 将SAM文件的第一列提出来，排序去重，同时统计每个QNAME出现的次数</span><br><span class="line">$ samtools view alignment.bam | cut -f1 | sort | uniq -c &gt;record.count</span><br><span class="line"></span><br><span class="line">得到的统计结果如下：</span><br><span class="line">      2 ERR144849.1</span><br><span class="line">      2 ERR144849.10</span><br><span class="line">      2 ERR144849.100</span><br><span class="line">      2 ERR144849.1000</span><br><span class="line">      2 ERR144849.10000</span><br><span class="line">      2 ERR144849.100000</span><br><span class="line">      2 ERR144849.1000000</span><br><span class="line">      2 ERR144849.10000000</span><br><span class="line">      2 ERR144849.10000001</span><br><span class="line">      2 ERR144849.10000002</span><br><span class="line">      2 ERR144849.10000003</span><br><span class="line">      2 ERR144849.10000004</span><br><span class="line">      2 ERR144849.10000005</span><br><span class="line">      ...</span><br></pre></td></tr></table></figure>
+<p>上面的测试结果与我们的假设吻合</p>
+<p>但是在一次处理三代测序数据（三代测序数据是Single-End）中发现了不同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在输出中出现了一些不太和谐的结果：有极少部分的QNAME对应2条以上的记录，这意味着存在一条read会有多条比对记录的情况，why？</p>
+<p>对这个与预期不完全相符的结果，尝试去寻找里面的原因，其间进行了各种各样的推理、假设、验证，最终在李恒的github中找到了答案</p>
+<blockquote>
+<p>2. Why does a read appear multiple times in the output SAM?</p>
+<p>BWA-SW and BWA-MEM perform local alignments. If there is a translocation, a gene fusion or a long deletion, a read bridging the break point may have two hits, occupying two lines in the SAM output. With the default setting of BWA-MEM, one and only one line is primary and is soft clipped; other lines are tagged with 0x800 SAM flag (supplementary alignment) and are hard clipped.</p>
+</blockquote>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://www.jianshu.com/p/364e640d3c9f" target="_blank" rel="noopener">【简书】从零开始完整学习全基因组测序数据分析：第5节 理解并操作BAM文件</a></p>
+<p>(2) <a href="https://mp.weixin.qq.com/s?__biz=MzAxMDkxODM1Ng==&amp;mid=2247483782&amp;idx=1&amp;sn=a2c7bac48e03195b646ae34f3b82ac29&amp;chksm=9b48413dac3fc82b61f9868c4385609af3eba9bf68dc026ab78a3f14980ce750cb35623195ce&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">【生信技能树】【直播】我的基因组（十五）:提取未比对的测序数据</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NGS/" rel="tag"># NGS</a>
+          
+            <a href="/tags/SAM/" rel="tag"># SAM</a>
+          
+            <a href="/tags/FLAG/" rel="tag"># FLAG</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/30/Setup-private-BlogSite/" rel="next" title="Hexo + GitHub Homepage 搭建个人博客">
+                <i class="fa fa-chevron-left"></i> Hexo + GitHub Homepage 搭建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/07/Andrew-Ng-Coursera-Homework/" rel="prev" title="Andrew NG Coursera 课程编程作业">
+                Andrew NG Coursera 课程编程作业 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#samtools和picard的排序问题"><span class="nav-number">1.</span> <span class="nav-text">samtools和picard的排序问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SAM文件中FLAG值的理解"><span class="nav-number">2.</span> <span class="nav-text">SAM文件中FLAG值的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SAM文件中那些未比对的reads"><span class="nav-number">3.</span> <span class="nav-text">SAM文件中那些未比对的reads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么一条read会有多条比对记录？"><span class="nav-number">4.</span> <span class="nav-text">为什么一条read会有多条比对记录？</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

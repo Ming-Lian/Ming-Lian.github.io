@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="问题描述与分析作为程序猿，应该多多少少都用过Markdown，或者至少读过别人用Markdown语法写的一些文档，比如在GitHub有一个你要用的开源程序，而你又是第一回用它，那么你一般会在这个仓库的Readme里读一读开发者提供的工具说明和使用的相关信息，这部分文档一般就是用Markdown的语法写的  此处以李恒大神的BWA的Readme为例  简单来说，Markdown就是简化阉割过的HTM">
+<meta name="keywords" content="Markdown,AJAX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端小技巧：加载并解析Markdown文档">
+<meta property="og:url" content="http://yoursite.com/2019/02/09/Load-and-resolve-MarkdownDoc/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="问题描述与分析作为程序猿，应该多多少少都用过Markdown，或者至少读过别人用Markdown语法写的一些文档，比如在GitHub有一个你要用的开源程序，而你又是第一回用它，那么你一般会在这个仓库的Readme里读一读开发者提供的工具说明和使用的相关信息，这部分文档一般就是用Markdown的语法写的  此处以李恒大神的BWA的Readme为例  简单来说，Markdown就是简化阉割过的HTM">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/MarkDown2HTML-markdown-example.png">
+<meta property="og:image" content="http://yoursite.com/images/MarkDown2HTML-transformation.png">
+<meta property="og:image" content="http://yoursite.com/images/ajax-process.gif">
+<meta property="og:image" content="http://yoursite.com/images/MarkDown2HTML-form.png">
+<meta property="og:updated_time" content="2019-02-17T06:12:08.156Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端小技巧：加载并解析Markdown文档">
+<meta name="twitter:description" content="问题描述与分析作为程序猿，应该多多少少都用过Markdown，或者至少读过别人用Markdown语法写的一些文档，比如在GitHub有一个你要用的开源程序，而你又是第一回用它，那么你一般会在这个仓库的Readme里读一读开发者提供的工具说明和使用的相关信息，这部分文档一般就是用Markdown的语法写的  此处以李恒大神的BWA的Readme为例  简单来说，Markdown就是简化阉割过的HTM">
+<meta name="twitter:image" content="http://yoursite.com/images/MarkDown2HTML-markdown-example.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/09/Load-and-resolve-MarkdownDoc/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>前端小技巧：加载并解析Markdown文档 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/09/Load-and-resolve-MarkdownDoc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端小技巧：加载并解析Markdown文档
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-09 00:28:49" itemprop="dateCreated datePublished" datetime="2019-02-09T00:28:49+00:00">2019-02-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前后端技术/" itemprop="url" rel="index"><span itemprop="name">前后端技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="问题描述与分析"><a href="#问题描述与分析" class="headerlink" title="问题描述与分析"></a>问题描述与分析</h2><p>作为程序猿，应该多多少少都用过Markdown，或者至少读过别人用Markdown语法写的一些文档，比如在GitHub有一个你要用的开源程序，而你又是第一回用它，那么你一般会在这个仓库的Readme里读一读开发者提供的工具说明和使用的相关信息，这部分文档一般就是用Markdown的语法写的</p>
+<p><img src="/images/MarkDown2HTML-markdown-example.png" alt></p>
+<p align="center">此处以李恒大神的BWA的Readme为例</p>
+
+<p>简单来说，Markdown就是简化阉割过的HTML，优点是语法简单高效，缺点就是HTML中一些稍微高级复杂一点的效果，比如文本居中，Markdown就无法实现，所以Markdown一般被用来写对页面排版要求不高，以文字为主的笔记和文档</p>
+<p>如果你一开始用Markdown写了文档，想要把它放到你的网页上去，并以解析后的形式呈现</p>
+<p><img src="/images/MarkDown2HTML-transformation.png" alt></p>
+<p align="center">左边是原始Markdown文档，右边是解析后的网页效果</p>
+
+<p>那么你有两种实现途径：</p>
+<ul>
+<li>将Markdown文档以HTML形式导出，在网页上加载之前导出的HTML文件即可</li>
+<li>原始网页获取Markdown文档，用js将Markdown文本解析成HTML文本，动态修改原始网页对应标签节点的内容，就实现了Markdown文本的解析和展示</li>
+</ul>
+<p>第一种方法：</p>
+<blockquote>
+<p>技术难度最小，也很容易理解，但是操作起来比较繁琐：你的Markdown文档一般是要经常修改更新的，那么每修改一次，你就需要重新导出，然后将之前导出的那一版HTML替换掉</p>
+</blockquote>
+<p>第二种方法：</p>
+<blockquote>
+<ul>
+<li>技术难度上要高一些，但是目前已经有可以调用的JS框架来实现Markdown2HTML的解析</li>
+<li>最大的优点就是，每一次修改更新很方便，只需要对Markdown文档就可以了</li>
+</ul>
+</blockquote>
+<p>下面我们对<strong>第二种方法</strong>的实现过程进行详细的说明</p>
+<h2 id="用AJAX获取Markdown文档"><a href="#用AJAX获取Markdown文档" class="headerlink" title="用AJAX获取Markdown文档"></a>用AJAX获取Markdown文档</h2><p>上一部分已经提到，我们需要先让原始网页请求服务器中的Markdown文档</p>
+<p>这一步需要使用AJAX（中文音译为阿甲克斯），这里先对AJAX作一个简单的科普：</p>
+<blockquote>
+<p>AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML），AJAX 是一种用于创建快速动态网页的技术</p>
+<p>首先要说清楚什么是动态网页。与动态网页相对的是静态网页，也就是大家都知道的用HTML写的网页，这种网页的一个鲜明的特点就是它的内容一旦确定就无法改变，在互联网发展的最早期的时候大家用的都是这种静态网页。动态网页要求页面的内容能进行更新。那么怎么让原先的静态网页动起来成为动态网页呢？也有两种方法：</p>
+<ul>
+<li>重载整个网页面来更新页面内容</li>
+<li>上一个页面状态与下一个页面状态，它们之间有相同不变的部分，也有发生了改变的部分，那么我只需要把那些需要发生变化的部分进行修改就行了。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新</li>
+</ul>
+<p>第一种方法的不经济显而易见，不管各个页面节点前后是否发生了改变，统一都进行刷新</p>
+<p>AJAX就是采用第二种页面刷新方法：通过在后台与服务器进行少量数据交换，向服务器请求数据，解析请求的数据，然后对原页面需要刷新的部分进行刷新</p>
+</blockquote>
+<p><img src="/images/ajax-process.gif" alt></p>
+<p align="center">AJAX工作原理</p>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// 获取表单变量</span><br><span class="line">var f=form;</span><br><span class="line">// 创建XMLHttpRequest对象</span><br><span class="line">var xmlhttp;</span><br><span class="line">if (window.XMLHttpRequest)</span><br><span class="line">&#123;</span><br><span class="line">	// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码</span><br><span class="line">	xmlhttp=new XMLHttpRequest();</span><br><span class="line">&#125;</span><br><span class="line">else</span><br><span class="line">&#123;</span><br><span class="line">	// IE6, IE5 浏览器执行代码</span><br><span class="line">	xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 得到服务器响应后，对得到的Markdown文档进行解析</span><br><span class="line">xmlhttp.onreadystatechange=function()</span><br><span class="line">&#123;</span><br><span class="line">	if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</span><br><span class="line">	&#123;</span><br><span class="line">		// 这里调用了marked框架中的marked函数实现Markdown2HTML的解析</span><br><span class="line">		document.getElementById(&quot;content&quot;).innerHTML=marked(xmlhttp.responseText);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 向服务器发送请求，获取你需要的Markdown文档</span><br><span class="line">xmlhttp.open(&quot;GET&quot;,f.q.value,true);</span><br><span class="line">xmlhttp.send();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对上面的脚本继续简单的说明：</p>
+<blockquote>
+<p>这个是AJAX的基本语法框架</p>
+<p>完成三步操作：</p>
+<ol>
+<li>创建http请求对象，告诉服务器我要哪个Markdown文档</li>
+<li>向服务器发起http请求</li>
+<li>收到服务器的反馈数据，得到请求的Markdown文档，进行数据的解析，实现Markdown2HTML</li>
+</ol>
+</blockquote>
+<p>那么这里有几个问题需要解答：</p>
+<p><strong>1. 怎么指定我想要的Markdown文档呢？</strong></p>
+<blockquote>
+<p>看上面的代码部分的最后一小部分，有这样一行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; xmlhttp.open(&quot;GET&quot;,f.q.value,true);</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>这个函数的第二个参数<code>f.q.value</code>，指定了你要的Markdown文档的地址，所以如果想要指定Markdown文档就需要对这个变量进行设定</p>
+<p>怎么设定这个变量？</p>
+<p>用表单传参来实现，这里的f就是表单变量，表单部分怎么实现请点 <a href="#specify-markdown-doc">这里</a></p>
+</blockquote>
+<h2 id="用表单指定Markdown文档"><a href="#用表单指定Markdown文档" class="headerlink" title="用表单指定Markdown文档"></a>用表单指定Markdown文档</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;form name=&quot;form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;select name=&quot;q&quot;&gt;</span><br><span class="line">		&lt;option class=&quot;active&quot; alue=&quot;&quot;&gt;选择一个笔记:&lt;/option&gt;</span><br><span class="line">		&lt;option value=&quot;A.md&quot;&gt;第一个Markdown文档&lt;/option&gt;</span><br><span class="line">		&lt;option value=&quot;B.md&quot;&gt;第二个Markdown文档&lt;/option&gt;</span><br><span class="line">		&lt;option value=&quot;C.md&quot;&gt;第三个Markdown文档&lt;/option&gt;</span><br><span class="line">		&lt;option value=&quot;Evalue-TranscriptomeData.md&quot;&gt;第四个Markdown文档&lt;/option&gt;</span><br><span class="line">	&lt;/select&gt;</span><br><span class="line">	&lt;input type=&quot;button&quot; value=&quot;显示&quot; onclick=&quot;showMarkdown()&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>表单的显示效果如下：</p>
+<p><img src="/images/MarkDown2HTML-form.png" alt></p>
+<p>点击表单中的“显示”按钮后会执行<code>showMarkdown( )</code>函数，即 <a href="#get-markdown-doc">用AJAX获取Markdown文档</a> 部分的那个函数，并且将表单选择的信息通过<code>form</code>变量传递给了<code>showMarkdown( )</code>函数中的<code>f</code>变量</p>
+<p>这样就通过表单设定了用户指定的Markdown文档</p>
+<h2 id="引用marked框架解析Markdown文档"><a href="#引用marked框架解析Markdown文档" class="headerlink" title="引用marked框架解析Markdown文档"></a>引用marked框架解析Markdown文档</h2><p>这里采用的是GitHub上的名为<code>marked</code>的JS框架，链接：<code>https://github.com/markedjs/marked</code></p>
+<p>要想使用这个框架，需要在html脚本的头信息中引用这个框架：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	...</span><br><span class="line">	&lt;script src=&quot;https://cdn.jsdelivr.net/npm/marked/marked.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+<p>引用这个框架后就可以使用里面定义的<code>marked( )</code>函数进行Markdown文本解析了</p>
+<h2 id="附：完整的实现脚本"><a href="#附：完整的实现脚本" class="headerlink" title="附：完整的实现脚本"></a>附：完整的实现脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	// 在这里对marked框架进行引用</span><br><span class="line">	&lt;script src=&quot;https://cdn.jsdelivr.net/npm/marked/marked.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	// 在这里编写AJAX代码</span><br><span class="line">	&lt;script&gt;</span><br><span class="line">  function showMarkdown()</span><br><span class="line">&#123;</span><br><span class="line">	// 获取表单变量</span><br><span class="line">	var f=form;</span><br><span class="line">	// 创建XMLHttpRequest对象</span><br><span class="line">	var xmlhttp;</span><br><span class="line">	if (window.XMLHttpRequest)</span><br><span class="line">	&#123;</span><br><span class="line">		// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码</span><br><span class="line">		xmlhttp=new XMLHttpRequest();</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		// IE6, IE5 浏览器执行代码</span><br><span class="line">		xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	// 得到服务器响应后，对得到的Markdown文档进行解析</span><br><span class="line">	xmlhttp.onreadystatechange=function()</span><br><span class="line">	&#123;</span><br><span class="line">		if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</span><br><span class="line">		&#123;</span><br><span class="line">			// 这里调用了marked框架中的marked函数实现Markdown2HTML的解析</span><br><span class="line">			document.getElementById(&quot;content&quot;).innerHTML=marked(xmlhttp.responseText);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	// 向服务器发送请求，获取你需要的Markdown文档</span><br><span class="line">	xmlhttp.open(&quot;GET&quot;,f.q.value,true);</span><br><span class="line">	xmlhttp.send();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	// 在这里编辑表单代码</span><br><span class="line">	&lt;div class=&quot;container&quot; style=&quot;margin-top:30px&quot;&gt;</span><br><span class="line">		&lt;form name=&quot;form&quot; action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">			&lt;select name=&quot;q&quot;&gt;</span><br><span class="line">				&lt;option class=&quot;active&quot; alue=&quot;&quot;&gt;选择一个笔记:&lt;/option&gt;</span><br><span class="line">				&lt;option value=&quot;A.md&quot;&gt;第一个Markdown文档&lt;/option&gt;</span><br><span class="line">				&lt;option value=&quot;B.md&quot;&gt;第二个Markdown文档&lt;/option&gt;</span><br><span class="line">				&lt;option value=&quot;C.md&quot;&gt;第三个Markdown文档&lt;/option&gt;</span><br><span class="line">				&lt;option value=&quot;Evalue-TranscriptomeData.md&quot;&gt;第四个Markdown文档&lt;/option&gt;</span><br><span class="line">			&lt;/select&gt;</span><br><span class="line">			&lt;input type=&quot;button&quot; value=&quot;显示&quot; onclick=&quot;showMarkdown()&quot;&gt;</span><br><span class="line">		&lt;/form&gt;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	// 在这里编辑空的div节点，用于后面展示解析后的内容</span><br><span class="line">	&lt;div id=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://github.com/Ming-Lian/Setup-Database/blob/master/AJAX%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md#content" target="_blank" rel="noopener">本人github笔记：AJAX学习笔记</a></p>
+<p>(2) <a href="https://github.com/markedjs/marked" target="_blank" rel="noopener">marked说明文档</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          
+            <a href="/tags/AJAX/" rel="tag"># AJAX</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/09/InAction-ML-XGS/" rel="next" title="西瓜书带学训练营·实战任务">
+                <i class="fa fa-chevron-left"></i> 西瓜书带学训练营·实战任务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/17/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述与分析"><span class="nav-number">1.</span> <span class="nav-text">问题描述与分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用AJAX获取Markdown文档"><span class="nav-number">2.</span> <span class="nav-text">用AJAX获取Markdown文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用表单指定Markdown文档"><span class="nav-number">3.</span> <span class="nav-text">用表单指定Markdown文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用marked框架解析Markdown文档"><span class="nav-number">4.</span> <span class="nav-text">引用marked框架解析Markdown文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附：完整的实现脚本"><span class="nav-number">5.</span> <span class="nav-text">附：完整的实现脚本</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="使用课程推荐的Octave进行编程实现，可以将Octave理解为开源版本的MATLAB Ex1: Linear Regression 读入数据  123456data = load(&amp;apos;ex1data1.txt&amp;apos;); % 导入的数据文件为用逗号隔开的两列，第一列为x，第二列为yX = data(:, 1);y = data(:, 2);% 可以尝试绘图% figure;plot(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Andrew NG Coursera 课程编程作业">
+<meta property="og:url" content="http://yoursite.com/2019/02/07/Andrew-Ng-Coursera-Homework/index.html">
+<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:description" content="使用课程推荐的Octave进行编程实现，可以将Octave理解为开源版本的MATLAB Ex1: Linear Regression 读入数据  123456data = load(&amp;apos;ex1data1.txt&amp;apos;); % 导入的数据文件为用逗号隔开的两列，第一列为x，第二列为yX = data(:, 1);y = data(:, 2);% 可以尝试绘图% figure;plot(">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex1-1.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex1-2.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex1-3.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex1-4.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-1.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-2.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-3.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-4.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-5.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-6.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-7.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-8.png">
+<meta property="og:image" content="http://yoursite.com/images/AndrewNG-homework-ex2-9.png">
+<meta property="og:updated_time" content="2019-02-17T06:12:08.096Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Andrew NG Coursera 课程编程作业">
+<meta name="twitter:description" content="使用课程推荐的Octave进行编程实现，可以将Octave理解为开源版本的MATLAB Ex1: Linear Regression 读入数据  123456data = load(&amp;apos;ex1data1.txt&amp;apos;); % 导入的数据文件为用逗号隔开的两列，第一列为x，第二列为yX = data(:, 1);y = data(:, 2);% 可以尝试绘图% figure;plot(">
+<meta name="twitter:image" content="http://yoursite.com/images/AndrewNG-homework-ex1-1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/07/Andrew-Ng-Coursera-Homework/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Andrew NG Coursera 课程编程作业 | Lianm' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Andrew-Ng-Coursera-Homework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Andrew NG Coursera 课程编程作业
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 23:56:50" itemprop="dateCreated datePublished" datetime="2019-02-07T23:56:50+00:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用课程推荐的<code>Octave</code>进行编程实现，可以将<code>Octave</code>理解为开源版本的<code>MATLAB</code></p>
+<h2 id="Ex1-Linear-Regression"><a href="#Ex1-Linear-Regression" class="headerlink" title="Ex1: Linear Regression"></a>Ex1: Linear Regression</h2><ol>
+<li><p>读入数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = load(&apos;ex1data1.txt&apos;); % 导入的数据文件为用逗号隔开的两列，第一列为x，第二列为y</span><br><span class="line">X = data(:, 1);</span><br><span class="line">y = data(:, 2);</span><br><span class="line">% 可以尝试绘图</span><br><span class="line">% figure;plot(x,y);</span><br><span class="line">m = length(y);</span><br></pre></td></tr></table></figure>
+<p> 数据分布图如下：</p>
+<p> <img src="/images/AndrewNG-homework-ex1-1.png" alt></p>
+</li>
+<li><p>梯度下降前的数据预处理与设置</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X = [ones(m,1),data(:,1)]; % 添加x0列，都设为1</span><br><span class="line">theta = zeros(2,1); % 初始化θ值</span><br><span class="line"></span><br><span class="line">% 梯度下降的一些设置信息</span><br><span class="line">iterations = 1500; % 迭代次数</span><br><span class="line">alpha = 0.01; % 学习率α</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算损失函数</p>
+<p> 线性回归的损失函数为：</p>
+<p> <img src="/images/AndrewNG-homework-ex1-2.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">% 定义一个函数computeCost来计算损失函数</span><br><span class="line">function J = computeCost(X, y, theta)</span><br><span class="line">	m = length(y);</span><br><span class="line">	predictions = X*theta; % 计算预测值hθ</span><br><span class="line">	sqerrors = (predictions - y).^2; % 计算平方误，矩阵的点乘运算得到的是一个向量</span><br><span class="line">	J = 1/(2*m)* sum(sqerrors);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行梯度下降</p>
+<p> <img src="/images/AndrewNG-homework-ex1-3.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">% 定义一个函数gradientDescent来执行梯度下降，为了后面观察梯度下降过程中损失函数的变化，记录每一步迭代后的损失函数值</span><br><span class="line">function [theta, J_history] = gradientDescent(X, y, theta, alpha, iterations)</span><br><span class="line">	m = length(y);</span><br><span class="line">	J_history = zeros(num_iters, 1);</span><br><span class="line">	% 以迭代次数为唯一迭代终止条件</span><br><span class="line">	for iter = 1:num_iters</span><br><span class="line">		% 计算梯度</span><br><span class="line">		predictions = X*theta;</span><br><span class="line">		updates = X&apos;*(predictions - y);</span><br><span class="line">		theta = theta - alpha*(1/m)*updates;</span><br><span class="line">		J_history(iter) = computeCost(X, y, theta);</span><br><span class="line">	end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>绘制拟合直线</p>
+<p> <img src="/images/AndrewNG-homework-ex1-4.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hold on; % 保留之前的绘图窗口，在这个绘图窗口继续画出拟合直线</span><br><span class="line">plot(X(:,2), X*theta, &apos;-&apos;);</span><br><span class="line">legend(&apos;Training data&apos;, &apos;Linear regression&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Ex2-Logistic回归"><a href="#Ex2-Logistic回归" class="headerlink" title="Ex2: Logistic回归"></a>Ex2: Logistic回归</h2><p>目标：</p>
+<blockquote>
+<p>构建一个logistics回归模型，依据学生两次考试的成绩来预测一个学生能否被大学录取</p>
+</blockquote>
+<p>通过的输入数据文件为<code>ex2data1.txt</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 为用逗号隔开的3列，分别为：exam1Score,exam2Score,lable</span><br><span class="line"></span><br><span class="line">34.62365962451697,78.0246928153624,0</span><br><span class="line">30.28671076822607,43.89499752400101,0</span><br><span class="line">35.84740876993872,72.90219802708364,0</span><br><span class="line">60.18259938620976,86.30855209546826,1</span><br><span class="line">79.0327360507101,75.3443764369103,1</span><br><span class="line">45.08327747668339,56.3163717815305,0</span><br><span class="line">61.10666453684766,96.51142588489624,1</span><br><span class="line">75.02474556738889,46.55401354116538,1</span><br><span class="line">76.09878670226257,87.42056971926803,1</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>读入数据，并画出数据分布散点图</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">data = load(&apos;ex2data1.txt&apos;);</span><br><span class="line">x = data(:,:2);</span><br><span class="line">y = data(:,3);</span><br><span class="line"></span><br><span class="line">% 画图</span><br><span class="line">%% 区分出两类样本</span><br><span class="line">pos = find(y==1);</span><br><span class="line">neg = find(y==0);</span><br><span class="line">figure;</span><br><span class="line">%% 画出pos类样本</span><br><span class="line">plot(x(pos,1), x(pos,2),&apos;k+&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">hold on;</span><br><span class="line">%% 画出neg类样本</span><br><span class="line">plot(x(neg,1), x(neg,2),&apos;ko&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">xlab(&apos;Exam 1 score&apos;);</span><br><span class="line">ylab(&apos;Exam 2 score&apos;);</span><br><span class="line">legend(&apos;Admitted&apos;, &apos;Not admitted&apos;);</span><br><span class="line">hold off;</span><br></pre></td></tr></table></figure>
+<p> <img src="/images/AndrewNG-homework-ex2-1.png" alt></p>
+<p> 要得到的目标函数为 sigmoid 函数：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-2.png" alt></p>
+<p> <img src="/images/AndrewNG-homework-ex2-3.png" alt></p>
+</li>
+<li><p>计算Cost和gradient</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[m,n] = size(x);</span><br><span class="line">X = [ones(m),data(:,:2)];</span><br><span class="line">initialTheta = zeros(1,n+1);</span><br><span class="line">% 计算初始的Cost和gradient</span><br><span class="line">[initalCost,initialGradient] = costFunction(X,y,initialTheta);</span><br><span class="line">% 打印出初始时的Cost和gradient</span><br><span class="line">fprintf(&apos;Cost at initial theta(zeros): %f\n&quot;,initialCost);</span><br><span class="line">fprintf(&apos;Gradient at initial theta(zeros): %f\n&quot;,initialGradient);</span><br></pre></td></tr></table></figure>
+<p> 在计算初始的Cost (initalCost) 和 gradient (initialGradient) 时，调用了自定义的函数costFunction</p>
+<p> 损失函数为：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-4.png" alt></p>
+<p> 梯度的计算公式为：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-5.png" alt></p>
+<p> 下面给出costFunction函数的定义：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function [jVal,gradient] = costFunction(x,y,theta)</span><br><span class="line">	predict = sigmoid(x*theta);</span><br><span class="line">	leftCost = -y&apos;*log(predict);</span><br><span class="line">	rightCost = -(1-y)&apos;*log(1-predict);</span><br><span class="line">	jVal = (1/m)*(leftCost+rightCost);</span><br><span class="line">	gradient = (1/m)*((predict-y)&apos;*x);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p> 在上面的costFunction函数中又调用了sigmoid函数，定义为：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function g = sigmoid(x)</span><br><span class="line">	g = 1./(1+exp(-x));</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>优化目标函数</p>
+<p> 使其目标函数的Cost最小化，即</p>
+<p> <img src="/images/AndrewNG-homework-ex2-6.png" alt></p>
+<p> 可以像<strong>练习一</strong>那样使用传统的梯度下降方法进行参数的优化，但Octave内部自带了<code>fminunc</code>函数，可以用于非约束优化问题（unconstrained optimization problem）的求解</p>
+<p> fminunc函数的用法为：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%% 设置fminunc函数的内部选项</span><br><span class="line">options = optmset(&apos;GradObj&apos;, &apos;on&apos;, &apos;MaxIter&apos;, 400);</span><br><span class="line">% &apos;GradObj&apos;, &apos;on&apos; 设置梯度目标参数为打开状态，即需要给这个算法提供一个梯度</span><br><span class="line">% &apos;MaxIter&apos;, 400 设置最大迭代次数</span><br><span class="line"></span><br><span class="line">%% 使用fminunc函数执行非约束优化</span><br><span class="line">[optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options);</span><br></pre></td></tr></table></figure>
+<p> 一般情况下costFunction函数和它的函数名一样，只计算Cost值，不过由于这里要用到fminunc这个非约束优化函数，该函数需要提供Cost和gradient，所以在前面costFunction函数时，增加了一个计算梯度值的功能</p>
+</li>
+<li><p>画出决策分界面 (Decision Boundary)</p>
+<p> 先像前面的第一步那样，画出原始数据分布散点图</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% 画图</span><br><span class="line">%% 区分出两类样本</span><br><span class="line">pos = find(y==1);</span><br><span class="line">neg = find(y==0);</span><br><span class="line">figure;</span><br><span class="line">%% 画出pos类样本</span><br><span class="line">plot(x(pos,1), x(pos,2),&apos;k+&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">%% 画出neg类样本</span><br><span class="line">plot(x(neg,1), x(neg,2),&apos;ko&apos;,&apos;MarkerSize&apos;, 3);</span><br><span class="line">xlab(&apos;Exam 1 score&apos;);</span><br><span class="line">ylab(&apos;Exam 2 score&apos;);</span><br></pre></td></tr></table></figure>
+<p> 然后在散点图的基础上，把分界线画出来</p>
+<p> 分界线满足：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-7.png" alt></p>
+<p> 得到x1和x2直接的关系为：</p>
+<p> <img src="/images/AndrewNG-homework-ex2-8.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hold on;</span><br><span class="line">% 只需要选择两个点即可将直线画出</span><br><span class="line">plot_x = [min(X(:,2))-2, max(X(:,2))+2];</span><br><span class="line">plot_y = (-1./theta(3)).*(theta(2).*plot_x + theta(1));</span><br><span class="line">plot(plot_x, plot_y)</span><br><span class="line">legend(&apos;Admitted&apos;, &apos;Not admitted&apos;, &apos;Decision Boundary&apos;)</span><br><span class="line">hold off;</span><br></pre></td></tr></table></figure>
+<p> <img src="/images/AndrewNG-homework-ex2-9.png" alt></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/07/Advanced-knowledge-of-SAM/" rel="next" title="SAM/BAM相关的进阶知识">
+                <i class="fa fa-chevron-left"></i> SAM/BAM相关的进阶知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/08/call-snp/" rel="prev" title="深入了解snp-calling流程">
+                深入了解snp-calling流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex1-Linear-Regression"><span class="nav-number">1.</span> <span class="nav-text">Ex1: Linear Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ex2-Logistic回归"><span class="nav-number">2.</span> <span class="nav-text">Ex2: Logistic回归</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
