@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="问题描述在进行宏基因组shotgun数据分析时，数据集分case和control两组，每组11个样本，通过Gene Profiling得到400多万行的profile（以RPKM方式进行定量），得到的proflie文件有600+MB 接着想用wilcox检验来筛选两组gene abundance存在差异的基因，结果跑了一天一夜没跑出结果 在排除脚本问题后，基本确定问题是数据量太大，计算效率太低导致">
+<meta name="keywords" content="R,shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【编程技巧】shell+R双重并行化——加速分析过程">
+<meta property="og:url" content="http://yoursite.com/2019/02/24/Dual-Parallelization-for-shell-R/index.html">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
+<meta property="og:description" content="问题描述在进行宏基因组shotgun数据分析时，数据集分case和control两组，每组11个样本，通过Gene Profiling得到400多万行的profile（以RPKM方式进行定量），得到的proflie文件有600+MB 接着想用wilcox检验来筛选两组gene abundance存在差异的基因，结果跑了一天一夜没跑出结果 在排除脚本问题后，基本确定问题是数据量太大，计算效率太低导致">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-02-24T14:19:04.016Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【编程技巧】shell+R双重并行化——加速分析过程">
+<meta name="twitter:description" content="问题描述在进行宏基因组shotgun数据分析时，数据集分case和control两组，每组11个样本，通过Gene Profiling得到400多万行的profile（以RPKM方式进行定量），得到的proflie文件有600+MB 接着想用wilcox检验来筛选两组gene abundance存在差异的基因，结果跑了一天一夜没跑出结果 在排除脚本问题后，基本确定问题是数据量太大，计算效率太低导致">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/24/Dual-Parallelization-for-shell-R/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【编程技巧】shell+R双重并行化——加速分析过程 | Lianm's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/24/Dual-Parallelization-for-shell-R/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【编程技巧】shell+R双重并行化——加速分析过程
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-24 14:14:36 / Modified: 14:19:04" itemprop="dateCreated datePublished" datetime="2019-02-24T14:14:36+00:00">2019-02-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在进行宏基因组shotgun数据分析时，数据集分case和control两组，每组11个样本，通过Gene Profiling得到400多万行的profile（以RPKM方式进行定量），得到的proflie文件有600+MB</p>
+<p>接着想用wilcox检验来筛选两组gene abundance存在差异的基因，结果跑了一天一夜没跑出结果</p>
+<p>在排除脚本问题后，基本确定问题是数据量太大，计算效率太低导致的，在解决这个问题过程中总结出了一种加速技巧：<strong>shell+R的双重并行化</strong></p>
+<h2 id="shell并行化"><a href="#shell并行化" class="headerlink" title="shell并行化"></a>shell并行化</h2><p>我目前所知道的在linux环境下的并行化实现方式有两种：</p>
+<p>（1）利用Slurm排队系统</p>
+<p>可以使用<code>--array=1-11%4</code>参数来指定任务队列编号为1-11，每次最多并行执行4个任务</p>
+<p>有两种书写格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 作为sbatch的参数</span><br><span class="line">$ sbatch --array=1-11%4 tasks.sh</span><br><span class="line"></span><br><span class="line">2. 写在shell脚本内部</span><br><span class="line">如：</span><br><span class="line">	#!/bin/bash</span><br><span class="line">	#SBATCH --array=1-11%4</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<p>（2）使用<code>do{...} &amp;;done;wait</code>语句</p>
+<p>该语句的格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">while read i</span><br><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">for((i=0;i&lt;n;i++)</span><br><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for((i=0;i&lt;10;i++))</span><br><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	echo $i</span><br><span class="line">	sleep 5</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<p>上面的命令如果不使用并行化，则总的执行时间为10*5=50秒，而并行之后只需要5秒</p>
+<p>可以在该命令模块外面再套一层循环，来<strong>控制每次并行化的任务数量</strong>，这个需求在大多数情况下是非常必要的：若总的任务很多，如果不对每一次并行化的任务数进行控制，而是一股脑地全部提交并行任务，非常容易到达服务器的负荷上限，那么等着你的很可能就是其他用户的骂声一片和服务器管理员的警告了！</p>
+<p>例如，从1到100，每次输出5个数，每次输出后间隔5秒后再继续下一轮的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for((i=0;5*i&lt;100;i++))</span><br><span class="line">do</span><br><span class="line">	for((j=5*i+1;j&lt;5*i+6;j++))</span><br><span class="line">	do</span><br><span class="line">		&#123;</span><br><span class="line">		echo $j</span><br><span class="line">		sleep 5</span><br><span class="line">		&#125; &amp;</span><br><span class="line">	done</span><br><span class="line">	wait</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="R并行化"><a href="#R并行化" class="headerlink" title="R并行化"></a>R并行化</h2><p>R的并行化是在 <code>*apply</code> 系列函数的基础上产生的，所以在介绍R的并行化之前，有必要对 <code>*apply</code> 系列函数作一个简单的说明，下面只对<code>apply( )</code>进行说明</p>
+<blockquote>
+<p>函数语法格式：<code>apply(x, margin, fun, ...)</code></p>
+<ul>
+<li><p><code>x</code>：一个data.frame或者是一个matrix</p>
+</li>
+<li><p><code>margin</code>：选择1或者2，1表示行，2表示列</p>
+</li>
+<li><p><code>fun</code>：一个函数对象，可以是R自带的，也可以是用户自定义的函数</p>
+</li>
+<li><p><code>...</code>：传递给函数fun的其他变量</p>
+</li>
+</ul>
+<p>例如：<code>apply(x,1,sum)</code>，将变量x逐行传递给函数sum，进行求和，得到的是变量x每行的和的列表</p>
+</blockquote>
+<p>一个任务之所以能够进行并行化处理，是因为该任务可以被拆分成许多个相互独立的小任务，每个小任务的求解对其他任务没有任何影响，因此可以对它们进行分而治之，最后将每个小任务求解结果进行汇总，即简单地合并，apply函数实现的就是这样的任务，将一个比较大的变量X按照行（margin=1）或列（margin=2）进行拆分，然后对每个行分别独立地进行求解</p>
+<p>但是<code>*apply</code>系列函数的分治策略并没有进行并行化，是一个只利用了一个线程的串行任务，但是由于它本身的分治属性，对它进行简单地改造和封装，就可以实现高效地并行化，这便是<code>parallel</code>包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># 初始化一个并行化的集群</span><br><span class="line">## 设置集群使用的核心数</span><br><span class="line">if (is.na(Args[4]))&#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">## 按照指定的核心数，初始化一个集群对象</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line"># 调用parApply函数，执行并行化任务</span><br><span class="line">out &lt;- parApply(cl,data,1,fun)</span><br><span class="line"></span><br><span class="line"># 任务结束后，关闭集群对象</span><br><span class="line">stopCluster(cl)</span><br></pre></td></tr></table></figure>
+<h2 id="shell-R双重并行化实现案例"><a href="#shell-R双重并行化实现案例" class="headerlink" title="shell+R双重并行化实现案例"></a>shell+R双重并行化实现案例</h2><p>有了上面提到的shell与R的并行化的实现方法，那么我们就可以将其运用于本文一开始提到的问题</p>
+<p>并行化的思路：</p>
+<blockquote>
+<p>（1）先将原始的大profile文件进行拆分，若每m行拆成一个subprofile，可以拆成n个subprofiles</p>
+<p>（2）对这n个subprofiles，按照每i个执行一次并行化任务（<strong>shell并行化</strong>），给每个并行化任务j个核心（<strong>R并行化</strong>）</p>
+</blockquote>
+<ol>
+<li><p><strong>shell脚本</strong></p>
+<p> 脚本名：<code>ParWilcox.sh</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># 参数说明：</span><br><span class="line"># - Profile files</span><br><span class="line"># - rows per sub-profile</span><br><span class="line"># - maximum tasks per run</span><br><span class="line"># - outdir</span><br><span class="line"></span><br><span class="line">profiles=$1</span><br><span class="line">nrow_per=$2</span><br><span class="line">num_tasks=$3</span><br><span class="line">outdir=$4</span><br><span class="line">if [ ! -d $outdir ]</span><br><span class="line">then</span><br><span class="line">	mkdir -p $outdir</span><br><span class="line">fi</span><br><span class="line">if [ -f $outdir/SubProfiles.list ]</span><br><span class="line">then</span><br><span class="line">	rm $outdir/SubProfiles.list</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">##################################需要修改的变量##################################</span><br><span class="line">workdir=/Path/To/Workdir</span><br><span class="line">################################################################################</span><br><span class="line"></span><br><span class="line"># 分割原始Profiles</span><br><span class="line">nline=$(wc -l $profiles | awk &apos;&#123;printf $1&#125;&apos;)</span><br><span class="line">for((i=0;i*nrow_per&lt;nline;i++))</span><br><span class="line">do</span><br><span class="line">	awk -v j=$i -v n=$nrow_per &apos;NR==1 || (NR&gt;j*n+1 &amp;&amp; NR&lt;=(j+1)*n+1)&apos; $profiles &gt;$outdir/SubProfiles-$&#123;i&#125;</span><br><span class="line">	echo &quot;SubProfiles-$&#123;i&#125;&quot; &gt;&gt;$outdir/SubProfiles.list</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 并行化执行多个sub-profile的wilcox检验</span><br><span class="line">num_SubProfiles=$(wc -l $outdir/SubProfiles.list | awk &apos;&#123;printf $1&#125;&apos;)</span><br><span class="line">for((i=0;i*num_tasks&lt;num_SubProfiles;i++))</span><br><span class="line">do</span><br><span class="line">	awk -v j=$i -v n=$num_tasks &apos;NR&gt;j*n &amp;&amp; NR&lt;=(j+1)*n&apos; $outdir/SubProfiles.list &gt; $outdir/current_subprofiles.List</span><br><span class="line">	while read subprofile</span><br><span class="line">	do</span><br><span class="line">		&#123;</span><br><span class="line">		Rscript $workdir/Script/wilcox-sided-parallel.R $outdir/$subprofile $workdir/Gene_abundance/SampleGroup.txt $outdir/statOut.$subprofile 2</span><br><span class="line">		&#125; &amp;</span><br><span class="line">	done &lt; $outdir/current_subprofiles.List</span><br><span class="line">	wait</span><br><span class="line">done</span><br><span class="line">cat $outdir/statOut.* &gt;$outdir/statOut</span><br><span class="line">rm $outdir/statOut.*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>被shell脚本调用的执行wilcox检验的R脚本</strong></p>
+<p> 脚本名：<code>wilcox-sided-parallel.R</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"># 三个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file</span><br><span class="line"># - outfile name</span><br><span class="line"># - threads number（默认为服务器总线程-10）</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line"></span><br><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># Initiate cluster</span><br><span class="line">if (is.na(Args[4]))&#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	if(is.na(stat$p.value))&#123;</span><br><span class="line">		stat$p.value &lt;- 1</span><br><span class="line">	&#125;</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">statOut &lt;- parApply(cl,data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line">stopCluster(cl)</span><br><span class="line"></span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 将结果写入文件中</span><br><span class="line">if(!is.null(statOut))&#123;</span><br><span class="line">	# 转换成数据框</span><br><span class="line">	statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">	colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line">	# 写入文件</span><br><span class="line">	write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>执行方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bash ParWilcox.sh &lt;raw profile&gt; &lt;rows per sub-profile&gt; &lt;tasks per run&gt; &lt;threads&gt;</span><br></pre></td></tr></table></figure>
+<p>脚本中用到的样本分组文件，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Sample	Group</span><br><span class="line">NP-003A	1</span><br><span class="line">NP-017A	1</span><br><span class="line">NP-018A	1</span><br><span class="line">...</span><br><span class="line">NP-007A	2</span><br><span class="line">NP-010A	2</span><br><span class="line">NP-011A	2</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/24/Follow-LYL-learning-math-physics/" rel="next" title="跟着李永乐老师学数学/物理">
+                <i class="fa fa-chevron-left"></i> 跟着李永乐老师学数学/物理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell并行化"><span class="nav-number">2.</span> <span class="nav-text">shell并行化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R并行化"><span class="nav-number">3.</span> <span class="nav-text">R并行化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-R双重并行化实现案例"><span class="nav-number">4.</span> <span class="nav-text">shell+R双重并行化实现案例</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

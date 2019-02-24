@@ -97,12 +97,12 @@
 
 
   <meta property="og:type" content="website">
-<meta property="og:title" content="Lianm&#39; Blog">
+<meta property="og:title" content="Lianm&#39;s Blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lianm&#39; Blog">
+<meta name="twitter:title" content="Lianm&#39;s Blog">
 
 
 
@@ -119,7 +119,7 @@
   };
 </script>
 
-  <title>Lianm' Blog</title>
+  <title>Lianm's Blog</title>
   
 
 
@@ -179,7 +179,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Lianm' Blog</span>
+        <span class="site-title">Lianm's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -298,6 +298,386 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/24/Dual-Parallelization-for-shell-R/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/24/Dual-Parallelization-for-shell-R/" class="post-title-link" itemprop="url">【编程技巧】shell+R双重并行化——加速分析过程</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-24 14:14:36 / Modified: 14:19:04" itemprop="dateCreated datePublished" datetime="2019-02-24T14:14:36+00:00">2019-02-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在进行宏基因组shotgun数据分析时，数据集分case和control两组，每组11个样本，通过Gene Profiling得到400多万行的profile（以RPKM方式进行定量），得到的proflie文件有600+MB</p>
+<p>接着想用wilcox检验来筛选两组gene abundance存在差异的基因，结果跑了一天一夜没跑出结果</p>
+<p>在排除脚本问题后，基本确定问题是数据量太大，计算效率太低导致的，在解决这个问题过程中总结出了一种加速技巧：<strong>shell+R的双重并行化</strong></p>
+<h2 id="shell并行化"><a href="#shell并行化" class="headerlink" title="shell并行化"></a>shell并行化</h2><p>我目前所知道的在linux环境下的并行化实现方式有两种：</p>
+<p>（1）利用Slurm排队系统</p>
+<p>可以使用<code>--array=1-11%4</code>参数来指定任务队列编号为1-11，每次最多并行执行4个任务</p>
+<p>有两种书写格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 作为sbatch的参数</span><br><span class="line">$ sbatch --array=1-11%4 tasks.sh</span><br><span class="line"></span><br><span class="line">2. 写在shell脚本内部</span><br><span class="line">如：</span><br><span class="line">	#!/bin/bash</span><br><span class="line">	#SBATCH --array=1-11%4</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<p>（2）使用<code>do{...} &amp;;done;wait</code>语句</p>
+<p>该语句的格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">while read i</span><br><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line">for((i=0;i&lt;n;i++)</span><br><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for((i=0;i&lt;10;i++))</span><br><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	echo $i</span><br><span class="line">	sleep 5</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<p>上面的命令如果不使用并行化，则总的执行时间为10*5=50秒，而并行之后只需要5秒</p>
+<p>可以在该命令模块外面再套一层循环，来<strong>控制每次并行化的任务数量</strong>，这个需求在大多数情况下是非常必要的：若总的任务很多，如果不对每一次并行化的任务数进行控制，而是一股脑地全部提交并行任务，非常容易到达服务器的负荷上限，那么等着你的很可能就是其他用户的骂声一片和服务器管理员的警告了！</p>
+<p>例如，从1到100，每次输出5个数，每次输出后间隔5秒后再继续下一轮的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for((i=0;5*i&lt;100;i++))</span><br><span class="line">do</span><br><span class="line">	for((j=5*i+1;j&lt;5*i+6;j++))</span><br><span class="line">	do</span><br><span class="line">		&#123;</span><br><span class="line">		echo $j</span><br><span class="line">		sleep 5</span><br><span class="line">		&#125; &amp;</span><br><span class="line">	done</span><br><span class="line">	wait</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="R并行化"><a href="#R并行化" class="headerlink" title="R并行化"></a>R并行化</h2><p>R的并行化是在 <code>*apply</code> 系列函数的基础上产生的，所以在介绍R的并行化之前，有必要对 <code>*apply</code> 系列函数作一个简单的说明，下面只对<code>apply( )</code>进行说明</p>
+<blockquote>
+<p>函数语法格式：<code>apply(x, margin, fun, ...)</code></p>
+<ul>
+<li><p><code>x</code>：一个data.frame或者是一个matrix</p>
+</li>
+<li><p><code>margin</code>：选择1或者2，1表示行，2表示列</p>
+</li>
+<li><p><code>fun</code>：一个函数对象，可以是R自带的，也可以是用户自定义的函数</p>
+</li>
+<li><p><code>...</code>：传递给函数fun的其他变量</p>
+</li>
+</ul>
+<p>例如：<code>apply(x,1,sum)</code>，将变量x逐行传递给函数sum，进行求和，得到的是变量x每行的和的列表</p>
+</blockquote>
+<p>一个任务之所以能够进行并行化处理，是因为该任务可以被拆分成许多个相互独立的小任务，每个小任务的求解对其他任务没有任何影响，因此可以对它们进行分而治之，最后将每个小任务求解结果进行汇总，即简单地合并，apply函数实现的就是这样的任务，将一个比较大的变量X按照行（margin=1）或列（margin=2）进行拆分，然后对每个行分别独立地进行求解</p>
+<p>但是<code>*apply</code>系列函数的分治策略并没有进行并行化，是一个只利用了一个线程的串行任务，但是由于它本身的分治属性，对它进行简单地改造和封装，就可以实现高效地并行化，这便是<code>parallel</code>包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># 初始化一个并行化的集群</span><br><span class="line">## 设置集群使用的核心数</span><br><span class="line">if (is.na(Args[4]))&#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">## 按照指定的核心数，初始化一个集群对象</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line"># 调用parApply函数，执行并行化任务</span><br><span class="line">out &lt;- parApply(cl,data,1,fun)</span><br><span class="line"></span><br><span class="line"># 任务结束后，关闭集群对象</span><br><span class="line">stopCluster(cl)</span><br></pre></td></tr></table></figure>
+<h2 id="shell-R双重并行化实现案例"><a href="#shell-R双重并行化实现案例" class="headerlink" title="shell+R双重并行化实现案例"></a>shell+R双重并行化实现案例</h2><p>有了上面提到的shell与R的并行化的实现方法，那么我们就可以将其运用于本文一开始提到的问题</p>
+<p>并行化的思路：</p>
+<blockquote>
+<p>（1）先将原始的大profile文件进行拆分，若每m行拆成一个subprofile，可以拆成n个subprofiles</p>
+<p>（2）对这n个subprofiles，按照每i个执行一次并行化任务（<strong>shell并行化</strong>），给每个并行化任务j个核心（<strong>R并行化</strong>）</p>
+</blockquote>
+<ol>
+<li><p><strong>shell脚本</strong></p>
+<p> 脚本名：<code>ParWilcox.sh</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># 参数说明：</span><br><span class="line"># - Profile files</span><br><span class="line"># - rows per sub-profile</span><br><span class="line"># - maximum tasks per run</span><br><span class="line"># - outdir</span><br><span class="line"></span><br><span class="line">profiles=$1</span><br><span class="line">nrow_per=$2</span><br><span class="line">num_tasks=$3</span><br><span class="line">outdir=$4</span><br><span class="line">if [ ! -d $outdir ]</span><br><span class="line">then</span><br><span class="line">	mkdir -p $outdir</span><br><span class="line">fi</span><br><span class="line">if [ -f $outdir/SubProfiles.list ]</span><br><span class="line">then</span><br><span class="line">	rm $outdir/SubProfiles.list</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">##################################需要修改的变量##################################</span><br><span class="line">workdir=/Path/To/Workdir</span><br><span class="line">################################################################################</span><br><span class="line"></span><br><span class="line"># 分割原始Profiles</span><br><span class="line">nline=$(wc -l $profiles | awk &apos;&#123;printf $1&#125;&apos;)</span><br><span class="line">for((i=0;i*nrow_per&lt;nline;i++))</span><br><span class="line">do</span><br><span class="line">	awk -v j=$i -v n=$nrow_per &apos;NR==1 || (NR&gt;j*n+1 &amp;&amp; NR&lt;=(j+1)*n+1)&apos; $profiles &gt;$outdir/SubProfiles-$&#123;i&#125;</span><br><span class="line">	echo &quot;SubProfiles-$&#123;i&#125;&quot; &gt;&gt;$outdir/SubProfiles.list</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 并行化执行多个sub-profile的wilcox检验</span><br><span class="line">num_SubProfiles=$(wc -l $outdir/SubProfiles.list | awk &apos;&#123;printf $1&#125;&apos;)</span><br><span class="line">for((i=0;i*num_tasks&lt;num_SubProfiles;i++))</span><br><span class="line">do</span><br><span class="line">	awk -v j=$i -v n=$num_tasks &apos;NR&gt;j*n &amp;&amp; NR&lt;=(j+1)*n&apos; $outdir/SubProfiles.list &gt; $outdir/current_subprofiles.List</span><br><span class="line">	while read subprofile</span><br><span class="line">	do</span><br><span class="line">		&#123;</span><br><span class="line">		Rscript $workdir/Script/wilcox-sided-parallel.R $outdir/$subprofile $workdir/Gene_abundance/SampleGroup.txt $outdir/statOut.$subprofile 2</span><br><span class="line">		&#125; &amp;</span><br><span class="line">	done &lt; $outdir/current_subprofiles.List</span><br><span class="line">	wait</span><br><span class="line">done</span><br><span class="line">cat $outdir/statOut.* &gt;$outdir/statOut</span><br><span class="line">rm $outdir/statOut.*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>被shell脚本调用的执行wilcox检验的R脚本</strong></p>
+<p> 脚本名：<code>wilcox-sided-parallel.R</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"># 三个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file</span><br><span class="line"># - outfile name</span><br><span class="line"># - threads number（默认为服务器总线程-10）</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line"></span><br><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># Initiate cluster</span><br><span class="line">if (is.na(Args[4]))&#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	if(is.na(stat$p.value))&#123;</span><br><span class="line">		stat$p.value &lt;- 1</span><br><span class="line">	&#125;</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">statOut &lt;- parApply(cl,data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line">stopCluster(cl)</span><br><span class="line"></span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 将结果写入文件中</span><br><span class="line">if(!is.null(statOut))&#123;</span><br><span class="line">	# 转换成数据框</span><br><span class="line">	statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">	colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line">	# 写入文件</span><br><span class="line">	write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>执行方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bash ParWilcox.sh &lt;raw profile&gt; &lt;rows per sub-profile&gt; &lt;tasks per run&gt; &lt;threads&gt;</span><br></pre></td></tr></table></figure>
+<p>脚本中用到的样本分组文件，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Sample	Group</span><br><span class="line">NP-003A	1</span><br><span class="line">NP-017A	1</span><br><span class="line">NP-018A	1</span><br><span class="line">...</span><br><span class="line">NP-007A	2</span><br><span class="line">NP-010A	2</span><br><span class="line">NP-011A	2</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/24/Follow-LYL-learning-math-physics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/24/Follow-LYL-learning-math-physics/" class="post-title-link" itemprop="url">跟着李永乐老师学数学/物理</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-24 14:05:50 / Modified: 14:09:33" itemprop="dateCreated datePublished" datetime="2019-02-24T14:05:50+00:00">2019-02-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MathIsFunGame/" itemprop="url" rel="index"><span itemprop="name">MathIsFunGame</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数学部分"><a href="#数学部分" class="headerlink" title="数学部分"></a>数学部分</h2><h3 id="1-祖暅原理：我国古代数学家算球体积的方法"><a href="#1-祖暅原理：我国古代数学家算球体积的方法" class="headerlink" title="1. 祖暅原理：我国古代数学家算球体积的方法"></a>1. 祖暅原理：我国古代数学家算球体积的方法</h3><p><img src="/images/Follow-LYL-1.jpg" alt></p>
+<h3 id="2-容斥原理：春节集卡活动集齐的概率有多大"><a href="#2-容斥原理：春节集卡活动集齐的概率有多大" class="headerlink" title="2. 容斥原理：春节集卡活动集齐的概率有多大"></a>2. 容斥原理：春节集卡活动集齐的概率有多大</h3><p><img src="/images/Follow-LYL-2.jpg" alt></p>
+<hr>
+<p>参考资料：</p>
+<p>(1) 李永乐老师B站视频</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/Practical-Scripts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -307,7 +687,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -343,12 +723,24 @@
                 
               
 
-              <time title="Created: 2019-02-17 08:14:59 / Modified: 08:31:02" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
+              <time title="Created: 2019-02-17 08:14:59" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-24 13:57:02" itemprop="dateModified" datetime="2019-02-24T13:57:02+00:00">2019-02-24</time>
               
             
           </span>
@@ -471,7 +863,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from Bio import SeqIO</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">Seq = [ seq for seq in SeqIO.parse(sys.argv[1],&apos;fasta&apos;)]</span><br><span class="line"></span><br><span class="line">SeqIO.write(Seq,sys.argv[2],&apos;fasta&apos;)</span><br></pre></td></tr></table></figure>
 <p>用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python formatFasta.py &lt;in.fa&gt; &lt;out.fa&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="R"><a href="#R" class="headerlink" title="R"></a>R</h2><h3 id="1-对profiles进行wilcox检验"><a href="#1-对profiles进行wilcox检验" class="headerlink" title="1. 对profiles进行wilcox检验"></a>1. 对profiles进行wilcox检验</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># 三个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file </span><br><span class="line"># - outfile name</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">statOut &lt;- apply(data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"># 转换成数据框</span><br><span class="line">statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line"># 写入文件</span><br><span class="line">write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br></pre></td></tr></table></figure>
+<h2 id="R"><a href="#R" class="headerlink" title="R"></a>R</h2><h3 id="1-对profiles进行wilcox检验（并行化）"><a href="#1-对profiles进行wilcox检验（并行化）" class="headerlink" title="1. 对profiles进行wilcox检验（并行化）"></a>1. 对profiles进行wilcox检验（并行化）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># 四个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file </span><br><span class="line"># - outfile name</span><br><span class="line"># - threads number（默认为服务器总线程-10）</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line"></span><br><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># Initiate cluster</span><br><span class="line">if(is.na(Args[4])) &#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	if(is.na(stat$p.value))&#123;</span><br><span class="line">		stat$p.value &lt;- 1</span><br><span class="line">	&#125;</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">statOut &lt;- parApply(cl,data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line">stopCluster(cl)</span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 将结果写入文件中</span><br><span class="line">if(!is.null(statOut))&#123;</span><br><span class="line">	# 转换成数据框</span><br><span class="line">	statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">	colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line">	# 写入文件</span><br><span class="line">	write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -537,7 +929,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -893,7 +1285,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -1541,153 +1933,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/17/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-17 03:46:27" itemprop="dateCreated datePublished" datetime="2019-02-17T03:46:27+00:00">2019-02-17</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/09/Load-and-resolve-MarkdownDoc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1697,7 +1942,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -1946,7 +2191,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -1999,7 +2244,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-17 06:41:16" itemprop="dateModified" datetime="2019-02-17T06:41:16+00:00">2019-02-17</time>
+                <time title="Modified: 2019-02-24 14:23:38" itemprop="dateModified" datetime="2019-02-24T14:23:38+00:00">2019-02-24</time>
               
             
           </span>
@@ -2233,6 +2478,89 @@
 </tr>
 </tbody>
 </table>
+<h2 id="4-sklearn包中朴素贝叶斯库的使用"><a href="#4-sklearn包中朴素贝叶斯库的使用" class="headerlink" title="4.sklearn包中朴素贝叶斯库的使用"></a>4.sklearn包中朴素贝叶斯库的使用</h2><h3 id="4-1-朴素贝叶斯相关知识点回顾"><a href="#4-1-朴素贝叶斯相关知识点回顾" class="headerlink" title="4.1. 朴素贝叶斯相关知识点回顾"></a>4.1. 朴素贝叶斯相关知识点回顾</h3><h4 id="4-1-1-什么是朴素贝叶斯分类器"><a href="#4-1-1-什么是朴素贝叶斯分类器" class="headerlink" title="4.1.1. 什么是朴素贝叶斯分类器"></a>4.1.1. 什么是朴素贝叶斯分类器</h4><p>判别式模型（discriminative models)：像决策树、BP神经网络、支持向量机等，都可以归入判别式模型，它们都是直接学习出输出Y与特征X的关系，如：</p>
+<ul>
+<li>决策函数 Y=f(X)</li>
+<li>条件概率 P(Y|X)</li>
+</ul>
+<p>生成式模型 (gernerative models)：先对联合概率分布 P(X,Y) 进行建模，然后再由此获得P(Y|X) = P(X,Y)/P(X)</p>
+<p>贝叶斯学派的思想：</p>
+<blockquote>
+<p>贝叶斯学派的思想可以概括为先验概率+数据=后验概率。也就是说我们在实际问题中需要得到的后验概率，可以通过先验概率和数据一起综合得到。数据大家好理解，被频率学派攻击的是先验概率，一般来说先验概率就是我们对于数据所在领域的历史经验，但是这个经验常常难以量化或者模型化，于是贝叶斯学派大胆的假设先验分布的模型，比如正态分布，beta分布等。这个假设一般没有特定的依据，因此一直被频率学派认为很荒谬。虽然难以从严密的数学逻辑里推出贝叶斯学派的逻辑，但是在很多实际应用中，贝叶斯理论很好用，比如垃圾邮件分类，文本分类</p>
+</blockquote>
+<p>如何对P(X,Y)进行建模？</p>
+<blockquote>
+<p>假如我们的分类模型样本是：</p>
+<p>(x<sup>(1)</sup><sub>1</sub>,x<sup>(1)</sup><sub>2</sub>,…x<sup>(1)</sup><sub>n</sub>,y<sub>1</sub>), (x<sup>(2)</sup><sub>1</sub>,x<sup>(2)</sup><sub>2</sub>,…x<sup>(2)</sup><sub>n</sub>,y<sub>2</sub>),…(x<sup>(m)</sup><sub>1</sub>,x<sup>(m)</sup><sub>2</sub>, …, x<sup>(m)</sup><sub>n</sub>,y<sub>m</sub>)</p>
+<p>则</p>
+<p>P(X, Y) = P(Y) * P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y ) </p>
+<p>其中</p>
+<p>P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y )  =  P( x<sub>1</sub> | Y) * P( x<sub>2</sub> | Y, x<sub>1</sub>) * … P( x<sub>n</sub> | Y, x<sub>1</sub>, … , x<sub>n-1</sub>)</p>
+</blockquote>
+<p>这是一个超级复杂的有n个维度的条件分布，很难求出</p>
+<p>朴素贝叶斯模型在这里做了一个大胆的假设，即X的n个维度之间相互独立，这样就可以得出：</p>
+<p>P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y ) = P( x<sub>1</sub> | Y) * P( x<sub>2</sub> | Y) * … * P( x<sub>n</sub> | Y) </p>
+<h4 id="4-1-2-朴素贝叶斯推断"><a href="#4-1-2-朴素贝叶斯推断" class="headerlink" title="4.1.2. 朴素贝叶斯推断"></a>4.1.2. 朴素贝叶斯推断</h4><p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-1.png" alt></p>
+<h4 id="4-1-3-朴素贝叶斯学习"><a href="#4-1-3-朴素贝叶斯学习" class="headerlink" title="4.1.3. 朴素贝叶斯学习"></a>4.1.3. 朴素贝叶斯学习</h4><p>需要从训练样本中学习到以下两个参数：</p>
+<ul>
+<li><p><strong>先验概率</strong> P(c)</p>
+<p>  P(c)表示了样本空间中各类样本所占的比例</p>
+<p>  根据大数定律，当训练集中包含充足的独立同分布样本时，P(c)可根据各类样本出现的频率来估计</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-2.png" alt></p>
+</li>
+<li><p><strong>类条件概率</strong>（又称为似然） P(x<sub>i</sub> | c)</p>
+<p>  （1）如果 x<sub>i</sub> 是离散的，可以假设 x<sub>i</sub>符合多项式分布，这样得到 P(x<sub>i</sub> | c) 是在样本类别 c 中，特征 x<sub>i</sub> 出现的频率</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-3.png" alt></p>
+<p>  （2）如果 x<sub>i</sub> 是连续属性，可以假设 P(x<sub>i</sub> | c) ~ N( μ<sub>c,i</sub> , σ<sup>2</sup><sub>c,i</sub> )</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-4.png" alt></p>
+</li>
+</ul>
+<h3 id="4-2-sklearn中朴素贝叶斯类库的简介"><a href="#4-2-sklearn中朴素贝叶斯类库的简介" class="headerlink" title="4.2. sklearn中朴素贝叶斯类库的简介"></a>4.2. sklearn中朴素贝叶斯类库的简介</h3><p>在scikit-learn中，一共有3个朴素贝叶斯的分类算法类</p>
+<blockquote>
+<ul>
+<li><p>GaussianNB：先验为高斯分布的朴素贝叶斯</p>
+</li>
+<li><p>MultinomialNB：先验为多项式分布的朴素贝叶斯</p>
+</li>
+<li><p>BernoulliNB：先验为伯努利分布的朴素贝叶斯</p>
+</li>
+</ul>
+</blockquote>
+<p>这三个类适用的分类场景各不相同</p>
+<blockquote>
+<p>一般来说，如果样本特征的分布大部分是<strong>连续值</strong>，使用GaussianNB会比较好</p>
+<p>如果如果样本特征的分大部分是<strong>多元离散值</strong>，使用MultinomialNB比较合适</p>
+<p>如果样本特征是<strong>二元离散值</strong>或者<strong>很稀疏的多元离散值</strong>，应该使用BernoulliNB。</p>
+</blockquote>
+<h4 id="4-2-1-GaussianNB类"><a href="#4-2-1-GaussianNB类" class="headerlink" title="4.2.1. GaussianNB类"></a>4.2.1. GaussianNB类</h4><p>GaussianNB类的主要参数仅有一个，即先验概率priors</p>
+<p>这个值默认不给出，如果不给出此时P(Y=c)= m<sub>c</sub> / m，如果给出的话就以priors 为准</p>
+<p>在使用GaussianNB的fit方法拟合数据后，我们可以进行预测。此时预测有三种方法</p>
+<blockquote>
+<ul>
+<li><p>predict方法：就是我们最常用的预测方法，直接给出测试集的预测类别输出；</p>
+</li>
+<li><p>predict_proba方法：给出测试集样本在各个类别上预测的概率；</p>
+</li>
+<li><p>predict_log_proba方法：和predict_proba类似，它会给出测试集样本在各个类别上预测的概率的一个对数转化；</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">clf = GaussianNB()</span><br><span class="line">#拟合数据</span><br><span class="line">clf.fit(X, Y)</span><br><span class="line"></span><br><span class="line">#进行预测</span><br><span class="line">clf.predict([[-0.8, -1]])</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-2-MultinomialNB类"><a href="#4-2-2-MultinomialNB类" class="headerlink" title="4.2.2. MultinomialNB类"></a>4.2.2. MultinomialNB类</h4><p>MultinomialNB假设特征的先验概率为多项式分布，即如下式：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-5.png" alt></p>
+<p>MultinomialNB参数比GaussianNB多，但是一共也只有仅仅3个</p>
+<ul>
+<li><p><strong>参数alpha</strong>：为上面的常数λ。如果你没有特别的需要，用默认的1即可。如果发现拟合的不好，需要调优时，可以选择稍大于1或者稍小于1的数</p>
+</li>
+<li><p><strong>参数fit_prior</strong>：是否要考虑先验概率，如果是false，则所有的样本类别输出都有相同的类别先验概率；否则可以自己用第三个参数class_prior输入先验概率，或者不输入第三个参数class_prior让MultinomialNB自己从训练集样本来计算先验概率</p>
+</li>
+<li><p><strong>参数class_prior</strong>：输入先验概率，若不输入第三个参数class_prior让MultinomialNB自己从训练集样本来计算先验概率</p>
+</li>
+</ul>
+<h4 id="4-2-3-BernoulliNB类"><a href="#4-2-3-BernoulliNB类" class="headerlink" title="4.2.3. BernoulliNB类"></a>4.2.3. BernoulliNB类</h4><p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-6.png" alt></p>
+<p>其中，x <sub>i</sub> 只能取0或1</p>
+<p>BernoulliNB一共有4个参数，其中3个参数的名字和意义和MultinomialNB完全相同</p>
+<p>唯一增加的一个参数是binarize，这个参数主要是用来帮BernoulliNB处理二项分布的。如果不输入，则BernoulliNB认为每个数据特征都已经是二元的。否则的话，小于binarize的会归为一类，大于binarize的会归为另外一类</p>
 <hr>
 <p>参考资料：</p>
 <p>(1) <a href="https://github.com/MLjian/TextClassificationImplement" target="_blank" rel="noopener">【GitHub】MLjian/TextClassificationImplement</a></p>
@@ -2243,6 +2571,9 @@
 <p>(6) <a href="https://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">刘建平Pinard《scikit-learn 支持向量机算法库使用小结》</a></p>
 <p>(7) <a href="https://www.cnblogs.com/pinard/p/6126077.html" target="_blank" rel="noopener">刘建平Pinard《支持向量机高斯核调参小结》</a></p>
 <p>(8) <a href="https://blog.csdn.net/loveliuzz/article/details/78768063" target="_blank" rel="noopener">loveliuzz《机器学习sklearn19.0——SVM算法》</a></p>
+<p>(9) 周志华《机器学习》</p>
+<p>(10) <a href="https://www.cnblogs.com/pinard/p/6069267.html" target="_blank" rel="noopener">刘建平Pinard《朴素贝叶斯算法原理小结》</a></p>
+<p>(11) <a href="https://www.cnblogs.com/pinard/p/6074222.html" target="_blank" rel="noopener">刘建平Pinard《scikit-learn 朴素贝叶斯类库使用小结》</a></p>
 
           
         
@@ -2308,7 +2639,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -2550,7 +2881,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -3152,7 +3483,7 @@ samplelist textfile 格式如下：
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -3605,552 +3936,6 @@ samplelist textfile 格式如下：
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/call-snp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/08/call-snp/" class="post-title-link" itemprop="url">深入了解snp-calling流程</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-08 00:15:36" itemprop="dateCreated datePublished" datetime="2019-02-08T00:15:36+00:00">2019-02-08</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-17 06:12:08" itemprop="dateModified" datetime="2019-02-17T06:12:08+00:00">2019-02-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="GATK4流程"><a href="#GATK4流程" class="headerlink" title="GATK4流程"></a>GATK4流程</h2><p><img src="/images/GATK4-logo.png" alt></p>
-<h3 id="准备配套数据"><a href="#准备配套数据" class="headerlink" title="准备配套数据"></a>准备配套数据</h3><p>要明确你的参考基因组版本了！！！ b36/b37/hg18/hg19/hg38，记住<strong>b37和hg19并不是完全一样</strong>的，有些微区别哦！！！</p>
-<p><strong>1、下载hg19</strong></p>
-<p>这个下载地址非常多，常用的就是NCBI，ensembl和UCSC了，但是这里推荐用这个脚本下载（下载源为UCSC）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 一个个地下载hg19的染色体</span><br><span class="line">for i in $(seq 1 22) X Y M;</span><br><span class="line">do echo $i;</span><br><span class="line">wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/chr$&#123;i&#125;.fa.gz;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">gunzip *.gz</span><br><span class="line"></span><br><span class="line"># 用cat按照染色体的顺序拼接起来，因为GATK后面的一些步骤对染色体顺序要求非常变态，如果下载整个hg19，很难保证染色体顺序是1-22，X,Y,M</span><br><span class="line">for i in $(seq 1 22) X Y M;</span><br><span class="line">do cat chr$&#123;i&#125;.fa &gt;&gt; hg19.fasta;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">rm -fr chr*.fasta</span><br></pre></td></tr></table></figure>
-<h3 id="BWA-Map-to-Reference"><a href="#BWA-Map-to-Reference" class="headerlink" title="BWA: Map to Reference"></a>BWA: Map to Reference</h3><ol>
-<li><p>建立参考序列索引</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bwa index -a bwtsw ref.fa</span><br></pre></td></tr></table></figure>
-<p> 参数<code>-a</code>用于指定建立索引的算法：</p>
-<blockquote>
-<ul>
-<li>bwtsw 适用于&gt;10M</li>
-<li>is 适用于参考序列&lt;2G (默认-a is)</li>
-</ul>
-</blockquote>
-<p> 可以不指定<code>-a</code>参数，bwa index会根据基因组大小来自动选择合适的索引方法</p>
-</li>
-<li><p>序列比对</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ bwa mem ref.fa sample_1.fq sample_2.fq -R &apos;@RG\tID:sample\tLB:sample\tSM:sample\tPL:ILLUMINA&apos; \</span><br><span class="line">	2&gt;sample_map.log | samtools sort -@ 20 -O bam -o sample.sorted.bam 1&gt;sample_sort.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
-<p> <code>-R</code> 选项为必须选项，用于定义头文件中的SAM/BAM文件中的read group和sample信息</p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; The file must have a proper bam header with read groups. Each read group must contain the platform (PL) and sample (SM) tags. </span><br><span class="line">&gt; For the platform value, we currently support 454, LS454, Illumina, Solid, ABI_Solid, and CG (all case-insensitive)</span><br><span class="line">&gt; </span><br><span class="line">&gt; The GATK requires several read group fields to be present in input files and will fail with errors if this requirement is not satisfied</span><br><span class="line">&gt; </span><br><span class="line">&gt; ID：输入reads集的ID号； LB： reads集的文库名； SM：样本名称； PL：测序平台</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p> 查看SAM/BAM文件中的read group和sample信息：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ samtools view -H /path/to/my.bam | grep &apos;^@RG&apos;</span><br><span class="line">@RG ID:0    PL:solid    PU:Solid0044_20080829_1_Pilot1_Ceph_12414_B_lib_1_2Kb_MP_Pilot1_Ceph_12414_B_lib_1_2Kb_MP   LB:Lib1 PI:2750 DT:2008-08-28T20:00:00-0400 SM:NA12414  CN:bcm</span><br><span class="line">@RG ID:1    PL:solid    PU:0083_BCM_20080719_1_Pilot1_Ceph_12414_B_lib_1_2Kb_MP_Pilot1_Ceph_12414_B_lib_1_2Kb_MP    LB:Lib1 PI:2750 DT:2008-07-18T20:00:00-0400 SM:NA12414  CN:bcm</span><br><span class="line">@RG ID:2    PL:LS454    PU:R_2008_10_02_06_06_12_FLX01080312_retry  LB:HL#01_NA11881    PI:0    SM:NA11881  CN:454MSC</span><br><span class="line">@RG ID:3    PL:LS454    PU:R_2008_10_02_06_07_08_rig19_retry    LB:HL#01_NA11881    PI:0    SM:NA11881  CN:454MSC</span><br><span class="line">@RG ID:4    PL:LS454    PU:R_2008_10_02_17_50_32_FLX03080339_retry  LB:HL#01_NA11881    PI:0    SM:NA11881  CN:454MSC</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p> read group信息不仅会加在头信息部分，也会在比对结果的每条记录里添加一个 <code>RG:Z:*</code> 标签</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ samtools view /path/to/my.bam | grep &apos;^@RG&apos;</span><br><span class="line">EAS139_44:2:61:681:18781    35  1   1   0   51M =   9   59  TAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAA B&lt;&gt;;==?=?&lt;==?=?=&gt;&gt;?&gt;&gt;&lt;=&lt;?=?8&lt;=?&gt;?&lt;:=?&gt;?&lt;==?=&gt;:;&lt;?:= RG:Z:4  MF:i:18 Aq:i:0  NM:i:0  UQ:i:0  H0:i:85 H1:i:31</span><br><span class="line">EAS139_44:7:84:1300:7601    35  1   1   0   51M =   12  62  TAACCCTAAGCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAA G&lt;&gt;;==?=?&amp;=&gt;?=?&lt;==?&gt;?&lt;&gt;&gt;?=?&lt;==?&gt;?&lt;==?&gt;?1==@&gt;?;&lt;=&gt;&lt;; RG:Z:3  MF:i:18 Aq:i:0  NM:i:1  UQ:i:5  H0:i:0  H1:i:85</span><br><span class="line">EAS139_44:8:59:118:13881    35  1   1   0   51M =   2   52  TAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAA @&lt;&gt;;&lt;=?=?==&gt;?&gt;?&lt;==?=&gt;&lt;=&gt;?-?;=&gt;?:&gt;&lt;==?7?;&lt;&gt;?5?&lt;&lt;=&gt;:; RG:Z:1  MF:i:18 Aq:i:0  NM:i:0  UQ:i:0  H0:i:85 H1:i:31</span><br><span class="line">EAS139_46:3:75:1326:2391    35  1   1   0   51M =   12  62  TAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAACCCTAA @&lt;&gt;==&gt;?&gt;@???B&gt;A&gt;?&gt;A?A&gt;??A?@&gt;?@A?@;??A&gt;@7&gt;?&gt;&gt;@:&gt;=@;@ RG:Z:0  MF:i:18 Aq:i:0  NM:i:0  UQ:i:0  H0:i:85 H1:i:31</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p> 若原始SAM/BAM文件没有read group和sample信息，可以通过AddOrReplaceReadGroups添加这部分信息</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar picard.jar AddOrReplaceReadGroups \</span><br><span class="line">      I=input.bam \</span><br><span class="line">      O=output.bam \</span><br><span class="line">      RGID=4 \</span><br><span class="line">      RGLB=lib1 \</span><br><span class="line">      RGPL=illumina \</span><br><span class="line">      RGPU=unit1 \</span><br><span class="line">      RGSM=20</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="前期处理"><a href="#前期处理" class="headerlink" title="前期处理"></a>前期处理</h3><p>在进行本部分的操作之前先要做好以下两部的准备工作</p>
-<p>1、创建GATK索引。用Samtools为参考序列创建一个索引，这是为方便GATK能够快速地获取fasta上的任何序列做准备</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ samtools faidx database/chr17.fa	# 该命令会在chr17.fa所在目录下创建一个chr17.fai索引文件</span><br></pre></td></tr></table></figure>
-<p>2、生成.dict文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gatk CreateSequenceDictionary -R database/chr17.fa -O database/chr17.dict</span><br></pre></td></tr></table></figure>
-<p>GATK4的调用语法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gatk [--java-options &quot;-Xmx4G&quot;] ToolName [GATK args]</span><br></pre></td></tr></table></figure>
-<h4 id="去除PCR重复"><a href="#去除PCR重复" class="headerlink" title="去除PCR重复"></a>去除PCR重复</h4><h5 id="duplicates的产生原因"><a href="#duplicates的产生原因" class="headerlink" title="duplicates的产生原因"></a>duplicates的产生原因</h5><p><img src="/images/GATK4-pipeline-remove-duplicates-reason-of-duplicates.jpg" alt></p>
-<ul>
-<li><strong>PCR duplicates（PCR重复）</strong></li>
-</ul>
-<p>PCR扩增时，同一个DNA片段会产生多个相同的拷贝，第4步测序的时候，这些来源于同！一！个！拷贝的DNA片段会结合到Fellowcell的不同位置上，生成完全相同的测序cluster，然后被测序出来，这些相同的序列就是duplicate</p>
-<ul>
-<li><strong>Cluster duplicates</strong></li>
-</ul>
-<p>生成测序cluster的时候，某一个cluster中的DNA序列可能搭到旁边的另一个cluster的生成位点上，又再重新长成一个相同的cluster，这也是序列duplicate的另一个来源，这个现象在Illumina HiSeq4000之后的Flowcell中会有这类Cluster duplicates</p>
-<ul>
-<li><strong>Optical duplicates（光学重复）</strong></li>
-</ul>
-<p>某些cluster在测序的时候，捕获的荧光亮点由于光波的衍射，导致形状出现重影（如同近视散光一样），导致它可能会被当成两个荧光点来处理。这也会被读出为两条完全相同的reads</p>
-<ul>
-<li><strong>Sister duplicates</strong></li>
-</ul>
-<p>它是文库分子的两条互补链同时都与Flowcell上的引物结合分别形成了各自的cluster被测序，最后产生的这对reads是完全反向互补的。比对到参考基因组时，也分别在正负链的相同位置上，在有些分析中也会被认为是一种duplicates。</p>
-<h5 id="用泊松分布解释-NGS-测序数据的-duplication-问题"><a href="#用泊松分布解释-NGS-测序数据的-duplication-问题" class="headerlink" title="用泊松分布解释 NGS 测序数据的 duplication 问题"></a>用泊松分布解释 NGS 测序数据的 duplication 问题</h5><p>我曾经有这样的疑惑，为什么文库构建过程中的 PCR 将每个文库分子都扩增了上千倍，以 PCR 10个循环为例 2<sup>10</sup>= 1024 ，但是实际测序数据中 duplication 率并不高（低于20%）</p>
-<p>有一篇文章从统计概率的角度详细探讨了一下 duplication 率的影响因素</p>
-<p>PCR 的过程中不同长度的文库分子被扩增的效率不同（GC 太高或 AT 含量太高都会影响扩增效率），PCR 更倾向于扩增短片段的文库分子，这里先不考虑文库片段扩增效率的差异，把问题简化一下，<strong>假设所有文库分子扩增效率都相同</strong>。PCR duplicate 的主要来源是<strong>同一个文库分子的不同拷贝都在 flowcell 上生成了可以被测序的 cluster</strong> ，导致同一个分子的序列被测序仪读取多次。那么为何在每个分子都有上千个拷贝的情况下，实际却很少出现同一分子的多个拷贝被测序的情况呢？主要原因就是文库中 unique 分子的数量比被 flowcell 上引物捕获的分子数量多很多，直白点说就是 <strong>flowcell 上用于捕获文库分子的引物数量太少了，两者不在同一个数量级</strong>，导致很少出现同一个文库分子的多个拷贝被 flowcell 上引物捕获生成 cluster。</p>
-<p>假设文库中所有分子与引物的结合都是随机的，简化一下就相当于，一个箱子中有 n 种颜色的球（文库中的 n 种 unique 分子），每种颜色有 1000 个（PCR 扩增的，随 cycle 数变化），从这个箱子中随机拿出来 k 个球（最终测序得到 k 条 reads），其中出现相同颜色的球就是 duplicate，那么 duplication 率就可以根据有多少种颜色的球被取出 0,1,2,3…… 次的概率计算，可以近似用泊松分布模型来描述。</p>
-<p>以人全基因组重测序 30X 为例，PE150 需要约 3x10<sup>8</sup>条 reads ，文库中 unique 分子数其实可以通过上机文库的浓度和体积（外加 PCR 循环数）计算出来，这里用近似值 3.5x10<sup>10</sup> 个 unique 分子。每个 unique 分子期望被测序的次数是 3x10<sup>8</sup>/3.5x10<sup>10</sup> = 0.0085 ，每个 unique 分子被测 0,1,2,3… 次的概率如下图：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; x &lt;- seq(0,10,1)</span><br><span class="line">&gt; xnames &lt;- as.character(x)</span><br><span class="line">&gt; xlab &lt;- &quot;一个文库分子的所有拷贝被测序的次数&quot;</span><br><span class="line">&gt; ylab &lt;- &quot;概率&quot;</span><br><span class="line">&gt; barplot(dpois(x,lambda = 0.0085),</span><br><span class="line">+ names.arg = xnames,</span><br><span class="line">+ xlab = xlab,</span><br><span class="line">+ ylab = ylab)</span><br></pre></td></tr></table></figure>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-poisson-1.png" alt></p>
-<p>由于 unique 分子数量太多，被测 0 次的概率远高于 1 和 2 次，我们去除 0 次的看一下：</p>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-poisson-2.png" alt></p>
-<p>unique 分子被测序 1 次的概率远大于 2次及以上，即便一个 unique 分子被测序 2 次，我们去除 duplicate 时候还会保留其中一条 reads。</p>
-<p>如果降低文库中 unique 分子数量到 4.5x10<sup>9</sup>个，PCR 循环数增加以便浓度达到跟上面模拟的情况相同，测序 reads 数还是 3x10<sup>8</sup> 条，每个 unique 分子预期被测序的次数是 3x10<sup>8</sup>/4.5x10<sup>9</sup> = 0.067 。</p>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-poisson-3.png" alt></p>
-<p>unique 分子数量减少，被测序 2次的概率增大，duplication 率显然也会增高。</p>
-<p>到这里已经可以很明白的看出 <strong>duplication 率主要与文库中 unique 分子数量有关</strong>，所以建库过程中最大化 unique 分子数是降低 duplication 率的关键。文库中 unique 分子数越多，说明建库起始量越高，需要 PCR 的循环数越少，而文库中 unique 分子数越少，说明建库起始量越低，需要 PCR 的循环数越多，因此提高建库起始量是关键。</p>
-<h5 id="PCR-bias的影响"><a href="#PCR-bias的影响" class="headerlink" title="PCR bias的影响"></a>PCR bias的影响</h5><ol>
-<li><p>DNA在打断的那一步会发生一些损失， 主要表现是会引发一些碱基发生颠换变换（嘌呤-变嘧啶或者嘧啶变嘌呤） ， 带来假的变异。 PCR过程会扩大这个信号， 导致最后的检测结果中混入了假的结果；</p>
-</li>
-<li><p>PCR反应过程中也会带来新的碱基错误。 发生在前几轮的PCR扩增发生的错误会在后续的PCR过程中扩大， 同样带来假的变异；</p>
-</li>
-<li><p>对于真实的变异， PCR反应可能会对包含某一个碱基的DNA模版扩增更加剧烈（这个现象称为PCR Bias） 。 因此， 如果反应体系是对含有reference allele的模板扩增偏向强烈， 那么变异碱基的信息会变小， 从而会导致假阴。</p>
-</li>
-</ol>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-1.png" alt></p>
-<h5 id="探究samtools和picard去除read-duplicates的方法"><a href="#探究samtools和picard去除read-duplicates的方法" class="headerlink" title="探究samtools和picard去除read duplicates的方法"></a>探究samtools和picard去除read duplicates的方法</h5><p><strong>1、samtools</strong></p>
-<p>samtools 去除 duplicates 使用 <strong>rmdup</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ samtools rmdup [-sS] &lt;input.srt.bam&gt; &lt;out.bam&gt;</span><br></pre></td></tr></table></figure>
-<p>只需要开始<code>-s</code>的标签， 就可以对单端测序进行去除PCR重复。其实对单端测序去除PCR重复很简单的，因为比对flag情况只有0,4,16，只需要它们比对到染色体的起始终止坐标一致即可，flag很容易一致。</p>
-<blockquote>
-<p>Remove potential PCR duplicates: if multiple read pairs have identical external coordinates, only retain the pair with highest mapping quality. I</p>
-</blockquote>
-<p align="center">&lt;img src=./picture/GATK4-pipeline-remove-duplicates-samtools-principle-1.png width=900/&gt;</p>
-
-<p>但是对于双端测序就有点复杂了~</p>
-<blockquote>
-<p>In the paired-end mode, this command ONLY works with FR orientation and requires ISIZE is correctly set. It does not work for unpaired reads (e.g. two ends mapped to different chromosomes or orphan reads).</p>
-</blockquote>
-<p align="center">&lt;img src=./picture/GATK4-pipeline-remove-duplicates-samtools-principle-2.png width=900/&gt;</p>
-
-<p>很明显可以看出，去除PCR重复不仅仅需要它们比对到染色体的起始终止坐标一致，尤其是<strong>flag</strong>，在双端测序里面一大堆的flag情况，所以我们的94741坐标的5个reads，一个都没有去除！</p>
-<p>这样的话，双端测序数据，用samtools rmdup效果就很差，所以很多人建议用picard工具的MarkDuplicates 功能</p>
-<p><strong>2、picard</strong></p>
-<p>picard对于单端或者双端测序数据并没有区分参数，可以用同一个命令！</p>
-<p>对应单端测序，picard的处理结果与samtools rmdup没有差别，不过这个java软件的缺点就是<strong>奇慢无比</strong></p>
-<h5 id="操作：排序及标记重复"><a href="#操作：排序及标记重复" class="headerlink" title="操作：排序及标记重复"></a>操作：排序及标记重复</h5><p><img src="/images/GATK4-pipeline-remove-duplicates-2.png" alt></p>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-3.png" alt></p>
-<p>1、排序（SortSam）</p>
-<ul>
-<li>对sam文件进行排序并生成bam文件，将sam文件中同一染色体对应的条目按照坐标顺序从小到大进行排序</li>
-<li>GATK4的排序功能是通过<code>picard SortSam</code>工具实现的。虽然<code>samtools sort</code>工具也可以实现该功能，但是在GATK流程中还是推荐用picard实现，因为SortSam会在输出文件的头信息部分添加一个SO标签用于说明文件已经被成功排序，且<strong>这个标签是必须的</strong>，GATK需要检查这个标签以保证后续分析可以正常进行</li>
-<li><code>https://software.broadinstitute.org/gatk/documentation/tooldocs/current/picard_sam_SortSam.php</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 使用GATK命令</span><br><span class="line">$ gatk SortSam -I mapping/T.chr17.sam -O preprocess/T.chr17.sort.bam -R database/chr17.fa -SO coordinate --CREATE_INDEX</span><br><span class="line"># 使用picard命令</span><br><span class="line">$ java -jar picard.jar SortSam \</span><br><span class="line">      I=input.bam \</span><br><span class="line">      O=sorted.bam \</span><br><span class="line">      SORT_ORDER=coordinate</span><br></pre></td></tr></table></figure>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-4.png" alt></p>
-<p>如何检查是否成功排序？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">$ samtools view -H /path/to/my.bam</span><br><span class="line">@HD     VN:1.0  GO:none SO:coordinate</span><br><span class="line">@SQ     SN:1    LN:247249719</span><br><span class="line">@SQ     SN:2    LN:242951149</span><br><span class="line">@SQ     SN:3    LN:199501827</span><br><span class="line">@SQ     SN:4    LN:191273063</span><br><span class="line">@SQ     SN:5    LN:180857866</span><br><span class="line">@SQ     SN:6    LN:170899992</span><br><span class="line">@SQ     SN:7    LN:158821424</span><br><span class="line">@SQ     SN:8    LN:146274826</span><br><span class="line">@SQ     SN:9    LN:140273252</span><br><span class="line">@SQ     SN:10   LN:135374737</span><br><span class="line">@SQ     SN:11   LN:134452384</span><br><span class="line">@SQ     SN:12   LN:132349534</span><br><span class="line">@SQ     SN:13   LN:114142980</span><br><span class="line">@SQ     SN:14   LN:106368585</span><br><span class="line">@SQ     SN:15   LN:100338915</span><br><span class="line">@SQ     SN:16   LN:88827254</span><br><span class="line">@SQ     SN:17   LN:78774742</span><br><span class="line">@SQ     SN:18   LN:76117153</span><br><span class="line">@SQ     SN:19   LN:63811651</span><br><span class="line">@SQ     SN:20   LN:62435964</span><br><span class="line">@SQ     SN:21   LN:46944323</span><br><span class="line">@SQ     SN:22   LN:49691432</span><br><span class="line">@SQ     SN:X    LN:154913754</span><br><span class="line">@SQ     SN:Y    LN:57772954</span><br><span class="line">@SQ     SN:MT   LN:16571</span><br><span class="line">@SQ     SN:NT_113887    LN:3994</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>若随后的比对记录中的contig那一列的顺序与头文件的顺序一致，且在头信息中包含<code>SO:coordinate</code>这个标签，则说明，该文件是排序过的</p>
-<p>2、标记重复（Markduplicates）</p>
-<ul>
-<li>标记文库中的重复</li>
-<li><code>https://software.broadinstitute.org/gatk/documentation/tooldocs/current/picard_sam_markduplicates_MarkDuplicates.php</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gatk MarkDuplicates -I preprocess/T.chr17.sort.bam -O preprocess/T.chr17.markdup.bam -M preprocess/T.chr17.metrics --CREATE_INDEX</span><br></pre></td></tr></table></figure>
-<p><img src="/images/GATK4-pipeline-remove-duplicates-5.png" alt></p>
-<h4 id="质量值校正"><a href="#质量值校正" class="headerlink" title="质量值校正"></a>质量值校正</h4><p>检测碱基质量分数中的系统错误，需要用到 GATK4 中的 BaseRecalibrator 工具</p>
-<p><strong>碱基质量分数重校准（Base quality score recalibration，BQSR)</strong>，就是利用机器学习的方式调整原始碱基的质量分数。它分为两个步骤:</p>
-<blockquote>
-<ul>
-<li>利用已有的snp数据库，建立相关性模型，产生重校准表( recalibration table)</li>
-<li>根据这个模型对原始碱基进行调整，只会调整非已知SNP区域。</li>
-</ul>
-</blockquote>
-<p>注：如果不是人类基因组，并且也缺少相应的已知SNP数据库，可以通过严格SNP筛选过程（例如结合GATK和samtools）建立一个snp数据库。</p>
-<p><strong>注意：Base Recalibration是以read group为单位进行的，因此当一个BAM文件中包含了多个read group时，BaseRecalibrator会对每个read group分别建立校正模型</strong></p>
-<p>1、建立较正模型</p>
-<p>质量值校正，这一步需要用到variants的known-sites，所以需要先准备好已知的snp，indel的VCF文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 下载known-site的VCF文件，到Ensembl上下载</span><br><span class="line">$ wget -c -P Ref/mouse/mm10/vcf ftp://ftp.ensembl.org/pub/release-93/variation/vcf/mus_musculus/mus_musculus.vcf.gz &gt;download.log &amp;</span><br><span class="line">$ cd Ref/mouse/mm10/vcf &amp;&amp; gunzip mus_musculus.vcf.gz &amp;&amp; mv mus_musculus.vcf dbsnp_150.mm10.vcf</span><br><span class="line"># 建好vcf文件的索引，需要用到GATK工具集中的IndexFeatureFile，该命令会在指定的vcf文件的相同路径下生成一个以&quot;.idx&quot;为后缀的文件</span><br><span class="line">$ gatk IndexFeatureFile -F dbsnp_150.mm10.vcf</span><br><span class="line"></span><br><span class="line"># 建立较正模型</span><br><span class="line">$ gatk BaseRecalibrator -R Ref/mouse/mm10/bwa/mm10.fa -I PharmacogenomicsDB/mouse/SAM/ERR118300.enriched.markdup.bam -O \</span><br><span class="line">PharmacogenomicsDB/mouse/SAM/ERR118300.recal.table --known-sites Ref/mouse/mm10/vcf/dbsnp_150.mm10.vcf</span><br></pre></td></tr></table></figure>
-<p>2、质量值校准</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 质量校正</span><br><span class="line">$ gatk ApplyBQSR -R Ref/mouse/mm10/bwa/mm10.fa -I PharmacogenomicsDB/mouse/SAM/ERR118300.enriched.markdup.bam -bqsr \</span><br><span class="line">PharmacogenomicsDB/mouse/SAM/ERR118300.recal.table -O PharmacogenomicsDB/mouse/SAM/ERR118300.recal.bam</span><br></pre></td></tr></table></figure>
-<h3 id="SNP、-INDEL位点识别"><a href="#SNP、-INDEL位点识别" class="headerlink" title="SNP、 INDEL位点识别"></a>SNP、 INDEL位点识别</h3><h4 id="SNP-calling-策略的选择"><a href="#SNP-calling-策略的选择" class="headerlink" title="SNP calling 策略的选择"></a>SNP calling 策略的选择</h4><p>当你有多个samples，然后你call snp时候，你是应该将所有sample分开call完之后，再merge在一起。还是直接将所有samples，同时用作input然后call snp呢？</p>
-<p>这里需要知道有哪些snp calling的策略：</p>
-<ul>
-<li><p><strong>single sample calling</strong>：每一个sample的bam file都进行单独的snp calling，然后每个sample单独snp calling结果再合成一个总的snp calling的结果。</p>
-</li>
-<li><p><strong>batch calling</strong>： 一定数目群集的bamfiles 一起calling snps，然后再merge在一起</p>
-</li>
-<li><p><strong>joint calling</strong>： 所有samples的BAM files一起call 出一个包含所有samples 变异信息的output</p>
-</li>
-</ul>
-<p>一般来说，如果条件允许（computational power等），使用joint calling ，即将所有samples同时call是比较优的选择</p>
-<p>原因：</p>
-<p><strong>1、对于低频率的变异具有更高更好的检测sensitivity</strong></p>
-<p>在joint calling中，由于所有samples中所有的位点都是同时call的，换句话说就是，所有位点的信息都是share的，因此可以如果某些samples中个别位点是低频率的，但是可能在其他samples中，该位点的频率比较高，因此可以准确的对低频位点有更加好的calling 效果。</p>
-<p><img src="/images/GATK4-pipeline-snp-calling-strategies.jpg" alt></p>
-<p>如左图，在1到n的samples中，碱基G只出现在其中两个samples中。如果我们将这些samples单独的call snps，这个低频率G的位点将会被忽略。但是joint calling 却可以允许将这些碱基G出现的频率进行累加，将该低频率的突变也call出来。</p>
-<p>在右图中，上面的sample是一个跟ref一样具有纯合位点，下面的sample在一些位点中有部分数据缺少的情况，例如rs429358.如果将这两个samples分开call snp，然后merge一起，这样会错误地将这两个samples，在这个位点上看作具有类似的变异频率，但是其实由于下面的samples在改位点的区域存在数据缺少，只能看作non-informative。</p>
-<p><strong>2、更好的过滤掉假阳性的变异callling的结果</strong></p>
-<p>现在使用过滤变异的方法例如VQSR等利用的统计模型，都基于一个比较大的samples size。joint calling 这种方法可以提供足够的数据，确保过滤这一步是统一应用于所有samples的。</p>
-<h4 id="Germline-SNPs-Indels"><a href="#Germline-SNPs-Indels" class="headerlink" title="Germline SNPs + Indels"></a>Germline SNPs + Indels</h4><p>将一个或多个个体放在一起call snp，得到一个 joint callset，该snp calling的策略称为<strong>joint calling</strong></p>
-<p><img src="/images/GATK4-pipeline-Germline-SNPs-Indels.png" alt></p>
-<ul>
-<li><p>第一步，单独为每个样本生成后续分析所需的中间文件——gVCF文件。这一步中包含了对原始fastq数据的质控、比对、排序、标记重复序列、BQSR和HaplotypeCaller gVCF等过程。这些过程全部都适合在单样本维度下独立完成。值得注意的是，与单样本模式不同，该模式中每个样本的gVCF应该成为这类流程的标配，在后续的步骤中我们可以通过gVCF很方便地完成群体的Joint Calling；</p>
-</li>
-<li><p>第二步，依据第一步完成的gVCF对这个群体进行Joint Calling，从而得到这个群体的变异结果和每个人准确的基因型（Genotype），最后使用VQSR完成变异的质控。</p>
-</li>
-</ul>
-<h5 id="SNP、-INDEL位点识别-1"><a href="#SNP、-INDEL位点识别-1" class="headerlink" title="SNP、 INDEL位点识别"></a>SNP、 INDEL位点识别</h5><p>1、单独为每个样本生成后续分析所需的中间文件——gVCF文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk HaplotypeCaller -R Ref/chr17.fa -I sam/T.chr17.recal.bam -ERC GVCF --dbsnp ../Ref/VCF/dbsnp_138.hg19.vcf \</span><br><span class="line">	-O calling/T.chr17.raw.snps.indels.vcf -L chr17:7400000-7800000</span><br></pre></td></tr></table></figure>
-<p>HaplotypeCaller可以同时call snp 和indel，通过局部 de-novo 组装而非基于mapping的结果。一旦程序在某个区域发现了变异信号，它会忽略已有的mapping信息，在该区域执行reads重组装</p>
-<p>如何对指定的区域call snp？</p>
-<blockquote>
-<p>使用 <code>-L</code> 参数指定识别突变位点的区域</p>
-<ol>
-<li><p>提供字符串指定单个interval，如<code>-L chr17:7400000-7800000</code> 只识别17号染色体7400000-7800000 区域的突变位点。或者使用 <code>-XL</code> 参数排除某个区域</p>
-</li>
-<li><p>提供一个保存interval lists的文件。GATK支持多种格式的interval lists文件</p>
-<ul>
-<li><p>Picard-style <code>.interval_list</code></p>
-<p>  由 SAM-like header 和 intervals 信息组成，坐标系统为 1-based</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; 		@HD     VN:1.0  SO:coordinate</span><br><span class="line">&gt; 		@SQ     SN:1    LN:249250621    AS:GRCh37       UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta   M5:1b22b98cdeb4a9304cb5d48026a85128     SP:Homo Sapiens</span><br><span class="line">&gt; 		@SQ     SN:2    LN:243199373    AS:GRCh37       UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta   M5:a0d9851da00400dec1098a9255ac712e     SP:Homo Sapiens</span><br><span class="line">&gt; 		1       30366   30503   +       target_1</span><br><span class="line">&gt; 		1       69089   70010   +       target_2</span><br><span class="line">&gt; 		1       367657  368599  +       target_3</span><br><span class="line">&gt; 		1       621094  622036  +       target_4</span><br><span class="line">&gt; 		1       861320  861395  +       target_5</span><br><span class="line">&gt; 		1       865533  865718  +       target_6</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<pre><code>- GATK-style `.list` or `.intervals`
-
-    这种格式很简单，intervals需要写成这种格式：`&lt;chr&gt;:&lt;start&gt;-&lt;stop&gt;`，坐标系统为 1-based
-
-- BED files `.bed`
-
-    BED3格式：`&lt;chr&gt; &lt;start&gt; &lt;stop&gt;`，坐标系统为 0-based，GATK只接受 1-based 坐标系统，因此GATK会根据文件后缀 `.bed` 识别bed文件格式，然后会将 0-based 转换为 1-based
-
-**注意：**
-&gt; - intervals 必须按照 reference 的坐标进行排序
-&gt; - 可以提供多个intervals集合，文件格式不必一致：`-L intervals1.interval_list -L intervals2.list -L intervals3.bed ...`
-</code></pre></blockquote>
-<p>2、合并多个GVCF文件得到GenomicsDB，为joint genotyping做准备。若是单样本跳过该步骤</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ gatk --java-options &quot;-Xmx4g -Xms4g&quot; GenomicsDBImport \</span><br><span class="line">      -V data/gvcfs/mother.g.vcf.gz \</span><br><span class="line">      -V data/gvcfs/father.g.vcf.gz \</span><br><span class="line">      -V data/gvcfs/son.g.vcf.gz \</span><br><span class="line">      --genomicsdb-workspace-path my_database \</span><br><span class="line">      -L 20</span><br></pre></td></tr></table></figure>
-<p>也可以使用CombineGVCFs实现该功能。CombineGVCFs继承自GATK4之前的版本，但是它的运行速度不如GenomicsDB</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ gatk CombineGVCFs \</span><br><span class="line">   -R reference.fasta \</span><br><span class="line">   --variant sample1.g.vcf.gz \</span><br><span class="line">   --variant sample2.g.vcf.gz \</span><br><span class="line">   -O cohort.g.vcf.gz</span><br></pre></td></tr></table></figure>
-<p>3、联合call snp，得到 joint-called SNP&amp;indel</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 单样本</span><br><span class="line">$ gatk --java-options &quot;-Xmx4g&quot; GenotypeGVCFs \</span><br><span class="line">   -R Homo_sapiens_assembly38.fasta \</span><br><span class="line">   -V input.g.vcf.gz \</span><br><span class="line">   -O output.vcf.gz</span><br><span class="line"></span><br><span class="line"># 多样本</span><br><span class="line">$ gatk --java-options &quot;-Xmx4g&quot; GenotypeGVCFs \</span><br><span class="line">   -R Homo_sapiens_assembly38.fasta \</span><br><span class="line">   -V gendb://my_database \</span><br><span class="line">   -O output.vcf.gz</span><br></pre></td></tr></table></figure>
-<h5 id="SNP、-INDEL位点过滤"><a href="#SNP、-INDEL位点过滤" class="headerlink" title="SNP、 INDEL位点过滤"></a>SNP、 INDEL位点过滤</h5><ul>
-<li><p>方法一：通过质量校正来过滤（Filter Variants by Variant (Quality Score) Recalibration）</p>
-<p>  1、用机器学习的方法基于已知的变异位点对caller给出的原始 variant quality score 进行校正  (VQSR)，包含两步：（1）构建校正模型；（2）应用模型进行质量值校正</p>
-<p>  由于评价SNP和Indel质量高低的标准不同，因此需要分SNP和Indel两种不同的模式，分别进行校正</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># SNP mode</span><br><span class="line">## 构建校正模型</span><br><span class="line">$ gatk VariantRecalibrator \</span><br><span class="line">   -R Homo_sapiens_assembly38.fasta \</span><br><span class="line">   -V input.vcf.gz \</span><br><span class="line">   --resource hapmap,known=false,training=true,truth=true,prior=15.0:hapmap_3.3.hg38.sites.vcf.gz \</span><br><span class="line">   --resource omni,known=false,training=true,truth=false,prior=12.0:1000G_omni2.5.hg38.sites.vcf.gz \</span><br><span class="line">   --resource 1000G,known=false,training=true,truth=false,prior=10.0:1000G_phase1.snps.high_confidence.hg38.vcf.gz \</span><br><span class="line">   --resource dbsnp,known=true,training=false,truth=false,prior=2.0:Homo_sapiens_assembly38.dbsnp138.vcf.gz \</span><br><span class="line">   -an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR \</span><br><span class="line">   -mode SNP \</span><br><span class="line">   -O output.snps.recal \</span><br><span class="line">   --tranches-file output.snps.tranches \</span><br><span class="line">   --rscript-file output.snps.plots.R</span><br><span class="line">## 应用模型进行质量值校正</span><br><span class="line">$ gatk ApplyVQSR \</span><br><span class="line">   -R Homo_sapiens_assembly38.fasta \</span><br><span class="line">   -V input.vcf.gz \</span><br><span class="line">   -O output.snps.VQSR.vcf.gz \</span><br><span class="line">   --truth-sensitivity-filter-level 99.0 \</span><br><span class="line">   --tranches-file output.snps.tranches \</span><br><span class="line">   --recal-file output.snps.recal \</span><br><span class="line">   -mode SNP</span><br><span class="line"></span><br><span class="line"># Indel mode</span><br><span class="line">## 上一步SNP mode产生的输出作为这一步的输入</span><br><span class="line">## 构建校正模型</span><br><span class="line">$ gatk VariantRecalibrator \</span><br><span class="line">   -R Homo_sapiens_assembly38.fasta \</span><br><span class="line">   -V input.snps.VQSR.vcf.gz \</span><br><span class="line">   --resource hapmap,known=false,training=true,truth=true,prior=15.0:hapmap_3.3.hg38.sites.vcf.gz \</span><br><span class="line">   --resource omni,known=false,training=true,truth=false,prior=12.0:1000G_omni2.5.hg38.sites.vcf.gz \</span><br><span class="line">   --resource 1000G,known=false,training=true,truth=false,prior=10.0:1000G_phase1.snps.high_confidence.hg38.vcf.gz \</span><br><span class="line">   --resource dbsnp,known=true,training=false,truth=false,prior=2.0:Homo_sapiens_assembly38.dbsnp138.vcf.gz \</span><br><span class="line">   -an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR \</span><br><span class="line">   -mode INDEL \</span><br><span class="line">   -O output.indels.recal \</span><br><span class="line">   --tranches-file output.indels.tranches \</span><br><span class="line">   --rscript-file output.indels.plots.R</span><br><span class="line">## 应用模型进行质量值校正</span><br><span class="line">$ gatk ApplyVQSR \</span><br><span class="line">   -R Homo_sapiens_assembly38.fasta \</span><br><span class="line">   -V input.snps.VQSR.vcf.gz \</span><br><span class="line">   -O output.snps.indels.VQSR.vcf.gz \</span><br><span class="line">   --truth-sensitivity-filter-level 99.0 \</span><br><span class="line">   --tranches-file output.indels.tranches \</span><br><span class="line">   --recal-file output.indels.recal \</span><br><span class="line">   -mode INDEL</span><br></pre></td></tr></table></figure>
-<p>  执行变异校正需要满足两个条件：</p>
-<blockquote>
-<ul>
-<li>大量高质量的已知variants作为训练集，而这对于许多的物种是不满足的</li>
-<li>数据集不能太小，因为它需要足够的数据集来识别 good vs. bad variants</li>
-</ul>
-</blockquote>
-<p>  因此对于只有一两个样本、靶向测序、RNA-seq、非模式动物的数据，都不推荐进行变异质量值校正。若以上两个条件都不满足，则需要采取直接过滤 (hard-filtering) 的策略</p>
-</li>
-<li><p>方法二：直接过滤 (hard-filtering)</p>
-<p>  <strong>Steps</strong></p>
-<blockquote>
-<ul>
-<li>Extract the SNPs from the call set</li>
-<li>Apply the filter to the SNP call set</li>
-<li>Extract the Indels from the call set</li>
-<li>Apply the filter to the Indel call set</li>
-<li>Combine SNP and indel call set</li>
-<li>Get passed call set</li>
-</ul>
-</blockquote>
-<ul>
-<li><p><strong>提取SNP位点</strong></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk SelectVariants -R Ref/chr17.fa -V calling/T.chr17.raw.snps.indels.genotype.vcf \</span><br><span class="line">--select-type-to-include SNP -O filter/T.chr17.raw.snps.genotype.vcf</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<pre><code>    参数说明：
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--select-type-to-include,-select-type:Type</span><br><span class="line">                              Select only a certain type of variants from the input file  This argument may be specified</span><br><span class="line">                              0 or more times. Default value: null. Possible values: &#123;NO_VARIATION, SNP, MNP, INDEL,</span><br><span class="line">                              SYMBOLIC, MIXED&#125;</span><br></pre></td></tr></table></figure>
-
-
-- **提取INDEL位点**
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk SelectVariants -R Ref/chr17.fa -V calling/T.chr17.raw.snps.indels.genotype.vcf \</span><br><span class="line">--select-type-to-include INDEL -O filter/T.chr17.raw.indels.genotype.vcf</span><br></pre></td></tr></table></figure>
-
-
-- **SNP位点过滤**
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk VariantFiltration -R Ref/chr17.fa -V filter/T.chr17.raw.snps.genotype.vcf --filter-expression &quot;QD &lt; 2.0 || FS &gt; 60.0 || MQ &lt; 40.0 || SOR &gt; 3.0 || MQRankSum &lt; -12.5 || \</span><br><span class="line">ReadPosRankSum &lt; -8.0&quot; --filter-name &quot;SNP_FILTER&quot; -O filter/T.chr17.filter.snps.genotype.vcf</span><br></pre></td></tr></table></figure>
-
-
-    参数说明：
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">--filter-expression,-filter:String</span><br><span class="line">                              One or more expression used with INFO fields to filter  This argument may be specified 0</span><br><span class="line">                              or more times. Default value: null.</span><br><span class="line"></span><br><span class="line">--filter-name:String          Names to use for the list of filters  This argument may be specified 0 or more times.</span><br><span class="line">                              Default value: null.</span><br></pre></td></tr></table></figure>
-
-
-- **INDEL位点过滤**
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk VariantFiltration -R Ref/chr17.fa -V filter/T.chr17.raw.indels.genotype.vcf --filter-expression &quot;QD &lt; 2.0 || FS &gt; 200.0 || SOR &gt; 10.0 || MQRankSum &lt; -12.5 || ReadPosRankSum &lt; \</span><br><span class="line">-20.0&quot; --filter-name &quot;INDEL_FILTER&quot; -O filter/T.chr17.filter.indels.genotype.vcf</span><br></pre></td></tr></table></figure>
-
-
-- **合并过滤后SNP、 INDEL文件**
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk MergeVcfs -I filter/T.chr17.filter.snps.genotype.vcf -I \</span><br><span class="line">filter/T.chr17.filter.indels.genotype.vcf -O filter/T.chr17.filter.snps.indels.genotype.vcf</span><br></pre></td></tr></table></figure>
-
-
-- **提取PASS突变位点**
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gatk SelectVariants -R Ref/chr17.fa -V filter/T.chr17.filter.snps.indels.genotype.vcf -O</span><br><span class="line">T.chr17.pass.snps.indels.genotype.vcf -select &quot;vc.isNotFiltered()&quot;</span><br></pre></td></tr></table></figure>
-
-
-    参数说明：
-
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--selectExpressions,-select:String</span><br><span class="line">                              One or more criteria to use when selecting the data  This argument may be specified 0 or</span><br><span class="line">                              more times. Default value: null.</span><br></pre></td></tr></table></figure>
-</code></pre><h5 id="Hard-filter阈值探究"><a href="#Hard-filter阈值探究" class="headerlink" title="Hard-filter阈值探究"></a>Hard-filter阈值探究</h5><p>GATK4官网给出的推荐阈值：</p>
-<blockquote>
-<p>For SNPs:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; QD &lt; 2.0</span><br><span class="line">&gt; MQ &lt; 40.0</span><br><span class="line">&gt; FS &gt; 60.0</span><br><span class="line">&gt; SOR &gt; 3.0</span><br><span class="line">&gt; MQRankSum &lt; -12.5</span><br><span class="line">&gt; ReadPosRankSum &lt; -8.0</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>For indels:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; QD &lt; 2.0</span><br><span class="line">&gt; ReadPosRankSum &lt; -20.0</span><br><span class="line">&gt; InbreedingCoeff &lt; -0.8</span><br><span class="line">&gt; FS &gt; 200.0</span><br><span class="line">&gt; SOR &gt; 10.0</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><a href="https://software.broadinstitute.org/gatk/documentation/article?id=11097" target="_blank" rel="noopener">点此</a> 查看GATK4原始网页</p>
-<p>该阈值选择来自于GATK4官网的推荐，阈值依据于比较真 vs. 假 snp的特征值（annotation values）统计分布</p>
-<blockquote>
-<p>One of the most helpful ways to approach hard-filtering is to visualize the distribution of annotation values for a truth set called using a particular pipeline. These distributions are sharped by both the pipeline methodology and the underlying physical properties of the sequence data; so for a given pairing of data generation technology + analysis pipeline, you can derive filtering thresholds based on what the distributions look like for the truth set</p>
-</blockquote>
-<p>评估数据来源：1000Genomes 中的 whole genome trio</p>
-<p>获得真/假变异的方法：</p>
-<blockquote>
-<p>将whole genome trio用HaplotypeCaller的GVCF mode得到各样本单独的GVCF文件，然后再用GenotypeGVCFs进行joint-calling得到未过滤的VCF文件，最后用VQSR（基于统计机器学习方法）得到过滤的变异集合</p>
-<p>将PASS的变异认为是真的，将被过滤的变异当作是假的</p>
-</blockquote>
-<p>比较真变异与假变异的特征值（annotation values）的分布，进行评估的特征值有：QD, FS, SOR, MQ, MQRankSum 和 ReadPosRankSum</p>
-<ul>
-<li><strong>QualByDepth (QD)</strong></li>
-</ul>
-<p>变异质量值（variant confidence (from the QUAL field)）除以该位点覆盖的非同源的depth（与参考基因组不同的），即对质量值按照depth进行了标准化</p>
-<p><img src="/images/GATK4-pipeline-hard-filter-QD.png" alt></p>
-<p>大多数被过滤掉的变异的落在低QD区域</p>
-<p>推荐：QD≥2</p>
-<ul>
-<li><strong>FisherStrand (FS)</strong></li>
-</ul>
-<p>一个衡量strand bias的量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Phred-scaled probability that there is strand bias at the site</span><br></pre></td></tr></table></figure>
-<p>当某一个位点的strand bias的程度很小或没有，那么 FS 值会接近于0</p>
-<p><img src="/images/GATK4-pipeline-hard-filter-FS.png" alt></p>
-<p>大多数过滤掉的变异的落在FS大于55的区域</p>
-<p>推荐：FS≤60</p>
-<ul>
-<li><strong>StrandOddsRatio (SOR)</strong></li>
-</ul>
-<p>另一种评估strand bias的量</p>
-<p><img src="/images/GATK4-pipeline-hard-filter-SOR.png" alt></p>
-<p>Notice most of the variants that have an SOR value greater than 3 fail the VQSR filter</p>
-<p>推荐：SOR≥3</p>
-<ul>
-<li><strong>RMSMappingQuality (MQ)</strong></li>
-</ul>
-<p>覆盖改位点的reads的mapping quality的均方根</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">原图</th>
-<th style="text-align:center">局部放大</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><img src="/images/GATK4-pipeline-hard-filter-MQ-1.png" alt></td>
-<td style="text-align:center"><img src="/images/GATK4-pipeline-hard-filter-MQ-2.png" alt></td>
-</tr>
-</tbody>
-</table>
-<p>推荐：MQ≥40</p>
-<ul>
-<li><strong>MappingQualityRankSumTest (MQRankSum)</strong></li>
-</ul>
-<p><img src="/images/GATK4-pipeline-hard-filter-MQRankSum.png" alt></p>
-<p>推荐：MQRankSum≥-2.5</p>
-<h2 id="SAMtools-BCFtools流程"><a href="#SAMtools-BCFtools流程" class="headerlink" title="SAMtools-BCFtools流程"></a>SAMtools-BCFtools流程</h2><h2 id="关于SNP的过滤"><a href="#关于SNP的过滤" class="headerlink" title="关于SNP的过滤"></a>关于SNP的过滤</h2><p>SNP过滤的意义：</p>
-<blockquote>
-<ul>
-<li><p>第一，过滤到一些低质量的SNP可以防止calling一些假阳性的SNP，这些假阳性的SNP会很大程度影响到后续的一系列的分析，例如GWAS等的分析，最后影响相关生物学问题的解答；</p>
-</li>
-<li><p>第二，如果你有很多的个体，往往你的call完SNP后，VCF文件的大小的会比较大，如果不经过过滤，对下游的群体结构分析，PCA等相关的计算，都会对计算机产生巨大的负担（运行速度还有需要的内存等）</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="使用vcftools进行SNP过滤"><a href="#使用vcftools进行SNP过滤" class="headerlink" title="使用vcftools进行SNP过滤"></a>使用vcftools进行SNP过滤</h3><p>VCFtools能干什么</p>
-<blockquote>
-<ul>
-<li>过滤特定的变异</li>
-<li>比较文件</li>
-<li>变异注释</li>
-<li>文件格式转换</li>
-<li>校验和合并文件</li>
-<li>对变异位点集合进行坐标运算</li>
-</ul>
-</blockquote>
-<hr>
-<p>参考资料：</p>
-<p>(1) <a href="http://www.bio-info-trainee.com/838.html" target="_blank" rel="noopener">生信菜鸟团：GATK使用注意事项</a></p>
-<p>(2) <a href="./supplement/%E5%85%A8%E5%A4%96%E6%98%BE%E5%AD%90%E7%BB%84%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90-GATK4.pdf">小天师兄《全外显子组测序分析》</a></p>
-<p>(3) <a href="https://mp.weixin.qq.com/s/RfEt-O-R2njje5Asu3WpwQ" target="_blank" rel="noopener">RNA-Seq是否可以替代WES完成外显子的变异检测?二代测序的四种Read重复是如何产生的?</a></p>
-<p>(4) <a href="http://www.bio-info-trainee.com/2003.html" target="_blank" rel="noopener">生信菜鸟团：仔细探究samtools的rmdup是如何行使去除PCR重复reads功能的</a></p>
-<p>(5) <a href="http://www.biotrainee.com/thread-1402-1-1.html" target="_blank" rel="noopener">生信技能树论坛：GATK之BaseRecalibrator</a></p>
-<p>(6) <a href="https://gatkforums.broadinstitute.org/gatk/discussion/1317/collected-faqs-about-bam-files" target="_blank" rel="noopener">GATK Forum: Collected FAQs about input files for sequence read data (BAM/CRAM)</a></p>
-<p>(7) <a href="https://software.broadinstitute.org/gatk/documentation/article.php?id=1204" target="_blank" rel="noopener">GATK Forum: What input files does the GATK accept / require?</a></p>
-<p>(8) <a href="https://software.broadinstitute.org/gatk/documentation/article.php?id=1319" target="_blank" rel="noopener">GATK Forum: Collected FAQs about interval lists</a></p>
-<p>(9) <a href="https://software.broadinstitute.org/gatk/best-practices/" target="_blank" rel="noopener">GATK Forum：GATK Best Practices</a></p>
-<p>(10) <a href="https://mp.weixin.qq.com/s/Sa019WuSg8fRQgkWAIG4pQ" target="_blank" rel="noopener">公众号碱基矿工：GATK4全基因组数据分析最佳实践 ，我以这篇文章为标志，终结当前WGS系列数据分析的流程主体问题 | 完全代码</a></p>
-<p>(11) <a href="https://mp.weixin.qq.com/s/XVkFuU2zWLY5r6grDwzkcA" target="_blank" rel="noopener">生信菜鸟团：生信笔记：call snp是应该一起call还是分开call？</a></p>
-<p>(12) <a href="https://software.broadinstitute.org/gatk/documentation/article?id=11069" target="_blank" rel="noopener">GATK Forum：Hard-filtering germline short variants</a></p>
-<p>(13) <a href="https://mp.weixin.qq.com/s/Juf7LklWkaCmUT_pusOuCA" target="_blank" rel="noopener">生信杂谈：用泊松分布解释 NGS 测序数据的 duplication 问题</a></p>
-<p>(14) <a href="https://www.jianshu.com/p/e05ff3cace56" target="_blank" rel="noopener">【简书】关于SNP的过滤（1）：如何使用vcftools进行SNP过滤</a></p>
-<p>(15) <a href="https://vcftools.github.io/index.html" target="_blank" rel="noopener">VCFtools官网</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -4198,7 +3983,7 @@ samplelist textfile 格式如下：
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -4219,7 +4004,9 @@ samplelist textfile 格式如下：
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   
                 </div>
@@ -4266,7 +4053,15 @@ samplelist textfile 格式如下：
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

@@ -97,11 +97,11 @@
 
 
   <meta name="description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
-<meta name="keywords" content="sklearn,logistic回归,决策树">
+<meta name="keywords" content="sklearn,logistic回归,决策树,朴素贝叶斯方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="西瓜书带学训练营·实战任务">
 <meta property="og:url" content="http://yoursite.com/2019/02/09/InAction-ML-XGS/index.html">
-<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
 <meta property="og:description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-1.png">
@@ -127,7 +127,13 @@
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-SVM-12.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-SVM-13.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-SVM-14.png">
-<meta property="og:updated_time" content="2019-02-17T06:41:16.754Z">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-1.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-2.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-3.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-4.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-5.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-6.png">
+<meta property="og:updated_time" content="2019-02-24T14:23:38.833Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="西瓜书带学训练营·实战任务">
 <meta name="twitter:description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
@@ -148,7 +154,7 @@
   };
 </script>
 
-  <title>西瓜书带学训练营·实战任务 | Lianm' Blog</title>
+  <title>西瓜书带学训练营·实战任务 | Lianm's Blog</title>
   
 
 
@@ -207,7 +213,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Lianm' Blog</span>
+        <span class="site-title">Lianm's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -335,7 +341,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -386,7 +392,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-17 06:41:16" itemprop="dateModified" datetime="2019-02-17T06:41:16+00:00">2019-02-17</time>
+                <time title="Modified: 2019-02-24 14:23:38" itemprop="dateModified" datetime="2019-02-24T14:23:38+00:00">2019-02-24</time>
               
             
           </span>
@@ -618,6 +624,89 @@
 </tr>
 </tbody>
 </table>
+<h2 id="4-sklearn包中朴素贝叶斯库的使用"><a href="#4-sklearn包中朴素贝叶斯库的使用" class="headerlink" title="4.sklearn包中朴素贝叶斯库的使用"></a>4.sklearn包中朴素贝叶斯库的使用</h2><h3 id="4-1-朴素贝叶斯相关知识点回顾"><a href="#4-1-朴素贝叶斯相关知识点回顾" class="headerlink" title="4.1. 朴素贝叶斯相关知识点回顾"></a>4.1. 朴素贝叶斯相关知识点回顾</h3><h4 id="4-1-1-什么是朴素贝叶斯分类器"><a href="#4-1-1-什么是朴素贝叶斯分类器" class="headerlink" title="4.1.1. 什么是朴素贝叶斯分类器"></a>4.1.1. 什么是朴素贝叶斯分类器</h4><p>判别式模型（discriminative models)：像决策树、BP神经网络、支持向量机等，都可以归入判别式模型，它们都是直接学习出输出Y与特征X的关系，如：</p>
+<ul>
+<li>决策函数 Y=f(X)</li>
+<li>条件概率 P(Y|X)</li>
+</ul>
+<p>生成式模型 (gernerative models)：先对联合概率分布 P(X,Y) 进行建模，然后再由此获得P(Y|X) = P(X,Y)/P(X)</p>
+<p>贝叶斯学派的思想：</p>
+<blockquote>
+<p>贝叶斯学派的思想可以概括为先验概率+数据=后验概率。也就是说我们在实际问题中需要得到的后验概率，可以通过先验概率和数据一起综合得到。数据大家好理解，被频率学派攻击的是先验概率，一般来说先验概率就是我们对于数据所在领域的历史经验，但是这个经验常常难以量化或者模型化，于是贝叶斯学派大胆的假设先验分布的模型，比如正态分布，beta分布等。这个假设一般没有特定的依据，因此一直被频率学派认为很荒谬。虽然难以从严密的数学逻辑里推出贝叶斯学派的逻辑，但是在很多实际应用中，贝叶斯理论很好用，比如垃圾邮件分类，文本分类</p>
+</blockquote>
+<p>如何对P(X,Y)进行建模？</p>
+<blockquote>
+<p>假如我们的分类模型样本是：</p>
+<p>(x<sup>(1)</sup><sub>1</sub>,x<sup>(1)</sup><sub>2</sub>,…x<sup>(1)</sup><sub>n</sub>,y<sub>1</sub>), (x<sup>(2)</sup><sub>1</sub>,x<sup>(2)</sup><sub>2</sub>,…x<sup>(2)</sup><sub>n</sub>,y<sub>2</sub>),…(x<sup>(m)</sup><sub>1</sub>,x<sup>(m)</sup><sub>2</sub>, …, x<sup>(m)</sup><sub>n</sub>,y<sub>m</sub>)</p>
+<p>则</p>
+<p>P(X, Y) = P(Y) * P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y ) </p>
+<p>其中</p>
+<p>P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y )  =  P( x<sub>1</sub> | Y) * P( x<sub>2</sub> | Y, x<sub>1</sub>) * … P( x<sub>n</sub> | Y, x<sub>1</sub>, … , x<sub>n-1</sub>)</p>
+</blockquote>
+<p>这是一个超级复杂的有n个维度的条件分布，很难求出</p>
+<p>朴素贝叶斯模型在这里做了一个大胆的假设，即X的n个维度之间相互独立，这样就可以得出：</p>
+<p>P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y ) = P( x<sub>1</sub> | Y) * P( x<sub>2</sub> | Y) * … * P( x<sub>n</sub> | Y) </p>
+<h4 id="4-1-2-朴素贝叶斯推断"><a href="#4-1-2-朴素贝叶斯推断" class="headerlink" title="4.1.2. 朴素贝叶斯推断"></a>4.1.2. 朴素贝叶斯推断</h4><p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-1.png" alt></p>
+<h4 id="4-1-3-朴素贝叶斯学习"><a href="#4-1-3-朴素贝叶斯学习" class="headerlink" title="4.1.3. 朴素贝叶斯学习"></a>4.1.3. 朴素贝叶斯学习</h4><p>需要从训练样本中学习到以下两个参数：</p>
+<ul>
+<li><p><strong>先验概率</strong> P(c)</p>
+<p>  P(c)表示了样本空间中各类样本所占的比例</p>
+<p>  根据大数定律，当训练集中包含充足的独立同分布样本时，P(c)可根据各类样本出现的频率来估计</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-2.png" alt></p>
+</li>
+<li><p><strong>类条件概率</strong>（又称为似然） P(x<sub>i</sub> | c)</p>
+<p>  （1）如果 x<sub>i</sub> 是离散的，可以假设 x<sub>i</sub>符合多项式分布，这样得到 P(x<sub>i</sub> | c) 是在样本类别 c 中，特征 x<sub>i</sub> 出现的频率</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-3.png" alt></p>
+<p>  （2）如果 x<sub>i</sub> 是连续属性，可以假设 P(x<sub>i</sub> | c) ~ N( μ<sub>c,i</sub> , σ<sup>2</sup><sub>c,i</sub> )</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-4.png" alt></p>
+</li>
+</ul>
+<h3 id="4-2-sklearn中朴素贝叶斯类库的简介"><a href="#4-2-sklearn中朴素贝叶斯类库的简介" class="headerlink" title="4.2. sklearn中朴素贝叶斯类库的简介"></a>4.2. sklearn中朴素贝叶斯类库的简介</h3><p>在scikit-learn中，一共有3个朴素贝叶斯的分类算法类</p>
+<blockquote>
+<ul>
+<li><p>GaussianNB：先验为高斯分布的朴素贝叶斯</p>
+</li>
+<li><p>MultinomialNB：先验为多项式分布的朴素贝叶斯</p>
+</li>
+<li><p>BernoulliNB：先验为伯努利分布的朴素贝叶斯</p>
+</li>
+</ul>
+</blockquote>
+<p>这三个类适用的分类场景各不相同</p>
+<blockquote>
+<p>一般来说，如果样本特征的分布大部分是<strong>连续值</strong>，使用GaussianNB会比较好</p>
+<p>如果如果样本特征的分大部分是<strong>多元离散值</strong>，使用MultinomialNB比较合适</p>
+<p>如果样本特征是<strong>二元离散值</strong>或者<strong>很稀疏的多元离散值</strong>，应该使用BernoulliNB。</p>
+</blockquote>
+<h4 id="4-2-1-GaussianNB类"><a href="#4-2-1-GaussianNB类" class="headerlink" title="4.2.1. GaussianNB类"></a>4.2.1. GaussianNB类</h4><p>GaussianNB类的主要参数仅有一个，即先验概率priors</p>
+<p>这个值默认不给出，如果不给出此时P(Y=c)= m<sub>c</sub> / m，如果给出的话就以priors 为准</p>
+<p>在使用GaussianNB的fit方法拟合数据后，我们可以进行预测。此时预测有三种方法</p>
+<blockquote>
+<ul>
+<li><p>predict方法：就是我们最常用的预测方法，直接给出测试集的预测类别输出；</p>
+</li>
+<li><p>predict_proba方法：给出测试集样本在各个类别上预测的概率；</p>
+</li>
+<li><p>predict_log_proba方法：和predict_proba类似，它会给出测试集样本在各个类别上预测的概率的一个对数转化；</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">clf = GaussianNB()</span><br><span class="line">#拟合数据</span><br><span class="line">clf.fit(X, Y)</span><br><span class="line"></span><br><span class="line">#进行预测</span><br><span class="line">clf.predict([[-0.8, -1]])</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-2-MultinomialNB类"><a href="#4-2-2-MultinomialNB类" class="headerlink" title="4.2.2. MultinomialNB类"></a>4.2.2. MultinomialNB类</h4><p>MultinomialNB假设特征的先验概率为多项式分布，即如下式：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-5.png" alt></p>
+<p>MultinomialNB参数比GaussianNB多，但是一共也只有仅仅3个</p>
+<ul>
+<li><p><strong>参数alpha</strong>：为上面的常数λ。如果你没有特别的需要，用默认的1即可。如果发现拟合的不好，需要调优时，可以选择稍大于1或者稍小于1的数</p>
+</li>
+<li><p><strong>参数fit_prior</strong>：是否要考虑先验概率，如果是false，则所有的样本类别输出都有相同的类别先验概率；否则可以自己用第三个参数class_prior输入先验概率，或者不输入第三个参数class_prior让MultinomialNB自己从训练集样本来计算先验概率</p>
+</li>
+<li><p><strong>参数class_prior</strong>：输入先验概率，若不输入第三个参数class_prior让MultinomialNB自己从训练集样本来计算先验概率</p>
+</li>
+</ul>
+<h4 id="4-2-3-BernoulliNB类"><a href="#4-2-3-BernoulliNB类" class="headerlink" title="4.2.3. BernoulliNB类"></a>4.2.3. BernoulliNB类</h4><p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-6.png" alt></p>
+<p>其中，x <sub>i</sub> 只能取0或1</p>
+<p>BernoulliNB一共有4个参数，其中3个参数的名字和意义和MultinomialNB完全相同</p>
+<p>唯一增加的一个参数是binarize，这个参数主要是用来帮BernoulliNB处理二项分布的。如果不输入，则BernoulliNB认为每个数据特征都已经是二元的。否则的话，小于binarize的会归为一类，大于binarize的会归为另外一类</p>
 <hr>
 <p>参考资料：</p>
 <p>(1) <a href="https://github.com/MLjian/TextClassificationImplement" target="_blank" rel="noopener">【GitHub】MLjian/TextClassificationImplement</a></p>
@@ -628,6 +717,9 @@
 <p>(6) <a href="https://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">刘建平Pinard《scikit-learn 支持向量机算法库使用小结》</a></p>
 <p>(7) <a href="https://www.cnblogs.com/pinard/p/6126077.html" target="_blank" rel="noopener">刘建平Pinard《支持向量机高斯核调参小结》</a></p>
 <p>(8) <a href="https://blog.csdn.net/loveliuzz/article/details/78768063" target="_blank" rel="noopener">loveliuzz《机器学习sklearn19.0——SVM算法》</a></p>
+<p>(9) 周志华《机器学习》</p>
+<p>(10) <a href="https://www.cnblogs.com/pinard/p/6069267.html" target="_blank" rel="noopener">刘建平Pinard《朴素贝叶斯算法原理小结》</a></p>
+<p>(11) <a href="https://www.cnblogs.com/pinard/p/6074222.html" target="_blank" rel="noopener">刘建平Pinard《scikit-learn 朴素贝叶斯类库使用小结》</a></p>
 
       
     </div>
@@ -656,6 +748,8 @@
             <a href="/tags/logistic回归/" rel="tag"># logistic回归</a>
           
             <a href="/tags/决策树/" rel="tag"># 决策树</a>
+          
+            <a href="/tags/朴素贝叶斯方法/" rel="tag"># 朴素贝叶斯方法</a>
           
         </div>
       
@@ -750,7 +844,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -771,7 +865,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   
                 </div>
@@ -818,7 +914,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -880,7 +984,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"><span class="nav-number">1.</span> <span class="nav-text">1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-任务描述"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编程实现"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 编程实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-sklearn包中logistic算法的使用"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. sklearn包中logistic算法的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-鸢尾花数据分类：sklearn包中决策树算法类库的使用"><span class="nav-number">2.</span> <span class="nav-text">2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DecisionTreeClassifier实例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. DecisionTreeClassifier实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可视化决策树"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 可视化决策树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sklearn中测试数据：sklearn包中SVM算法库的使用"><span class="nav-number">3.</span> <span class="nav-text">3. sklearn中测试数据：sklearn包中SVM算法库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SVM相关知识点回顾"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. SVM相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-SVM与SVR"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1. SVM与SVR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-核函数"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2. 核函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sklearn中SVM相关库的简介"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. sklearn中SVM相关库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-分类库与回归库"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1. 分类库与回归库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-高斯核调参"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2. 高斯核调参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-1-需要调节的参数"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">3.2.2.1. 需要调节的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-2-调参方法：网格搜索"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">3.2.2.2. 调参方法：网格搜索</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-编程实现"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 编程实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"><span class="nav-number">1.</span> <span class="nav-text">1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-任务描述"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编程实现"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 编程实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-sklearn包中logistic算法的使用"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. sklearn包中logistic算法的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-鸢尾花数据分类：sklearn包中决策树算法类库的使用"><span class="nav-number">2.</span> <span class="nav-text">2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DecisionTreeClassifier实例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. DecisionTreeClassifier实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可视化决策树"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 可视化决策树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sklearn中测试数据：sklearn包中SVM算法库的使用"><span class="nav-number">3.</span> <span class="nav-text">3. sklearn中测试数据：sklearn包中SVM算法库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SVM相关知识点回顾"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. SVM相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-SVM与SVR"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1. SVM与SVR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-核函数"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2. 核函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sklearn中SVM相关库的简介"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. sklearn中SVM相关库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-分类库与回归库"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1. 分类库与回归库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-高斯核调参"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2. 高斯核调参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-1-需要调节的参数"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">3.2.2.1. 需要调节的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-2-调参方法：网格搜索"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">3.2.2.2. 调参方法：网格搜索</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-编程实现"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 编程实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-sklearn包中朴素贝叶斯库的使用"><span class="nav-number">4.</span> <span class="nav-text">4.sklearn包中朴素贝叶斯库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-朴素贝叶斯相关知识点回顾"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 朴素贝叶斯相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-什么是朴素贝叶斯分类器"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1. 什么是朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-朴素贝叶斯推断"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2. 朴素贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-朴素贝叶斯学习"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3. 朴素贝叶斯学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-sklearn中朴素贝叶斯类库的简介"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. sklearn中朴素贝叶斯类库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-GaussianNB类"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1. GaussianNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-MultinomialNB类"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2. MultinomialNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-BernoulliNB类"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3. BernoulliNB类</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

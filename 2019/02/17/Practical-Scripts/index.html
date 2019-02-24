@@ -101,10 +101,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="实用小脚本">
 <meta property="og:url" content="http://yoursite.com/2019/02/17/Practical-Scripts/index.html">
-<meta property="og:site_name" content="Lianm&#39; Blog">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
 <meta property="og:description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-17T08:31:02.937Z">
+<meta property="og:updated_time" content="2019-02-24T13:57:02.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实用小脚本">
 <meta name="twitter:description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>实用小脚本 | Lianm' Blog</title>
+  <title>实用小脚本 | Lianm's Blog</title>
   
 
 
@@ -183,7 +183,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Lianm' Blog</span>
+        <span class="site-title">Lianm's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -311,7 +311,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm' Blog">
+      <meta itemprop="name" content="Lianm's Blog">
     </span>
 
     
@@ -345,12 +345,24 @@
                 
               
 
-              <time title="Created: 2019-02-17 08:14:59 / Modified: 08:31:02" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
+              <time title="Created: 2019-02-17 08:14:59" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-24 13:57:02" itemprop="dateModified" datetime="2019-02-24T13:57:02+00:00">2019-02-24</time>
               
             
           </span>
@@ -471,7 +483,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from Bio import SeqIO</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">Seq = [ seq for seq in SeqIO.parse(sys.argv[1],&apos;fasta&apos;)]</span><br><span class="line"></span><br><span class="line">SeqIO.write(Seq,sys.argv[2],&apos;fasta&apos;)</span><br></pre></td></tr></table></figure>
 <p>用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python formatFasta.py &lt;in.fa&gt; &lt;out.fa&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="R"><a href="#R" class="headerlink" title="R"></a>R</h2><h3 id="1-对profiles进行wilcox检验"><a href="#1-对profiles进行wilcox检验" class="headerlink" title="1. 对profiles进行wilcox检验"></a>1. 对profiles进行wilcox检验</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># 三个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file </span><br><span class="line"># - outfile name</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">statOut &lt;- apply(data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"># 转换成数据框</span><br><span class="line">statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line"># 写入文件</span><br><span class="line">write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br></pre></td></tr></table></figure>
+<h2 id="R"><a href="#R" class="headerlink" title="R"></a>R</h2><h3 id="1-对profiles进行wilcox检验（并行化）"><a href="#1-对profiles进行wilcox检验（并行化）" class="headerlink" title="1. 对profiles进行wilcox检验（并行化）"></a>1. 对profiles进行wilcox检验（并行化）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># 四个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file </span><br><span class="line"># - outfile name</span><br><span class="line"># - threads number（默认为服务器总线程-10）</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line"></span><br><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># Initiate cluster</span><br><span class="line">if(is.na(Args[4])) &#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	if(is.na(stat$p.value))&#123;</span><br><span class="line">		stat$p.value &lt;- 1</span><br><span class="line">	&#125;</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">statOut &lt;- parApply(cl,data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line">stopCluster(cl)</span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 将结果写入文件中</span><br><span class="line">if(!is.null(statOut))&#123;</span><br><span class="line">	# 转换成数据框</span><br><span class="line">	statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">	colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line">	# 写入文件</span><br><span class="line">	write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -521,6 +533,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/24/Follow-LYL-learning-math-physics/" rel="prev" title="跟着李永乐老师学数学/物理">
+                跟着李永乐老师学数学/物理 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -590,7 +606,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -611,7 +627,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">categories</span>
                   
                 </div>
@@ -658,7 +676,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -720,7 +746,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">1.</span> <span class="nav-text">Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-拆分FASTA文件"><span class="nav-number">1.1.</span> <span class="nav-text">1. 拆分FASTA文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-从双端FASTQ文件中抽取指定数据量-bp-的序列"><span class="nav-number">1.2.</span> <span class="nav-text">2. 从双端FASTQ文件中抽取指定数据量(bp)的序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-双端FASTQ文件进行双端配对"><span class="nav-number">1.3.</span> <span class="nav-text">3. 双端FASTQ文件进行双端配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-根据序列Id提取FASTA序列"><span class="nav-number">1.4.</span> <span class="nav-text">4. 根据序列Id提取FASTA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-统计FastQC输出"><span class="nav-number">1.5.</span> <span class="nav-text">5. 统计FastQC输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.</span> <span class="nav-text">Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式化FASTA文件"><span class="nav-number">2.1.</span> <span class="nav-text">1. 格式化FASTA文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R"><span class="nav-number">3.</span> <span class="nav-text">R</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对profiles进行wilcox检验"><span class="nav-number">3.1.</span> <span class="nav-text">1. 对profiles进行wilcox检验</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">1.</span> <span class="nav-text">Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-拆分FASTA文件"><span class="nav-number">1.1.</span> <span class="nav-text">1. 拆分FASTA文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-从双端FASTQ文件中抽取指定数据量-bp-的序列"><span class="nav-number">1.2.</span> <span class="nav-text">2. 从双端FASTQ文件中抽取指定数据量(bp)的序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-双端FASTQ文件进行双端配对"><span class="nav-number">1.3.</span> <span class="nav-text">3. 双端FASTQ文件进行双端配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-根据序列Id提取FASTA序列"><span class="nav-number">1.4.</span> <span class="nav-text">4. 根据序列Id提取FASTA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-统计FastQC输出"><span class="nav-number">1.5.</span> <span class="nav-text">5. 统计FastQC输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.</span> <span class="nav-text">Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式化FASTA文件"><span class="nav-number">2.1.</span> <span class="nav-text">1. 格式化FASTA文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R"><span class="nav-number">3.</span> <span class="nav-text">R</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对profiles进行wilcox检验（并行化）"><span class="nav-number">3.1.</span> <span class="nav-text">1. 对profiles进行wilcox检验（并行化）</span></a></li></ol></li></ol></div>
             
 
           </div>
