@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
+<html class="theme-next pisces use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,13 +51,13 @@
 <link rel="stylesheet" href="/css/main.css?v=7.0.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '7.0.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -97,14 +97,14 @@
 
 
   <meta name="description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
-<meta name="keywords" content="Perl,Python,R">
+<meta name="keywords" content="R,Perl,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实用小脚本">
 <meta property="og:url" content="http://yoursite.com/2019/02/17/Practical-Scripts/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
 <meta property="og:description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-24T13:57:02.358Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-09T07:57:04.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实用小脚本">
 <meta name="twitter:description" content="Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同 脚本名：splitFasta.pl1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
@@ -165,7 +165,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -196,7 +196,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -224,7 +224,24 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
 
   </li>
         
@@ -241,7 +258,24 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
 
   </li>
 
@@ -249,9 +283,6 @@
       
     </ul>
   
-
-  
-    
 
   
 
@@ -283,6 +314,9 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+            
+
+          
           <div id="content" class="content">
             
 
@@ -306,8 +340,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -338,14 +372,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-02-17 08:14:59" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
+              <time title="创建时间：2019-02-17 08:14:59" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+00:00">2019-02-17</time>
             
 
             
@@ -360,9 +394,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2019-02-24 13:57:02" itemprop="dateModified" datetime="2019-02-24T13:57:02+00:00">2019-02-24</time>
+                <time title="修改时间：2019-03-09 07:57:04" itemprop="dateModified" datetime="2019-03-09T07:57:04+00:00">2019-03-09</time>
               
             
           </span>
@@ -376,7 +410,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
@@ -431,6 +465,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl PairsMate.pl -1 &lt;input1.fastq&gt; -2 &lt;input2.fastq&gt; [-o &lt;outdir&gt;]</span><br></pre></td></tr></table></figure>
 <p>具体的参数使用说明可以执行 <code>perl PairsMate.pl</code>，查看脚本使用文档</p>
 <h3 id="4-根据序列Id提取FASTA序列"><a href="#4-根据序列Id提取FASTA序列" class="headerlink" title="4. 根据序列Id提取FASTA序列"></a>4. 根据序列Id提取FASTA序列</h3><p>提供FASTA文件，和包含序列Id的文件（有多列，用制表符隔开，其中一列为序列Id），提取该序列Id对应的FASTA序列</p>
+<p>脚本名：<code>extractSeqFromFasta.pl</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/perl</span><br><span class="line">use strict;</span><br><span class="line">use warnings;</span><br><span class="line"></span><br><span class="line">my geneList = $ARGV[0];</span><br><span class="line">my fasta = $ARGV[1];</span><br><span class="line">my out = $ARGV[2];</span><br><span class="line"></span><br><span class="line">my %Hash_fasta;</span><br><span class="line">my $seqId;</span><br><span class="line"></span><br><span class="line"># 读入fasta文件，存为哈希</span><br><span class="line">open FA,&quot;&lt;$fasta&quot; or die &quot;$!\n&quot;;</span><br><span class="line">while(&lt;FA&gt;)&#123;</span><br><span class="line">	chomp;</span><br><span class="line">	next if(/^\s?$/);</span><br><span class="line">	if(/^&gt;(.+)$/)&#123;</span><br><span class="line">		$seqId = $1;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		$Hash_fasta&#123;$seqId&#125; .= $_;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">close(FA);</span><br><span class="line"></span><br><span class="line"># 逐行读入geneList文件，并从上一步的哈希中将该序列提取出来</span><br><span class="line">open LIST,&quot;&lt;$geneList&quot; or die &quot;$!\n&quot;;</span><br><span class="line">open OUT,&quot;&gt;$out&quot; or die &quot;$!\n&quot;;</span><br><span class="line">while(&lt;LIST&gt;)&#123;</span><br><span class="line">	chomp;</span><br><span class="line">	next if(/^\s?$/);</span><br><span class="line">	my $gene = $_;</span><br><span class="line">	if($Hash_fasta&#123;$gene&#125;)&#123;</span><br><span class="line">		print OUT &quot;&gt;$gene\n$Hash_fasta&#123;$gene&#125;\n&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">close(LIST);</span><br><span class="line">close(OUT);</span><br></pre></td></tr></table></figure>
+<p>使用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl extractSeqFromFasta.pl &lt;in.fasta&gt; &lt;gene list&gt; &lt;out.fasta&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="5-统计FastQC输出"><a href="#5-统计FastQC输出" class="headerlink" title="5. 统计FastQC输出"></a>5. 统计FastQC输出</h3><p>统计FastQC结果，注意脚本需要在FastQC输出结果所在目录下运行。脚本的统计项目及输出如下：</p>
 <table>
 <thead>
@@ -484,6 +522,25 @@
 <p>用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python formatFasta.py &lt;in.fa&gt; &lt;out.fa&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="R"><a href="#R" class="headerlink" title="R"></a>R</h2><h3 id="1-对profiles进行wilcox检验（并行化）"><a href="#1-对profiles进行wilcox检验（并行化）" class="headerlink" title="1. 对profiles进行wilcox检验（并行化）"></a>1. 对profiles进行wilcox检验（并行化）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># 四个参数，按顺序分别为：</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - sample group file </span><br><span class="line"># - outfile name</span><br><span class="line"># - threads number（默认为服务器总线程-10）</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line"></span><br><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line"># Initiate cluster</span><br><span class="line">if(is.na(Args[4])) &#123;</span><br><span class="line">	no_cores &lt;- detectCores() - 10</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[4])</span><br><span class="line">&#125;</span><br><span class="line">cl &lt;- makeCluster(no_cores)</span><br><span class="line"></span><br><span class="line">data &lt;- read.table(Args[1],head=T,row.names=1,sep=&apos;\t&apos;)</span><br><span class="line">group &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line"># 找出profiles中每列代表的样本所属的组</span><br><span class="line">col_group1 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==1],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line">col_group2 &lt;- colnames(data) %in% sub(&apos;-&apos;,&apos;.&apos;,paste(group$Sample[group$Group==2],&apos;.rpkm&apos;,sep=&apos;&apos;))</span><br><span class="line"></span><br><span class="line"># 对单个基因进行wilcox检验，并输出统计检验结果，输出格式如下：</span><br><span class="line"># 	geneName,pvalue,group1Median,group2Median,direction</span><br><span class="line">wilcox_fun &lt;- function(data,col_group1,col_group2)&#123;</span><br><span class="line">	g1 &lt;- as.numeric(data[col_group1])</span><br><span class="line">	g2 &lt;- as.numeric(data[col_group2])</span><br><span class="line">	# 执行wilcox检验</span><br><span class="line">	stat &lt;- wilcox.test(g1,g2,paired = FALSE, exact=NULL, correct=TRUE, alternative=&quot;two.sided&quot;)</span><br><span class="line">	if(is.na(stat$p.value))&#123;</span><br><span class="line">		stat$p.value &lt;- 1</span><br><span class="line">	&#125;</span><br><span class="line">	# 对有统计学意义的基因进行判断，是上调&quot;up&quot;还是下调&quot;down&quot;或者是不变&quot;-&quot;（对于组2，即不吃药组）</span><br><span class="line">	if(stat$p.value &lt; 0.1  &amp; median(g1) &lt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;down&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) &gt; median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;up&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else if(stat$p.value &lt; 0.1  &amp; median(g1) == median(g2))&#123;</span><br><span class="line">		G12 &lt;- c(ifelse(is.na(stat$p.value),1,stat$p.value),median(g1),median(g2),&apos;-&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		G12 &lt;- c()</span><br><span class="line">	&#125;</span><br><span class="line">	G12</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">statOut &lt;- parApply(cl,data,1,wilcox_fun,col_group1,col_group2)</span><br><span class="line">stopCluster(cl)</span><br><span class="line"># 删除为NULL的列表元素</span><br><span class="line">for(i in names(statOut))&#123;</span><br><span class="line">	if(is.null(statOut[[i]]))&#123;</span><br><span class="line">		statOut[[i]] &lt;- NULL</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 将结果写入文件中</span><br><span class="line">if(!is.null(statOut))&#123;</span><br><span class="line">	# 转换成数据框</span><br><span class="line">	statOut &lt;- as.data.frame(t(as.matrix(as.data.frame(statOut))))</span><br><span class="line">	colnames(statOut) &lt;- c(&apos;pvalue&apos;,&apos;group1Median&apos;,&apos;group2Median&apos;,&apos;direction&apos;)</span><br><span class="line">	# 写入文件</span><br><span class="line">	write.table(statOut,Args[3],sep = &apos;\t&apos;,row.names = T,col.names = T,quote = F)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-对差异显著的subprofile进行可视化——箱线图与热图"><a href="#2-对差异显著的subprofile进行可视化——箱线图与热图" class="headerlink" title="2. 对差异显著的subprofile进行可视化——箱线图与热图"></a>2. 对差异显著的subprofile进行可视化——箱线图与热图</h3><p>想法：</p>
+<blockquote>
+<p>从上游的分析中得到两种样本profile的差异统计检验结果，其中有p-value和p-adjust，可以根据p-value或p-adjust设置阈值，筛选出有统计学显著性的差异observation</p>
+<p>根据这些observation的Id从原始profile中将这些差异observation的部分提取了得到subprofile</p>
+<p>对subprofile进行可视化——箱线图（boxplot）与热图（heatmap）</p>
+</blockquote>
+<p>需要提供的输入：</p>
+<blockquote>
+<ul>
+<li><p>上游的分析中得到两种样本profile的差异统计检验结果</p>
+</li>
+<li><p>原始profile</p>
+</li>
+<li><p>样本的分组信息</p>
+</li>
+</ul>
+</blockquote>
+<p>脚本名：<code>plotDiffSubprofile.R</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"># 实现功能说明：导入差异分析的结果与原始profile，提取原始profile中提取</span><br><span class="line">#	差异显著（通过第3个参数设置筛选的阈值）的集合绘制热图/箱线图</span><br><span class="line">#</span><br><span class="line">#	考虑到可能直接得到的画图输出不满足用户的需求，所以提供了一个参数来控</span><br><span class="line">#	制是否输出画图用的数据，以便用户可以直接载人绘图数据，根据自己的需求</span><br><span class="line">#	灵活画图</span><br><span class="line">#########################################################################</span><br><span class="line"># 必须参数说明：</span><br><span class="line"># - output file from wilcox stat</span><br><span class="line"># - profiles matrix file</span><br><span class="line"># - padj threshold</span><br><span class="line"># - min memmbers for subprofile</span><br><span class="line"># - sample group file, 2 columns, 1st column corresponding to sample, 2nd</span><br><span class="line">#	 column corresponding to group</span><br><span class="line"># - logic value, False or True, whether to output prepared data frame for</span><br><span class="line">#	 ggplot-boxplot and filted subprofile for heatmap, saved as raw txt and</span><br><span class="line">#	 Rdata(subprofile_melt--boxplot, subprofile_matrix,anno_col--heatmap) formats</span><br><span class="line">#########################################################################</span><br><span class="line"></span><br><span class="line">library(reshape2)</span><br><span class="line">library(ggplot2)</span><br><span class="line">library(pheatmap)</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(T)</span><br><span class="line"></span><br><span class="line">stat &lt;- read.table(Args[1],header=T,sep=&apos;\t&apos;)</span><br><span class="line">profile &lt;- read.table(Args[2],head=T,sep=&apos;\t&apos;)</span><br><span class="line">padj &lt;- as.numeric(Args[3])</span><br><span class="line">num_min &lt;- as.numeric(Args[4])</span><br><span class="line">group &lt;- read.table(Args[5],head=T,sep=&apos;\t&apos;)</span><br><span class="line"></span><br><span class="line">stat_filt &lt;- stat[stat$pAdj&lt;=padj,]</span><br><span class="line"></span><br><span class="line"># 若差异的集合太小则不进行后续的绘图操作</span><br><span class="line">if(dim(stat_filt)[1]&gt;=num_min)&#123;</span><br><span class="line">	# 提取出差异的subprofile</span><br><span class="line">	subprofile &lt;- profile[profile[,1] %in% rownames(stat_filt),]</span><br><span class="line">	</span><br><span class="line">	# 将数据框的短格式展开为长格式</span><br><span class="line">	subprofile_melt &lt;- melt(subprofile,id.vars=1,variable.name = &apos;sample&apos;,value.name = &apos;abundance&apos;)</span><br><span class="line">	colnames(subprofile_melt) &lt;- c(&apos;ID&apos;,&apos;sample&apos;,&apos;abundance&apos;)</span><br><span class="line">	</span><br><span class="line">	# 添加分组信息</span><br><span class="line">	subprofile_melt$group &lt;- NULL</span><br><span class="line">	group_factor &lt;- unique(group[,2])	# 获得所有组别及其表示符</span><br><span class="line">	for(i in group_factor)&#123;</span><br><span class="line">		subprofile_melt$group[subprofile_melt$sample %in% sub(&apos;-&apos;,&apos;.&apos;,group[group[,2]==i,1])] &lt;- i</span><br><span class="line">	&#125;</span><br><span class="line">	subprofile_melt$group &lt;- as.factor(subprofile_melt$group) # 分组变量必须为factor</span><br><span class="line">	</span><br><span class="line">	# 画boxplot</span><br><span class="line">	# png(paste(Args[2],&quot;.boxplotDiff.png&quot;,sep=&apos;&apos;))</span><br><span class="line">	p_box &lt;- ggplot(subprofile_melt)</span><br><span class="line">	p_box + geom_boxplot(aes(x=ID,y=abundance,fill=group))</span><br><span class="line">	# dev.off()</span><br><span class="line">	ggsave(paste(Args[2],&quot;.boxplotDiff.png&quot;,sep=&apos;&apos;))</span><br><span class="line">	</span><br><span class="line">	# 画heatmap</span><br><span class="line">	## 整理绘图数据</span><br><span class="line">	subprofile_matrix &lt;- as.matrix(subprofile[,-1])</span><br><span class="line">	rownames(subprofile_matrix) &lt;- subprofile[,1]</span><br><span class="line">	## 准备heatmap的注释信息</span><br><span class="line">	anno_col &lt;- data.frame(group=as.factor(group[,2]))</span><br><span class="line">	rownames(anno_col) &lt;- sub(&apos;-&apos;,&apos;.&apos;,group[,1])</span><br><span class="line">	png(paste(Args[2],&quot;.heatmapDiff.png&quot;,sep=&apos;&apos;))</span><br><span class="line">	pheatmap(subprofile_matrix,scale=&quot;row&quot;,cluster_rows=T,cluster_cols=T,annotation_col=anno_col,show_rownames = F)</span><br><span class="line">	dev.off()</span><br><span class="line">	</span><br><span class="line">	# 若最后一个参数为True则写出数据</span><br><span class="line">	if(Args[6])&#123;</span><br><span class="line">		write.table(subprofile_melt,paste(Args[2],&quot;.boxplotDiff.data&quot;,sep=&apos;&apos;),row.names=F,col.names=T,sep=&apos;\t&apos;,quote=F) # 画箱线图的数据</span><br><span class="line">		write.table(subprofile_matrix,paste(Args[2],&quot;.heatmapDiff.data&quot;,sep=&apos;&apos;),row.names=T,col.names=T,sep=&apos;\t&apos;,quote=F) # 画热图的数据</span><br><span class="line">		write.table(anno_col,paste(Args[2],&quot;.heatmapDiff.anno&quot;,sep=&apos;&apos;),row.names=T,col.names=T,sep=&apos;\t&apos;,quote=F) # 画热图的注释数据</span><br><span class="line">		save(subprofile_melt,subprofile_matrix,anno_col,file=paste(Args[2],&quot;.Rdata&quot;,sep=&apos;&apos;))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	print(&quot;Not enough memmbers of subprofile passing the padj threshold!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -507,11 +564,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/R/" rel="tag"># R</a>
+          
             <a href="/tags/Perl/" rel="tag"># Perl</a>
           
             <a href="/tags/Python/" rel="tag"># Python</a>
-          
-            <a href="/tags/R/" rel="tag"># R</a>
           
         </div>
       
@@ -583,10 +640,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -595,8 +652,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
               <p class="site-author-name" itemprop="name">Lianm</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
           </div>
 
           
@@ -606,8 +665,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
@@ -630,7 +689,7 @@
                       
                     
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">categories</span>
+                    <span class="site-state-item-name">分类</span>
                   
                 </div>
               
@@ -684,8 +743,14 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
-                    <span class="site-state-item-name">tags</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">标签</span>
                   
                 </div>
               
@@ -746,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">1.</span> <span class="nav-text">Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-拆分FASTA文件"><span class="nav-number">1.1.</span> <span class="nav-text">1. 拆分FASTA文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-从双端FASTQ文件中抽取指定数据量-bp-的序列"><span class="nav-number">1.2.</span> <span class="nav-text">2. 从双端FASTQ文件中抽取指定数据量(bp)的序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-双端FASTQ文件进行双端配对"><span class="nav-number">1.3.</span> <span class="nav-text">3. 双端FASTQ文件进行双端配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-根据序列Id提取FASTA序列"><span class="nav-number">1.4.</span> <span class="nav-text">4. 根据序列Id提取FASTA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-统计FastQC输出"><span class="nav-number">1.5.</span> <span class="nav-text">5. 统计FastQC输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.</span> <span class="nav-text">Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式化FASTA文件"><span class="nav-number">2.1.</span> <span class="nav-text">1. 格式化FASTA文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R"><span class="nav-number">3.</span> <span class="nav-text">R</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对profiles进行wilcox检验（并行化）"><span class="nav-number">3.1.</span> <span class="nav-text">1. 对profiles进行wilcox检验（并行化）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perl"><span class="nav-number">1.</span> <span class="nav-text">Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-拆分FASTA文件"><span class="nav-number">1.1.</span> <span class="nav-text">1. 拆分FASTA文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-从双端FASTQ文件中抽取指定数据量-bp-的序列"><span class="nav-number">1.2.</span> <span class="nav-text">2. 从双端FASTQ文件中抽取指定数据量(bp)的序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-双端FASTQ文件进行双端配对"><span class="nav-number">1.3.</span> <span class="nav-text">3. 双端FASTQ文件进行双端配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-根据序列Id提取FASTA序列"><span class="nav-number">1.4.</span> <span class="nav-text">4. 根据序列Id提取FASTA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-统计FastQC输出"><span class="nav-number">1.5.</span> <span class="nav-text">5. 统计FastQC输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.</span> <span class="nav-text">Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-格式化FASTA文件"><span class="nav-number">2.1.</span> <span class="nav-text">1. 格式化FASTA文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R"><span class="nav-number">3.</span> <span class="nav-text">R</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对profiles进行wilcox检验（并行化）"><span class="nav-number">3.1.</span> <span class="nav-text">1. 对profiles进行wilcox检验（并行化）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-对差异显著的subprofile进行可视化——箱线图与热图"><span class="nav-number">3.2.</span> <span class="nav-text">2. 对差异显著的subprofile进行可视化——箱线图与热图</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -778,7 +843,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
 
 
 
@@ -786,7 +851,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
 
 
 
@@ -874,7 +939,9 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
 
 
 
@@ -911,6 +978,21 @@
   
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
 
   
 

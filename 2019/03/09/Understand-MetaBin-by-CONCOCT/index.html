@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1. 宏基因组binning简介Metagenome 组装完成后，我们得到的是成千上万的 contigs，我们需要知道哪些 contigs 来自哪一个基因组，或者都有哪些微生物的基因组。所以需要将 contigs 按照物种水平进行分组归类，称为 “bining” 123456Supervised binning methods: use databases of already sequence">
+<meta name="keywords" content="NGS,metagenomics,Machine-Learning,Guassian-Mixture-Model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从CONCOCT入手理解宏基因组binning">
+<meta property="og:url" content="http://yoursite.com/2019/03/09/Understand-MetaBin-by-CONCOCT/index.html">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
+<meta property="og:description" content="1. 宏基因组binning简介Metagenome 组装完成后，我们得到的是成千上万的 contigs，我们需要知道哪些 contigs 来自哪一个基因组，或者都有哪些微生物的基因组。所以需要将 contigs 按照物种水平进行分组归类，称为 “bining” 123456Supervised binning methods: use databases of already sequence">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-gene-binning-1.gif">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-gene-binning-methods-and-softwares-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-gene-binning-methods-and-softwares-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-gene-binning-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Algorithms-Bioinf-bining-composition-formula.png">
+<meta property="og:image" content="http://yoursite.com/images/Algorithms-Bioinf-bining-coverage-formula-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Algorithms-Bioinf-bining-coverage-formula-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Understand-MetaBin-by-CONCOCT-k-means.gif">
+<meta property="og:image" content="http://yoursite.com/images/Understand-MetaBin-by-CONCOCT-GMM-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Understand-MetaBin-by-CONCOCT-GMM-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-4.png">
+<meta property="og:updated_time" content="2019-03-09T07:40:58.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从CONCOCT入手理解宏基因组binning">
+<meta name="twitter:description" content="1. 宏基因组binning简介Metagenome 组装完成后，我们得到的是成千上万的 contigs，我们需要知道哪些 contigs 来自哪一个基因组，或者都有哪些微生物的基因组。所以需要将 contigs 按照物种水平进行分组归类，称为 “bining” 123456Supervised binning methods: use databases of already sequence">
+<meta name="twitter:image" content="http://yoursite.com/images/Metagenome-gene-binning-1.gif">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/09/Understand-MetaBin-by-CONCOCT/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>从CONCOCT入手理解宏基因组binning | Lianm's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/09/Understand-MetaBin-by-CONCOCT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从CONCOCT入手理解宏基因组binning
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-09 07:22:30 / 修改时间：07:40:58" itemprop="dateCreated datePublished" datetime="2019-03-09T07:22:30+00:00">2019-03-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/Metagenome-gene-binning-1.gif" alt></p>
+<h2 id="1-宏基因组binning简介"><a href="#1-宏基因组binning简介" class="headerlink" title="1. 宏基因组binning简介"></a>1. 宏基因组binning简介</h2><p>Metagenome 组装完成后，我们得到的是成千上万的 contigs，我们需要知道哪些 contigs 来自哪一个基因组，或者都有哪些微生物的基因组。所以需要将 contigs 按照物种水平进行分组归类，称为 <strong>“bining”</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Supervised binning methods: use databases of already sequenced genomes to label contigs into taxonomic classes</span><br><span class="line"></span><br><span class="line">Unsupervised (clustering) methods: look for natural groups in the data</span><br><span class="line"></span><br><span class="line">Both supervised and unsupervised methods have two main elements: a metric to define the similarity between a given contig and</span><br><span class="line">a bin, and an algorithm to convert those similarities into assignments</span><br></pre></td></tr></table></figure>
+<p>一个很容易想到的策略就是，将组装得到的片段与已知物种的参考基因组进行比对，根据同源性进行归类。然而目前大多数的微生物的基因组还没有测序出来，因此限制了这种方法的可行性。</p>
+<p>目前主流的 bining 策略利用的是 contigs 的序列组成特点。</p>
+<h2 id="2-binning原理"><a href="#2-binning原理" class="headerlink" title="2. binning原理"></a>2. binning原理</h2><h3 id="2-1-可用于binning的特征"><a href="#2-1-可用于binning的特征" class="headerlink" title="2.1. 可用于binning的特征"></a>2.1. 可用于binning的特征</h3><ul>
+<li><p><strong>根据核酸组成信息来进行binning：k-mer frequencies</strong></p>
+<p>  依据：来自同一菌株的序列，其核酸组成是相似的</p>
+<p>  例如根<strong>据核酸使用频率</strong>（oligonucleotide frequency variations），通常是四核苷酸频率（tetranucleotide frequency），<strong>GC含量</strong>和<strong>必需的单拷贝基因</strong>等</p>
+<p>  优势：即便只有一个样品的宏基因组数据也可以进行binning，这在原理上是可操作的</p>
+<p>  不足：由于很多微生物种内各基因型之间的基因组相似性很高，想利用1个样品的宏基因组数据通过核酸组成信息进行binning，效果往往并不理想或难度很大。利用核酸组成信息进行binning，基本上只适合那些群落中物种基因型有明显核酸组成差异的，例如低GC含量和一致的寡核苷酸使用频率</p>
+</li>
+<li><p><strong>根据丰度信息来进行binning</strong></p>
+<p>  依据：来自同一个菌株的基因在不同的样品中 ( 不同时间或不同病理程度 ) 的丰度分布模式是相似的【PMID: 24997787】。</p>
+<p>  原因：比如，某一细菌中有两个基因，A和B，它们在该细菌基因组中的拷贝数比例为 A:B = 2:1，则不管在哪个样品中这种细菌的数量有多少，这两个基因的丰度比例总是为 2:1</p>
+<p>  优势：这种方法更有普适性，一般效果也比较好，能达到菌株的水平</p>
+<p>  不足：必须要大样本量，一般至少要50个样本以上，至少要有2个组能呈现丰度变化 ( 即不同的处理，不同的时间，疾病和健康，或者不同的采样地点等 ) ，每个组内的生物学重复也要尽量的多</p>
+<p>  对于像质粒这样的可移动遗传单元 (mobile genetic elements (MGEs))，由于其复制独立于细菌染色体，则同一种细菌的不同个体，该质粒的拷贝数可能存在差异，使得无法用丰度信息进行有效地bining</p>
+</li>
+<li><p><strong>同时依据核酸组成和丰度变化信息</strong></p>
+<p>  将核酸组成信息和丰度差异信息创建一个综合的距离矩阵，既能保证binning效果，也能相对节约计算资源，现在比较主流的binning软件多是同时依据核酸组成和丰度变化信息</p>
+</li>
+<li><p><strong>根据基因组甲基化模式</strong></p>
+<p>  依据：不同的细菌，其基因组甲基化模式不同，平均一种细菌有3种特意的甲基化 motif。MGEs (mobile genetic elements) 中含有 MTase 基因，其基因水平转移是细菌甲基化组多样性的驱动因素。虽然 MGEs 在不同个体的拷贝数不同，但是都存在，因此具有相同 MGEs 的细菌个体，其总遗传物质（包括染色体和 MGEs ）都会受到相同的MTase的作用而得到相同的甲基化模式。</p>
+</li>
+</ul>
+<h3 id="2-2-从哪些序列下手进行binning？"><a href="#2-2-从哪些序列下手进行binning？" class="headerlink" title="2.2. 从哪些序列下手进行binning？"></a>2.2. 从哪些序列下手进行binning？</h3><p>从原始的clean reads，还是从组装成的contig，还是从预测到的gene，都可以。根据基于聚类的序列类型的不同，暂且分为reads binning， contig binning和 genes binning</p>
+<p>比较这三种binning的优劣：</p>
+<blockquote>
+<ul>
+<li><p><strong>contig binning</strong></p>
+<p> 由于核酸组成和物种丰度变化模式在越长的序列中越显著和稳定，基于contig binning效果可能更好</p>
+</li>
+<li><p><strong>reads binning</strong></p>
+<p> 基于reads binning的优势是可以聚类出宏基因组中丰度非常低的物种</p>
+<p> 考虑到在宏基因组组装中reads利用率很低，单样品5Gb测序量情况下，环境样品组装reads利用率一般只有10%左右，肠道样品或极端环境样品组装reads利用率一般能达到30%，这样很多物种，尤其是低丰度的物种可能没有被组装出来，没有体现在gene 或者contig 中，因此基于reads binning 才有可能得到低丰度的物种</p>
+<p> 如 Brian Cleary 等 (DOI:10.1038/nbt.3329.Detection) 利用基于 reads binning 的 latent strain analysis 可以聚类出丰度低至0.00001%的菌株。此方法虽然得到更全面的 bins，但低丰度 bins 信息依旧不完整。</p>
+</li>
+<li><p><strong>genes binning</strong></p>
+<p> 应用非常广泛</p>
+<p> 原因可能是（1）基于genes丰度变化模式进行binning可操作性比较强，宏基因组分析中肯定都会计算gene丰度，一般不会计算contig丰度，gene丰度数据可以信手拈来；（2）基于genes binning有很多可参考的文献，过程也并不复杂，可复制性强；（3）对计算机资源消耗比较低</p>
+</li>
+</ul>
+</blockquote>
+<p>总体来说应用最广泛的就是基于genes binning 和 contig binning</p>
+<p>Naseer Sangwan 等 (DOI: 10.1186/s40168-016-0154-5) 总结了 contig binning 的算法和软件（如下表）</p>
+<p><img src="/images/Metagenome-gene-binning-methods-and-softwares-1.png" alt></p>
+<p><img src="/images/Metagenome-gene-binning-methods-and-softwares-2.png" alt></p>
+<p><strong>基于Genes abundance binning的一般流程</strong></p>
+<p>在宏基因组做完组装和基因预测之后，把所有样品中预测到的基因混合在一起，去冗余得到unique genes集合，对这个unique genes集合进行binning，主要是根据gene在各个样品中的丰度变化模式，计算gene之间的相关性，利用这种相关性进行聚类</p>
+<p><img src="/images/Metagenome-gene-binning-2.png" alt></p>
+<p>该图中的聚类过程类似于<strong>K-means聚类</strong>：随机选择几个seed genes作为诱饵，计算其他基因丰度分布模式与seed genes的相关性，按照固定的相关性值PCC&gt;0.9，将它们归属于不同seed genes所代表的类，然后在聚好的类内重新选择seed genes，进行迭代，最终聚类得到一个个基因集合，较大的集合（超过700个基因）称为 metagenomic species (MGS)，较小的集合称为 co-abundance gene group (CAG)</p>
+<p>基于 binning 结果进行单菌组装：</p>
+<blockquote>
+<p>Sequence reads from individual samples that map to the MGS genes and their contigs are then extracted and used to assembly a draft genome sequence for an MGS</p>
+</blockquote>
+<h2 id="3-详述CONCOCT的binning原理"><a href="#3-详述CONCOCT的binning原理" class="headerlink" title="3. 详述CONCOCT的binning原理"></a>3. 详述CONCOCT的binning原理</h2><p>结合序列组成特征 (sequence composition) 和跨样本覆盖度特征 (coverage across multiple samples) 进行binning</p>
+<p>在进行binning之前需要将所有样本的reads进行混拼 (coassembly) 得到contigs</p>
+<ul>
+<li><p><strong>Sequence composition features</strong></p>
+<p>  以 k-mer 长度等于5为例</p>
+<p>  将相互之间成反向互补关系的 5-mers pairs 记做一种，则总共有512种 5-mers，对每一条contig计算其各自 5-mers 的组成频率从而构造出一个长度为v=512的向量 Z<sub>i</sub>：</p>
+  <p align="center">Z<sub>i</sub> = (Z<sub>i,1</sub>, …, Z<sub>i,v</sub>)</p>
+
+<p>  为了保证每个 5-mers 频率的计数非零（为后面的对数转换做准备），进行伪计数处理，然后用该序列的 5-mers的总数进行标准化，得到新的向量 Z<sub>i</sub><sup>‘</sup>：</p>
+<p>  <img src="/images/Algorithms-Bioinf-bining-composition-formula.png" alt></p>
+</li>
+<li><p><strong>Contig coverage features</strong></p>
+<p>  用段序列比对软件，将各个样本（总共有M个样本）的reads比对到contigs上，计算每条contigs在每个样本中的 coverage (Mapped reads * read length / contig length)，得到表示 congtig i 的 coverage 的向量 Y<sub>i</sub>：</p>
+  <p align="center">Y<sub>i</sub> = (Y<sub>i,1</sub>, …, Y<sub>i,M</sub>)</p>
+
+<p>  两轮标准化处理：</p>
+<blockquote>
+<p>伪计数处理：额外添加一条比对到该 contig 上的 read；再用该<strong>样本内</strong>所有 contigs（contigs总数为N）的 coverage 进行标准化，得到新的向量 Y<sub>i</sub><sup>‘</sup>：</p>
+<p><img src="/images/Algorithms-Bioinf-bining-coverage-formula-1.png" alt></p>
+<p>然后再在<strong>contig内部</strong>进行标准化，得到新的向量 Y<sub>i</sub><sup>‘’</sup>：</p>
+<p><img src="/images/Algorithms-Bioinf-bining-coverage-formula-2.png" alt></p>
+</blockquote>
+</li>
+<li><p><strong>Combine two features</strong></p>
+<p>  将表示某一个 contig i 的序列组成特征的向量 Z<sub>i</sub><sup>‘</sup> 和 coverage 特征向量 Y<sub>i</sub><sup>‘’</sup>合并成组成一个新的特征向量 X<sub>i</sub>（向量长度为E=V+M），同时进行对数转换：</p>
+<p>  </p><p align="center">X<sub>i</sub> = { log(Z<sub>i</sub><sup>‘</sup>) , log(Y<sub>i</sub><sup>‘’</sup>) }</p>
+</li>
+<li><p><strong>PCA降维</strong>，保留能解释至少90%的方差的主成分（共保留前D个主成分，D &lt; E）</p>
+<p>  矩阵维数变化：N x E =&gt; N x D</p>
+</li>
+<li><p><strong>cluster contigs into bins</strong></p>
+<p>  使用高斯混合模型 (Gaussian mixture model)</p>
+<p>  基于高斯混合模型(GMM)的期望最大化（EM）聚类：</p>
+<blockquote>
+<p>可以把高斯混合模型简单理解为k-means算法的概率统计版本</p>
+<ul>
+<li><p><strong>回顾k-means聚类</strong></p>
+<p> k-means聚类有这样一个数据分布的假设：属于同一簇的数据样本聚集成近乎于圆形的团</p>
+<p> <img src="/images/Understand-MetaBin-by-CONCOCT-k-means.gif" alt></p>
+<p> k-means的优点是速度非常快，因为我们真正要做的就是计算点和组中心之间的距离；计算量少！因此，它具有线性复杂性o（n）</p>
+<p> 另一方面，k-means有两个缺点。首先，您必须先确定聚类的簇数量。理想情况下，对于一个聚类算法，我们希望它能帮我们解决这些问题，因为它的目的是从数据中获得一些洞察力。k-均值也从随机选择聚类中心开始，因此它可能在算法的不同运行中产生不同的聚类结果。因此，结果可能不可重复，缺乏一致性。</p>
+</li>
+<li><p><strong>GMM算法</strong></p>
+<p> k-means的一个主要缺点是它简单地使用了集群中心的平均值，对于以圆形方式聚集成簇的数据，k-means算法的聚类效果很好，但是当簇不是圆形时，k均值会失效，这也是将均值用作簇中心的后果</p>
+<p> 通过下面的图片，我们可以看到为什么这不是最好的方式</p>
+<p> <img src="/images/Understand-MetaBin-by-CONCOCT-GMM-1.png" alt></p>
+<p> 在左手边，人眼可以很明显地看到，有两个半径不同的圆形星团以相同的平均值为中心。k-means不能处理这个问题，因为不同簇的平均值非常接近</p>
+<p> 高斯混合模型（gmms）具有比K-means更好的灵活性。使用GMMs，其基于的数据分布的假设为数据点是高斯分布，可以简单理解为属于同一簇的数据样本聚集成近乎于环状或椭圆形的团，相对于环形或椭圆形的数据而言，这个假设的严格程度与均值相比弱很多</p>
+<p> 那高斯混合模型是如何实现聚类的呢？</p>
+<blockquote>
+<p>与k-means算法类似，首先需要知道数据需要聚成k个簇，然后随机初始化k个簇各种所对应的高斯分布的两个参数：均值μ与方差σ，然后基于EM算法从数据中学到各个簇最佳的参数：C<sub>1</sub> ~ N(μ<sub>1</sub>, σ<sub>1</sub><sup>2</sup>), C<sub>2</sub> ~ N(μ<sub>2</sub>, σ<sub>2</sub><sup>2</sup>) … C<sub>k</sub> ~ N(μ<sub>k</sub>, σ<sub>k</sub><sup>2</sup>)</p>
+<p>接着就可以基于上一步学习到的参数对每个数据点划分簇的归属了，比如对于样本i，其簇的归属为：<br><img src="/images/Understand-MetaBin-by-CONCOCT-GMM-2.png" alt></p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h2 id="4-拆解CONCOCT的流程"><a href="#4-拆解CONCOCT的流程" class="headerlink" title="4. 拆解CONCOCT的流程"></a>4. 拆解CONCOCT的流程</h2><h3 id="4-1-Assembling-Metagenomic-Reads"><a href="#4-1-Assembling-Metagenomic-Reads" class="headerlink" title="4.1. Assembling Metagenomic Reads"></a>4.1. Assembling Metagenomic Reads</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 将多个样本的测序数据fastq文件，按照双端分别进行合并</span><br><span class="line">$ cat $CONCOCT_TEST/reads/Sample*_R1.fa &gt; All_R1.fa</span><br><span class="line">$ cat $CONCOCT_TEST/reads/Sample*_R2.fa &gt; All_R2.fa</span><br><span class="line"></span><br><span class="line"># 拼接</span><br><span class="line">$ velveth velveth_k71 71 -fasta -shortPaired -separate All_R1.fa All_R2.fa</span><br><span class="line">$ velvetg velveth_k71 -ins_length 400 -exp_cov auto -cov_cutoff auto</span><br></pre></td></tr></table></figure>
+<p>velveth:</p>
+<blockquote>
+<p>takes in a number of sequence files, produces a hashtable, then outputs two files in an output directory (creating it if necessary), Sequences and Roadmaps, which are necessary to velvetg. </p>
+<p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; ./velveth output_directory hash_length [[-file_format][-read_type] filename]</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>velvetg:</p>
+<blockquote>
+<p>Velvetg is the core of Velvet where the de Bruijn graph is built then manipulated</p>
+</blockquote>
+<h3 id="4-2-Cutting-up-contigs"><a href="#4-2-Cutting-up-contigs" class="headerlink" title="4.2. Cutting up contigs"></a>4.2. Cutting up contigs</h3><p>将大片段的contigs (&gt;=20kb)，切成一个个10kb的小片段，当切到尾部只剩不到20kb时，停止切割，以防切得过碎</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python $CONCOCT/scripts/cut_up_fasta.py -c 10000 -o 0 -m contigs/velvet_71.fa &gt; contigs/velvet_71_c10K.fa</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-Map-Remove-Duplicate-and-Quant-Coverage"><a href="#4-3-Map-Remove-Duplicate-and-Quant-Coverage" class="headerlink" title="4.3. Map, Remove Duplicate and Quant Coverage"></a>4.3. Map, Remove Duplicate and Quant Coverage</h3><ol>
+<li><p>使用 Bowtie2 执行 mapping 操作</p>
+</li>
+<li><p>用 MarkDuplicates（Picard中的一个工具） 去除 PCR duplicates</p>
+</li>
+<li><p>用 BEDTools genomeCoverageBed 基于 mapping 得到的 bam 文件计算每个contigs的coverage</p>
+</li>
+</ol>
+<p><strong>（1） Map, Remove Duplicate</strong></p>
+<p>其中1、2步操作可以由CONCOCT中提供的脚本<code>map-bowtie2-markduplicates.sh</code>完成</p>
+<p>先要自行建好这些contigs的bowtie2索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># index for contigs</span><br><span class="line">$ bowtie2-build contigs/velvet_71_c10K.fa contigs/velvet_71_c10K.fa</span><br></pre></td></tr></table></figure>
+<p>用<code>map-bowtie2-markduplicates.sh</code>脚本完成 <code>mapping</code> -&gt; <code>remove duplicate</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for f in $CONCOCT_TEST/reads/*_R1.fa; do</span><br><span class="line">    mkdir -p map/$(basename $f);</span><br><span class="line">    cd map/$(basename $f);</span><br><span class="line">    bash $CONCOCT/scripts/map-bowtie2-markduplicates.sh -ct 1 -p &apos;-f&apos; $f $(echo $f | sed s/R1/R2/) pair $CONCOCT_EXAMPLE/contigs/velvet_71_c10K.fa asm bowtie2;</span><br><span class="line">    cd ../..;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><code>-c</code> option to compute coverage histogram with genomeCoverageBed</li>
+<li><code>-t</code> option is number of threads</li>
+<li><code>-p</code> option is the extra parameters given to bowtie2. In this case -f</li>
+<li><code>-k</code> 保留中间文件</li>
+</ul>
+</blockquote>
+<p>随后的5个参数：</p>
+<blockquote>
+<ul>
+<li>pair1, the fasta/fastq file with the #1 mates</li>
+<li>pair2, the fasta/fastq file with the #2 mates</li>
+<li>pair_name, a name for the pair used to prefix output files</li>
+<li>assembly, a fasta file of the assembly to map the pairs to</li>
+<li>assembly_name, a name for the assembly, used to postfix outputfiles</li>
+<li>outputfolder, the output files will end up in this folder</li>
+</ul>
+</blockquote>
+<p>如果要自己逐步执行第1、2两步，则可以通过以下方式实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># Index reference, Burrows-Wheeler Transform</span><br><span class="line">$ bowtie2-build SampleA.fasta SampleA.fasta</span><br><span class="line"></span><br><span class="line"># Align Paired end, sort and index</span><br><span class="line">bowtie2 \</span><br><span class="line">	-p 32 \</span><br><span class="line">	-x SampleA.fasta \</span><br><span class="line">	-1 $Data/SampleA.1.fastq \</span><br><span class="line">	-2 $Data/SampleA.2.fastq | \</span><br><span class="line">	samtools sort -@ 18 -O BAM -o SampleA.sort.bam</span><br><span class="line">samtools index SampleA.sort.bam</span><br><span class="line"></span><br><span class="line"># Mark duplicates and index</span><br><span class="line">java -Xms32g -Xmx32g -XX:ParallelGCThreads=15 -XX:MaxPermSize=2g -XX:+CMSClassUnloadingEnabled \</span><br><span class="line">    -jar picard.jar MarkDuplicates \</span><br><span class="line">    I=./SampleA.sort.bam \</span><br><span class="line">    O=./SampleA.sort.md.bam \</span><br><span class="line">    M=./SampleA.smd.metrics \</span><br><span class="line">    VALIDATION_STRINGENCY=LENIENT \</span><br><span class="line">    MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000 \</span><br><span class="line">    REMOVE_DUPLICATES=TRUE # 该参数默认为false，即在输出中不过滤duplicate，但是会对这些记录的flag进行修改标记</span><br><span class="line">samtools index ./SampleA.sort.md.bam</span><br></pre></td></tr></table></figure>
+<p><strong>（2）Quant Coverage</strong></p>
+<p>第3步，计算每个contigs的coverage，用<code>gen_input_table.py</code>脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># usage: gen_input_table.py [-h] [--samplenames SAMPLENAMES] [--isbedfiles] fastafile bamfiles [bamfiles ...]</span><br><span class="line"># --samplenames 写有样品名的文件，每个文件名一行</span><br><span class="line"># --isbedfiles  如果在上一步map时运行了genomeCoverageBed，则可以加上此参数后直接用 *smds.coverage文件。如果没运行genomeCoverageBed，则不加此参数，依旧使用bam文件。</span><br><span class="line"></span><br><span class="line">$ python $CONCOCT/scripts/gen_input_table.py --isbedfiles \</span><br><span class="line">	--samplenames &lt;(for s in Sample*; do echo $s | cut -d&apos;_&apos; -f1; done) \</span><br><span class="line">	../contigs/velvet_71_c10K.fa */bowtie2/asm_pair-smds.coverage \</span><br><span class="line">	&gt; concoct_inputtable.tsv</span><br></pre></td></tr></table></figure>
+<p>注：</p>
+<blockquote>
+<p>这个脚本可以接受两种类型的输入</p>
+<ul>
+<li>（1）对bamfiles执行<code>genomeCoverageBed (bedtools genomecov</code>得到的<code>*smds.coverage</code>文件，此时要使用<code>--isbedfiles</code>参数，这样脚本只执行下面提到的第2步操作——计算每条contig的平均depth（又称为这条contig的abundance）；</li>
+<li>（2）原始的bamfiles，则脚本要执行下面提到的两步操作；</li>
+</ul>
+</blockquote>
+<p>也可以自己写命令逐步实现，这样有利于加深对工具的理解</p>
+<ol>
+<li><p>计算每条contig的depth分布（histograms）</p>
+<p> <img src="/images/Metagenome-Tools-CONCOCT-genomecov-1.png" alt></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bedtools genomecov -ibam ./SampleA.smds.bam &gt; ./SampleA.smds.coverage</span><br></pre></td></tr></table></figure>
+<p> <code>bedtools genomecov</code>默认计算histograms，如输出为<code>chr1   0  980  1000</code>，则说明在contig chr1上depth=0的碱基数为980bp，该contig长度为1000bp</p>
+<p> 例如：</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ cat A.bed</span><br><span class="line">&gt; chr1  10  20</span><br><span class="line">&gt; chr1  20  30</span><br><span class="line">&gt; chr2  0   500</span><br><span class="line">&gt; </span><br><span class="line">&gt; $ cat my.genome</span><br><span class="line">&gt; chr1  1000</span><br><span class="line">&gt; chr2  500</span><br><span class="line">&gt; </span><br><span class="line">&gt; $ bedtools genomecov -i A.bed -g my.genome</span><br><span class="line">&gt; chr1   0  980  1000  0.98</span><br><span class="line">&gt; chr1   1  20   1000  0.02</span><br><span class="line">&gt; chr2   1  500  500   1</span><br><span class="line">&gt; genome 0  980  1500  0.653333</span><br><span class="line">&gt; genome 1  520  1500  0.346667</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>输出格式为：</p>
+<ul>
+<li>chromosome</li>
+<li>depth of coverage from features in input file</li>
+<li>number of bases on chromosome (or genome) with depth equal to column 2</li>
+<li>size of chromosome (or entire genome) in base pairs</li>
+<li>size of chromosome (or entire genome) in base pairs</li>
+</ul>
+</blockquote>
+</li>
+<li><p>计算每条contig的平均depth</p>
+<p> <img src="/images/Metagenome-Tools-CONCOCT-genomecov-2.png" alt></p>
+<p> 有两种计算方法：</p>
+<p> <img src="/images/Metagenome-Tools-CONCOCT-genomecov-3.png" alt></p>
+<p> 或</p>
+<p> <img src="/images/Metagenome-Tools-CONCOCT-genomecov-4.png" alt></p>
+<p> 第二种计算方法本质上就是加权平均</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;BEGIN &#123;pc=&quot;&quot;&#125; </span><br><span class="line">&#123;</span><br><span class="line">    c=$1;</span><br><span class="line">    if (c == pc) &#123;</span><br><span class="line">        cov=cov+$2*$5;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      print pc,cov;</span><br><span class="line">      cov=$2*$5;</span><br><span class="line">    pc=c&#125;</span><br><span class="line">&#125; END &#123;print pc,cov&#125;&apos; SampleA.smds.coverage | tail -n +2 &gt; SampleA.smds.coverage.percontig</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>（3）Generate linkage table</strong></p>
+<p>接着要构建 linkage per sample between contigs，<strong>目前不是很理解它这一步的目的</strong></p>
+<p>尝试作简单的理解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># usage: bam_to_linkage.py [-h] [--samplenames SAMPLENAMES] [--regionlength REGIONLENGTH] [--fullsearch] [-m MAX_N_CORES] [--readlength READLENGTH] [--mincontiglength MINCONTIGLENGTH] fastafile bamfiles [bamfiles ...]</span><br><span class="line"># --samplenames 写有样品名的文件，每个文件名一行</span><br><span class="line"># --regionlength contig序列中用于linkage的两端长度 [默认 500]</span><br><span class="line"># --fullsearch 在全部contig中搜索用于linkage</span><br><span class="line"># -m 最大线程数，每个ban文件对应一个线程</span><br><span class="line"># --readlength untrimmed reads长度 [默认 100]</span><br><span class="line"># --mincontiglength 识别的最小contig长度 [默认 0]</span><br><span class="line"></span><br><span class="line">cd $CONCOCT_EXAMPLE/map</span><br><span class="line">python bam_to_linkage.py -m 8 --regionlength 500 --fullsearch --samplenames sample.txt $DATA/SampleA.fasta ./SampleA.smds.bam &gt; SampleA_concoct_linkage.tsv</span><br><span class="line">mv SampleA_concoct_linkage.tsv ../concoct-input</span><br><span class="line"></span><br><span class="line"># 输出文件格式</span><br><span class="line"># 共2+6*i列 (i样品数)，依次为contig1、contig2、nr_links_inward_n、nr_links_outward_n、nr_links_inline_n、nr_links_inward_or_outward_n、read_count_contig1_n、read_count_contig2_n</span><br><span class="line"># where n represents sample name. </span><br><span class="line"># Links只输出一次，如 contig1contig2 输出，则 contig2contig1 不输出</span><br><span class="line"></span><br><span class="line"># contig1: Contig linking with contig2</span><br><span class="line"># contig2: Contig linking with contig1</span><br><span class="line"># nr_links_inward: Number of pairs confirming an inward orientation of the contigs -&gt;&lt;-</span><br><span class="line"># nr_links_outward: Number of pairs confirming an outward orientation of the contigs &lt;--&gt; </span><br><span class="line"># nr_links_inline: Number of pairs confirming an outward orientation of the contigs -&gt;-&gt;</span><br><span class="line"># nr_links_inward_or_outward: Number of pairs confirming an inward or outward orientation of the contigs. This can be the case if the contig is very short and the search region on both tips of a contig overlaps or the --fullsearch parameter is used and one of the reads in the pair is outside</span><br><span class="line"># read_count_contig1/2: Number of reads on contig1 or contig2. With --fullsearch read count over the entire contig is used, otherwise only the number of reads in the tips are counted.</span><br></pre></td></tr></table></figure>
+<hr>
+<p>参考资料：</p>
+<p>(1) Quince C, Walker A W, Simpson J T, et al. Shotgun metagenomics, from sampling to analysis[J]. Nature Biotechnology, 2017, 35(9):833.</p>
+<p>(2) Nielsen H B, Almeida M, Juncker A S, et al. Identification and assembly of genomes and genetic elements in complex metagenomic samples without using reference genomes[J]. Nature Biotechnology, 2014, 32(8):822-828.</p>
+<p>(3) Sangwan N, Xia F, Gilbert J A. Recovering complete and draft population genomes from metagenome datasets[J]. Microbiome, 2016, 4(1):8.</p>
+<p>(4) Abubucker, S. et al. Metabolic reconstruction for metagenomic data and its application to the human microbiome. PLoS Comput. Biol. 8, e1002358(2012).</p>
+<p>(5) Beaulaurier J, Zhu S, Deikus G, et al. Metagenomic binning and association of plasmids with bacterial host genomes using DNA methylation.[J]. Nature Biotechnology, 2017, 36(1).</p>
+<p>(6) Alneberg, J. et al. Binning metagenomic contigs by coverage and composition. Nat. Methods 11, 1144–1146 (2014).</p>
+<p>(7) <a href="http://concoct.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">CONCOCT’s documentation</a></p>
+<p>(8) <a href="https://www.ebi.ac.uk/~zerbino/velvet/Manual.pdf" target="_blank" rel="noopener">Manual for Velvet</a></p>
+<p>(9) <a href="https://bedtools.readthedocs.io/en/latest/content/tools/genomecov.html" target="_blank" rel="noopener">BEDtools官网</a></p>
+<p>(10) <a href="http://www.zhengyue90.com/?p=182" target="_blank" rel="noopener">【Yue Zheng博客】宏基因组binning-CONCOCT</a></p>
+<p>(11) <a href="https://mp.weixin.qq.com/s/VzZ9uoVDbgllFxVuMszD_g" target="_blank" rel="noopener">AI研习社《数据科学中必须熟知的5种聚类算法》</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NGS/" rel="tag"># NGS</a>
+          
+            <a href="/tags/metagenomics/" rel="tag"># metagenomics</a>
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine-Learning</a>
+          
+            <a href="/tags/Guassian-Mixture-Model/" rel="tag"># Guassian-Mixture-Model</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/24/Dual-Parallelization-for-shell-R/" rel="next" title="【编程技巧】shell+R双重并行化——加速分析过程">
+                <i class="fa fa-chevron-left"></i> 【编程技巧】shell+R双重并行化——加速分析过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-宏基因组binning简介"><span class="nav-number">1.</span> <span class="nav-text">1. 宏基因组binning简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-binning原理"><span class="nav-number">2.</span> <span class="nav-text">2. binning原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-可用于binning的特征"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 可用于binning的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-从哪些序列下手进行binning？"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 从哪些序列下手进行binning？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-详述CONCOCT的binning原理"><span class="nav-number">3.</span> <span class="nav-text">3. 详述CONCOCT的binning原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-拆解CONCOCT的流程"><span class="nav-number">4.</span> <span class="nav-text">4. 拆解CONCOCT的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Assembling-Metagenomic-Reads"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. Assembling Metagenomic Reads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Cutting-up-contigs"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. Cutting up contigs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Map-Remove-Duplicate-and-Quant-Coverage"><span class="nav-number">4.3.</span> <span class="nav-text">4.3. Map, Remove Duplicate and Quant Coverage</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
+<html class="theme-next pisces use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,13 +51,13 @@
 <link rel="stylesheet" href="/css/main.css?v=7.0.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '7.0.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -103,7 +103,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/02/09/InAction-ML-XGS/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
 <meta property="og:description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-1.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-2.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-3.png">
@@ -133,7 +133,23 @@
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-4.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-5.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-6.png">
-<meta property="og:updated_time" content="2019-02-24T14:23:38.833Z">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-1.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-2.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-3.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-4.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-5.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-6.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-8.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-9.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-10.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-11.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-12.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-13.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-14.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-15.png">
+<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-16.png">
+<meta property="og:updated_time" content="2019-03-09T07:49:51.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="西瓜书带学训练营·实战任务">
 <meta name="twitter:description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
@@ -195,7 +211,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -226,7 +242,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -254,7 +270,24 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
 
   </li>
         
@@ -271,7 +304,24 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
 
   </li>
 
@@ -279,9 +329,6 @@
       
     </ul>
   
-
-  
-    
 
   
 
@@ -313,6 +360,9 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+            
+
+          
           <div id="content" class="content">
             
 
@@ -336,8 +386,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -368,14 +418,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-02-09 00:17:04" itemprop="dateCreated datePublished" datetime="2019-02-09T00:17:04+00:00">2019-02-09</time>
+              <time title="创建时间：2019-02-09 00:17:04" itemprop="dateCreated datePublished" datetime="2019-02-09T00:17:04+00:00">2019-02-09</time>
             
 
             
@@ -390,9 +440,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2019-02-24 14:23:38" itemprop="dateModified" datetime="2019-02-24T14:23:38+00:00">2019-02-24</time>
+                <time title="修改时间：2019-03-09 07:49:51" itemprop="dateModified" datetime="2019-03-09T07:49:51+00:00">2019-03-09</time>
               
             
           </span>
@@ -406,7 +456,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
@@ -707,6 +757,184 @@
 <p>其中，x <sub>i</sub> 只能取0或1</p>
 <p>BernoulliNB一共有4个参数，其中3个参数的名字和意义和MultinomialNB完全相同</p>
 <p>唯一增加的一个参数是binarize，这个参数主要是用来帮BernoulliNB处理二项分布的。如果不输入，则BernoulliNB认为每个数据特征都已经是二元的。否则的话，小于binarize的会归为一类，大于binarize的会归为另外一类</p>
+<h2 id="5-手写数字识别：sklearn包中神经网络库的使用"><a href="#5-手写数字识别：sklearn包中神经网络库的使用" class="headerlink" title="5. 手写数字识别：sklearn包中神经网络库的使用"></a>5. 手写数字识别：sklearn包中神经网络库的使用</h2><h3 id="5-1-神经网络相关知识点回顾"><a href="#5-1-神经网络相关知识点回顾" class="headerlink" title="5.1. 神经网络相关知识点回顾"></a>5.1. 神经网络相关知识点回顾</h3><h4 id="5-1-1-感知机：神经网络的最小单元"><a href="#5-1-1-感知机：神经网络的最小单元" class="headerlink" title="5.1.1. 感知机：神经网络的最小单元"></a>5.1.1. 感知机：神经网络的最小单元</h4><p>神经网络中最基本的成分是神经元（neuron）模型，最常见的模型是M-P神经元模型，也可以称为感知机（Perceptron）</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-1.png" alt></p>
+<p>若对生物学有一点基础的了解，就可以知道上面构造的简化的M-P神经元模型几乎完全吻合生物学上的定义：</p>
+<blockquote>
+<p>当前神经元通过与上游神经元之间的突触结构，接受来自上游的神经元1到n传递过来的信号x<sub>1</sub>,x<sub>2</sub>…x<sub>n</sub>，由于不同的上游信号传递过来它们的影响程度是不一样的，因此对它们进行加权求和，即∑w<sub>i</sub>x<sub>i</sub>，则得到总的上游信号</p>
+<p>另外当前神经元还有一个激活阈值θ，若上游信号的汇总信号强度大于θ，即则∑w<sub>i</sub>x<sub>i</sub>-θ &gt; 0，则当前神经元被激活，处于兴奋状态；若若上游信号的汇总信号强度小于θ，即则∑w<sub>i</sub>x<sub>i</sub>-θ &lt; 0，则当前神经元未被激活，处于抑制状态</p>
+</blockquote>
+<p>对于生物学上的神经元来说，它只有两个状态：</p>
+<ul>
+<li>“1”：对应神经元兴奋；</li>
+<li>“0”：对应神经元抑制；</li>
+</ul>
+<p>则它接受的信号为上游神经元的输出为 x<sub>i</sub>∈{0,1}，它的输出信号为 y∈{0,1}</p>
+<p>则它的理想激活函数是阶跃函数，即<code>f(x)=sgn(x)</code></p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-2.png" alt></p>
+<p>然而，阶跃函数具有不连续、不光滑等不太好的性质，因此实际上常用sigmoid函数作为激活函数</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-3.png" alt></p>
+<p>则此时激活函数为f(x)=sigmoid(∑w<sub>i</sub>x<sub>i</sub>-θ），很明显若选择sigmod函数作为感知机的激活函数，则此时感知机等价于一个logistic回归分类器</p>
+<p>类比logistic回归分类器</p>
+<blockquote>
+<ul>
+<li><p>对于线性可分的分类任务，感知机完全等价于logistic回归分类器</p>
+</li>
+<li><p>对于线性不可分问题，logistic回归可以构造额外的高阶多项式：</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-4.png" alt></p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-5.png" alt></p>
+<p>  本质上是将原始特征空间中线性不可分的样本向高维特征空间进行映射，使得它们在新的高维特征空间中线性可分</p>
+<p>  而感知器无法进行高维空间的映射，只能基于原始特征空间寻找线性判别边界，因此感知机在面对简单的非线性可分问题是，往往无法得到理想的判别面</p>
+</li>
+</ul>
+</blockquote>
+<p>感知机的学习规则：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-6.png" alt></p>
+<h4 id="5-1-2-神经网络的学习：BackPropagation算法"><a href="#5-1-2-神经网络的学习：BackPropagation算法" class="headerlink" title="5.1.2. 神经网络的学习：BackPropagation算法"></a>5.1.2. 神经网络的学习：BackPropagation算法</h4><p>神经网络的学习算法本质上是数学上常用的梯度下降（Gradient Descend）算法</p>
+<p>依据在一轮神经网络的训练过程中所用到的训练样本的数量的不同，可分为以下两类：</p>
+<blockquote>
+<ul>
+<li><p>标准BP算法：每次网络训练只针对单个训练样本，一次训练就输入一个训练样本，更新一次网络参数；</p>
+</li>
+<li><p>累积BP算法：每次网络训练只针对所有训练样本，一次将所有训练样本输入，更新一次网络参数；</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="5-1-2-1-标准BP算法"><a href="#5-1-2-1-标准BP算法" class="headerlink" title="5.1.2.1. 标准BP算法"></a>5.1.2.1. 标准BP算法</h4><p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-7.jpg" alt></p>
+<p>以w<sub>h,j</sub>为例进行推导</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-8.png" alt></p>
+<p>在标准BP算法中，由于只对输入的一个训练样本进行网络参数的训练，因此它的目标函数为当前样本k的均方误差E<sub>k</sub></p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-9.png" alt></p>
+<p>此时关键在于怎么推出△w<sub>hj</sub>的表达式？</p>
+<p>根据链式求导法则，W<sub>hj</sub>的影响链条为：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-10.png" alt></p>
+<p>因此△w<sub>hj</sub>可以写成：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-11.png" alt></p>
+<p>中间推导过程省略，最后得到的△w<sub>hj</sub>的表达式为：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-12.png" alt></p>
+<h4 id="5-1-2-2-累积BP算法"><a href="#5-1-2-2-累积BP算法" class="headerlink" title="5.1.2.2. 累积BP算法"></a>5.1.2.2. 累积BP算法</h4><p>累积BP算法的目标是最小化训练集的累积误差：</p>
+<p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-13.png" alt></p>
+<p>这是累积BP算法与标准BP算法的最大的也是最本质的差别</p>
+<p>标准BP算法存在的问题：</p>
+<blockquote>
+<p>每次更新只针对单个训练样本，参数更新得非常频繁，而且不同样本训练的效果可能出现相互“抵消”的现象</p>
+<p>因此为了达到与累积误差相同的极小点，标准BP算法往往需要进行更多次的迭代</p>
+</blockquote>
+<p>累积BP算法的优缺点：</p>
+<blockquote>
+<ul>
+<li><p>优点：直接对累积误差最小化，它在读取整个训练样本集D后才对参数进行一次更新，其参数更新的频率低得多</p>
+</li>
+<li><p>缺点：累积误差下降到一点程度之后，进一步下降会非常缓慢</p>
+<p>  此时标准BP算法往往会更快得到较好的解，因为其解的震荡性给它带来了一个好处——容易跳出局部最优</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="5-2-sklearn中神经网络库的简介"><a href="#5-2-sklearn中神经网络库的简介" class="headerlink" title="5.2. sklearn中神经网络库的简介"></a>5.2. sklearn中神经网络库的简介</h3><p>sklearn中神经网络的实现不适用于大规模数据应用。特别是 scikit-learn 不支持 GPU</p>
+<h4 id="5-2-1-MLPClassifier"><a href="#5-2-1-MLPClassifier" class="headerlink" title="5.2.1. MLPClassifier"></a>5.2.1. MLPClassifier</h4><p>神经网络又称为多层感知机（Multi-layer Perceptron，MLP）</p>
+<p>sklearn中用MLP进行分类的类为MLPClassifier</p>
+<p>主要参数说明：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">hidden_​​layer_sizes</td>
+<td style="text-align:left">tuple，length = n_layers - 2，默认值（100，）第i个元素表示第i个隐藏层中的神经元数量。</td>
+</tr>
+<tr>
+<td style="text-align:left">activation</td>
+<td style="text-align:left">{‘identity’，‘logistic’，‘tanh’，‘relu’}，默认’relu’ 隐藏层的激活函数：‘identity’，无操作激活，对实现线性瓶颈很有用，返回f（x）= x；‘logistic’，logistic sigmoid函数，返回f（x）= 1 /（1 + exp（-x））；‘tanh’，双曲tan函数，返回f（x）= tanh（x）；‘relu’，整流后的线性单位函数，返回f（x）= max（0，x）</td>
+</tr>
+<tr>
+<td style="text-align:left">slover</td>
+<td style="text-align:left">{‘lbfgs’，‘sgd’，‘adam’}，默认’adam’。权重优化的求解器：’lbfgs’是准牛顿方法族的优化器；’sgd’指的是随机梯度下降。’adam’是指由Kingma，Diederik和Jimmy Ba提出的基于随机梯度的优化器。注意：默认解算器“adam”在相对较大的数据集（包含数千个训练样本或更多）方面在训练时间和验证分数方面都能很好地工作。但是，对于小型数据集，“lbfgs”可以更快地收敛并且表现更好。</td>
+</tr>
+<tr>
+<td style="text-align:left">alpha</td>
+<td style="text-align:left">float，可选，默认为0.0001。L2惩罚（正则化项）参数。</td>
+</tr>
+<tr>
+<td style="text-align:left">batch_size</td>
+<td style="text-align:left">int，optional，默认’auto’。用于随机优化器的minibatch的大小。如果slover是’lbfgs’，则分类器将不使用minibatch。设置为“auto”时，batch_size = min（200，n_samples）</td>
+</tr>
+<tr>
+<td style="text-align:left">learning_rate</td>
+<td style="text-align:left">{‘常数’，‘invscaling’，‘自适应’}，默认’常数”。 用于权重更新。仅在solver =’sgd’时使用。’constant’是’learning_rate_init’给出的恒定学习率；’invscaling’使用’power_t’的逆缩放指数在每个时间步’t’逐渐降低学习速率learning_rate_， effective_learning_rate = learning_rate_init / pow（t，power_t）；只要训练损失不断减少，“adaptive”将学习速率保持为“learning_rate_init”。每当两个连续的时期未能将训练损失减少至少tol，或者如果’early_stopping’开启则未能将验证分数增加至少tol，则将当前学习速率除以5。</td>
+</tr>
+</tbody>
+</table>
+<p>MLPClassifier的训练使用BP算法，其使用<strong>交叉熵损失函数</strong>（Cross-Entropy loss function）</p>
+<p>MLP的训练需要准备</p>
+<blockquote>
+<ul>
+<li><p>X<sub>m*n</sub>：m个训练样本的n维特征向量构成的特征矩阵</p>
+</li>
+<li><p>Y<sub>m</sub>：m训练样本的目标值组成的向量</p>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.neural_network import MLPClassifier</span><br><span class="line"></span><br><span class="line">X = [[0., 0.], [1., 1.]]</span><br><span class="line">y = [0, 1]</span><br><span class="line"></span><br><span class="line"># 模型训练</span><br><span class="line">clf = MLPClassifier(solver=&apos;lbfgs&apos;, alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)</span><br><span class="line">clf.fit(X, y)</span><br><span class="line"></span><br><span class="line"># 模型预测</span><br><span class="line">clf.predict([[2., 2.], [-1., -2.]])</span><br></pre></td></tr></table></figure>
+<p>以上训练好的MLP模型保存在clf对象中，该对象有以下两个子变量：</p>
+<blockquote>
+<ul>
+<li><p><code>clf.coefs_</code>：模型的一系列权重矩阵</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; 	# 用以下命令查看每一层的权重矩阵的维度</span><br><span class="line">&gt; 	&gt;&gt;[coef.shape for coef in clf.coefs_]</span><br><span class="line">&gt; 	[(2, 5), (5, 2), (2, 1)]</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<pre><code>其中下标为 i 的权重矩阵表示第 i 层和第 i+1 层之间的权重
+</code></pre><ul>
+<li><p><code>intercepts_</code>：一系列偏置向量</p>
+<p>  其中的下标为 i 的向量表示添加到第 i+1 层的偏置值</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p><strong>多分类任务</strong></p>
+<p>  MLPClassifier 通过应用 Softmax 作为输出函数来支持多分类</p>
+<p>  softmax回归本质上是将原先常见的二元分类任务神经网络的输出层采用的sigmoid激活函数换成softmax回归</p>
+<p>  例如要利用神经网络进行k类的分类，则神经网络结构如下：</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-14.png" alt></p>
+<p>  那么最后一层即网络的输出层所采用的激活函数——softmax回归到底长什么样呢？</p>
+<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-15.png" alt></p>
+<p>  因此该网络的输出层又被称为softmax layer</p>
+<p>  因此在提供训练集时，若总共有k的类别，当某一个训练样本的类别为第i类时，它的目标值应该为<code>[0, 0, ..., 1, ..., 0]</code>，只在向量的第i个位置标为1，其他位置都为0</p>
+</li>
+<li><p><strong>多标签分类任务</strong></p>
+<p>  一个样本可能属于多个类别。 对于每个类，原始输出经过 logistic 函数变换后，大于或等于 0.5 的值将进为 1，否则为 0。 对于样本的预测输出，值为 1 的索引位置表示该样本的分类类别</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; X = [[0., 0.], [1., 1.]]</span><br><span class="line">&gt;&gt;&gt; y = [[0, 1], [1, 1]]</span><br><span class="line">&gt;&gt;&gt; clf = MLPClassifier(solver=&apos;lbfgs&apos;, alpha=1e-5,</span><br><span class="line">...                     hidden_layer_sizes=(15,), random_state=1)</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; clf.fit(X, y) </span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; clf.predict([[1., 2.]])</span><br><span class="line">array([[1, 1]])</span><br><span class="line">&gt;&gt;&gt; clf.predict([[0., 0.]])</span><br><span class="line">array([[0, 1]])</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="5-3-编程实现"><a href="#5-3-编程实现" class="headerlink" title="5.3. 编程实现"></a>5.3. 编程实现</h3><p>对于神经网络，要说它的Hello world，莫过于识别手写数字了</p>
+<p>首先要获取实验数据，下载地址：<a href="http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz" target="_blank" rel="noopener">http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz</a></p>
+<p>数组中的每一行都表示一个灰度图像。每个元素都表示像素所对应的灰度值。</p>
+<p>数据集中将数据分成3类：训练集，验证集，测试集。一般情况下会将训练数据分为训练集和测试集</p>
+<p>为什么要将训练数据分为训练集和测试集？</p>
+<blockquote>
+<p>将原始数据分开，保证用于测试的数据是训练模型时从未遇到的数据可以使测试更客观。否则就像学习教课书的知识，又只考教课书的知识，就算不理解记下了就能得高分但遇到新问题就傻眼了。</p>
+<p>好一点的做法就是用训练集当课本给他上课，先找出把课本知识掌握好的人，再参加由新题组成的月考即测试集，若是还是得分高，那就是真懂不是死记硬背了。</p>
+<p>但这样选出来的模型实际是还是用训练集和测试集共同得到的，再进一步，用训练集和验证集反复训练和检测，得到最好的模型，再用测试集来一局定输赢即期末考试，这样选出来的就更好了。</p>
+</blockquote>
+<p>本实验中为了方便将训练集与验证集合并</p>
+<ol>
+<li><p>先载入数据，并简单查看一下数据</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.neural_network import MLPClassifier</span><br><span class="line">import numpy as np</span><br><span class="line">import pickle</span><br><span class="line">import gzip</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"># 加载数据</span><br><span class="line">with gzip.open(r&quot;mnist.pkl.gz&quot;) as fp:</span><br><span class="line">    training_data, valid_data, test_data = pickle.load(fp)</span><br><span class="line"></span><br><span class="line">X_training_data, y_training_data = training_data</span><br><span class="line">X_valid_data, y_valid_data = valid_data</span><br><span class="line">X_test_data, y_test_data = test_data</span><br><span class="line"></span><br><span class="line"># 合并训练集,验证集</span><br><span class="line">X_training = np.vstack((X_training_data, X_valid_data))</span><br><span class="line">   y_training = np.append(y_training_data, y_valid_data)</span><br><span class="line"></span><br><span class="line">def show_data_struct():</span><br><span class="line">    print X_training_data.shape, y_training_data.shape</span><br><span class="line">    print X_valid_data.shape, y_valid_data.shape</span><br><span class="line">    print X_test_data.shape, y_test_data.shape</span><br><span class="line">    print X_training_data[0]</span><br><span class="line">    print y_training_data[0]</span><br><span class="line"></span><br><span class="line">show_data_struct()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>随便看几张训练图片</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def show_image():</span><br><span class="line">    plt.figure(1)</span><br><span class="line">    for i in range(10):</span><br><span class="line">        image = X_training[i]	# 得到包含第i张图的像素向量，为1*768</span><br><span class="line">        pixels = image.reshape((28, 28)) # 将原始像素向量转换为28*28的像素矩阵</span><br><span class="line">        plt.subplot(5,2,i+1)</span><br><span class="line">        plt.imshow(pixels, cmap=&apos;gray&apos;)</span><br><span class="line">        plt.title(y_training[i])</span><br><span class="line">        plt.axis(&apos;off&apos;)</span><br><span class="line">    plt.subplots_adjust(top=0.92, bottom=0.08, left=0.10, right=0.95, hspace=0.45,</span><br><span class="line">                        wspace=0.85)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">show_image()</span><br></pre></td></tr></table></figure>
+<p> <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-16.png" alt></p>
+</li>
+<li><p>训练模型</p>
+<p> 为了获得比默认参数更佳的模型，我们采用网格搜索法搜索更优的训练超参数，使用gridSearchCV实现，上文<a href="#sklearn-svm-parameters-setting-for-guassian-kernal-how-to-set-parameters">3.2.2.2. 调参方法：网格搜索</a>中有较为详细的说明</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line"></span><br><span class="line">mlp = MLPClassifier()</span><br><span class="line">mlp_clf__tuned_parameters = &#123;&quot;hidden_layer_sizes&quot;: [(100,), (100, 30)],</span><br><span class="line">                                 &quot;solver&quot;: [&apos;adam&apos;, &apos;sgd&apos;, &apos;lbfgs&apos;],</span><br><span class="line">                                 &quot;max_iter&quot;: [20],</span><br><span class="line">                                 &quot;verbose&quot;: [True]</span><br><span class="line">                                 &#125;</span><br><span class="line">estimator = GridSearchCV(mlp, mlp_clf__tuned_parameters, n_jobs=6)</span><br><span class="line">estimator.fit(X_training, y_training)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <hr>
 <p>参考资料：</p>
 <p>(1) <a href="https://github.com/MLjian/TextClassificationImplement" target="_blank" rel="noopener">【GitHub】MLjian/TextClassificationImplement</a></p>
@@ -717,9 +945,14 @@
 <p>(6) <a href="https://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">刘建平Pinard《scikit-learn 支持向量机算法库使用小结》</a></p>
 <p>(7) <a href="https://www.cnblogs.com/pinard/p/6126077.html" target="_blank" rel="noopener">刘建平Pinard《支持向量机高斯核调参小结》</a></p>
 <p>(8) <a href="https://blog.csdn.net/loveliuzz/article/details/78768063" target="_blank" rel="noopener">loveliuzz《机器学习sklearn19.0——SVM算法》</a></p>
-<p>(9) 周志华《机器学习》</p>
+<p>(9) 周志华《机器学习：第7章 贝叶斯分类器》</p>
 <p>(10) <a href="https://www.cnblogs.com/pinard/p/6069267.html" target="_blank" rel="noopener">刘建平Pinard《朴素贝叶斯算法原理小结》</a></p>
 <p>(11) <a href="https://www.cnblogs.com/pinard/p/6074222.html" target="_blank" rel="noopener">刘建平Pinard《scikit-learn 朴素贝叶斯类库使用小结》</a></p>
+<p>(12) 周志华《机器学习：第5章 神经网络》</p>
+<p>(13) 吴恩达《deeplearning.ai：改善深层神经网络》</p>
+<p>(14) <a href="http://sklearn.apachecn.org/#/docs/18" target="_blank" rel="noopener">scikit-learn中文网《神经网络模型（有监督）》</a></p>
+<p>(15) <a href="https://blog.csdn.net/weixin_38278334/article/details/83023958" target="_blank" rel="noopener">啊噗不是阿婆主《sklearn 神经网络MLPclassifier参数详解》</a></p>
+<p>(16) <a href="https://www.jianshu.com/p/d4fd9c52a915" target="_blank" rel="noopener">多问Why.简书《SkLearn之MLP》</a></p>
 
       
     </div>
@@ -821,10 +1054,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -833,8 +1066,10 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
               <p class="site-author-name" itemprop="name">Lianm</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
           </div>
 
           
@@ -844,8 +1079,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
@@ -868,7 +1103,7 @@
                       
                     
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">categories</span>
+                    <span class="site-state-item-name">分类</span>
                   
                 </div>
               
@@ -922,8 +1157,14 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
-                    <span class="site-state-item-name">tags</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">标签</span>
                   
                 </div>
               
@@ -984,7 +1225,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"><span class="nav-number">1.</span> <span class="nav-text">1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-任务描述"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编程实现"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 编程实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-sklearn包中logistic算法的使用"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. sklearn包中logistic算法的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-鸢尾花数据分类：sklearn包中决策树算法类库的使用"><span class="nav-number">2.</span> <span class="nav-text">2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DecisionTreeClassifier实例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. DecisionTreeClassifier实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可视化决策树"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 可视化决策树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sklearn中测试数据：sklearn包中SVM算法库的使用"><span class="nav-number">3.</span> <span class="nav-text">3. sklearn中测试数据：sklearn包中SVM算法库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SVM相关知识点回顾"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. SVM相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-SVM与SVR"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1. SVM与SVR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-核函数"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2. 核函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sklearn中SVM相关库的简介"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. sklearn中SVM相关库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-分类库与回归库"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1. 分类库与回归库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-高斯核调参"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2. 高斯核调参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-1-需要调节的参数"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">3.2.2.1. 需要调节的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-2-调参方法：网格搜索"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">3.2.2.2. 调参方法：网格搜索</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-编程实现"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 编程实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-sklearn包中朴素贝叶斯库的使用"><span class="nav-number">4.</span> <span class="nav-text">4.sklearn包中朴素贝叶斯库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-朴素贝叶斯相关知识点回顾"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 朴素贝叶斯相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-什么是朴素贝叶斯分类器"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1. 什么是朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-朴素贝叶斯推断"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2. 朴素贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-朴素贝叶斯学习"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3. 朴素贝叶斯学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-sklearn中朴素贝叶斯类库的简介"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. sklearn中朴素贝叶斯类库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-GaussianNB类"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1. GaussianNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-MultinomialNB类"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2. MultinomialNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-BernoulliNB类"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3. BernoulliNB类</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"><span class="nav-number">1.</span> <span class="nav-text">1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-任务描述"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编程实现"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 编程实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-sklearn包中logistic算法的使用"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. sklearn包中logistic算法的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-鸢尾花数据分类：sklearn包中决策树算法类库的使用"><span class="nav-number">2.</span> <span class="nav-text">2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DecisionTreeClassifier实例"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. DecisionTreeClassifier实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可视化决策树"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 可视化决策树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sklearn中测试数据：sklearn包中SVM算法库的使用"><span class="nav-number">3.</span> <span class="nav-text">3. sklearn中测试数据：sklearn包中SVM算法库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SVM相关知识点回顾"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. SVM相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-SVM与SVR"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1. SVM与SVR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-核函数"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2. 核函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sklearn中SVM相关库的简介"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. sklearn中SVM相关库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-分类库与回归库"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1. 分类库与回归库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-高斯核调参"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2. 高斯核调参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-1-需要调节的参数"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">3.2.2.1. 需要调节的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-2-调参方法：网格搜索"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">3.2.2.2. 调参方法：网格搜索</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-编程实现"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 编程实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-sklearn包中朴素贝叶斯库的使用"><span class="nav-number">4.</span> <span class="nav-text">4.sklearn包中朴素贝叶斯库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-朴素贝叶斯相关知识点回顾"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 朴素贝叶斯相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-什么是朴素贝叶斯分类器"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1. 什么是朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-朴素贝叶斯推断"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2. 朴素贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-朴素贝叶斯学习"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3. 朴素贝叶斯学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-sklearn中朴素贝叶斯类库的简介"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. sklearn中朴素贝叶斯类库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-GaussianNB类"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1. GaussianNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-MultinomialNB类"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2. MultinomialNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-BernoulliNB类"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3. BernoulliNB类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-手写数字识别：sklearn包中神经网络库的使用"><span class="nav-number">5.</span> <span class="nav-text">5. 手写数字识别：sklearn包中神经网络库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-神经网络相关知识点回顾"><span class="nav-number">5.1.</span> <span class="nav-text">5.1. 神经网络相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-感知机：神经网络的最小单元"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1. 感知机：神经网络的最小单元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-神经网络的学习：BackPropagation算法"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2. 神经网络的学习：BackPropagation算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-1-标准BP算法"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.2.1. 标准BP算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-2-累积BP算法"><span class="nav-number">5.1.4.</span> <span class="nav-text">5.1.2.2. 累积BP算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-sklearn中神经网络库的简介"><span class="nav-number">5.2.</span> <span class="nav-text">5.2. sklearn中神经网络库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-MLPClassifier"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1. MLPClassifier</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-编程实现"><span class="nav-number">5.3.</span> <span class="nav-text">5.3. 编程实现</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1016,7 +1257,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
 
 
 
@@ -1024,7 +1265,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
 
 
 
@@ -1112,7 +1353,9 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
 
 
 
@@ -1149,6 +1392,21 @@
   
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
 
   
 
