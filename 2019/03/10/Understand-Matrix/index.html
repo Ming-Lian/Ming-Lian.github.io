@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="本文整理自 孟岩《理解矩阵》，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致  “如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习">
+<meta name="keywords" content="线性代数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【整理·非原创】理解矩阵">
+<meta property="og:url" content="http://yoursite.com/2019/03/10/Understand-Matrix/index.html">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
+<meta property="og:description" content="本文整理自 孟岩《理解矩阵》，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致  “如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Understand-Matrix-1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Understand-Matrix-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Understand-Matrix-3.png">
+<meta property="og:updated_time" content="2019-03-10T10:29:27.937Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【整理·非原创】理解矩阵">
+<meta name="twitter:description" content="本文整理自 孟岩《理解矩阵》，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致  “如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习">
+<meta name="twitter:image" content="http://yoursite.com/images/Understand-Matrix-1.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/10/Understand-Matrix/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【整理·非原创】理解矩阵 | Lianm's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/10/Understand-Matrix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【整理·非原创】理解矩阵
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-10 10:22:44 / 修改时间：10:29:27" itemprop="dateCreated datePublished" datetime="2019-03-10T10:22:44+00:00">2019-03-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MathIsFunGame/" itemprop="url" rel="index"><span itemprop="name">MathIsFunGame</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文整理自 <a href="https://blog.csdn.net/myan/article/details/1865397" target="_blank" rel="noopener">孟岩《理解矩阵》</a>，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致</p>
+<p><img src="/images/Understand-Matrix-1.jpg" alt></p>
+<p>“如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多”</p>
+<p>“按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难”</p>
+<p align="right">——瑞典数学家Lars Garding《Encounter with Mathematics》</p>
+
+<p>当我们开始学习线性代数的时候，不知不觉就进入了<strong>“第二代数学模型”</strong>的范畴当中，这意味着数学的表述方式和抽象性有了一次全面的进化，对于从小一直在“第一代数学模型”，即以实用为导向的、具体的数学模型中学习的我们来说，在没有并明确告知的情况下进行如此剧烈的paradigm shift，不感到困难才是奇怪的。</p>
+<h2 id="1-我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失"><a href="#1-我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失" class="headerlink" title="1. 我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失"></a>1. 我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失</h2><p>对于矩阵的一些基础问题：</p>
+<blockquote>
+<p>（1）矩阵究竟是什么东西？向量可以被认为是具有n个相互独立的性质（维度）的对象的表示，矩阵又是什么呢？我们如果认为矩阵是一组列（行）向量组成的新的复合向量的展开式，那么为什么这种展开式具有如此广泛的应用？特别是，为什么偏偏二维的展开式如此有用？如果矩阵中每一个元素又是一个向量，那么我们再展开一次，变成三维的立方阵，是不是更有用？</p>
+<p>（2）矩阵的乘法规则究竟为什么这样规定？为什么这样一种怪异的乘法规则却能够在实践中发挥如此巨大的功效？很多看上去似乎是完全不相关的问题，最后竟然都归结到矩阵的乘法，这难道不是很奇妙的事情？难道在矩阵乘法那看上去莫名其妙的规则下面，包含着世界的某些本质规律？如果是的话，这些本质规律是什么？</p>
+<p>（3） 行列式究竟是一个什么东西？为什么会有如此怪异的计算规则？行列式与其对应方阵本质上是什么关系？为什么只有方阵才有对应的行列式，而一般矩阵就没有（不要觉得这个问题很蠢，如果必要，针对m x n矩阵定义行列式不是做不到的，之所以不做，是因为没有这个必要，但是为什么没有这个必要）？而且，行列式的计算规则，看上去跟矩阵的任何计算规则都没有直观的联系，为什么又在很多方面决定了矩阵的性质？难道这一切仅是巧合？</p>
+<p>（4）矩阵为什么可以分块计算？分块计算这件事情看上去是那么随意，为什么竟是可行的？</p>
+<p>（5）对于矩阵转置运算A<sup>T</sup>，有(AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup>，对于矩阵求逆运算A<sup>-1</sup>，有(AB)<sup>-1</sup> = B<sup>-1</sup>A<sup>-1</sup>。两个看上去完全没有什么关系的运算，为什么有着类似的性质？这仅仅是巧合吗？</p>
+<p>（6）为什么说P-1AP得到的矩阵与A矩阵“相似”？这里的“相似”是什么意思？</p>
+<p>（7）特征值和特征向量的本质是什么？它们定义就让人很惊讶，因为Ax =λx，一个诺大的矩阵的效应，竟然不过相当于一个小小的数λ，确实有点奇妙。但何至于用“特征”甚至“本征”来界定？它们刻划的究竟是什么？</p>
+</blockquote>
+<p>这样的问题如果不能获得回答，线性代数对于我们来说就是一个<strong>粗暴的、不讲道理的、莫名其妙的规则集合</strong>，我们会感到，自己并不是在学习一门学问，而是被不由分说地“抛到”一个强制的世界中，只是在考试的皮鞭挥舞之下被迫赶路，全然无法领略其中的美妙、和谐与统一。</p>
+<p>之所以会存在这么多的为什么，很大原因是<strong>线性代数教学中直觉性丧失</strong>的后果，即知其然不知其所以然</p>
+<blockquote>
+<p>上述这些涉及到“如何能”、“怎么会”的问题，虽然能够通过数学性证明来回答，但并不能够让提问者的疑惑得到解决</p>
+<p>比如对于“矩阵为什么可以分块计算”这个问题</p>
+<p>提问者其实真正的疑惑是在于：矩阵分块运算为什么竟然是可行的？究竟只是凑巧，还是说这是由矩阵这种对象的某种本质所必然决定的？如果是后者，那么矩阵的这些本质是什么？</p>
+</blockquote>
+<h2 id="2-对线形空间和矩阵的几个核心概念的理解"><a href="#2-对线形空间和矩阵的几个核心概念的理解" class="headerlink" title="2. 对线形空间和矩阵的几个核心概念的理解"></a>2. 对线形空间和矩阵的几个核心概念的理解</h2><h3 id="2-1-什么是空间"><a href="#2-1-什么是空间" class="headerlink" title="2.1. 什么是空间"></a>2.1. 什么是空间</h3><p>空间有很多种。你要是去看某种空间的数学定义，大致都是“存在一个集合，在这个集合上定义某某概念，然后满足某些性质”，就可以被称为空间，即用“空间”来称呼一些具有某些特性的集合</p>
+<p>我们一般人最熟悉的空间，毫无疑问就是我们生活在其中的（按照牛顿的绝对时空观）的三维空间，从数学上说，这是一个三维的欧几里德空间</p>
+<p>我们先不管那么多，先看看我们熟悉的这样一个空间有些什么最基本的特点。仔细想想我们就会知道，这个三维的空间：</p>
+<blockquote>
+<ul>
+<li>由很多（实际上是无穷多个）位置点组成；</li>
+<li>这些点之间存在相对的关系；</li>
+<li>可以在空间中定义长度、角度；</li>
+<li><strong>这个空间可以容纳运动，这里我们所说的运动是从一个点到另一个点的移动（变换），而不是微积分意义上的“连续”性的运动</strong>；</li>
+</ul>
+</blockquote>
+<p>上面的这些性质中，最最关键的是第4条：<strong>容纳运动是空间的本质特征</strong></p>
+<p>认识到了这些，我们就可以把我们关于三维空间的认识扩展到其他的空间：</p>
+<blockquote>
+<p>不管是什么空间，都必须容纳和支持在其中发生的符合规则的运动（变换）</p>
+<p>在某种空间中往往会存在一种相对应的变换：</p>
+<ul>
+<li>拓扑空间中有拓扑变换；</li>
+<li>线性空间中有线性变换；</li>
+<li>仿射空间中有仿射变换；</li>
+</ul>
+<p>其实这些变换都只不过是对应空间中允许的运动形式而已</p>
+</blockquote>
+<p><strong>“空间”是容纳运动的一个对象集合，而变换则规定了对应空间的运动</strong></p>
+<h3 id="2-2-线性空间与线性变换的表示方式——矩阵"><a href="#2-2-线性空间与线性变换的表示方式——矩阵" class="headerlink" title="2.2. 线性空间与线性变换的表示方式——矩阵"></a>2.2. 线性空间与线性变换的表示方式——矩阵</h3><p>既然我们承认线性空间是个空间，那么有两个最基本的问题必须首先得到解决，那就是：</p>
+<ul>
+<li><p>空间是一个对象集合，线性空间也是空间，所以也是一个对象集合。那么线性空间是什么样的对象的集合？或者说，线性空间中的对象有什么共同点吗？</p>
+<blockquote>
+<p><strong>线性空间中的任何一个对象，通过选取基和坐标的办法，都可以表达为向量的形式</strong></p>
+<p>举两个例子：</p>
+<p>（1）最高次项不大于n次的多项式的全体构成一个线性空间，也就是说，这个线性空间中的每一个对象是一个多项式。如果我们以 x <sup>0</sup>, x <sup>1</sup>, …, x <sup>n</sup> 为基，那么任何一个这样的多项式都可以表达为一组n+1维向量，其中的每一个分量 a <sub>i</sub> 其实就是多项式中 x <sup>(i-1)</sup> 项的系数</p>
+<p>值得说明的是，基的选取有多种办法，只要所选取的那一组基线性无关就可以</p>
+<p>（2）闭区间[a, b]上的n阶连续可微函数的全体，构成一个线性空间。也就是说，这个线性空间的每一个对象是一个连续函数。对于其中任何一个连续函数，根据<strong>魏尔斯特拉斯定理</strong>，一定可以找到最高次项不大于n的多项式函数，使之与该连续函数的差为0，也就是说，完全相等。这样就把问题归结为L1了</p>
+</blockquote>
+<p>  所以说，向量是很厉害的，只要你找到合适的基，用向量可以表示线性空间里任何一个对象</p>
+<p>  这里头大有文章，因为向量表面上只是一列数，但是其实由于它的有序性，所以除了这些数本身携带的信息之外，还可以在每个数的对应位置上携带信息。</p>
+</li>
+<li><p>线性空间中的运动如何表述的？也就是，线性变换是如何表示的？</p>
+<p>  线性空间中的运动，被称为<strong>线性变换</strong>。也就是说，你从线性空间中的一个点运动到任意的另外一个点，都可以通过一个线性变化来完成。</p>
+<p>  那么，线性变换如何表示呢？</p>
+<blockquote>
+<p>在线性空间中，当你选定一组基之后，不仅可以用一个向量来描述空间中的任何一个对象，而且可以用矩阵来描述该空间中的任何一个运动（变换）。而使某个对象发生对应运动的方法，就是用代表那个运动的矩阵，乘以代表那个对象的向量。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>在线性空间中选定基之后，向量刻画对象，矩阵刻画对象的运动，用矩阵与向量的乘法施加运动</strong></p>
+<p>是的，<strong>矩阵的本质是运动的描述</strong></p>
+<h3 id="2-3-进一步辨析”矩阵是运动的描述”：引出变换"><a href="#2-3-进一步辨析”矩阵是运动的描述”：引出变换" class="headerlink" title="2.3. 进一步辨析”矩阵是运动的描述”：引出变换"></a>2.3. 进一步辨析”矩阵是运动的描述”：引出变换</h3><p>初等数学是研究常量的数学，是研究静态的数学，高等数学是变量的数学，是研究运动的数学</p>
+<p align="right">——《高等数学·微积分》</p>
+
+<p>大家口口相传，差不多人人都知道这句话。但是真知道这句话说的是什么意思的人，好像也不多</p>
+<blockquote>
+<p>简而言之，在我们人类的经验里，运动是一个连续过程，从A点到B点，就算走得最快的光，也是需要一个时间来逐点地经过AB之间的路径，这就带来了连续性的概念。而连续这个事情，如果不定义极限的概念，根本就解释不了</p>
+<p>古希腊人的数学非常强，但就是缺乏极限观念，所以解释不了运动，被芝诺的那些著名悖论（飞箭不动、飞毛腿阿喀琉斯跑不过乌龟等四个悖论）搞得死去活来。</p>
+</blockquote>
+<p>不过在矩阵相关的研究中，“运动”的概念不是微积分中的连续性的运动，而是<strong>瞬间发生的变化</strong></p>
+<blockquote>
+<p>比如这个时刻在A点，经过一个“运动”，一下子就“跃迁”到了B点，其中不需要经过A点与B点之间的任何一个点。这样的“运动”，或者说“跃迁”，是违反我们日常的经验的。不过了解一点量子物理常识的人，就会立刻指出，量子（例如电子）在不同的能量级轨道上跳跃，就是瞬间发生的，具有这样一种跃迁行为。所以说，自然界中并不是没有这种运动现象，只不过宏观上我们观察不到。</p>
+</blockquote>
+<p>为了避免产生歧义，作者对”矩阵是运动的描述”进行了更为精确的定义</p>
+<p align="center"><strong>“矩阵是线性空间里跃迁的描述”</strong></p>
+
+<p>可是这样说又太物理，也就是说太具体，而不够数学，也就是说不够抽象。因此我们最后换用一个正牌的数学术语——<strong>变换</strong>，来描述这个事情</p>
+<p>因此，<strong>所谓变换，其实就是空间里从一个点（元素/对象）到另一个点（元素/对象）的跃迁</strong></p>
+<p>比如说，拓扑变换，就是在拓扑空间里从一个点到另一个点的跃迁。再比如说，仿射变换，就是在仿射空间里从一个点到另一个点的跃迁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">附带说一下，这个仿射空间跟向量空间是亲兄弟</span><br><span class="line"></span><br><span class="line">做计算机图形学的朋友都知道，尽管描述一个三维对象只需要三维向量，但所有的计算机图形学变换矩阵都是4 x 4的。</span><br><span class="line">说其原因，很多书上都写着“为了使用中方便”，这在我看来简直就是企图蒙混过关。</span><br><span class="line"></span><br><span class="line">真正的原因，是因为在计算机图形学里应用的图形变换，实际上是在仿射空间而不是向量空间中进行的。</span><br></pre></td></tr></table></figure>
+<p>一旦我们理解了“变换”这个概念，矩阵的定义就变成：</p>
+<p align="center"><strong>“矩阵是线性空间里的变换的描述”</strong></p>
+
+<p>到这里为止，我们终于得到了一个看上去比较数学的定义。</p>
+<h3 id="2-4-理解“矩阵是线性空间中的线性变换的一个描述”"><a href="#2-4-理解“矩阵是线性空间中的线性变换的一个描述”" class="headerlink" title="2.4. 理解“矩阵是线性空间中的线性变换的一个描述”"></a>2.4. 理解“矩阵是线性空间中的线性变换的一个描述”</h3><p>“在一个线性空间V里的一个线性变换T，当选定一组基之后，就可以表示为矩阵”</p>
+<p>“线性变换：设有一种变换T，使得对于线性空间V中间任何两个不相同的对象x和y，以及任意实数a和b，有：T(ax + by) = aT(x) + bT(y)”</p>
+<p align="right">——《线性代数》</p>
+
+<h4 id="2-4-1-什么是线性变换"><a href="#2-4-1-什么是线性变换" class="headerlink" title="2.4.1. 什么是线性变换"></a>2.4.1. 什么是线性变换</h4><p>线性变换究竟是一种什么样的变换？</p>
+<blockquote>
+<p><strong>变换是从空间的一个点跃迁到另一个点，而线性变换，就是从一个线性空间V的某一个点跃迁到另一个线性空间W的另一个点的运动。</strong></p>
+<p>这句话里蕴含着一层意思，就是说一个点不仅可以变换到同一个线性空间中的另一个点，而且可以变换到另一个线性空间中的另一个点去</p>
+<p>不管你怎么变，只要变换前后都是线性空间中的对象，这个变换就一定是线性变换，也就一定可以用一个非奇异矩阵来描述。而你用一个非奇异矩阵去描述的一个变换，一定是一个线性变换</p>
+<blockquote>
+<p><strong>补充知识：奇异与非奇异</strong></p>
+<p>首先，看这个矩阵是不是<strong>方阵</strong>（即行数和列数相等的矩阵。若行数和列数不相等，那就谈不上奇异矩阵和非奇异矩阵）。</p>
+<p>然后，再看此矩阵的<strong>行列式|A|是否等于0</strong>，若等于0，称矩阵A为奇异矩阵；若不等于0，称矩阵A为非奇异矩阵</p>
+<p>同时，由|A|≠0可知矩阵A可逆，这样可以得出另外一个重要结论:<strong>可逆矩阵就是非奇异矩阵，非奇异矩阵也是可逆矩阵</strong></p>
+</blockquote>
+</blockquote>
+<h4 id="2-4-2-什么是基"><a href="#2-4-2-什么是基" class="headerlink" title="2.4.2. 什么是基"></a>2.4.2. 什么是基</h4><p>什么是基呢？</p>
+<p>为了方便理解，这里只要<strong>把基看成是线性空间里的坐标系</strong>就可以了</p>
+<p>这样一来，“选定一组基”就是说在线性空间里选定一个坐标系。</p>
+<h4 id="2-4-3-区别“线性变换”与“线性变换的一个描述”"><a href="#2-4-3-区别“线性变换”与“线性变换的一个描述”" class="headerlink" title="2.4.3. 区别“线性变换”与“线性变换的一个描述”"></a>2.4.3. 区别“线性变换”与“线性变换的一个描述”</h4><p>最后我们把矩阵的定义完善如下：</p>
+<p><strong>“矩阵是线性空间中的线性变换的一个描述。在一个线性空间中，只要我们选定一组基，那么对于任何一个线性变换，都能够用一个确定的矩阵来加以描述。”</strong></p>
+<p>理解这句话的关键，在于把<strong>“线性变换”</strong>与<strong>“线性变换的一个描述”</strong>区别开。一个是那个对象，一个是对那个对象的表述。</p>
+<p>同样的，对于一个线性变换，只要你选定一组基，那么就可以找到一个矩阵来描述这个线性变换。换一组基，就得到一个不同的矩阵。所有这些矩阵都是这同一个线性变换的描述，但又都不是线性变换本身。</p>
+<p><strong>这些对于同一个线性变换基于所选择的基的不同而得到的一组描述矩阵，它们之间互为相似矩阵</strong></p>
+<p>那么问题来了：你给我两个矩阵，我怎么知道这两个矩阵是描述的同一个线性变换呢？</p>
+<blockquote>
+<p>同一个线性变换的矩阵兄弟们的一个性质：</p>
+<p>若矩阵A与B是同一个线性变换的两个不同的描述（之所以会不同，是因为选定了不同的基，也就是选定了不同的坐标系），则一定能找到一个非奇异矩阵P，使得A、B之间满足这样的关系：</p>
+<p align="center">A = P<sup>-1</sup>BP</p>
+
+<p>线性代数稍微熟一点的读者一下就看出来，这就是相似矩阵的定义</p>
+<p>上面式子里那个矩阵P，其实就是A矩阵所基于的基与B矩阵所基于的基这两组基之间的一个变换关系</p>
+</blockquote>
+<p>同一个线性变换的不同矩阵描述，从实际运算性质来看<strong>并不是不分好环</strong>的。有些描述矩阵就比其他的矩阵性质好得多。这很容易理解，同一头猪的照片也有美丑之分嘛。所以矩阵的相似变换可以把一个比较丑的矩阵变成一个比较美的矩阵，而保证这两个矩阵都是描述了同一个线性变换。</p>
+<h2 id="3-对1、2的总结及引出下一部分"><a href="#3-对1、2的总结及引出下一部分" class="headerlink" title="3. 对1、2的总结及引出下一部分"></a>3. 对1、2的总结及引出下一部分</h2><ol>
+<li><p>首先有空间，空间可以容纳对象运动的。一种空间对应一类对象。</p>
+</li>
+<li><p>有一种空间叫线性空间，线性空间是容纳向量对象运动的。</p>
+</li>
+<li><p>运动是瞬时的，因此也被称为变换。</p>
+</li>
+<li><p>矩阵是线性空间中运动（变换）的描述。</p>
+</li>
+<li><p>矩阵与向量相乘，就是实施运动（变换）的过程。</p>
+</li>
+<li><p>同一个变换，在不同的坐标系下表现为不同的矩阵，但是它们的本质是一样的，所以本征值相同。</p>
+</li>
+</ol>
+<p>引出下一部分：</p>
+<blockquote>
+<p>矩阵不仅可以作为线性变换的描述，而且可以作为一组基的描述</p>
+<p>作为变换的矩阵，不但可以把线性空间中的一个点给变换到另一个点去，而且也能够把线性空间中的一个坐标系（基）表换到另一个坐标系（基）去</p>
+</blockquote>
+<h2 id="4-将矩阵当作对一组基（坐标系）的描述"><a href="#4-将矩阵当作对一组基（坐标系）的描述" class="headerlink" title="4. 将矩阵当作对一组基（坐标系）的描述"></a>4. 将矩阵当作对一组基（坐标系）的描述</h2><p>我们知道，线性空间里的基本对象是向量，而向量是这么表示的：</p>
+<p>[ a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, …, a<sub>n</sub> ]</p>
+<p>矩阵是这么表示的：</p>
+<p>a<sub>11</sub>, a<sub>12</sub>, a<sub>13</sub>, …, a<sub>1n</sub></p>
+<p>a<sub>21</sub>, a<sub>22</sub>, a<sub>23</sub>, …, a<sub>2n</sub></p>
+<p>…</p>
+<p>a<sub>n1</sub>, a<sub>n2</sub>, a<sub>n3</sub>, …, a<sub>nn</sub></p>
+<p>可以很容易看出，矩阵是一组向量组成的。特别的，n维线性空间里的方阵是由n个n维向量组成的</p>
+<p>我们在这里只讨论这个n阶的、非奇异的方阵，因为理解它就是理解矩阵的关键，它才是一般情况，而其他矩阵都是意外，都是不得不对付的讨厌状况，大可以放在一边</p>
+<p><strong>如果一组向量是彼此线性无关的话，那么它们就可以成为度量这个线性空间的一组基，从而事实上成为一个坐标系体系，其中每一个向量都躺在一根坐标轴上，并且成为那根坐标轴上的基本度量单位（长度1）。</strong></p>
+<p>现在到了<strong>关键的一步</strong>：看上去矩阵就是由一组向量组成的，而且如果矩阵非奇异的话（我说了，只考虑这种情况），那么组成这个矩阵的那一组向量也就是线性无关的了，也就可以成为度量线性空间的一个坐标系。</p>
+<p>结论：<strong>矩阵描述了一个坐标系</strong></p>
+<h3 id="4-1-为什么可以将矩阵看作坐标系"><a href="#4-1-为什么可以将矩阵看作坐标系" class="headerlink" title="4.1. 为什么可以将矩阵看作坐标系"></a>4.1. 为什么可以将矩阵看作坐标系</h3><p>你可能会产生下面的困惑：前面刚说了矩阵就是运动吗？怎么这会矩阵又是坐标系了？</p>
+<p>之所以矩阵又是运动，又是坐标系，那是因为——</p>
+<p align="center"><strong>“运动等价于坐标系变换”</strong></p>
+
+<p>或者说得更直白一点：</p>
+<p align="center"><strong>“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”</strong></p>
+
+<p>其实这就相当于物理中说到的，<strong>参考系选择的不同，运动的描述也就不同</strong>，即运动是相对的：打个比方，把线性空间的一个对象（即一个向量）当作是你，坐标系当作是地面，你在路上走，若以地面为参考系，那么你是运动的，若以你为参考系，地面是运动的</p>
+<p>举个简单的例子：</p>
+<blockquote>
+<p>把点(1, 1)变到点(2, 3)去，你可以有两种做法：</p>
+<ul>
+<li><p>坐标系不动，点动，把(1, 1)点挪到(2, 3)去</p>
+</li>
+<li><p>点不动，变坐标系，让x轴的度量（单位向量）变成原来的1/2，让y轴的度量（单位向量）变成原先的1/3，这样点还是那个点，可是点的坐标就变成(2, 3)了</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="4-2-比较运动视角与坐标系视角下的矩阵"><a href="#4-2-比较运动视角与坐标系视角下的矩阵" class="headerlink" title="4.2. 比较运动视角与坐标系视角下的矩阵"></a>4.2. 比较运动视角与坐标系视角下的矩阵</h3><p>（1）从第一个方式来看，把矩阵看成是运动描述，矩阵与向量相乘就是使向量（点）运动的过程</p>
+<p>Ma = b：向量a经过矩阵M所描述的变换，变成了向量b</p>
+<p>（2）从第二个方式来看，矩阵M描述了一个坐标系</p>
+<p>Ma = b：有一个向量，它在坐标系M的度量下得到的度量结果向量为a，那么它在坐标系I的度量下，这个向量的度量结果是b</p>
+<p>或者也可以这么理解：</p>
+<p>在M为坐标系的意义下，如果把M放在一个向量a的前面，形成Ma的样式，我们可以认为这是<strong>对向量a的一个环境声明</strong>。它相当于是说：</p>
+<p>“注意了！这里有一个向量，它在坐标系M中度量，得到的度量结果可以表达为a。可是它在别的坐标系里度量的话，就会得到不同的结果。为了明确，我把M放在前面，让你明白，这是该向量在坐标系M中度量的结果。”</p>
+<p>那么我们再看孤零零的向量b：多看几遍，你没看出来吗？它其实不是b，它是——Ib，也就是说：“在单位坐标系，也就是我们通常说的直角坐标系I中，有一个向量，度量的结果是b。”</p>
+<p>而  Ma = Ib的意思就是说：</p>
+<p> “在M坐标系里量出来的向量a，跟在I坐标系里量出来的向量b，其实根本就是一个向量啊！”</p>
+<h3 id="4-3-重新理解向量"><a href="#4-3-重新理解向量" class="headerlink" title="4.3. 重新理解向量"></a>4.3. 重新理解向量</h3><p>向量这个东西客观存在，但是要把它表示出来，就要把它放在一个坐标系中去度量它，然后把度量的结果（向量在各个坐标轴上的投影值）按一定顺序列在一起，就成了我们平时所见的向量表示形式。</p>
+<p>你选择的坐标系（基）不同，得出来的向量的表示就不同。向量还是那个向量，选择的坐标系不同，其表示方式就不同。</p>
+<p>因此，按道理来说，每写出一个向量的表示，都应该声明一下这个表示是在哪个坐标系中度量出来的。表示的方式，就是 Ma，也就是说，有一个向量，在M矩阵表示的坐标系中度量出来的结果为a。我们平时说一个向量是[2 3 5 7]<sup>T</sup>，隐含着是说，这个向量在 I 坐标系中的度量结果是[2 3 5 7]<sup>T</sup>，因此，这个形式反而是一种简化了的特殊情况。</p>
+<p>注意到，M矩阵表示出来的那个坐标系，由一组基组成，而那组基也是由向量组成的，同样存在这组向量是在哪个坐标系下度量而成的问题。也就是说，表述一个矩阵的一般方法，也应该要指明其所处的基准坐标系。所谓M，其实是 IM，也就是说，M中那组基的度量是在 I 坐标系中得出的。从这个视角来看，<strong>M×N也不是什么矩阵乘法了，而是声明了一个在M坐标系中量出的另一个坐标系N，其中M本身是在I坐标系中度量出来的</strong>。</p>
+<h3 id="4-4-回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”"><a href="#4-4-回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”" class="headerlink" title="4.4. 回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”"></a>4.4. 回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”</h3><p>回过头来说变换的问题。我刚才说，<strong>“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”</strong>，那个“固定对象”我们找到了，就是那个向量。但是坐标系的变换呢？我怎么没看见？</p>
+<p align="center"><strong>Ma = Ib</strong></p>
+
+<p>我现在要变M为I，怎么变？对了，在前面乘以个M<sup>-1</sup>，也就是M的逆矩阵。换句话说，你不是有一个坐标系M吗，现在我让它乘以个M<sup>-1</sup>，变成I，这样一来的话，原来M坐标系中的a在I中一量，就得到b了</p>
+<p>尝试去理解这个事件：</p>
+<p>比如，你画一个坐标系，x轴上的衡量单位是2，y轴上的衡量单位是3，在这样一个坐标系里，坐标为(1，1)的那一点，实际上就是笛卡尔坐标系里的点(2, 3)。而让它原形毕露的办法，就是把原来那个坐标系:</p>
+<p><img src="/images/Understand-Matrix-2.png" alt></p>
+<p>在x方向度量缩小为原来的1/2，而y方向度量缩小为原来的1/3，这样一来坐标系就变成单位坐标系I了。保持点不变，那个向量现在就变成了(2, 3)了。</p>
+<p>怎么能够让“x方向度量缩小为原来的1/2，而y方向度量缩小为原来的1/3”呢？就是让原坐标系被矩阵：</p>
+<p><img src="/images/Understand-Matrix-3.png" alt></p>
+<p>左乘，而这个矩阵就是原矩阵的逆矩阵。</p>
+<p>下面我们得出一个重要的结论：</p>
+<p align="center"><strong>“对坐标系施加变换的方法，就是让表示那个坐标系的矩阵与表示那个变化的矩阵相乘。”</strong></p>
+
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://blog.csdn.net/myan/article/details/647511" target="_blank" rel="noopener">孟岩 《理解矩阵（一）》</a></p>
+<p>(2) <a href="https://blog.csdn.net/myan/article/details/649018" target="_blank" rel="noopener">孟岩 《理解矩阵（二）》</a></p>
+<p>(3) <a href="https://blog.csdn.net/myan/article/details/1865397" target="_blank" rel="noopener">孟岩 《理解矩阵（三）》</a></p>
+<p>(4) 《高等数学》</p>
+<p>(5) 《线性代数》</p>
+<p>(6) 百度百科《奇异矩阵》</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线性代数/" rel="tag"># 线性代数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/10/UnderStand-Matrix/" rel="next" title="UnderStand-Matrix">
+                <i class="fa fa-chevron-left"></i> UnderStand-Matrix
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失"><span class="nav-number">1.</span> <span class="nav-text">1. 我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对线形空间和矩阵的几个核心概念的理解"><span class="nav-number">2.</span> <span class="nav-text">2. 对线形空间和矩阵的几个核心概念的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-什么是空间"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 什么是空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-线性空间与线性变换的表示方式——矩阵"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 线性空间与线性变换的表示方式——矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-进一步辨析”矩阵是运动的描述”：引出变换"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 进一步辨析”矩阵是运动的描述”：引出变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-理解“矩阵是线性空间中的线性变换的一个描述”"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 理解“矩阵是线性空间中的线性变换的一个描述”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-什么是线性变换"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 什么是线性变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-什么是基"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 什么是基</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-区别“线性变换”与“线性变换的一个描述”"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 区别“线性变换”与“线性变换的一个描述”</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-对1、2的总结及引出下一部分"><span class="nav-number">3.</span> <span class="nav-text">3. 对1、2的总结及引出下一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-将矩阵当作对一组基（坐标系）的描述"><span class="nav-number">4.</span> <span class="nav-text">4. 将矩阵当作对一组基（坐标系）的描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-为什么可以将矩阵看作坐标系"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 为什么可以将矩阵看作坐标系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-比较运动视角与坐标系视角下的矩阵"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. 比较运动视角与坐标系视角下的矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-重新理解向量"><span class="nav-number">4.3.</span> <span class="nav-text">4.3. 重新理解向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”"><span class="nav-number">4.4.</span> <span class="nav-text">4.4. 回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
