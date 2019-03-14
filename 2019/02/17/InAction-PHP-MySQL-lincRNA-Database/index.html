@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-CN">
+<html class="theme-next pisces use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Pisces',
     version: '7.0.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -124,7 +124,7 @@
 <meta property="og:image" content="http://yoursite.com/images/InAction-PHP-MySQL-part2-modify-phpscript-location.jpg">
 <meta property="og:image" content="http://yoursite.com/images/InAction-PHP-MySQL-part3-login-ui.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-PHP-MySQL-part3-page-with-navigation.png">
-<meta property="og:updated_time" content="2019-02-17T07:43:42.369Z">
+<meta property="og:updated_time" content="2019-03-14T06:09:29.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP+MySQL实战：小鼠与人类lincRNA数据库">
 <meta name="twitter:description" content="Part1：lincRNA注释信息数据库实现目标 将lincRNA的gtf格式的注释信息写到MySQL数据库中 用户需要登录才具有数据库访问权限 提供数据库的检索功能  思路 从 UCSC genome browser 或 Ensemble 等数据库中下载人类（homo sapiens）和小鼠 （Mus musculus）的全基因组注释信息文件(GTF或者GFF3格式文件）  提取出其中的linc">
@@ -306,9 +306,6 @@
   
 
   
-    
-
-  
 
   
 </nav>
@@ -337,6 +334,9 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+            
+
           
           <div id="content" class="content">
             
@@ -400,12 +400,24 @@
                 
               
 
-              <time title="创建时间：2019-02-17 06:51:33 / 修改时间：07:43:42" itemprop="dateCreated datePublished" datetime="2019-02-17T06:51:33+00:00">2019-02-17</time>
+              <time title="创建时间：2019-02-17 06:51:33" itemprop="dateCreated datePublished" datetime="2019-02-17T06:51:33+08:00">2019-02-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-14 14:09:29" itemprop="dateModified" datetime="2019-03-14T14:09:29+08:00">2019-03-14</time>
               
             
           </span>
@@ -1078,7 +1090,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1164,7 +1176,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -1226,7 +1250,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Part1：lincRNA注释信息数据库"><span class="nav-number">1.</span> <span class="nav-text">Part1：lincRNA注释信息数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现目标"><span class="nav-number">1.1.</span> <span class="nav-text">实现目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备需要写入数据库中的数据"><span class="nav-number">1.3.</span> <span class="nav-text">准备需要写入数据库中的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载注释信息文件"><span class="nav-number">1.3.1.</span> <span class="nav-text">下载注释信息文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取lincRNA部分记录"><span class="nav-number">1.3.2.</span> <span class="nav-text">提取lincRNA部分记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将数据写入数据库中"><span class="nav-number">1.4.</span> <span class="nav-text">将数据写入数据库中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：使用MySQLi"><span class="nav-number">1.4.1.</span> <span class="nav-text">方法一：使用MySQLi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：使用sql脚本"><span class="nav-number">1.4.2.</span> <span class="nav-text">方法二：使用sql脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准备sql脚本"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">准备sql脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写入数据"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">写入数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑php脚本"><span class="nav-number">1.5.</span> <span class="nav-text">编辑php脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册"><span class="nav-number">1.5.1.</span> <span class="nav-text">注册</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建注册页面"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">创建注册页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册信息处理脚本"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">注册信息处理脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录"><span class="nav-number">1.5.2.</span> <span class="nav-text">登录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#登录页面"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">登录页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登录脚本"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">登录脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登录成功"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">登录成功</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#退出登录"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">退出登录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检索数据库"><span class="nav-number">1.5.3.</span> <span class="nav-text">检索数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表单部分"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">表单部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PHP脚本"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">PHP脚本</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part2：内容与功能升级"><span class="nav-number">2.</span> <span class="nav-text">Part2：内容与功能升级</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现目标-1"><span class="nav-number">2.1.</span> <span class="nav-text">实现目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路-1"><span class="nav-number">2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加blast功能"><span class="nav-number">2.3.</span> <span class="nav-text">添加blast功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获得chrX上lincRNA序列"><span class="nav-number">2.3.1.</span> <span class="nav-text">获得chrX上lincRNA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建BLAST索引"><span class="nav-number">2.3.2.</span> <span class="nav-text">构建BLAST索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行BLAST"><span class="nav-number">2.3.3.</span> <span class="nav-text">执行BLAST</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加lincRNA表达谱"><span class="nav-number">2.4.</span> <span class="nav-text">添加lincRNA表达谱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取在两个样本组的表达谱"><span class="nav-number">2.4.1.</span> <span class="nav-text">获取在两个样本组的表达谱</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据集简单介绍与下载"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">数据集简单介绍与下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跑RNA-seq分析流程"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">跑RNA-seq分析流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将差异表达结果写进MySQL"><span class="nav-number">2.4.2.</span> <span class="nav-text">将差异表达结果写进MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检索表达谱数据库"><span class="nav-number">2.4.3.</span> <span class="nav-text">检索表达谱数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画图：单个基因表达谱"><span class="nav-number">2.4.4.</span> <span class="nav-text">画图：单个基因表达谱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加批量提交数据功能"><span class="nav-number">2.5.</span> <span class="nav-text">添加批量提交数据功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加Update功能"><span class="nav-number">2.6.</span> <span class="nav-text">添加Update功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#番外篇：前端优化——html-css"><span class="nav-number">3.</span> <span class="nav-text">番外篇：前端优化——html+css</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登录界面优化"><span class="nav-number">3.1.</span> <span class="nav-text">登录界面优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航条菜单的制作"><span class="nav-number">3.2.</span> <span class="nav-text">导航条菜单的制作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Part1：lincRNA注释信息数据库"><span class="nav-text">Part1：lincRNA注释信息数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现目标"><span class="nav-text">实现目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备需要写入数据库中的数据"><span class="nav-text">准备需要写入数据库中的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载注释信息文件"><span class="nav-text">下载注释信息文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取lincRNA部分记录"><span class="nav-text">提取lincRNA部分记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将数据写入数据库中"><span class="nav-text">将数据写入数据库中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：使用MySQLi"><span class="nav-text">方法一：使用MySQLi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：使用sql脚本"><span class="nav-text">方法二：使用sql脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准备sql脚本"><span class="nav-text">准备sql脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写入数据"><span class="nav-text">写入数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑php脚本"><span class="nav-text">编辑php脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册"><span class="nav-text">注册</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建注册页面"><span class="nav-text">创建注册页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册信息处理脚本"><span class="nav-text">注册信息处理脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录"><span class="nav-text">登录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#登录页面"><span class="nav-text">登录页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登录脚本"><span class="nav-text">登录脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登录成功"><span class="nav-text">登录成功</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#退出登录"><span class="nav-text">退出登录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检索数据库"><span class="nav-text">检索数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表单部分"><span class="nav-text">表单部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PHP脚本"><span class="nav-text">PHP脚本</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Part2：内容与功能升级"><span class="nav-text">Part2：内容与功能升级</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现目标-1"><span class="nav-text">实现目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路-1"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加blast功能"><span class="nav-text">添加blast功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获得chrX上lincRNA序列"><span class="nav-text">获得chrX上lincRNA序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建BLAST索引"><span class="nav-text">构建BLAST索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行BLAST"><span class="nav-text">执行BLAST</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加lincRNA表达谱"><span class="nav-text">添加lincRNA表达谱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取在两个样本组的表达谱"><span class="nav-text">获取在两个样本组的表达谱</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据集简单介绍与下载"><span class="nav-text">数据集简单介绍与下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跑RNA-seq分析流程"><span class="nav-text">跑RNA-seq分析流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将差异表达结果写进MySQL"><span class="nav-text">将差异表达结果写进MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检索表达谱数据库"><span class="nav-text">检索表达谱数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画图：单个基因表达谱"><span class="nav-text">画图：单个基因表达谱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加批量提交数据功能"><span class="nav-text">添加批量提交数据功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加Update功能"><span class="nav-text">添加Update功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#番外篇：前端优化——html-css"><span class="nav-text">番外篇：前端优化——html+css</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登录界面优化"><span class="nav-text">登录界面优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导航条菜单的制作"><span class="nav-text">导航条菜单的制作</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1266,7 +1290,7 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
 
 
 
@@ -1354,8 +1378,9 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+  <script src="/js/src/affix.js?v=7.0.0"></script>
 
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
 
 
 

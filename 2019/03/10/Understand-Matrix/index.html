@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-CN">
+<html class="theme-next pisces use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Pisces',
     version: '7.0.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -96,21 +96,21 @@
 
 
 
-  <meta name="description" content="本文整理自 孟岩《理解矩阵》，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致  “如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习">
+  <meta name="description" content="“如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习线性代数的时候，不知不觉就进入了“第二代数学模型”的范畴当中，这意味着数学的表述方式和抽象性有了一次全面的进化，">
 <meta name="keywords" content="线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【整理·非原创】理解矩阵">
-<meta property="og:url" content="http://yoursite.com/2019/03/10/Understand-Matrix/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/03/10/UnderStand-Matrix/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="本文整理自 孟岩《理解矩阵》，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致  “如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习">
+<meta property="og:description" content="“如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习线性代数的时候，不知不觉就进入了“第二代数学模型”的范畴当中，这意味着数学的表述方式和抽象性有了一次全面的进化，">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/Understand-Matrix-1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/Understand-Matrix-2.png">
 <meta property="og:image" content="http://yoursite.com/images/Understand-Matrix-3.png">
-<meta property="og:updated_time" content="2019-03-10T10:29:27.937Z">
+<meta property="og:updated_time" content="2019-03-14T07:15:19.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【整理·非原创】理解矩阵">
-<meta name="twitter:description" content="本文整理自 孟岩《理解矩阵》，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致  “如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习">
+<meta name="twitter:description" content="“如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多” “按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难” ——瑞典数学家Lars Garding《Encounter with Mathematics》  当我们开始学习线性代数的时候，不知不觉就进入了“第二代数学模型”的范畴当中，这意味着数学的表述方式和抽象性有了一次全面的进化，">
 <meta name="twitter:image" content="http://yoursite.com/images/Understand-Matrix-1.jpg">
 
 
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/10/Understand-Matrix/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/10/UnderStand-Matrix/">
 
 
 
@@ -289,9 +289,6 @@
   
 
   
-    
-
-  
 
   
 </nav>
@@ -321,6 +318,9 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+            
+
+          
           <div id="content" class="content">
             
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/10/Understand-Matrix/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/10/UnderStand-Matrix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lianm">
@@ -383,12 +383,24 @@
                 
               
 
-              <time title="创建时间：2019-03-10 10:22:44 / 修改时间：10:29:27" itemprop="dateCreated datePublished" datetime="2019-03-10T10:22:44+00:00">2019-03-10</time>
+              <time title="创建时间：2019-03-10 10:19:23" itemprop="dateCreated datePublished" datetime="2019-03-10T10:19:23+08:00">2019-03-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-14 15:15:19" itemprop="dateModified" datetime="2019-03-14T15:15:19+08:00">2019-03-14</time>
               
             
           </span>
@@ -440,8 +452,7 @@
       
 
       
-        <p>本文整理自 <a href="https://blog.csdn.net/myan/article/details/1865397" target="_blank" rel="noopener">孟岩《理解矩阵》</a>，除了添加了少部分个人理解的文字以及对文章逻辑结构的整理外，文章主体基本与原文一致</p>
-<p><img src="/images/Understand-Matrix-1.jpg" alt></p>
+        <p><img src="/images/Understand-Matrix-1.jpg" alt></p>
 <p>“如果不熟悉线性代数的概念，要去学习自然科学，现在看来就和文盲差不多”</p>
 <p>“按照现行的国际标准，线性代数是通过公理化来表述的，它是第二代数学模型，…，这就带来了教学上的困难”</p>
 <p align="right">——瑞典数学家Lars Garding《Encounter with Mathematics》</p>
@@ -453,7 +464,7 @@
 <p>（2）矩阵的乘法规则究竟为什么这样规定？为什么这样一种怪异的乘法规则却能够在实践中发挥如此巨大的功效？很多看上去似乎是完全不相关的问题，最后竟然都归结到矩阵的乘法，这难道不是很奇妙的事情？难道在矩阵乘法那看上去莫名其妙的规则下面，包含着世界的某些本质规律？如果是的话，这些本质规律是什么？</p>
 <p>（3） 行列式究竟是一个什么东西？为什么会有如此怪异的计算规则？行列式与其对应方阵本质上是什么关系？为什么只有方阵才有对应的行列式，而一般矩阵就没有（不要觉得这个问题很蠢，如果必要，针对m x n矩阵定义行列式不是做不到的，之所以不做，是因为没有这个必要，但是为什么没有这个必要）？而且，行列式的计算规则，看上去跟矩阵的任何计算规则都没有直观的联系，为什么又在很多方面决定了矩阵的性质？难道这一切仅是巧合？</p>
 <p>（4）矩阵为什么可以分块计算？分块计算这件事情看上去是那么随意，为什么竟是可行的？</p>
-<p>（5）对于矩阵转置运算A<sup>T</sup>，有(AB)<sup>T</sup> = B<sup>T</sup>A<sup>T</sup>，对于矩阵求逆运算A<sup>-1</sup>，有(AB)<sup>-1</sup> = B<sup>-1</sup>A<sup>-1</sup>。两个看上去完全没有什么关系的运算，为什么有着类似的性质？这仅仅是巧合吗？</p>
+<p>（5）对于矩阵转置运算AT，有(AB)T = BTAT，对于矩阵求逆运算A-1，有(AB)-1 = B-1A-1。两个看上去完全没有什么关系的运算，为什么有着类似的性质？这仅仅是巧合吗？</p>
 <p>（6）为什么说P-1AP得到的矩阵与A矩阵“相似”？这里的“相似”是什么意思？</p>
 <p>（7）特征值和特征向量的本质是什么？它们定义就让人很惊讶，因为Ax =λx，一个诺大的矩阵的效应，竟然不过相当于一个小小的数λ，确实有点奇妙。但何至于用“特征”甚至“本征”来界定？它们刻划的究竟是什么？</p>
 </blockquote>
@@ -689,8 +700,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/10/UnderStand-Matrix/" rel="next" title="UnderStand-Matrix">
-                <i class="fa fa-chevron-left"></i> UnderStand-Matrix
+              <a href="/2019/03/09/Understand-MetaBin-by-CONCOCT/" rel="next" title="从CONCOCT入手理解宏基因组binning">
+                <i class="fa fa-chevron-left"></i> 从CONCOCT入手理解宏基因组binning
               </a>
             
           </div>
@@ -698,6 +709,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/14/Unsupervise-Clustering-Algorithmn/" rel="prev" title="无监督聚类算法">
+                无监督聚类算法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -769,7 +784,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -855,7 +870,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -917,7 +944,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失"><span class="nav-number">1.</span> <span class="nav-text">1. 我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对线形空间和矩阵的几个核心概念的理解"><span class="nav-number">2.</span> <span class="nav-text">2. 对线形空间和矩阵的几个核心概念的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-什么是空间"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 什么是空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-线性空间与线性变换的表示方式——矩阵"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 线性空间与线性变换的表示方式——矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-进一步辨析”矩阵是运动的描述”：引出变换"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. 进一步辨析”矩阵是运动的描述”：引出变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-理解“矩阵是线性空间中的线性变换的一个描述”"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. 理解“矩阵是线性空间中的线性变换的一个描述”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-什么是线性变换"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1. 什么是线性变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-什么是基"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2. 什么是基</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-区别“线性变换”与“线性变换的一个描述”"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3. 区别“线性变换”与“线性变换的一个描述”</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-对1、2的总结及引出下一部分"><span class="nav-number">3.</span> <span class="nav-text">3. 对1、2的总结及引出下一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-将矩阵当作对一组基（坐标系）的描述"><span class="nav-number">4.</span> <span class="nav-text">4. 将矩阵当作对一组基（坐标系）的描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-为什么可以将矩阵看作坐标系"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. 为什么可以将矩阵看作坐标系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-比较运动视角与坐标系视角下的矩阵"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. 比较运动视角与坐标系视角下的矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-重新理解向量"><span class="nav-number">4.3.</span> <span class="nav-text">4.3. 重新理解向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”"><span class="nav-number">4.4.</span> <span class="nav-text">4.4. 回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失"><span class="nav-text">1. 我们对于矩阵的种种疑惑——本质是线性代数教学中直觉性丧失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对线形空间和矩阵的几个核心概念的理解"><span class="nav-text">2. 对线形空间和矩阵的几个核心概念的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-什么是空间"><span class="nav-text">2.1. 什么是空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-线性空间与线性变换的表示方式——矩阵"><span class="nav-text">2.2. 线性空间与线性变换的表示方式——矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-进一步辨析”矩阵是运动的描述”：引出变换"><span class="nav-text">2.3. 进一步辨析”矩阵是运动的描述”：引出变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-理解“矩阵是线性空间中的线性变换的一个描述”"><span class="nav-text">2.4. 理解“矩阵是线性空间中的线性变换的一个描述”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-什么是线性变换"><span class="nav-text">2.4.1. 什么是线性变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-什么是基"><span class="nav-text">2.4.2. 什么是基</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-区别“线性变换”与“线性变换的一个描述”"><span class="nav-text">2.4.3. 区别“线性变换”与“线性变换的一个描述”</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-对1、2的总结及引出下一部分"><span class="nav-text">3. 对1、2的总结及引出下一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-将矩阵当作对一组基（坐标系）的描述"><span class="nav-text">4. 将矩阵当作对一组基（坐标系）的描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-为什么可以将矩阵看作坐标系"><span class="nav-text">4.1. 为什么可以将矩阵看作坐标系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-比较运动视角与坐标系视角下的矩阵"><span class="nav-text">4.2. 比较运动视角与坐标系视角下的矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-重新理解向量"><span class="nav-text">4.3. 重新理解向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”"><span class="nav-text">4.4. 回头理解“固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换”</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -957,7 +984,7 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
 
 
 
@@ -1045,8 +1072,9 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+  <script src="/js/src/affix.js?v=7.0.0"></script>
 
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
 
 
 

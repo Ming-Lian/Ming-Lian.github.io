@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-CN">
+<html class="theme-next pisces use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +72,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Pisces',
     version: '7.0.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-2.png">
 <meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-3.png">
 <meta property="og:image" content="http://yoursite.com/images/Metagenome-Tools-CONCOCT-genomecov-4.png">
-<meta property="og:updated_time" content="2019-03-09T07:40:58.631Z">
+<meta property="og:updated_time" content="2019-03-14T06:09:29.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从CONCOCT入手理解宏基因组binning">
 <meta name="twitter:description" content="1. 宏基因组binning简介Metagenome 组装完成后，我们得到的是成千上万的 contigs，我们需要知道哪些 contigs 来自哪一个基因组，或者都有哪些微生物的基因组。所以需要将 contigs 按照物种水平进行分组归类，称为 “bining” 123456Supervised binning methods: use databases of already sequence">
@@ -300,9 +300,6 @@
   
 
   
-    
-
-  
 
   
 </nav>
@@ -331,6 +328,9 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
+            
+
           
           <div id="content" class="content">
             
@@ -394,12 +394,24 @@
                 
               
 
-              <time title="创建时间：2019-03-09 07:22:30 / 修改时间：07:40:58" itemprop="dateCreated datePublished" datetime="2019-03-09T07:22:30+00:00">2019-03-09</time>
+              <time title="创建时间：2019-03-09 07:22:30" itemprop="dateCreated datePublished" datetime="2019-03-09T07:22:30+08:00">2019-03-09</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-14 14:09:29" itemprop="dateModified" datetime="2019-03-14T14:09:29+08:00">2019-03-14</time>
               
             
           </span>
@@ -724,8 +736,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/10/UnderStand-Matrix/" rel="prev" title="UnderStand-Matrix">
-                UnderStand-Matrix <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/10/UnderStand-Matrix/" rel="prev" title="【整理·非原创】理解矩阵">
+                【整理·非原创】理解矩阵 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -798,7 +810,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -884,7 +896,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -946,7 +970,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-宏基因组binning简介"><span class="nav-number">1.</span> <span class="nav-text">1. 宏基因组binning简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-binning原理"><span class="nav-number">2.</span> <span class="nav-text">2. binning原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-可用于binning的特征"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 可用于binning的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-从哪些序列下手进行binning？"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 从哪些序列下手进行binning？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-详述CONCOCT的binning原理"><span class="nav-number">3.</span> <span class="nav-text">3. 详述CONCOCT的binning原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-拆解CONCOCT的流程"><span class="nav-number">4.</span> <span class="nav-text">4. 拆解CONCOCT的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Assembling-Metagenomic-Reads"><span class="nav-number">4.1.</span> <span class="nav-text">4.1. Assembling Metagenomic Reads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Cutting-up-contigs"><span class="nav-number">4.2.</span> <span class="nav-text">4.2. Cutting up contigs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Map-Remove-Duplicate-and-Quant-Coverage"><span class="nav-number">4.3.</span> <span class="nav-text">4.3. Map, Remove Duplicate and Quant Coverage</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-宏基因组binning简介"><span class="nav-text">1. 宏基因组binning简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-binning原理"><span class="nav-text">2. binning原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-可用于binning的特征"><span class="nav-text">2.1. 可用于binning的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-从哪些序列下手进行binning？"><span class="nav-text">2.2. 从哪些序列下手进行binning？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-详述CONCOCT的binning原理"><span class="nav-text">3. 详述CONCOCT的binning原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-拆解CONCOCT的流程"><span class="nav-text">4. 拆解CONCOCT的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Assembling-Metagenomic-Reads"><span class="nav-text">4.1. Assembling Metagenomic Reads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Cutting-up-contigs"><span class="nav-text">4.2. Cutting up contigs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Map-Remove-Duplicate-and-Quant-Coverage"><span class="nav-text">4.3. Map, Remove Duplicate and Quant Coverage</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -986,7 +1010,7 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
 
 
 
@@ -1074,8 +1098,9 @@
   
 
 
-  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+  <script src="/js/src/affix.js?v=7.0.0"></script>
 
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
 
 
 
