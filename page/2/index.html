@@ -335,6 +335,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/InAction-PHP-MySQL-lincRNA-Database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/17/InAction-PHP-MySQL-lincRNA-Database/" class="post-title-link" itemprop="url">PHP+MySQL实战：小鼠与人类lincRNA数据库</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-17 06:51:33" itemprop="dateCreated datePublished" datetime="2019-02-17T06:51:33+08:00">2019-02-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-14 14:09:29" itemprop="dateModified" datetime="2019-03-14T14:09:29+08:00">2019-03-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前后端技术/" itemprop="url" rel="index"><span itemprop="name">前后端技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              Part1：lincRNA注释信息数据库实现目标
+将lincRNA的gtf格式的注释信息写到MySQL数据库中
+用户需要登录才具有数据库访问权限
+提供数据库的检索功能
+
+思路
+从 UCSC genome browser 或 Ensemble 等数据库中下载人类（homo sapiens）和小鼠 （Mus musculus）的全基因组注释信息文件(GTF或者GFF3格式文件）
+
+提取出其中的lincRNA的注释信息记录，然后将其写入MySQL数据库系统
+
+写好PHP脚本与之前建好的MySQL数据库系统进行数据交互
+
+
+准备需要写入数据库中的数据下载注释信息文件获取GTF文件的下载地址：
+打开Ensemble数据库：http://asia.ensembl.org/index.html
+
+
+
+
+
+
+以下列出了可供下载的基因组注释信息版本release-XX，目前的最新版本为release-91
+
+得到下载链接，开始下载（下载至Linux服务器中）
+# 下载GRCh38.91（人类）注释文件$ wget -c -P /Path/To/dir ftp://ftp.ensembl.org/pub/
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/17/InAction-PHP-MySQL-lincRNA-Database/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/09/Load-and-resolve-MarkdownDoc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2120,7 +2327,7 @@ https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2425,6 +2632,8 @@ https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md
 
   
   
+    
+      
     
       
     
