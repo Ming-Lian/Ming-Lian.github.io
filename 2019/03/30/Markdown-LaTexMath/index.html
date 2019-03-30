@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。 数学公式的编辑与显示常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不">
+<meta name="keywords" content="Markdown,LaTex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown+LaTex Math">
+<meta property="og:url" content="http://yoursite.com/2019/03/30/Markdown-LaTexMath/index.html">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
+<meta property="og:description" content="实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。 数学公式的编辑与显示常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-30T08:23:51.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Markdown+LaTex Math">
+<meta name="twitter:description" content="实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。 数学公式的编辑与显示常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/30/Markdown-LaTexMath/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Markdown+LaTex Math | Lianm's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/30/Markdown-LaTexMath/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Markdown+LaTex Math
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-30 16:06:57 / 修改时间：16:23:51" itemprop="dateCreated datePublished" datetime="2019-03-30T16:06:57+08:00">2019-03-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前后端技术/" itemprop="url" rel="index"><span itemprop="name">前后端技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那<strong>数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播</strong>，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。</p>
+<h2 id="数学公式的编辑与显示"><a href="#数学公式的编辑与显示" class="headerlink" title="数学公式的编辑与显示"></a>数学公式的编辑与显示</h2><p>常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不是说完全不能解决，折中一下，编辑成图片，以图片形式插入也行，但这毕竟不太高效和方便，也不利于传播，而在出版界用得比较多的LaTex语法虽然在数字的编辑上有一套成熟的解决方案，LaTex math，但是在普通文本的编辑上，它的语法格式与Markdown相比又显得太过复杂</p>
+<p>那么，有没有一种方法，可以分别将Markdown的文本编辑优势和LaTex的数学公式编辑优势相互结合起来呢？</p>
+<p>有，就是Markdown+LaTex</p>
+<p>与LaTex文档的比较</p>
+<blockquote>
+<p>虽然很多数学学术论文整个文档就像使用Markdown一样是直接使用的LaTex语法来编辑的，但是仔细比对之后发现直接用LaTex语法来写整个文档来，它的效果和Markdown + LaTex Math 方式没有太大的区别。</p>
+<p>但是LaTex的语法、编辑器、配置、中文支持等都要比Markdown要复杂的多，而且也不及Markdown已经非常成熟的生态（包括工具链、社区等）。</p>
+</blockquote>
+<h2 id="编辑器的选择"><a href="#编辑器的选择" class="headerlink" title="编辑器的选择"></a>编辑器的选择</h2><p>Markdown的编辑器非常多，对于很多初学者来说，个人比较推荐使用VS Code</p>
+<blockquote>
+<ul>
+<li><p>VS Code汉化比较方便，想让更多人学会使用Python来学数学，有一个中文界面还是比较重要的；而且VS Code是跨平台的，Mac、Windows都可以上手；</p>
+</li>
+<li><p>VS Code是一款极为优秀的代码编辑器，说起优秀，应该算是目前最为推荐的编辑器之一（可能没有之一）；</p>
+</li>
+<li><p>VS Code插件丰富，Python的编译、Markdown的编写与预览、LaTex Math的显示等工具链相当完备；</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="数学公式与LaTex-Math"><a href="#数学公式与LaTex-Math" class="headerlink" title="数学公式与LaTex Math"></a>数学公式与LaTex Math</h2><h3 id="内联与块状"><a href="#内联与块状" class="headerlink" title="内联与块状"></a>内联与块状</h3><p>在介绍数学公式之前，我们需要先来了解一下<strong>内联</strong>与<strong>块状</strong>的概念</p>
+<p>所谓内联就是我们可以把数学符号嵌入到文字段落里面，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">函数式：$f(x)=\frac&#123;P(x)&#125;&#123;Q(x)&#125;$</span><br></pre></td></tr></table></figure>
+<p>函数式：$f(x)=\frac{P(x)}{Q(x)}$  </p>
+<p>如果我们需要输出的数学公式比较复杂，或者我们需要凸出并独立显示公式，这个时候我们就需要使用到公式的块状输出，块状输出的语法使用4个美元符号<code>$$数学公式$$</code>，我们来看案例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$f(x)=\frac&#123;P(x)&#125;&#123;Q(x)&#125;$$</span><br></pre></td></tr></table></figure>
+<p>$$f(x)=\frac{P(x)}{Q(x)}$$ </p>
+<p>使用块状输出，函数会居中显示，值得一提的是我们在使用块状输出数学公式时，<strong>在Markdown里需要换行来写公式</strong>。</p>
+<h3 id="LaTex-Math的基本语法"><a href="#LaTex-Math的基本语法" class="headerlink" title="LaTex Math的基本语法"></a>LaTex Math的基本语法</h3><ul>
+<li><strong>希腊字母</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$\Gamma$</span><br><span class="line">$\iota$</span><br><span class="line">$\sigma$</span><br><span class="line">$\phi$</span><br><span class="line">$\upsilon$</span><br><span class="line">$\Pi$</span><br><span class="line">$\Bbbk$</span><br><span class="line">$\heartsuit$</span><br><span class="line">$\int$</span><br><span class="line">$\oint$</span><br></pre></td></tr></table></figure>
+<p>$\Gamma$、$\iota$、$\sigma$、$\phi$、$\upsilon$、$\Pi$、$\Bbbk$、$\heartsuit$、$\int$、$\oint$</p>
+<ul>
+<li><strong>三角函数</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$\tan$</span><br><span class="line">$\sin$</span><br><span class="line">$\cos$</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>运算符</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$+$</span><br><span class="line">$-$</span><br><span class="line">$=$</span><br><span class="line">$&gt;$</span><br><span class="line">$&lt;$</span><br><span class="line">$\times$</span><br><span class="line">$\div$</span><br><span class="line">$\equiv$</span><br><span class="line">$\leq$</span><br><span class="line">$\geq$</span><br><span class="line">$\neq$</span><br></pre></td></tr></table></figure>
+<p>$+$、$-$、$=$、$&gt;$、$&lt;$、$\times$、$\div$、$\equiv$、$\leq$、$\geq$、$\neq$  </p>
+<ul>
+<li><strong>集合符号</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$\cup$</span><br><span class="line">$\cap$</span><br><span class="line">$\in$</span><br><span class="line">$\notin$</span><br><span class="line">$\ni$</span><br><span class="line">$\subset$</span><br><span class="line">$\subseteq$</span><br><span class="line">$\supset$</span><br><span class="line">$\supseteq$</span><br><span class="line">$\infty$</span><br></pre></td></tr></table></figure>
+<p>$\cup$、$\cap$、$\in$、$\notin$、$\ni$、$\subset$、$\subseteq$、$\supset$、$\supseteq$、$\infty$</p>
+<ul>
+<li><strong>指数输出</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$x^3+x^9$  </span><br><span class="line">$x^y$</span><br></pre></td></tr></table></figure>
+<p>$x^3+x^9$、$x^y$</p>
+<ul>
+<li><strong>n次方根输出</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$\sqrt&#123;3x-1&#125;+\sqrt[5]&#123;2y^5-4&#125;$</span><br></pre></td></tr></table></figure>
+<p>$\sqrt{3x-1}+\sqrt[5]{2y^5-4}$</p>
+<ul>
+<li><strong>输出分数</strong></li>
+</ul>
+<p>语法为<code>\frac{分子}{分母}</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$\frac&#123;x&#125;&#123;2y&#125; +\frac&#123;x-y&#125;&#123;x+y&#125; $$</span><br></pre></td></tr></table></figure>
+<p>$$\frac{x}{2y} +\frac{x-y}{x+y} $$</p>
+<ul>
+<li><strong>累加求和输出</strong></li>
+</ul>
+<p>求和公式比较复杂，会涉及到上标和下标，在输出指数<code>^</code>时我们可以把它看成是上标，使用<code>_</code>来输出下标</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$\sum_&#123;n=1&#125;^\infty k$$</span><br></pre></td></tr></table></figure>
+<p>$$\sum_{n=1}^\infty k$$</p>
+<ul>
+<li><strong>极限的输出</strong></li>
+</ul>
+<p>输出极限就会使用到下标</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$\lim\limits_&#123;x \to \infty&#125; \exp(-x) = 0$$</span><br></pre></td></tr></table></figure>
+<p>$$\lim\limits_{x \to \infty} \exp(-x) = 0$$</p>
+<ul>
+<li><strong>输出矩阵</strong></li>
+</ul>
+<p>使用<code>\begin{matrix}</code>和<code>\end{matrix}</code>围住即可输出矩阵，矩阵之间用<code>$</code>来空格，用<code>\\</code>来换行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">  \begin&#123;matrix&#125;</span><br><span class="line">   1 &amp; 2 &amp; 3 \\</span><br><span class="line">   4 &amp; 5 &amp; 6 \\</span><br><span class="line">   7 &amp; 8 &amp; 9</span><br><span class="line">  \end&#123;matrix&#125; </span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>$$<br>  \begin{matrix}<br>   1 &amp; 2 &amp; 3 \<br>   4 &amp; 5 &amp; 6 \<br>   7 &amp; 8 &amp; 9<br>  \end{matrix}<br>$$</p>
+<h3 id="复杂数学公式"><a href="#复杂数学公式" class="headerlink" title="复杂数学公式"></a>复杂数学公式</h3><ul>
+<li><strong>分段函数的编写</strong></li>
+</ul>
+<p>分段函数是非常复杂的，这时候会用到LaTex的cases语法，用<code>\begin{cases}</code>和<code>\end{cases}</code>围住即可，中间则用<code>\\</code>来分段，具体我们来看下面的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">X(m,n)=</span><br><span class="line">\begin&#123;cases&#125;</span><br><span class="line">x(n), \\</span><br><span class="line">x(n-1) \\</span><br><span class="line">x(n-1)</span><br><span class="line">\end&#123;cases&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
+<p>$$<br>X(m,n)=<br>\begin{cases}<br>x(n), \<br>x(n-1) \<br>x(n-1)<br>\end{cases}<br>$$</p>
+<h2 id="LaTex-Math的跨平台显示"><a href="#LaTex-Math的跨平台显示" class="headerlink" title="LaTex Math的跨平台显示"></a>LaTex Math的跨平台显示</h2><p><strong>（1）知乎、简书</strong></p>
+<p>简书的Markdown编辑器可以比较完美的支持Markdown语法以及Markdown Math语法，可以直接把用VS Code写的Markdown文件里的内容复制粘贴过去，然后进行一些简单的修改就可以了</p>
+<p>知乎自带数学公式的插入，如果直接导入Markdown文件显示会出现一些问题，需要把数学公式用知乎自带的Tex编辑器重新书写，只需要把<code>$$</code>删除即可</p>
+<p><strong>（2）网页</strong></p>
+<p>由于我们的网页可以不用Markdown，用HTML替换Markdown排版语法就可以，所以我们只需要专注于如何在网页上显示数学公式即可。比较完美的解决方案是使用<code>mathjax</code>，我们只需要在<code>&lt;head&gt;</code>标签内插入<code>mathjaxjs</code>即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; async</span><br><span class="line">  src=&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML&quot; async&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>要注意的是内联式的语法会有些不同，不再是<code>$符号与公式$</code>，而是：<code>\(符号与公式\)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;</span><br><span class="line">  当 \(a \ne 0\)时,  \(ax^2 + bx + c = 0\) 会有两个解，它们是：</span><br><span class="line">  $$x = &#123;-b \pm \sqrt&#123;b^2-4ac&#125; \over 2a&#125;.$$</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>（3）公众号</strong></p>
+<p>微信公众号封闭且奇葩，美化微信公众号的排版虽然用的是html和css语法，但是有很多需要注意的地方，因此排版也相对来说比较麻烦</p>
+<p>要想让数学公式在公众号上显示就比较麻烦，微信公众号是不支持LaTex语法的，所以需要把公式做成图片，其他不支持LaTex的自媒体平台也可以这么处理</p>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="https://www.jianshu.com/p/d9a5a1c694b4" target="_blank" rel="noopener">【简书】HackWeek《使用Markdown输出LaTex数学公式》</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          
+            <a href="/tags/LaTex/" rel="tag"># LaTex</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/14/Application-of-MachineLearning-in-Bioinformatics/" rel="next" title="机器学习在生物信息中的应用">
+                <i class="fa fa-chevron-left"></i> 机器学习在生物信息中的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数学公式的编辑与显示"><span class="nav-text">数学公式的编辑与显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑器的选择"><span class="nav-text">编辑器的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学公式与LaTex-Math"><span class="nav-text">数学公式与LaTex Math</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内联与块状"><span class="nav-text">内联与块状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LaTex-Math的基本语法"><span class="nav-text">LaTex Math的基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂数学公式"><span class="nav-text">复杂数学公式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LaTex-Math的跨平台显示"><span class="nav-text">LaTex Math的跨平台显示</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
