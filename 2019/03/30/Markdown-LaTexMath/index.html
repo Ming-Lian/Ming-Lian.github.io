@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Lianm&#39;s Blog">
 <meta property="og:description" content="实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。 数学公式的编辑与显示常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-30T08:23:51.449Z">
+<meta property="og:updated_time" content="2019-03-31T09:14:45.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Markdown+LaTex Math">
 <meta name="twitter:description" content="实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。 数学公式的编辑与显示常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不">
@@ -379,12 +379,24 @@
                 
               
 
-              <time title="创建时间：2019-03-30 16:06:57 / 修改时间：16:23:51" itemprop="dateCreated datePublished" datetime="2019-03-30T16:06:57+08:00">2019-03-30</time>
+              <time title="创建时间：2019-03-30 16:06:57" itemprop="dateCreated datePublished" datetime="2019-03-30T16:06:57+08:00">2019-03-30</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-31 17:14:45" itemprop="dateModified" datetime="2019-03-31T17:14:45+08:00">2019-03-31</time>
               
             
           </span>
@@ -515,14 +527,15 @@
 <li><strong>输出矩阵</strong></li>
 </ul>
 <p>使用<code>\begin{matrix}</code>和<code>\end{matrix}</code>围住即可输出矩阵，矩阵之间用<code>$</code>来空格，用<code>\\</code>来换行</p>
+<p>注意：在mathjax的环境下用<code>\\</code>可能无法成功解析，可以尝试<code>\\\</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">  \begin&#123;matrix&#125;</span><br><span class="line">   1 &amp; 2 &amp; 3 \\</span><br><span class="line">   4 &amp; 5 &amp; 6 \\</span><br><span class="line">   7 &amp; 8 &amp; 9</span><br><span class="line">  \end&#123;matrix&#125; </span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
-<p>$$<br>  \begin{matrix}<br>   1 &amp; 2 &amp; 3 \<br>   4 &amp; 5 &amp; 6 \<br>   7 &amp; 8 &amp; 9<br>  \end{matrix}<br>$$</p>
+<p>$$<br>  \begin{matrix}<br>   1 &amp; 2 &amp; 3 \\<br>   4 &amp; 5 &amp; 6 \\<br>   7 &amp; 8 &amp; 9<br>  \end{matrix}<br>$$</p>
 <h3 id="复杂数学公式"><a href="#复杂数学公式" class="headerlink" title="复杂数学公式"></a>复杂数学公式</h3><ul>
 <li><strong>分段函数的编写</strong></li>
 </ul>
 <p>分段函数是非常复杂的，这时候会用到LaTex的cases语法，用<code>\begin{cases}</code>和<code>\end{cases}</code>围住即可，中间则用<code>\\</code>来分段，具体我们来看下面的例子</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">X(m,n)=</span><br><span class="line">\begin&#123;cases&#125;</span><br><span class="line">x(n), \\</span><br><span class="line">x(n-1) \\</span><br><span class="line">x(n-1)</span><br><span class="line">\end&#123;cases&#125;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
-<p>$$<br>X(m,n)=<br>\begin{cases}<br>x(n), \<br>x(n-1) \<br>x(n-1)<br>\end{cases}<br>$$</p>
+<p>$$<br>X(m,n)=<br>\begin{cases}<br>x(n), \\<br>x(n-1) \\<br>x(n-1)<br>\end{cases}<br>$$</p>
 <h2 id="LaTex-Math的跨平台显示"><a href="#LaTex-Math的跨平台显示" class="headerlink" title="LaTex Math的跨平台显示"></a>LaTex Math的跨平台显示</h2><p><strong>（1）知乎、简书</strong></p>
 <p>简书的Markdown编辑器可以比较完美的支持Markdown语法以及Markdown Math语法，可以直接把用VS Code写的Markdown文件里的内容复制粘贴过去，然后进行一些简单的修改就可以了</p>
 <p>知乎自带数学公式的插入，如果直接导入Markdown文件显示会出现一些问题，需要把数学公式用知乎自带的Tex编辑器重新书写，只需要把<code>$$</code>删除即可</p>
