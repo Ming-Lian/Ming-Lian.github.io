@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近在给面临中考的表妹补课，补的是数学和物理（化学尝试过，表示hold不住），补课会遇到了一些还挺有意思，稍有难度的题，就把它们的解题过程记录了下来 人到油腻中年，只能拿这样的东西练练脑子了，主要为了防止老年痴呆 Week-1题目是这样的：   正五边形广场ABCDE的边长为80m，甲、乙两个同学做游戏，分别从A、C两点处同时出发，沿A-B-C-D-E-A的方向绕广场行走，甲的速度为50m/min">
+<meta name="keywords" content="初中数学,智力游戏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每周一道初中数学题">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/Math-Subject-per-Week/index.html">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
+<meta property="og:description" content="最近在给面临中考的表妹补课，补的是数学和物理（化学尝试过，表示hold不住），补课会遇到了一些还挺有意思，稍有难度的题，就把它们的解题过程记录了下来 人到油腻中年，只能拿这样的东西练练脑子了，主要为了防止老年痴呆 Week-1题目是这样的：   正五边形广场ABCDE的边长为80m，甲、乙两个同学做游戏，分别从A、C两点处同时出发，沿A-B-C-D-E-A的方向绕广场行走，甲的速度为50m/min">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Math-Subject-1.png">
+<meta property="og:updated_time" content="2019-03-31T16:09:26.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="每周一道初中数学题">
+<meta name="twitter:description" content="最近在给面临中考的表妹补课，补的是数学和物理（化学尝试过，表示hold不住），补课会遇到了一些还挺有意思，稍有难度的题，就把它们的解题过程记录了下来 人到油腻中年，只能拿这样的东西练练脑子了，主要为了防止老年痴呆 Week-1题目是这样的：   正五边形广场ABCDE的边长为80m，甲、乙两个同学做游戏，分别从A、C两点处同时出发，沿A-B-C-D-E-A的方向绕广场行走，甲的速度为50m/min">
+<meta name="twitter:image" content="http://yoursite.com/images/Math-Subject-1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/01/Math-Subject-per-Week/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>每周一道初中数学题 | Lianm's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/Math-Subject-per-Week/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">每周一道初中数学题
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-01 00:02:03 / 修改时间：00:09:26" itemprop="dateCreated datePublished" datetime="2019-04-01T00:02:03+08:00">2019-04-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MathIsFunGame/" itemprop="url" rel="index"><span itemprop="name">MathIsFunGame</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在给面临中考的表妹补课，补的是数学和物理（化学尝试过，表示hold不住），补课会遇到了一些还挺有意思，稍有难度的题，就把它们的解题过程记录了下来</p>
+<p>人到油腻中年，只能拿这样的东西练练脑子了，主要为了防止老年痴呆</p>
+<h2 id="Week-1"><a href="#Week-1" class="headerlink" title="Week-1"></a>Week-1</h2><p>题目是这样的：</p>
+<blockquote>
+<p><img src="/images/Math-Subject-1.png" alt></p>
+<p>正五边形广场ABCDE的边长为80m，甲、乙两个同学做游戏，分别从A、C两点处同时出发，沿A-B-C-D-E-A的方向绕广场行走，甲的速度为50m/min，乙的速度为46m/min，则两人第一次刚走到同一条边上时，（ ）</p>
+<ul>
+<li><p>A. 甲在顶点A处</p>
+</li>
+<li><p>B. 甲在顶点B处</p>
+</li>
+<li><p>C. 甲在顶点C处</p>
+</li>
+<li><p>D. 甲在顶点D处</p>
+</li>
+</ul>
+</blockquote>
+<p>求解思路：</p>
+<p>这本质上是一个同向同时的追击问题</p>
+<p>想象一下，甲追上乙即两者相遇时的场景，两人第一次刚走到同一条边上的场景肯定发生在两者相遇之前，也就是说题目要求的那个时刻那个场景是发生在追击过程中的</p>
+<p>可以很容易地想到，两人第一次刚走到同一条边上时，落在后面的甲肯定刚好落在这个五边形的某一个顶点上，这意味着甲此时刚好完整地走完了x条边，则此时甲移动的路程为80x</p>
+<p>由于此时，乙与甲在同一条边上，则可设此时甲乙之间的距离为k，则此时乙移动的路程为80x+k-160</p>
+<p>考虑到甲乙是同时运动的，它们的运动时间总是相同的，则</p>
+<p>$$<br>\frac{80x}{50}=\frac{80x+k-160}{46}<br>$$</p>
+<p>根据这个公式，可以推出K的表达式为：</p>
+<p>$$k=ax+b$$</p>
+<blockquote>
+<p>a和b分别是某一个实数，可以通过上面的等式实际算出来，不过这里主要是为了讲解解题的思路，所以没有将实际算出的数字标上</p>
+</blockquote>
+<p>前面提到，此时乙与甲是在同一条边上的，那么它们之间的距离k肯定不能超出这条边的长度，即</p>
+<p>$$0 &lt; k = ax+b\leq80$$</p>
+<p>根据上面的不等式就可以算出x的取值范围：</p>
+<p>$$w_1 &lt; x \leq w_2$$</p>
+<p>则去x在该取值范围的最小正整数，通过它就可以知道此时甲到底位于哪个顶点，比如若此时x去3，则甲位于D点</p>
+<h2 id="Week-2"><a href="#Week-2" class="headerlink" title="Week-2"></a>Week-2</h2><p>题目：</p>
+<blockquote>
+<p>已知抛物线$y=x^2-2x-3$进过点A(-1,b)，P(m,t)是抛物线上的一个动点，P关于原点的对称点为P’，问：</p>
+<p>当点P’落在第二象限内，且$P’A^2$取得最小值时，求m的值</p>
+</blockquote>
+<p>求解：</p>
+<p>已知点P’是P关于原点的中心对称点，因此P’的坐标可以推出是(-m,-t)，也可以求出点A的坐标为(-1,0)</p>
+<p>又由于点P’落在第二象限，因此：</p>
+<p>$$<br>\begin{cases}<br>-m<0 \\\ -t>0<br>\end{cases}<br>\to<br>\begin{cases}<br>m&gt;0 \\<br>t&lt;0<br>\end{cases}<br>$$</0></p>
+<p>因为已知点A的坐标，也知道点P’坐标的表示方式，则可以将$P’A^2$表示出来：</p>
+<p>$$<br>\begin{aligned}<br>P’A^2 &amp;=(-m+1)^2+t^2 \\<br>&amp;=m^2-2m+1+t^2<br>\end{aligned}<br>$$</p>
+<p>虽然我们用m和t将$P’A^2$表示了出来，但是两个未知数还是太多，需要想办法消去其中一个，这时可以利用点P在抛物线上这个条件，则</p>
+<p>$$<br>m^2-2m-3=t \to m^2-2m=t+3<br>$$</p>
+<p>将这一步得到的结论$m^2-2m=t+3$带入上一步的结论中，从而得到</p>
+<p>$$<br>P’A^2=t^2+t+1 (t&lt;0)<br>$$</p>
+<p>因此，此时题目的问题变成了：当t&lt;0时，$P’A^2=t^2+t+1$在何处取到最小值？</p>
+<p>很明显，抛物线$t^2+t+1$的开口向上，且其对称轴为$t=-\frac{1}{2}$，在抛物线的取值范围t&lt;0上，因此t取$-\frac{1}{2}$</p>
+<p>已经得到t的取值，将它带到抛物线表达式中，就可以将m求出了</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/初中数学/" rel="tag"># 初中数学</a>
+          
+            <a href="/tags/智力游戏/" rel="tag"># 智力游戏</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/Linear-Algebra-Note/" rel="next" title="线性代数学习笔记">
+                <i class="fa fa-chevron-left"></i> 线性代数学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Week-1"><span class="nav-text">Week-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Week-2"><span class="nav-text">Week-2</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
