@@ -335,6 +335,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/Perl-Advanced/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/01/Perl-Advanced/" class="post-title-link" itemprop="url">Perl进阶笔记</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-01 13:41:38 / 修改时间：13:45:17" itemprop="dateCreated datePublished" datetime="2019-04-01T13:41:38+08:00">2019-04-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              pod文档使用pod文档可以实现程序usage说明
+=head1 part1	doc in part1=head2 part2	doc in part2...=cut	# pod文档结束的标志
+注意：每个=标签上下必须隔一行，否则就会错误解析。
+用pod2doc $0可以将程序中的文档打印出来，不过一般用在程序内部，当程序参数设定错误时打印pod文档：
+die `pod2doc $0` if (...);
+Getopt::Long首先需要在脚本开头加上对该模块的引用
+use Getopt::Long;
+使用GetOptions函数承接传递的参数：
+my ($var1,$var2,$var3,$var4); # 若使用&quot;use strict&quot;模式，则需要提前定义变量GetOptions(	&quot;i:s&quot;=&gt;\$var1,	&quot;o:s&quot;=&gt;\$var2,	&quot;n:i&quot;=&gt;\$var3,	&quot;m:i&quot;=&gt;\$var4	);
+perl单行执行perl -h可以查看perl的所有参数
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/01/Perl-Advanced/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/Math-Subject-per-Week/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2019,190 +2199,6 @@ while read i
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/17/Practical-Scripts/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/17/Practical-Scripts/" class="post-title-link" itemprop="url">实用小脚本</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-17 08:14:59" itemprop="dateCreated datePublished" datetime="2019-02-17T08:14:59+08:00">2019-02-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-14 14:09:29" itemprop="dateModified" datetime="2019-03-14T14:09:29+08:00">2019-03-14</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              Perl1. 拆分FASTA文件将FASTA文件按照用户指定的序列条数进行拆分，即每n条序列写到一个文件中，或者按照指定的输出文件数进行拆分，则每个文件中包含的序列数相同
-脚本名：splitFasta.pl#!/usr/bin/perluse strict;use warnings;use Getopt::Long;use POSIX;# 帮助文档=head1 Description	This script is used to split fasta file, which is too large with thosands of sequence=head1 Usage	$0 -i &lt;input&gt; -o &lt;output_dir&gt; [-n &lt;seq_num_per_file&gt;] [-m &lt;output_file_num&gt;]	=head1 Parameters	-i	[str]	Input raw fasta file	-o	[str]	Output file to which directory	-n	[int]	Sequence n
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/17/Practical-Scripts/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2252,7 +2248,7 @@ while read i
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2563,9 +2559,9 @@ while read i
   
     
       
-        
-      
     
+      
+        
       
     
       
