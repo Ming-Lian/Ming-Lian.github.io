@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/Favico.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="安装LCD驱动2017-03-02-raspbian-jessie以前版本在/boot目录下，下载 LCD-show-161112.tar.gz :  http://blog.lxx1.com/wp-content/uploads/2017/03/LCD-show-161112.tar.gz 然后解压，并赋予./LCD-show/LCD-show可执行权限 1chmod +x ./LCD-sho">
+<meta name="keywords" content="Linux,Raspi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进阶笔记">
+<meta property="og:url" content="http://yoursite.com/2019/04/02/Linux-Advanced/index.html">
+<meta property="og:site_name" content="Lianm&#39;s Blog">
+<meta property="og:description" content="安装LCD驱动2017-03-02-raspbian-jessie以前版本在/boot目录下，下载 LCD-show-161112.tar.gz :  http://blog.lxx1.com/wp-content/uploads/2017/03/LCD-show-161112.tar.gz 然后解压，并赋予./LCD-show/LCD-show可执行权限 1chmod +x ./LCD-sho">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Linux-advanced-raspi-logo.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Linux-advanced-install-gnome-gui-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Linux-advanced-hardlinks-and-softlinks-1.png">
+<meta property="og:updated_time" content="2019-04-02T02:26:00.543Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux进阶笔记">
+<meta name="twitter:description" content="安装LCD驱动2017-03-02-raspbian-jessie以前版本在/boot目录下，下载 LCD-show-161112.tar.gz :  http://blog.lxx1.com/wp-content/uploads/2017/03/LCD-show-161112.tar.gz 然后解压，并赋予./LCD-show/LCD-show可执行权限 1chmod +x ./LCD-sho">
+<meta name="twitter:image" content="http://yoursite.com/images/Linux-advanced-raspi-logo.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/02/Linux-Advanced/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux进阶笔记 | Lianm's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lianm's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Focus on Bioinformatics and Machine-Learning</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-search">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/search/" rel="section"><i class="menu-item-icon fa fa-fw fa-search"></i> <br>搜索</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Ming-Lian" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/02/Linux-Advanced/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux进阶笔记
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-02 10:19:48 / 修改时间：10:26:00" itemprop="dateCreated datePublished" datetime="2019-04-02T10:19:48+08:00">2019-04-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/Linux-advanced-raspi-logo.jpg" alt></p>
+<h2 id="安装LCD驱动"><a href="#安装LCD驱动" class="headerlink" title="安装LCD驱动"></a>安装LCD驱动</h2><h3 id="2017-03-02-raspbian-jessie以前版本"><a href="#2017-03-02-raspbian-jessie以前版本" class="headerlink" title="2017-03-02-raspbian-jessie以前版本"></a>2017-03-02-raspbian-jessie以前版本</h3><p>在/boot目录下，下载 <strong>LCD-show-161112.tar.gz</strong> : </p>
+<p><code>http://blog.lxx1.com/wp-content/uploads/2017/03/LCD-show-161112.tar.gz</code></p>
+<p>然后解压，并赋予./LCD-show/LCD-show可执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./LCD-show/LCD35-show</span><br></pre></td></tr></table></figure>
+<p>安装完成后，树莓派会重启，然后3.5寸屏幕上就可以正常显示了。</p>
+<h3 id="2017-03-02-raspbian-jessie版本"><a href="#2017-03-02-raspbian-jessie版本" class="headerlink" title="2017-03-02-raspbian-jessie版本"></a>2017-03-02-raspbian-jessie版本</h3><p>安装过程同上，安装包地址：</p>
+<p><code>wget http://blog.lxx1.com/wp-content/uploads/2017/03/LCD-show-170309.tar.gz</code></p>
+<h4 name="switch-between-lcd-and-hdmi">LCD和HDMI相互切换</h4>
+
+<p>在正常使用LCD的情况下，外接HDMI是没有显示的，如需启用HDMI输出，需执行以下命令，树莓派会自动重启。再等待约30秒，HDMI显示屏开始显示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./LCD-show/LCD-hdmi</span><br></pre></td></tr></table></figure>
+<p>如需切换回LCD显示方式，则需执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./LCD-show/LCD35-show</span><br></pre></td></tr></table></figure>
+<h2 id="安装中文语言包"><a href="#安装中文语言包" class="headerlink" title="安装中文语言包"></a>安装中文语言包</h2><h3 id="CentOS-yum"><a href="#CentOS-yum" class="headerlink" title="CentOS (yum)"></a>CentOS (yum)</h3><p>先查看语言包是否存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ locale -a</span><br></pre></td></tr></table></figure>
+<p>如果发现没有中文，则安装一个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install kde-l10n-Chinese</span><br><span class="line">$ sudo yum reinstall glibc-common</span><br></pre></td></tr></table></figure>
+<h3 id="Ubuntu-apt"><a href="#Ubuntu-apt" class="headerlink" title="Ubuntu (apt)"></a>Ubuntu (apt)</h3><p>Ubuntu中的中文语言包:</p>
+<ul>
+<li>language-pack-zh-hans 简体中文</li>
+<li>language-pack-zh-hans-base</li>
+<li>language-pack-zh-hant 繁体中文</li>
+<li>language-pack-zh-hant-base</li>
+</ul>
+<p>安装中文语言包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install  language-pack-zh-han*</span><br></pre></td></tr></table></figure>
+<p>在中文语言包安装完成后，就需要安装ibus输入法了，先安装ibus框架，需要在Terminal中输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo apt-get install ibus ibus-clutter ibus-gtk ibus-gtk3 ibus-qt4</span><br></pre></td></tr></table></figure>
+<p>切换到ibus框架</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ im-config -s ibus</span><br></pre></td></tr></table></figure>
+<p>再安装拼音引擎</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ibus-pinyin</span><br></pre></td></tr></table></figure>
+<p>再调出ibus Preference来添加该拼音输入法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ibus-setup</span><br></pre></td></tr></table></figure>
+<p>在弹出对话框中，添加Chinese-Pinyin输入法。</p>
+<p>&lt;img src=/picture/Linux-advanced-ibus-config.png width=”800” /&gt;</p>
+<h3 id="Raspbian"><a href="#Raspbian" class="headerlink" title="Raspbian"></a>Raspbian</h3><p>先安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 中文字体</span><br><span class="line">sudo apt-get install ttf-wqy-zenhei</span><br><span class="line"># 中文输入法</span><br><span class="line">sudo apt-get install scim-pinyin</span><br></pre></td></tr></table></figure></p>
+<p>设置默认的字体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+<p>然后选择change_locale，在Default locale for the system environment:中选择zh_CN.UTF-8,配置完成之后，输入命令<code>sudo reboot</code></p>
+<p>切换输入法：ctrl+space</p>
+<h2 id="更改键盘布局"><a href="#更改键盘布局" class="headerlink" title="更改键盘布局"></a>更改键盘布局</h2><p>树莓派的默认键盘布局是英国(GB)，而我们用的键盘布局一般是美国(US)的。</p>
+<p>通过 raspi-config 进入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+<p>进入后，选择：<code>5 Internationalisation Options</code> -&gt; <code>Change Keyboard LaySet</code> -&gt; <code>Generic 101-key PC</code> -&gt; <code>English(US, alternative international)</code></p>
+<h2 id="安装Gnome图形操作界面"><a href="#安装Gnome图形操作界面" class="headerlink" title="安装Gnome图形操作界面"></a>安装Gnome图形操作界面</h2><p>像安装CentOS，官方提供了较大的DVD IOS版的安装包，也提供了简化的Minimal IOS版的，如果选择的是Minimal版的，安装完之后一般只有命令行操作模式，不预装GNOME这样的GUI操作界面</p>
+<p>这时如果想安装GNOME图形操作界面怎么实现？（如果一开始就知道有GUI的需求，最好直接下载完整版的</p>
+<p>首先安装X(X Window System)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum groupinstall &quot;X Window System&quot;</span><br></pre></td></tr></table></figure>
+<p>由于这个软件组比较大，安装过程会比较慢，安装完成会出现complete！</p>
+<p>检查一下我们已经安装的软件以及可以安装的软件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum grouplist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Linux-advanced-install-gnome-gui-1.png" alt></p>
+<p>然后安装我们需要的图形界面软件，GNOME(GNOME Desktop)</p>
+<p>一定要注意：名称必须对应</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum groupinstall &quot;GNOME Desktop&quot;</span><br></pre></td></tr></table></figure>
+<p>安装完成后我们可以通过命令 <code>startx</code> 进入图形界面，第一次进入会比较慢，请耐心等待</p>
+<h2 id="更改软件源"><a href="#更改软件源" class="headerlink" title="更改软件源"></a>更改软件源</h2><p><strong>由于树莓派软件官方源在国外，所以连接不稳定，且速度慢，所以安装初次进入系统后，一定要修改一下软件源。</strong></p>
+<p>国内软件源推荐（中科大）：<a href="http://mirrors.ustc.edu.cn/raspbian/raspbian/" target="_blank" rel="noopener">http://mirrors.ustc.edu.cn/raspbian/raspbian/</a></p>
+<p>查看当前所用的Debian版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure>
+<p>直接看到 Codename</p>
+<h3 id="raspbian-stretch-基于Debian9"><a href="#raspbian-stretch-基于Debian9" class="headerlink" title="raspbian-stretch (基于Debian9)"></a>raspbian-stretch (基于Debian9)</h3><p>更改/etc/apt/source.list文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi</span><br><span class="line"></span><br><span class="line">deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi</span><br></pre></td></tr></table></figure>
+<p>接着更改/etc/apt/source.list.d/raspi.list:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/ stretch main ui</span><br></pre></td></tr></table></figure>
+<h3 id="raspbian-jessie-基于Debian8"><a href="#raspbian-jessie-基于Debian8" class="headerlink" title="raspbian-jessie (基于Debian8)"></a>raspbian-jessie (基于Debian8)</h3><p>更改/etc/apt/source.list文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main contrib non-free rpi</span><br><span class="line"></span><br><span class="line">deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ jessie main contrib non-free rpi</span><br></pre></td></tr></table></figure>
+<p>接着更改/etc/apt/source.list.d/raspi.list:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ jessie main ui</span><br></pre></td></tr></table></figure>
+<h2 id="软件管理：APT-dpkg"><a href="#软件管理：APT-dpkg" class="headerlink" title="软件管理：APT/dpkg"></a>软件管理：APT/dpkg</h2><h3 id="APT-APT——Advanced-Package-Tool"><a href="#APT-APT——Advanced-Package-Tool" class="headerlink" title="APT: APT——Advanced Package Tool"></a>APT: APT——Advanced Package Tool</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">具体语句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">软件源设置</td>
+<td style="text-align:left">/etc/apt/sources.list</td>
+</tr>
+<tr>
+<td style="text-align:left">更新软件源数据</td>
+<td style="text-align:left">apt-get update</td>
+</tr>
+<tr>
+<td style="text-align:left">更新已安装软件</td>
+<td style="text-align:left">apt-get upgrade</td>
+</tr>
+<tr>
+<td style="text-align:left">更新系统版本</td>
+<td style="text-align:left">apt-get dist-upgrade</td>
+</tr>
+<tr>
+<td style="text-align:left">通过安装包或卸载包来修复依赖错误</td>
+<td style="text-align:left">apt-get -f install</td>
+</tr>
+<tr>
+<td style="text-align:left">搜索软件源数据</td>
+<td style="text-align:left">apt-cache search foo</td>
+</tr>
+<tr>
+<td style="text-align:left">解压安装软件包</td>
+<td style="text-align:left">apt-get install foo</td>
+</tr>
+<tr>
+<td style="text-align:left">重新安装软件包</td>
+<td style="text-align:left">apt-get –reinstall install foo</td>
+</tr>
+<tr>
+<td style="text-align:left">删除软件包释放的内容</td>
+<td style="text-align:left">apt-get remove foo</td>
+</tr>
+<tr>
+<td style="text-align:left">卸载软件，同时清除该软件配置文件</td>
+<td style="text-align:left">apt-get –purge remove foo</td>
+</tr>
+<tr>
+<td style="text-align:left">删除不需要的包</td>
+<td style="text-align:left">apt-get autoclean</td>
+</tr>
+<tr>
+<td style="text-align:left">删除所有已下载的包</td>
+<td style="text-align:left">apt-get clean</td>
+</tr>
+<tr>
+<td style="text-align:left">自动安装编译一软件所需要的包</td>
+<td style="text-align:left">apt-get build-dep foo</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dpkg-package-manager-for-Debian"><a href="#dpkg-package-manager-for-Debian" class="headerlink" title="dpkg: package manager for Debian"></a>dpkg: package manager for Debian</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">功能</th>
+<th style="text-align:left">具体语句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">显示DEB包信息</td>
+<td style="text-align:left">dpkg -I xx.deb</td>
+</tr>
+<tr>
+<td style="text-align:left">显示DEB包文件列表</td>
+<td style="text-align:left">dpkg -c xx.deb</td>
+</tr>
+<tr>
+<td style="text-align:left">安装DEB包</td>
+<td style="text-align:left">dpkg -i xx.deb</td>
+</tr>
+<tr>
+<td style="text-align:left">安装DEB包（指定根目录）</td>
+<td style="text-align:left">dpkg –root=<directory> -i xx.deb</directory></td>
+</tr>
+<tr>
+<td style="text-align:left">显示所有已安装软件</td>
+<td style="text-align:left">dpkg -l</td>
+</tr>
+<tr>
+<td style="text-align:left">显示已安装包信息</td>
+<td style="text-align:left">dpkg -s foo</td>
+</tr>
+<tr>
+<td style="text-align:left">显示已安装包文件列表</td>
+<td style="text-align:left">dpkg -L foo</td>
+</tr>
+<tr>
+<td style="text-align:left">卸载包</td>
+<td style="text-align:left">dpkg -r foo</td>
+</tr>
+<tr>
+<td style="text-align:left">卸载软件包并删除其配置文件</td>
+<td style="text-align:left">dpkg -P foo</td>
+</tr>
+<tr>
+<td style="text-align:left">重新配置已安装程序</td>
+<td style="text-align:left">dpkg-reconfigure foo</td>
+</tr>
+</tbody>
+</table>
+<h2 id="升级及报错处理"><a href="#升级及报错处理" class="headerlink" title="升级及报错处理"></a>升级及报错处理</h2><p>一般升级更新只需要运行以下两条命令即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update # 更新软件源数据</span><br><span class="line">sudo apt-get upgrade # 更新已安装软件</span><br></pre></td></tr></table></figure>
+<p>但是在实际操作过程中会出现一些问题：</p>
+<h3 id="update-出错"><a href="#update-出错" class="headerlink" title="update 出错"></a>update 出错</h3><p>update过程出错一般是软件源地址无法连接，导致更新包无法下载到本地导致的，所以解决方法：<a href="#change-source">更改软件源</a></p>
+<h3 id="upgrade-出错"><a href="#upgrade-出错" class="headerlink" title="upgrade 出错"></a>upgrade 出错</h3><p>如果update过程顺利，但是到执行<code>apt-get upgrade</code>时报错：</p>
+<p><strong>E: The value ‘stable’ is invalid for APT::Default-Release as such a release is not available in the sources</strong></p>
+<p>即系统指定的包管理工具的版本”stable”无效，需要更改为合适的版本，如<strong>“wheezy”</strong>或<strong>“jessie”</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 寻找相应的配置文件</span><br><span class="line">grep -r &quot;stable&quot; /etc/apt/*</span><br><span class="line"></span><br><span class="line"># 得到输出：/etc/apt/apt.conf.d/99openmediavault-release:APT::Default-Release &quot;stable&quot;;</span><br><span class="line"># 说明配置文件为：/etc/apt/apt.conf.d/99openmediavault-release</span><br><span class="line"></span><br><span class="line"># 修改该文件，树莓派下vi/vim不太好用，建议使用nano。把&quot;stable&quot;改成&quot;jessie&quot;</span><br><span class="line">nano /etc/apt/apt.conf.d/99openmediavault-release</span><br></pre></td></tr></table></figure>
+<p>然后再执行<code>apt-get upgrade</code>就没问题了</p>
+<h2 id="文本处理双剑客-sed-amp-AWK"><a href="#文本处理双剑客-sed-amp-AWK" class="headerlink" title="文本处理双剑客: sed &amp; AWK"></a>文本处理双剑客: sed &amp; AWK</h2><h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><p>脚本结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">awk</span><br><span class="line"></span><br><span class="line">	&apos;</span><br><span class="line">	BEGIN &#123;actions&#125;</span><br><span class="line">		/pattern1/&#123;actions&#125;</span><br><span class="line">		...</span><br><span class="line">		/patternN/&#123;actions&#125;</span><br><span class="line">	END &#123;actions&#125;</span><br><span class="line">	&apos;</span><br><span class="line"></span><br><span class="line">InputFile</span><br></pre></td></tr></table></figure>
+<ul>
+<li>BEGIN{actions} 和END{actions} 是可选的</li>
+<li>/pattern/和{actions} 可以省略，但不能同时省略<ul>
+<li>/pattern/省略时表示对所有的输入行执行指定的actions</li>
+<li>{actions} 省略时表示打印整行</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>编辑命令（一个、一组命令或一个命令文件）<ul>
+<li>模式：只编辑与模式相匹配的记录行；没有提供模式时，匹配所有行</li>
+<li>命令：具体执行的编辑命令；没有指定命令时，打印整个记录行</li>
+</ul>
+</li>
+</ul>
+<p>特殊变量</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">变量</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$n</td>
+<td style="text-align:left">当前记录的第n个字段，字段间由FS分隔</td>
+</tr>
+<tr>
+<td style="text-align:left">$0</td>
+<td style="text-align:left">完整的输入记录</td>
+</tr>
+<tr>
+<td style="text-align:left">ARGC</td>
+<td style="text-align:left">命令行参数的数目</td>
+</tr>
+<tr>
+<td style="text-align:left">ARGIND</td>
+<td style="text-align:left">命令行中当前文件的位置（从0开始算）</td>
+</tr>
+<tr>
+<td style="text-align:left">ARGV</td>
+<td style="text-align:left">包含命令行参数的数组</td>
+</tr>
+<tr>
+<td style="text-align:left">CONVFMT</td>
+<td style="text-align:left">数字转换格式（默认值为%.6g)</td>
+</tr>
+<tr>
+<td style="text-align:left">ENVIRON</td>
+<td style="text-align:left">环境变量关联数组</td>
+</tr>
+<tr>
+<td style="text-align:left">ERRNO</td>
+<td style="text-align:left">最后一个系统错误描述</td>
+</tr>
+<tr>
+<td style="text-align:left">FIELDWIDTHS</td>
+<td style="text-align:left">字段宽度列表（用空格键分隔）</td>
+</tr>
+<tr>
+<td style="text-align:left">FILENAME</td>
+<td style="text-align:left">当前文件名</td>
+</tr>
+<tr>
+<td style="text-align:left">FNR</td>
+<td style="text-align:left">同NR，但相对于当前文件</td>
+</tr>
+<tr>
+<td style="text-align:left">FS</td>
+<td style="text-align:left">字段分隔符（默认是任何空格）</td>
+</tr>
+<tr>
+<td style="text-align:left">IGNORECASE</td>
+<td style="text-align:left">如果为真，则进行忽略大小写的匹配</td>
+</tr>
+<tr>
+<td style="text-align:left">NF</td>
+<td style="text-align:left">当前记录中的字段数</td>
+</tr>
+<tr>
+<td style="text-align:left">NR</td>
+<td style="text-align:left">当前记录数</td>
+</tr>
+<tr>
+<td style="text-align:left">OFMT</td>
+<td style="text-align:left">数字的输出格式（默认值是%.6g)</td>
+</tr>
+<tr>
+<td style="text-align:left">OFS</td>
+<td style="text-align:left">输出字段分隔符（默认值是一个空格）</td>
+</tr>
+<tr>
+<td style="text-align:left">ORS</td>
+<td style="text-align:left">输出记录分隔符（默认值是一个换行符）</td>
+</tr>
+<tr>
+<td style="text-align:left">RLENGTH</td>
+<td style="text-align:left">由match函数所匹配的字符串的长度</td>
+</tr>
+<tr>
+<td style="text-align:left">RS</td>
+<td style="text-align:left">记录分隔符（默认是一个换行符）</td>
+</tr>
+<tr>
+<td style="text-align:left">RSTART</td>
+<td style="text-align:left">由match函数所匹配的字符串第一个位置</td>
+</tr>
+<tr>
+<td style="text-align:left">SUBSEP</td>
+<td style="text-align:left">数组下标分隔符（默认值是\034）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="硬链接与软链接"><a href="#硬链接与软链接" class="headerlink" title="硬链接与软链接"></a>硬链接与软链接</h2><p>文件由两部分构成：文件数据 + 文件元数据</p>
+<p><strong>文件数据</strong>：文件储存在硬盘上，硬盘的最小存储单位叫做”扇区”（Sector）。每个扇区储存512字节（相当于0.5KB）。操作系统读取硬盘的时候，不会一个个扇区地读取，这样效率太低，而是一次性连续读取多个扇区，即一次性读取一个”块”（block）。这种由多个扇区组成的”块”，是文件存取的最小单位。”块”的大小，最常见的是4KB，即连续八个 sector组成一个 block。</p>
+<p><strong>文件元数据</strong>：文件数据都储存在”块”中，那么很显然，我们还必须找到一个地方储存文件的元信息，比如文件的创建者、文件的创建日期、文件的大小等等。这种储存文件元信息的区域就叫做inode，中文译名为”索引节点”。</p>
+<p>inode包含文件的元信息：</p>
+<blockquote>
+<ul>
+<li><p>文件的字节数</p>
+</li>
+<li><p>文件拥有者的User ID</p>
+</li>
+<li><p>文件的Group ID</p>
+</li>
+<li><p>文件的读、写、执行权限</p>
+</li>
+<li><p>文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。</p>
+</li>
+<li><p>链接数，即有多少文件名指向这个inode</p>
+</li>
+<li><p>文件数据block的位置</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="/images/Linux-advanced-hardlinks-and-softlinks-1.png" alt></p>
+<p><strong>Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件</strong>。对于系统来说，文件名只是inode号码便于识别的别称或者绰号。表面上，用户通过文件名，打开文件。</p>
+<p>实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。</p>
+<p><strong>硬链接</strong>：</p>
+<blockquote>
+<p>一般情况下，文件名和inode号码是”一一对应”关系，每个inode号码对应一个文件名。但是，Unix/Linux系统允许，多个文件名指向同一个inode号码。这意味着，可以用不同的文件名访问同样的内容；对文件内容进行修改，会影响到所有文件名；但是，删除一个文件名，不影响另一个文件名的访问。这种情况就被称为”硬链接”（hard link）。</p>
+</blockquote>
+<p><strong>软链接</strong>：</p>
+<blockquote>
+<p>文件A和文件B的inode号码虽然不一样，但是文件A的内容是文件B的路径。读取文件A时，系统会自动将访问者导向文件B。因此，无论打开哪一个文件，最终读取的都是文件B。这时，文件A就称为文件B的”软链接”（soft link）或者”符号链接（symbolic link）。</p>
+<p>文件A依赖于文件B而存在，如果删除了文件B，打开文件A就会报错：”No such file or directory”。这是软链接与硬链接最大的不同：文件A指向文件B的文件名，而不是文件B的inode号码，文件B的inode”链接数”不会因此发生变化。</p>
+</blockquote>
+<h2 id="进程并行化"><a href="#进程并行化" class="headerlink" title="进程并行化"></a>进程并行化</h2><h3 id="最简单的并行化方法：-amp-wait"><a href="#最简单的并行化方法：-amp-wait" class="headerlink" title="最简单的并行化方法：&amp;+wait"></a>最简单的并行化方法：&amp;+wait</h3><p>利用Bash的后台运行&amp;和wait函数，可实现最简单的批量作业并行化。</p>
+<p>格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">do</span><br><span class="line">	&#123;</span><br><span class="line">	code1;</span><br><span class="line">	code2;</span><br><span class="line">	...</span><br><span class="line">	coden;</span><br><span class="line">	&#125; &amp;</span><br><span class="line">done</span><br><span class="line">wait</span><br></pre></td></tr></table></figure>
+<h2 id="启用树莓派root用户"><a href="#启用树莓派root用户" class="headerlink" title="启用树莓派root用户"></a>启用树莓派root用户</h2><p>树莓派使用的linux是debian系统，所以树莓派启用root和debian是相同的。</p>
+<p>debian里root账户默认没有密码，但账户锁定。</p>
+<p>当需要root权限时，由默认账户经由sudo执行，Raspberry pi 系统中的Raspbian</p>
+<p>默认用户是pi 密码为raspberry</p>
+<p>重新开启root账号，可由pi用户登录后，在命令行下执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
+<p>执行此命令后系统会提示输入两遍的root密码，输入你想设的密码即可</p>
+<h2 id="搭建树莓派Linux服务器"><a href="#搭建树莓派Linux服务器" class="headerlink" title="搭建树莓派Linux服务器"></a>搭建树莓派Linux服务器</h2><p>首先，你需要一根网线，将树莓派连接到外网</p>
+<p>然后，开启树莓派的ssh服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo raspi-config</span><br></pre></td></tr></table></figure>
+<p>进入设置界面后选择：<code>Advanced Options</code> =&gt; <code>SSH</code> =&gt; <code>enable</code></p>
+<p>接着查看你的树莓派当前被分配的ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig -a</span><br></pre></td></tr></table></figure>
+<p>查看命令输出的头几行的其中一项”inet addr”就可以知道ip值了</p>
+<p>现在Linux服务器就搭建好了，你只需要在你的电脑上安装上ssh终端工具即可登录到该服务器，是不是太简单了</p>
+<h2 id="解决Secure-SSH-Client登录服务器失败"><a href="#解决Secure-SSH-Client登录服务器失败" class="headerlink" title="解决Secure SSH Client登录服务器失败"></a>解决Secure SSH Client登录服务器失败</h2><p>登录失败报错信息</p>
+<blockquote>
+<p>Server responded”Algorithm negotiation failed”<br>Key exchange with the remote host failed. This can happen for<br>example computer does not support the selected algorthms.</p>
+</blockquote>
+<p>登录失败原因：</p>
+<blockquote>
+<p>Because i had past updated server, it’s that means i had updated the sshd algorithm negotiation on server meanwhile, but the sshd algorithm negotiation in client is the old, so server cannot compatible the algorithm negotiation from client.</p>
+</blockquote>
+<p>解决方法：</p>
+<p>在/etc/ssh/sshd_config文件中添加以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ciphers aes128-cbc,aes192-cbc,aes256-cbc,aes128-ctr,aes192-ctr,aes256-ctr,3des-cbc,arcfour128,arcfour256,arcfour,blowfish-cbc,cast128-cbc  </span><br><span class="line">MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160,hmac-sha1-96,hmac-md5-96  </span><br><span class="line">KexAlgorithms diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group1-sha1,curve25519-sha256@libssh.org</span><br></pre></td></tr></table></figure>
+<p>重启sshd服务后，即可正常连接:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
+<h2 id="Shell编程"><a href="#Shell编程" class="headerlink" title="Shell编程"></a>Shell编程</h2><h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><h4 id="传统方法：使用"><a href="#传统方法：使用" class="headerlink" title="传统方法：使用$"></a>传统方法：使用$</h4><p>在shell脚本中，命令$后加一些特殊的标记可以取脚本的传入参数，如$0取脚本输入的第一个参数，$1取第二个参数等：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$0</td>
+<td style="text-align:left">命令本身，类似c的argv[0]</td>
+</tr>
+<tr>
+<td style="text-align:left">$1、$2……</td>
+<td style="text-align:left">第1个参数、第2个参数……</td>
+</tr>
+<tr>
+<td style="text-align:left">$#</td>
+<td style="text-align:left">参数的个数，不包括$0</td>
+</tr>
+<tr>
+<td style="text-align:left">$@</td>
+<td style="text-align:left">以列表的形式返回参数列表，不包括$0</td>
+</tr>
+<tr>
+<td style="text-align:left">$?</td>
+<td style="text-align:left">最后运行的命令结束代码</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用getopt"><a href="#使用getopt" class="headerlink" title="使用getopt"></a>使用getopt</h4><p>getopt不是标准的unix命令，但它在大多数的发行版中都会带有，getopt虽然是带个get但此函数其实主要不是获取而是规范</p>
+<p>getopt后面接受-o选项表示程序可接受的短选项 如<code>-o ab:c::</code>，表示程序参数后面可接受的选项为<code>-a -b -c</code> 其中-a后面不接受参数，-b后面必须接受参数(:)，-c后面参数可选(::)</p>
+<p>getopt后面接受–long选项表示程序可接受的短选项 如<code>--long along,blong:,clong::</code>，长选项用逗号分隔开，后面接参数的标记号和短选项一致 </p>
+<p>在对参数进行解析前先通过getopt进行解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ARGS=`getopt -o ab:c: --long along,blong:,clong: -- &quot;$@&quot;`</span><br><span class="line">#判断是否执行成功，没执行成功退出</span><br><span class="line">if [ $? != 0 ] ; then echo &quot;Terminating...&quot; &gt;&amp;2 ; exit 1 ; fi</span><br><span class="line">#重新设置参数</span><br><span class="line">eval set -- &quot;$ARGS&quot;</span><br></pre></td></tr></table></figure>
+<p>进行参数解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">while true;do</span><br><span class="line">    case &quot;$1&quot; in</span><br><span class="line">        -a)</span><br><span class="line">            echo &quot;a&quot;</span><br><span class="line">            shift;;</span><br><span class="line">        -b) </span><br><span class="line">            echo &quot;b&quot;</span><br><span class="line">            shift;;</span><br><span class="line">        -c) </span><br><span class="line">            echo &quot;c&quot;</span><br><span class="line">            shift;;</span><br><span class="line">        --)</span><br><span class="line">            echo &quot;--&quot;</span><br><span class="line">            shift</span><br><span class="line">            break</span><br><span class="line">            ;;</span><br><span class="line">        *) </span><br><span class="line">            echo &quot;??&quot;</span><br><span class="line">            shift</span><br><span class="line">            ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h4 id="使用getopts"><a href="#使用getopts" class="headerlink" title="使用getopts"></a>使用getopts</h4><p>注意： getopts只能接受短参数，即一个字母作为一个参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getopts [option[:]] [DESCPRITION] VARIABLE</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>option：表示为某个脚本可以使用的选项</p>
+<p><code>&quot;:&quot;</code>：如果某个选项（option）后面出现了冒号（”:”），则表示这个选项后面可以接参数（即一段描述信息DESCPRITION）</p>
+<p>VARIABLE：表示将某个选项保存在变量VARIABLE中</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">while getopts &quot;:a:b:c:&quot; opt</span><br><span class="line">do</span><br><span class="line">    case $opt in</span><br><span class="line">        a)</span><br><span class="line">        echo &quot;参数a的值$OPTARG&quot;</span><br><span class="line">        ;;</span><br><span class="line">        b)</span><br><span class="line">        echo &quot;参数b的值$OPTARG&quot;</span><br><span class="line">        ;;</span><br><span class="line">        c)</span><br><span class="line">        echo &quot;参数c的值$OPTARG&quot;</span><br><span class="line">        ;;</span><br><span class="line">        ?)</span><br><span class="line">        echo &quot;未知参数&quot;</span><br><span class="line">        exit 1;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h3 id="输出重定向"><a href="#输出重定向" class="headerlink" title="输出重定向"></a>输出重定向</h3><p>当在运行一个程序，或者执行一个脚本时，会在执行过程中输出标准输出/标准错误，不论是标准输出还是标准错误，都是会默认输出到屏幕上，若想将它们输出到文件中，可以执行输出重定向</p>
+<blockquote>
+<ul>
+<li><code>&gt;</code>或<code>1&gt;</code> 标准输出重定向到文件中，标准错误还是默认输出（输出到屏幕）</li>
+<li><code>2&gt;</code> 标准错误重定向到文件夹中，标准输出还是默认输出（输出到屏幕）</li>
+<li><code>1&gt; 2&gt;&amp;1</code> 将标准输出与标准错误绑定，一起输出到文件中</li>
+</ul>
+</blockquote>
+<p>若在执行<code>echo</code>时，想要指定输出的方式则可以采取以下方式：</p>
+<blockquote>
+<ul>
+<li><code>echo $i &gt;&amp;1</code> 以标准输出方式输出</li>
+<li><code>echo $i &gt;&amp;2</code> 以标准错误方式输出</li>
+</ul>
+</blockquote>
+<hr>
+<p>参考资料：</p>
+<p>(1) <a href="http://blog.lxx1.com/2457/raspberry-3-5inch-rpi-lcd-4" target="_blank" rel="noopener">Raspberry 3.5inch RPi LCD-4</a></p>
+<p>(2) <a href="http://blog.csdn.net/sweettool/article/details/70224459" target="_blank" rel="noopener">ubuntu 16.04 英文版命令行安装中文语言包</a></p>
+<p>(3) <a href="https://www.cnblogs.com/zhaopengcheng/p/6040605.html" target="_blank" rel="noopener">ubuntu16.4安装中文输入法</a></p>
+<p>(4) <a href="http://shumeipai.nxez.com/2016/03/13/how-to-make-raspberry-pi-display-chinese.html" target="_blank" rel="noopener">如何让树莓派显示中文？</a></p>
+<p>(5) <a href="http://shumeipai.nxez.com/2017/11/13/raspberry-pi-change-the-keyboard-layout.html" target="_blank" rel="noopener">树莓派开箱配置之更改键盘布局</a></p>
+<p>(6) <a href="#http://blog.csdn.net/kxwinxp/article/details/78370980">树莓派3B+ 软件源更改</a></p>
+<p>(7) 小伊老师Linux课程课件</p>
+<p>(8) <a href="https://blog.csdn.net/jijiahao95/article/details/53398475" target="_blank" rel="noopener">Linux节点理解</a></p>
+<p>(9) <a href="https://www.linuxidc.com/Linux/2015-01/112363.htm" target="_blank" rel="noopener">Bash脚本实现批量作业并行化</a></p>
+<p>(10) <a href="http://blog.csdn.net/yoie01/article/details/45115067" target="_blank" rel="noopener">树莓派 - 修改pi账号密码,开启root账号</a></p>
+<p>(11) <a href="http://chenqinfeng.com/2016/02/19/Ubuntu%20SSH%20Algorithm%20negotiation%20failed/" target="_blank" rel="noopener">Ubuntu SSH Algorithm negotiation failed</a></p>
+<p>(12) <a href="https://blog.csdn.net/czyt1988/article/details/79110450" target="_blank" rel="noopener">shell学习 - 处理脚本的多参数输入</a></p>
+<p>(13) <a href="https://blog.csdn.net/sinat_36521655/article/details/79296181" target="_blank" rel="noopener">shell中脚本参数传递的两种方式</a></p>
+<p>(14) <a href="https://jingyan.baidu.com/article/0964eca26fc3b38284f53642.html" target="_blank" rel="noopener">【百度经验】Linux CentOS 7的图形界面安装（GNOME、KDE等）</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Raspi/" rel="tag"># Raspi</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/02/Python3-Webcrawler-Note/" rel="next" title="python3爬虫笔记">
+                <i class="fa fa-chevron-left"></i> python3爬虫笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Lianm">
+            
+              <p class="site-author-name" itemprop="name">Lianm</p>
+              <p class="site-description motion-element" itemprop="description">中国科学院北京基因组研究所研究生</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Ming-Lian" title="GitHub &rarr; https://github.com/Ming-Lian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:lianming17m@big.ac.cn" title="E-Mail &rarr; mailto:lianming17m@big.ac.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装LCD驱动"><span class="nav-text">安装LCD驱动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2017-03-02-raspbian-jessie以前版本"><span class="nav-text">2017-03-02-raspbian-jessie以前版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2017-03-02-raspbian-jessie版本"><span class="nav-text">2017-03-02-raspbian-jessie版本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-text">LCD和HDMI相互切换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装中文语言包"><span class="nav-text">安装中文语言包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-yum"><span class="nav-text">CentOS (yum)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ubuntu-apt"><span class="nav-text">Ubuntu (apt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Raspbian"><span class="nav-text">Raspbian</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改键盘布局"><span class="nav-text">更改键盘布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Gnome图形操作界面"><span class="nav-text">安装Gnome图形操作界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更改软件源"><span class="nav-text">更改软件源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#raspbian-stretch-基于Debian9"><span class="nav-text">raspbian-stretch (基于Debian9)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raspbian-jessie-基于Debian8"><span class="nav-text">raspbian-jessie (基于Debian8)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件管理：APT-dpkg"><span class="nav-text">软件管理：APT/dpkg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#APT-APT——Advanced-Package-Tool"><span class="nav-text">APT: APT——Advanced Package Tool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dpkg-package-manager-for-Debian"><span class="nav-text">dpkg: package manager for Debian</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级及报错处理"><span class="nav-text">升级及报错处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#update-出错"><span class="nav-text">update 出错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#upgrade-出错"><span class="nav-text">upgrade 出错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本处理双剑客-sed-amp-AWK"><span class="nav-text">文本处理双剑客: sed &amp; AWK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sed"><span class="nav-text">sed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWK"><span class="nav-text">AWK</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬链接与软链接"><span class="nav-text">硬链接与软链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程并行化"><span class="nav-text">进程并行化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最简单的并行化方法：-amp-wait"><span class="nav-text">最简单的并行化方法：&amp;+wait</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用树莓派root用户"><span class="nav-text">启用树莓派root用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建树莓派Linux服务器"><span class="nav-text">搭建树莓派Linux服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决Secure-SSH-Client登录服务器失败"><span class="nav-text">解决Secure SSH Client登录服务器失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell编程"><span class="nav-text">Shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数传递"><span class="nav-text">参数传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#传统方法：使用"><span class="nav-text">传统方法：使用$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用getopt"><span class="nav-text">使用getopt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用getopts"><span class="nav-text">使用getopts</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出重定向"><span class="nav-text">输出重定向</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lianm</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'; 
+      }
+      else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
