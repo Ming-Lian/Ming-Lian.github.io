@@ -96,27 +96,34 @@
 
 
 
-  <meta name="description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态 基于单特征的贝叶斯判别模型   首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆   一个样本的表型负荷（phenotype burden）被定义为：  该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例    由于表型">
+  <meta name="description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
 <meta name="keywords" content="Bioinformatics,朴实贝叶斯,beta分布">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习在生物信息中的应用">
 <meta property="og:url" content="http://yoursite.com/2019/03/14/Application-of-MachineLearning-in-Bioinformatics/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态 基于单特征的贝叶斯判别模型   首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆   一个样本的表型负荷（phenotype burden）被定义为：  该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例    由于表型">
+<meta property="og:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-1.png">
-<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-2.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-workflow.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png">
 <meta property="og:image" content="http://yoursite.com/images/T-cell-sequencing-in-cancers-colorectal-cancer-2.png">
-<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-2.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-3.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-4.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-5.png">
-<meta property="og:updated_time" content="2019-03-14T15:08:08.815Z">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-redraw-pictures-for-NGpapre-1.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-PhenotypeBurdenDot_0.05_A-B.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png">
+<meta property="og:updated_time" content="2019-04-02T11:31:34.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习在生物信息中的应用">
-<meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态 基于单特征的贝叶斯判别模型   首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆   一个样本的表型负荷（phenotype burden）被定义为：  该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例    由于表型">
-<meta name="twitter:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-1.png">
+<meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
+<meta name="twitter:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png">
 
 
 
@@ -388,12 +395,24 @@
                 
               
 
-              <time title="创建时间：2019-03-14 15:21:21 / 修改时间：23:08:08" itemprop="dateCreated datePublished" datetime="2019-03-14T15:21:21+08:00">2019-03-14</time>
+              <time title="创建时间：2019-03-14 15:21:21" itemprop="dateCreated datePublished" datetime="2019-03-14T15:21:21+08:00">2019-03-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-02 19:31:34" itemprop="dateModified" datetime="2019-04-02T19:31:34+08:00">2019-04-02</time>
               
             
           </span>
@@ -445,19 +464,45 @@
       
 
       
-        <h2 id="1-根据免疫组库TCRβ预测病人的CMV感染状态"><a href="#1-根据免疫组库TCRβ预测病人的CMV感染状态" class="headerlink" title="1. 根据免疫组库TCRβ预测病人的CMV感染状态"></a>1. 根据免疫组库TCRβ预测病人的CMV感染状态</h2><ul>
-<li><p>基于单特征的贝叶斯判别模型</p>
-<p>  首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆</p>
+        <h2 id="1-根据免疫组库TCRβ预测病人的CMV感染状态"><a href="#1-根据免疫组库TCRβ预测病人的CMV感染状态" class="headerlink" title="1. 根据免疫组库TCRβ预测病人的CMV感染状态"></a>1. 根据免疫组库TCRβ预测病人的CMV感染状态</h2><p>这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV<sub>-</sub>)和289例CMV阳性(CMV<sub>+</sub>)</p>
+<p>外部验证用到了120个样本（cohort 2）</p>
+<p>该机器学习的任务为：</p>
+<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png" alt></p>
+<p>讨论 TCRβ 免疫组的数据特点：</p>
+<blockquote>
+<ul>
+<li>可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个；</li>
+<li>一个新样本中很可能会出现训练样本集合中未出现的TCRβ克隆类型；</li>
+<li>对于一个给定的TCR，它对给定抗原肽的结合亲和力会受到HLA类型的调控，因此原始的用于判别分析的特征集合还受到隐变量——HLA类型的影响；</li>
+</ul>
+</blockquote>
+<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-workflow.png" alt></p>
+<ul>
+<li><p>特征选择：鉴定表型相关的TCRβs</p>
+<p>  使用Fisher精确检验：</p>
+<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png" alt></p>
+<p>  Fisher检验的阈值设为：$P&lt;1\times 10^{-4}$，且富集在CMV<sup>+</sup>样本中，从而得到与CMV<sup>+</sup>相关的CDR3克隆集合，共有164个</p>
+<p>  通过下面的TCRβ克隆在两组中的发生率的散点图可以明显地看到，筛出的表型相关的TCRβ克隆的确显著地表达在CMV+组中</p>
+<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
+</li>
+<li><p>计算表型负荷（phenotype burden）</p>
 <p>  一个样本的表型负荷（phenotype burden）被定义为：</p>
 <blockquote>
 <p>该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例</p>
 </blockquote>
-<p>  由于表型负荷的取值范围为 (0, 1)，则其符合beta二项分布（简称beta分布，补充知识——<a href="#beta-distribution">Beta分布</a>）</p>
-<p>  然后分别对表型阳性和表型阴性两组样本，利用Beta分别估计出各组的表型负荷的概率密度分布，分别记作 Beta<sub>+</sub>(α<sub>+</sub> , β<sub>+</sub>) 和 Beta<sub>-</sub>(α<sub>-</sub> , β<sub>-</sub>)</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-1.png" alt></p>
+<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png" alt></p>
+</li>
+</ul>
+<ul>
+<li><p>基于单特征的贝叶斯判别模型</p>
+<p>  首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆。使用Fisher精确检验：</p>
+<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png" alt></p>
+<p>  由于表型负荷的取值范围为 (0,1)，其符合β二项分布（简称为β分布）</p>
+<p>  然后分别对表型阳性和表型阴性两组样本，利用Beta分别（补充知识——<a href="#beta-distribution">Beta分布</a>）估计出各组的表型负荷的概率密度分布，分别记作 $\beta_+ (\alpha_+,\beta_+)$和$\beta_- (\alpha_-,\beta_-)$</p>
+<p>  $$P(x|c_+) \sim \beta_+ (\alpha_+,\beta_+) \\P(x|c_-) \sim \beta_- (\alpha_-,\beta_-)$$</p>
 <p>  对于一个新的样本可以计算出它来自表型阳性组和表型阴性组的后验概率：</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-2.png" alt></p>
-<p>  若P ( c<sub>+</sub> | x <sub>i</sub> ) &gt; P ( c <sub>-</sub> | x <sub>i</sub> )，则判断为阳性组，否则为阴性组</p>
+<p>  $$P(c_+|x_i)=P(c_+)P(x_i|c_+)\\P(c_-|x_i)=P(c_-)P(x_i|c_-)$$</p>
+<p>  若$P(c_+|x_i)&gt;P(c_-|x_i)$，则判断为阳性组，否则为阴性组</p>
 </li>
 </ul>
 <h2 id="2-SC3：单细胞表达谱的无监督聚类"><a href="#2-SC3：单细胞表达谱的无监督聚类" class="headerlink" title="2. SC3：单细胞表达谱的无监督聚类"></a>2. SC3：单细胞表达谱的无监督聚类</h2><p>该聚类方法名为SC3（Single-Cell Consensus Clustering）</p>
@@ -476,7 +521,7 @@
 <p>（2）对所有的聚类结果的二值相似度矩阵S取平均，得到consensus matrix；</p>
 <p>（3）基于consensus matrix进行层次聚类，得到最终的consensus clustering；</p>
 </blockquote>
-<h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="1-beta分布"><a href="#1-beta分布" class="headerlink" title="*1. beta分布"></a>*1. beta分布</h3><h4 id="1-1-什么是beta分布"><a href="#1-1-什么是beta分布" class="headerlink" title="*1.1. 什么是beta分布"></a>*1.1. 什么是beta分布</h4><p>对于硬币或者骰子这样的简单实验，我们事先能很准确地掌握系统成功的概率。</p>
+<h2 id="2-GATK的VQSR"><a href="#2-GATK的VQSR" class="headerlink" title="2. GATK的VQSR"></a>2. GATK的VQSR</h2><h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="1-beta分布"><a href="#1-beta分布" class="headerlink" title="*1. beta分布"></a>*1. beta分布</h3><h4 id="1-1-什么是beta分布"><a href="#1-1-什么是beta分布" class="headerlink" title="*1.1. 什么是beta分布"></a>*1.1. 什么是beta分布</h4><p>对于硬币或者骰子这样的简单实验，我们事先能很准确地掌握系统成功的概率。</p>
 <p>然而通常情况下，系统成功的概率是未知的，但是根据频率学派的观点，我们可以<strong>通过频率来估计概率</strong>。为了测试系统的成功概率，我们做n次试验，统计成功的次数k，于是很直观地就可以计算出。然而由于系统成功的概率是未知的，这个公式计算出的只是系统成功概率的<strong>最佳估计</strong>。也就是说实际上也可能为其它的值，只是为其它的值的概率较小。因此我们并不能完全确定硬币出现正面的概率就是该值，所以也是一个随机变量，它符合Beta分布，其取值范围为0到1</p>
 <p>用一句话来说，beta分布可以看作一个<strong>概率的概率密度分布</strong>，当你不知道一个东西的具体概率是多少时，它可以给出了所有概率出现的可能性大小。</p>
 <p>Beta分布有和两个参数α和β，其中α为成功次数加1，β为失败次数加1。</p>
@@ -487,7 +532,7 @@
 <blockquote>
 <ul>
 <li><p>beta分布的均值</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png" alt></p>
+  <p align="center">&lt;img src=./picture/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png height=70 /&gt;</p>
 </li>
 <li><p>这个分布主要落在了(0.2,0.35)间，这是从经验中得出的合理的范围</p>
 </li>
@@ -508,6 +553,48 @@
 <blockquote>
 <p>根据这个新的beta分布，我们可以得出他的数学期望为：αα+β=82+10082+100+219+200=.303 ，这一结果要比直接的估计要小 100100+200=.333 。你可能已经意识到，我们事实上就是在这个运动员在击球之前可以理解为他已经成功了81次，失败了219次这样一个先验信息。</p>
 </blockquote>
+<h3 id="2-重复NG免疫组库TCRβ文章的图"><a href="#2-重复NG免疫组库TCRβ文章的图" class="headerlink" title="*2. 重复NG免疫组库TCRβ文章的图"></a>*2. 重复NG免疫组库TCRβ文章的图</h3><h4 id="2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆" class="headerlink" title="*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆"></a>*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</h4><p>目的是得到类似下面的结果：</p>
+<p><img src="/images/App-ML-in-Bioinfo-supplementary-redraw-pictures-for-NGpapre-1.png" alt></p>
+<p>提供的输入：</p>
+<blockquote>
+<ul>
+<li>Observed matrix：行为CDR3克隆，列为样本，矩阵中的值只能取0或1，0表示该feature在该样本中未被观测到，1为被观测到了</li>
+<li>样本的分组信息文件（该文件非必须，若样本名中包含分组信息，则可以不提供这个文件，只需提供分从样本名中提取分组信息的正则表达式）</li>
+<li>当前感兴趣的两个组，因为考虑到可能提供的样本是多组的，而Fisher检验只能进行两组间的比较，所以多组时需要指定分析的两组是谁</li>
+</ul>
+</blockquote>
+<p>脚本名：<code>FisherTestForMatrix.R</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">####################################################################</span><br><span class="line"># 该脚本用于对样本的Oberved矩阵执行Fisher精确检验（单尾），用于    #</span><br><span class="line"># 检测feature与分组的相关性                                        #</span><br><span class="line">####################################################################</span><br><span class="line"></span><br><span class="line"># 参数说明：</span><br><span class="line"># - （1）样本的Oberved矩阵，行为特征，列为样本，矩阵中的值只能取0</span><br><span class="line">#	或1，0表示该feature在该样本中未被观测到，1为被观测到了</span><br><span class="line">#</span><br><span class="line"># - （2）是否提供样本的分组信息文件，1为是，0位否</span><br><span class="line">#</span><br><span class="line"># - （3）若上一个参数选择1（提供分组信息文件），则该参数应该设为</span><br><span class="line">#	分组信息文件的路径，分组文件要求至少包含两列——SampleId和Group；</span><br><span class="line">#	若上一个参数选择0（不提供分组信息文件），则认为分组信息已经包</span><br><span class="line">#	含的样本的命名中，则可以通过提供分组信息在样本名中匹配的正则</span><br><span class="line">#	表达式</span><br><span class="line">#</span><br><span class="line"># - （4）感兴趣的两组，例如是A组和B组，则写成&quot;A-B&quot;，即中间用连字</span><br><span class="line">#	符连接</span><br><span class="line">#</span><br><span class="line"># - （5）设置的p值阈值</span><br><span class="line">#</span><br><span class="line"># - （6）设置并行化线程数，若不设置这个参数，则默认不采用并行化计</span><br><span class="line">#	算方法</span><br><span class="line"></span><br><span class="line">library(stringr)</span><br><span class="line">library(ggplot2)</span><br><span class="line">library(parallel)</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(TRUE)</span><br><span class="line">MatFile &lt;- Args[1]</span><br><span class="line">Bool_GroupFile &lt;- Args[2]</span><br><span class="line">GroupFile &lt;- Args[3]</span><br><span class="line">TargetGroups &lt;- Args[4]</span><br><span class="line">pvalue &lt;- Args[5]</span><br><span class="line"></span><br><span class="line"># 开启并行化</span><br><span class="line">if(!is.na(Args[6]))&#123;</span><br><span class="line">	no_cores &lt;- as.integer(Args[6])</span><br><span class="line">	cl &lt;- makeCluster(no_cores)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Matrix &lt;- read.table(MatFile, header=T, row.names=1)</span><br><span class="line">TargetGroups &lt;- unlist(strsplit(TargetGroups, &apos;-&apos;))</span><br><span class="line"></span><br><span class="line">print(&quot;Loading Observed Matrix successfully&quot;)</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line"># 1. 获得Oberved矩阵样本对应的分组信息</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">if(Bool_GroupFile %in% c(1, 0))&#123;</span><br><span class="line">	# 从提供的分组信息文件中获得</span><br><span class="line">	if(Bool_GroupFile==1)&#123;</span><br><span class="line">		Group &lt;- read.table(GroupFile, header=T)</span><br><span class="line">		# 考虑到可能存在Observe矩阵列名命名不规范，即以数字起始（会在开头</span><br><span class="line">		#	添加X字符），或其中包含连字符（将连字符替换为点）因此需要将</span><br><span class="line">		#	Group变量中的SampleId进行相应的替换，以保证一致</span><br><span class="line">		colname_matrix &lt;- ifelse(grepl(&apos;^X&apos;,colnames(Matrix)),sub(&apos;^X&apos;,&apos;&apos;,colnames(Matrix)),colnames(Matrix))</span><br><span class="line">		colname_matrix &lt;- gsub(&apos;\\.&apos;,&apos;-&apos;,colname_matrix)</span><br><span class="line">		SampleGroup &lt;- Group$Group[match(colname_matrix, Group$SampleId)]</span><br><span class="line">	# 从样本名中用正则提取</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		GroupPattern &lt;- GroupFile</span><br><span class="line">		SampleGroup &lt;- unlist(str_extract(colnames(Matrix), GroupPattern))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	stop(&quot;参数指定错误！第二个参数必须为0或1&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">print(&quot;Load/get group info for coresponding samples in each col in Observed Matrix&quot;)</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line"># 2. 对每个feature执行Fisher检验，得到检验结果</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line"># 用于执行fisher检验的函数，最终返回的是TRUE或FALSE</span><br><span class="line">FisherTest &lt;- function(ObserveVec, GroupIndex, TargetGroups)&#123;</span><br><span class="line">	# 初始化列联表</span><br><span class="line">	FisherMat &lt;- matrix(c(0,0,0,0),</span><br><span class="line">						nrow = 2,</span><br><span class="line">						dimnames = list(Observe=c(&apos;Yes&apos;,&apos;No&apos;),</span><br><span class="line">										Group=TargetGroups</span><br><span class="line">										))</span><br><span class="line">	# 为列联表的每一项填上对应的值</span><br><span class="line">	FisherMat[1,1] &lt;- sum(ObserveVec==1&amp;GroupIndex==colnames(FisherMat)[1])</span><br><span class="line">	FisherMat[1,2] &lt;- sum(ObserveVec==1&amp;GroupIndex==colnames(FisherMat)[2])</span><br><span class="line">	FisherMat[2,1] &lt;- sum(ObserveVec==0&amp;GroupIndex==colnames(FisherMat)[1])</span><br><span class="line">	FisherMat[2,2] &lt;- sum(ObserveVec==0&amp;GroupIndex==colnames(FisherMat)[2])</span><br><span class="line">	# 进行fisher检验，得到p值</span><br><span class="line">	pvalue &lt;- fisher.test(FisherMat, alternative = &quot;two.sided&quot;)$p.value</span><br><span class="line">	# 返回向量：组1计数、组2计数、p值</span><br><span class="line">	c(FisherMat[1,1], FisherMat[1,2], pvalue)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 为每个feature（即矩阵的行）执行fisher检验，得到是每个feature的pvalue，每一个的返回值以列形式进行追加</span><br><span class="line">if(!is.na(Args[6]))&#123;</span><br><span class="line">	StatOut &lt;- parApply(cl,Matrix, 1, FisherTest, SampleGroup, TargetGroups)</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	StatOut &lt;- apply(Matrix, 1, FisherTest, SampleGroup, TargetGroups)</span><br><span class="line">&#125;</span><br><span class="line">StatOut_Table &lt;- data.frame(Feature=colnames(StatOut),Group1=StatOut[1,],Group2=StatOut[2,],Pval=StatOut[3,])</span><br><span class="line">colnames(StatOut_Table) &lt;- c(&apos;Feature&apos;, paste(&quot;Group_&quot;,TargetGroups[1],sep=&apos;&apos;), paste(&quot;Group_&quot;,TargetGroups[2],sep=&apos;&apos;), &apos;Pval&apos;)</span><br><span class="line"></span><br><span class="line">print(&quot;Finish Fisher&apos;s Exact Test for each feature&quot;)</span><br><span class="line"></span><br><span class="line"># 将Fisher检验结果写入文件</span><br><span class="line">write.table(StatOut_Table, paste(str_extract(MatFile,&apos;^(.*?)\\.&apos;),TargetGroups[1],&quot;-&quot;,TargetGroups[2],&quot;.stat&quot;,sep=&apos;&apos;),row.names=F,col.names=T,sep=&quot;\t&quot;,quote=F)</span><br><span class="line"></span><br><span class="line">print(&quot;Finish writing Fisher&apos;s Exact Test Output into file&quot;)</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line"># 3. 表型负荷（Phenotype Burden）相关的计算与画图</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line"># 计算每个样本的表型负荷相关的两个值，该样本中与分组1相关的features数，以及该样本中观测到的features数</span><br><span class="line">if(!is.na(Args[6]))&#123;</span><br><span class="line">	RelativeFeatures &lt;- parApply(cl, Matrix[,SampleGroup %in% TargetGroups], 2, function(x,y,p,z) sum(x==1&amp;y&lt;p&amp;z), </span><br><span class="line">							StatOut_Table$Pval, </span><br><span class="line">							pvalue, </span><br><span class="line">							StatOut_Table[,2]&gt;StatOut_Table[,3])</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	RelativeFeatures &lt;- apply(Matrix[,SampleGroup %in% TargetGroups], 2, function(x,y,p,z) sum(x==1&amp;y&lt;p&amp;z), </span><br><span class="line">							StatOut_Table$Pval, </span><br><span class="line">							pvalue, </span><br><span class="line">							StatOut_Table[,2]&gt;StatOut_Table[,3])</span><br><span class="line">&#125;</span><br><span class="line">stopCluster(cl)</span><br><span class="line">TotalFeatures &lt;- colSums(Matrix[,SampleGroup %in% TargetGroups])</span><br><span class="line">PhenotypeBurden &lt;- data.frame(Relative=RelativeFeatures, Total=TotalFeatures, Group=SampleGroup[SampleGroup %in% TargetGroups])</span><br><span class="line"></span><br><span class="line">print(&quot;Finish calculate statistics for Phenotype-Burden&quot;)</span><br><span class="line"></span><br><span class="line"># 画散点图</span><br><span class="line">print(&quot;Start dotplot&quot;)</span><br><span class="line">png(paste(&quot;PhenotypeBurdenDot_&quot;,pvalue,&quot;_&quot;,TargetGroups[1],&quot;-&quot;,TargetGroups[2],&quot;.png&quot;,sep=&apos;&apos;))</span><br><span class="line">ggplot(PhenotypeBurden)+geom_point(aes(x=Total, y=Relative, color=Group))</span><br><span class="line">dev.off()</span><br><span class="line"># 保存数据</span><br><span class="line">write.table(PhenotypeBurden,paste(str_extract(MatFile,&apos;^(.*?)\\.&apos;),pvalue,&quot;.&quot;, TargetGroups[1],&quot;-&quot;,TargetGroups[2],&quot;.data&quot;,sep=&apos;&apos;),row.names=T,col.names=T,sep=&quot;\t&quot;,quote=F)</span><br></pre></td></tr></table></figure>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Rscript FisherTestForMatrix.R &lt;profile matrix&gt; &lt;1|0&gt; &lt;group info|regx&gt; &lt;2 interested group&gt; &lt;pval&gt;</span><br></pre></td></tr></table></figure>
+<p>具体的参数说明，请查看脚本的注释信息</p>
+<h4 id="2-2-绘制表型负荷相关散点图"><a href="#2-2-绘制表型负荷相关散点图" class="headerlink" title="*2.2. 绘制表型负荷相关散点图"></a>*2.2. 绘制表型负荷相关散点图</h4><h5 id="2-2-1-训练集"><a href="#2-2-1-训练集" class="headerlink" title="*2.2.1. 训练集"></a>*2.2.1. 训练集</h5><p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
+<p>画出的表型负荷相关散点图如下：</p>
+<p><img src="/images/App-ML-in-Bioinfo-supplementary-PhenotypeBurdenDot_0.05_A-B.png" alt></p>
+<h5 id="2-2-2-测试集"><a href="#2-2-2-测试集" class="headerlink" title="*2.2.2. 测试集"></a>*2.2.2. 测试集</h5><p>测试集的表型负荷相关散点图需要基于训练集的结果，需要执行另外的操作</p>
+<p>需要提供的输入：</p>
+<blockquote>
+<ul>
+<li><p>测试集的Observed matrix：行为CDR3克隆，列为样本，矩阵中的值只能取0或1，0表示该feature在该样本中未被观测到，1为被观测到了</p>
+</li>
+<li><p>样本的分组信息文件（该文件非必须，若样本名中包含分组信息，则可以不提供这个文件，只需提供分从样本名中提取分组信息的正则表达式）</p>
+</li>
+<li><p>当前感兴趣的两个组，因为考虑到可能提供的样本是多组的，而Fisher检验只能进行两组间的比较，所以多组时需要指定分析的两组是谁</p>
+</li>
+<li><p>训练集的Fisher检验输出结果</p>
+</li>
+</ul>
+</blockquote>
+<p>脚本名：<code>PhenotypeBurden2TestCohort.R</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###################################################</span><br><span class="line"># 该脚本用于对测试集的每个样本计算表型负荷相关    #</span><br><span class="line"># 的两个值：该样本中与分组1相关的features数，以   #</span><br><span class="line"># 及该样本中观测到的features数                    #</span><br><span class="line">###################################################</span><br><span class="line"></span><br><span class="line"># 参数说明：</span><br><span class="line"># - （1）测试集Oberved矩阵，行为特征，列为样本，矩阵中的值只能取0</span><br><span class="line">#	或1，0表示该feature在该样本中未被观测到，1为被观测到了</span><br><span class="line">#</span><br><span class="line"># - （2）是否提供样本的分组信息文件，1为是，0位否</span><br><span class="line">#</span><br><span class="line"># - （3）若上一个参数选择1（提供分组信息文件），则该参数应该设为</span><br><span class="line">#	分组信息文件的路径，分组文件要求至少包含两列——SampleId和Group；</span><br><span class="line">#	若上一个参数选择0（不提供分组信息文件），则认为分组信息已经包</span><br><span class="line">#	含的样本的命名中，则可以通过提供分组信息在样本名中匹配的正则</span><br><span class="line">#	表达式</span><br><span class="line">#</span><br><span class="line"># - （4）感兴趣的两组，例如是A组和B组，则写成&quot;A-B&quot;，即中间用连字</span><br><span class="line">#	符连接</span><br><span class="line">#</span><br><span class="line"># - （5）设置的p值阈值</span><br><span class="line">#</span><br><span class="line"># - （6）上一步对训练集执行Fisher检验的检验结果输出文件</span><br><span class="line"></span><br><span class="line">library(stringr)</span><br><span class="line">library(ggplot2)</span><br><span class="line"></span><br><span class="line">Args &lt;- commandArgs(TRUE)</span><br><span class="line">MatFile &lt;- Args[1]</span><br><span class="line">Bool_GroupFile &lt;- Args[2]</span><br><span class="line">GroupFile &lt;- Args[3]</span><br><span class="line">TargetGroups &lt;- Args[4]</span><br><span class="line">pvalue &lt;- Args[5]</span><br><span class="line">StatFile &lt;- Args[6]</span><br><span class="line"></span><br><span class="line">Matrix &lt;- read.table(MatFile, header=T, row.names=1)</span><br><span class="line">TargetGroups &lt;- unlist(strsplit(TargetGroups, &apos;-&apos;))</span><br><span class="line">StatOut &lt;- read.table(StatFile, header=T)</span><br><span class="line"></span><br><span class="line">print(&quot;Loading Observed Matrix and Fisher&apos;s Exact Test output successfully&quot;)</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line"># 1. 获得Oberved矩阵样本对应的分组信息</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">if(Bool_GroupFile %in% c(1, 0))&#123;</span><br><span class="line">	# 从提供的分组信息文件中获得</span><br><span class="line">	if(Bool_GroupFile==1)&#123;</span><br><span class="line">		Group &lt;- read.table(GroupFile, header=T)</span><br><span class="line">		# 考虑到可能存在Observe矩阵列名命名不规范，即以数字起始（会在开头</span><br><span class="line">		#	添加X字符），或其中包含连字符（将连字符替换为点）因此需要将</span><br><span class="line">		#	Group变量中的SampleId进行相应的替换，以保证一致</span><br><span class="line">		colname_matrix &lt;- ifelse(grepl(&apos;^X&apos;,colnames(Matrix)),sub(&apos;^X&apos;,&apos;&apos;,colnames(Matrix)),colnames(Matrix))</span><br><span class="line">		colname_matrix &lt;- gsub(&apos;\\.&apos;,&apos;-&apos;,colname_matrix)</span><br><span class="line">		SampleGroup &lt;- Group$Group[match(colname_matrix, Group$SampleId)]</span><br><span class="line">	# 从样本名中用正则提取</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		GroupPattern &lt;- GroupFile</span><br><span class="line">		SampleGroup &lt;- unlist(str_extract(colnames(Matrix), GroupPattern))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	stop(&quot;参数指定错误！第二个参数必须为0或1&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line"># 2. 表型负荷（Phenotype Burden）相关的计算与画图</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line"># 计算每个样本的表型负荷相关的两个值，该样本中与分组1相关的features数，以及该样本中观测到的features数</span><br><span class="line">RelativeFeatures_list &lt;- StatOut$Feature[StatOut[,2]&gt;StatOut[,3]&amp;StatOut$Pval&lt;pvalue]</span><br><span class="line">RelativeFeatures &lt;- apply(Matrix[rownames(Matrix) %in% RelativeFeatures_list,SampleGroup %in% TargetGroups], 2, sum)</span><br><span class="line">TotalFeatures &lt;- colSums(Matrix[,SampleGroup %in% TargetGroups])</span><br><span class="line">PhenotypeBurden &lt;- data.frame(Relative=RelativeFeatures, Total=TotalFeatures, Group=SampleGroup[SampleGroup %in% TargetGroups])</span><br><span class="line"></span><br><span class="line">print(&quot;Finish calculate statistics for Phenotype-Burden&quot;)</span><br><span class="line"></span><br><span class="line"># 画散点图</span><br><span class="line">print(&quot;Start dotplot&quot;)</span><br><span class="line">png(paste(&quot;PhenotypeBurdenDot_&quot;,pvalue,&quot;_&quot;,TargetGroups[1],&quot;-&quot;,TargetGroups[2],&quot;.png&quot;,sep=&apos;&apos;))</span><br><span class="line">ggplot(PhenotypeBurden)+geom_point(aes(x=Total, y=Relative, color=Group))+</span><br><span class="line">	labs(title=&quot;CMV-associated vs. total-unique&quot;)</span><br><span class="line">dev.off()</span><br><span class="line"># 保存数据</span><br><span class="line">write.table(PhenotypeBurden,paste(str_extract(MatFile,&apos;^(.*?)\\.&apos;),pvalue,&quot;.&quot;, TargetGroups[1],&quot;-&quot;,TargetGroups[2],&quot;.data&quot;,sep=&apos;&apos;),row.names=T,col.names=T,sep=&quot;\t&quot;,quote=F)</span><br></pre></td></tr></table></figure>
+<p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Rscript PhenotypeBurden2TestCohort.R &lt;profile matrix&gt; &lt;1|0&gt; &lt;group info|regx&gt; &lt;2 interested group&gt; &lt;pval&gt; &lt;stat&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-TCRβ在两组间分布偏好性的散点图"><a href="#2-2-TCRβ在两组间分布偏好性的散点图" class="headerlink" title="*2.2. TCRβ在两组间分布偏好性的散点图"></a>*2.2. TCRβ在两组间分布偏好性的散点图</h4><p>就是画这幅图：</p>
+<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
+<p>注意：这幅图的横纵坐标都进行了log10变换</p>
+<p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
+<p>画出的散点图如下：</p>
+<p><img src="/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png" alt></p>
 <hr>
 <p>参考资料：</p>
 <p>(1)  Emerson R O , Dewitt W S , Vignali M , et al. Immunosequencing identifies signatures of cytomegalovirus exposure history and HLA-mediated effects on the T cell repertoire[J]. Nature Genetics, 2017, 49(5):659-665.</p>
@@ -812,7 +899,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-根据免疫组库TCRβ预测病人的CMV感染状态"><span class="nav-text">1. 根据免疫组库TCRβ预测病人的CMV感染状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SC3：单细胞表达谱的无监督聚类"><span class="nav-text">2. SC3：单细胞表达谱的无监督聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beta分布"><span class="nav-text">*1. beta分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是beta分布"><span class="nav-text">*1.1. 什么是beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-理解beta分布"><span class="nav-text">*1.2. 理解beta分布</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-根据免疫组库TCRβ预测病人的CMV感染状态"><span class="nav-text">1. 根据免疫组库TCRβ预测病人的CMV感染状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SC3：单细胞表达谱的无监督聚类"><span class="nav-text">2. SC3：单细胞表达谱的无监督聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-GATK的VQSR"><span class="nav-text">2. GATK的VQSR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beta分布"><span class="nav-text">*1. beta分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是beta分布"><span class="nav-text">*1.1. 什么是beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-理解beta分布"><span class="nav-text">*1.2. 理解beta分布</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-重复NG免疫组库TCRβ文章的图"><span class="nav-text">*2. 重复NG免疫组库TCRβ文章的图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><span class="nav-text">*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-绘制表型负荷相关散点图"><span class="nav-text">*2.2. 绘制表型负荷相关散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-训练集"><span class="nav-text">*2.2.1. 训练集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-测试集"><span class="nav-text">*2.2.2. 测试集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-TCRβ在两组间分布偏好性的散点图"><span class="nav-text">*2.2. TCRβ在两组间分布偏好性的散点图</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -979,6 +1066,43 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
   
 
 

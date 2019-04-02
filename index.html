@@ -1672,12 +1672,24 @@ $$\begin{cases}x &amp; + &amp
                 
               
 
-              <time title="创建时间：2019-03-14 15:21:21 / 修改时间：23:08:08" itemprop="dateCreated datePublished" datetime="2019-03-14T15:21:21+08:00">2019-03-14</time>
+              <time title="创建时间：2019-03-14 15:21:21" itemprop="dateCreated datePublished" datetime="2019-03-14T15:21:21+08:00">2019-03-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-02 19:31:34" itemprop="dateModified" datetime="2019-04-02T19:31:34+08:00">2019-04-02</time>
               
             
           </span>
@@ -1732,23 +1744,29 @@ $$\begin{cases}x &amp; + &amp
         
           
             <p>
-              1. 根据免疫组库TCRβ预测病人的CMV感染状态
-基于单特征的贝叶斯判别模型
-  首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆
-  一个样本的表型负荷（phenotype burden）被定义为：
+              1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+)
+外部验证用到了120个样本（cohort 2）
+该机器学习的任务为：
 
-该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例
+讨论 TCRβ 免疫组的数据特点：
 
-  由于表型负荷的取值范围为 (0, 1)，则其符合beta二项分布（简称beta分布，补充知识——Beta分布）
-  然后分别对表型阳性和表型阴性两组样本，利用Beta分别估计出各组的表型负荷的概率密度分布，分别记作 Beta+(α+ , β+) 和 Beta-(α- , β-)
+
+可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个；
+一个新样本中很可能会出现训练样本集合中未出现的TCRβ克隆类型；
+对于一个给定的TCR，它对给定抗原肽的结合亲和力会受到HLA类型的调控，因此原始的用于判别分析的特征集合还受到隐变量——HLA类型的影响；
+
+
+
+
+特征选择：鉴定表型相关的TCRβs
+  使用Fisher精确检验：
   
-  对于一个新的样本可以计算出它来自表型阳性组和表型阴性组的后验概率：
+  Fisher检验的阈值设为：$P&lt;1\times 10^{-4}$，且富集在CMV+样本中，从而得到与CMV+相关的CDR3克隆集合，共有164个
+  通过下面的TCRβ克隆在两组中的发生率的散点图可以明显地看到，筛出的表型相关的TCRβ克隆的确显著地表达在CMV+组中
   
-  若P ( c+ | x i ) &gt; P ( c - | x i )，则判断为阳性组，否则为阴性组
 
-
-2. SC3：单细胞表达谱的无监督聚类该聚类方法名为SC3（Single-Cell Consensus Clustering）
-该方
+计算表型负荷（phenotype burden）
+  一个样本的表型
               ...
             </p>
           <!--noindex-->
