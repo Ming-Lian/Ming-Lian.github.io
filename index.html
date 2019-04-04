@@ -335,6 +335,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/Application-of-MachineLearning-in-Bioinformatics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/04/Application-of-MachineLearning-in-Bioinformatics/" class="post-title-link" itemprop="url">机器学习在生物信息学中的应用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-04 10:15:20 / 修改时间：15:57:37" itemprop="dateCreated datePublished" datetime="2019-04-04T10:15:20+08:00">2019-04-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+)
+外部验证用到了120个样本（cohort 2）
+该机器学习的任务为：
+
+讨论 TCRβ 免疫组的数据特点：
+
+
+可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个；
+一个新样本中很可能会出现训练样本集合中未出现的TCRβ克隆类型；
+对于一个给定的TCR，它对给定抗原肽的结合亲和力会受到HLA类型的调控，因此原始的用于判别分析的特征集合还受到隐变量——HLA类型的影响；
+
+
+
+
+特征选择：鉴定表型相关的TCRβs
+  使用Fisher精确检验（单尾检验，具体实现过程请查看文末 *2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆）：
+  
+  Fisher检验的阈值设为：$P&lt;1\times 10^{-4}$，FDR&lt;0.14（该FDR的计算方法见文末 *3. FDR的计算方法 ），且富集在CMV+样本中，从而得到与CMV+相关的CDR3克隆集合，共有164个
+  通过下面的TCR
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/04/Application-of-MachineLearning-in-Bioinformatics/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/02/Linux-Advanced/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -380,12 +569,24 @@
                 
               
 
-              <time title="创建时间：2019-04-02 10:19:48 / 修改时间：10:26:00" itemprop="dateCreated datePublished" datetime="2019-04-02T10:19:48+08:00">2019-04-02</time>
+              <time title="创建时间：2019-04-02 10:19:48" itemprop="dateCreated datePublished" datetime="2019-04-02T10:19:48+08:00">2019-04-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -564,12 +765,24 @@ LCD和HDMI相互切换
                 
               
 
-              <time title="创建时间：2019-04-02 10:02:45 / 修改时间：10:16:19" itemprop="dateCreated datePublished" datetime="2019-04-02T10:02:45+08:00">2019-04-02</time>
+              <time title="创建时间：2019-04-02 10:02:45" itemprop="dateCreated datePublished" datetime="2019-04-02T10:02:45+08:00">2019-04-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -743,12 +956,24 @@ $ wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh$ bas
                 
               
 
-              <time title="创建时间：2019-04-02 09:54:34 / 修改时间：09:57:34" itemprop="dateCreated datePublished" datetime="2019-04-02T09:54:34+08:00">2019-04-02</time>
+              <time title="创建时间：2019-04-02 09:54:34" itemprop="dateCreated datePublished" datetime="2019-04-02T09:54:34+08:00">2019-04-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -930,12 +1155,24 @@ mount /dev/sdXN /media/externaldrive -o=rw
                 
               
 
-              <time title="创建时间：2019-04-01 13:41:38 / 修改时间：13:45:17" itemprop="dateCreated datePublished" datetime="2019-04-01T13:41:38+08:00">2019-04-01</time>
+              <time title="创建时间：2019-04-01 13:41:38" itemprop="dateCreated datePublished" datetime="2019-04-01T13:41:38+08:00">2019-04-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -1110,12 +1347,24 @@ perl单行执行perl -h可以查看perl的所有参数
                 
               
 
-              <time title="创建时间：2019-04-01 00:02:03 / 修改时间：00:09:26" itemprop="dateCreated datePublished" datetime="2019-04-01T00:02:03+08:00">2019-04-01</time>
+              <time title="创建时间：2019-04-01 00:02:03" itemprop="dateCreated datePublished" datetime="2019-04-01T00:02:03+08:00">2019-04-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -1302,12 +1551,24 @@ D. 甲在顶点D处
                 
               
 
-              <time title="创建时间：2019-03-31 00:05:32 / 修改时间：00:43:44" itemprop="dateCreated datePublished" datetime="2019-03-31T00:05:32+08:00">2019-03-31</time>
+              <time title="创建时间：2019-03-31 00:05:32" itemprop="dateCreated datePublished" datetime="2019-03-31T00:05:32+08:00">2019-03-31</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -1500,7 +1761,7 @@ $$\begin{cases}x &amp; + &amp
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-31 17:14:45" itemprop="dateModified" datetime="2019-03-31T17:14:45+08:00">2019-03-31</time>
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -1627,211 +1888,6 @@ $$\begin{cases}x &amp; + &amp
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/Application-of-MachineLearning-in-Bioinformatics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/14/Application-of-MachineLearning-in-Bioinformatics/" class="post-title-link" itemprop="url">机器学习在生物信息中的应用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-14 15:21:21" itemprop="dateCreated datePublished" datetime="2019-03-14T15:21:21+08:00">2019-03-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-02 19:31:34" itemprop="dateModified" datetime="2019-04-02T19:31:34+08:00">2019-04-02</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+)
-外部验证用到了120个样本（cohort 2）
-该机器学习的任务为：
-
-讨论 TCRβ 免疫组的数据特点：
-
-
-可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个；
-一个新样本中很可能会出现训练样本集合中未出现的TCRβ克隆类型；
-对于一个给定的TCR，它对给定抗原肽的结合亲和力会受到HLA类型的调控，因此原始的用于判别分析的特征集合还受到隐变量——HLA类型的影响；
-
-
-
-
-特征选择：鉴定表型相关的TCRβs
-  使用Fisher精确检验：
-  
-  Fisher检验的阈值设为：$P&lt;1\times 10^{-4}$，且富集在CMV+样本中，从而得到与CMV+相关的CDR3克隆集合，共有164个
-  通过下面的TCRβ克隆在两组中的发生率的散点图可以明显地看到，筛出的表型相关的TCRβ克隆的确显著地表达在CMV+组中
-  
-
-计算表型负荷（phenotype burden）
-  一个样本的表型
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/14/Application-of-MachineLearning-in-Bioinformatics/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/Unsupervise-Clustering-Algorithmn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1877,12 +1933,24 @@ $$\begin{cases}x &amp; + &amp
                 
               
 
-              <time title="创建时间：2019-03-14 15:05:14 / 修改时间：15:11:57" itemprop="dateCreated datePublished" datetime="2019-03-14T15:05:14+08:00">2019-03-14</time>
+              <time title="创建时间：2019-03-14 15:05:14" itemprop="dateCreated datePublished" datetime="2019-03-14T15:05:14+08:00">2019-03-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -2082,7 +2150,7 @@ $$\begin{cases}x &amp; + &amp
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-14 15:15:19" itemprop="dateModified" datetime="2019-03-14T15:15:19+08:00">2019-03-14</time>
+                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -2354,11 +2422,7 @@ $$\begin{cases}x &amp; + &amp
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -2565,15 +2629,15 @@ $$\begin{cases}x &amp; + &amp
   
     
       
-    
-      
-    
-      
-    
-      
-    
-      
         
+      
+    
+      
+    
+      
+    
+      
+    
       
     
       
