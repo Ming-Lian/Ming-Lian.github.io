@@ -96,13 +96,13 @@
 
 
 
-  <meta name="description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
+  <meta name="description" content="1. logistic回归：“达观杯”文本智能处理挑战赛1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共有四列：   第一列是文">
 <meta name="keywords" content="sklearn,logistic回归,决策树,朴素贝叶斯方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="西瓜书带学训练营·实战任务">
 <meta property="og:url" content="http://yoursite.com/2019/02/09/InAction-ML-XGS/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
+<meta property="og:description" content="1. logistic回归：“达观杯”文本智能处理挑战赛1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共有四列：   第一列是文">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-1.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-2.png">
@@ -136,8 +136,6 @@
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-1.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-2.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-3.png">
-<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-4.png">
-<meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-5.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-6.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-7.jpg">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-8.png">
@@ -149,10 +147,10 @@
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-14.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-15.png">
 <meta property="og:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-neural-network-16.png">
-<meta property="og:updated_time" content="2019-04-04T02:15:43.076Z">
+<meta property="og:updated_time" content="2019-04-05T04:58:22.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="西瓜书带学训练营·实战任务">
-<meta name="twitter:description" content="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共">
+<meta name="twitter:description" content="1. logistic回归：“达观杯”文本智能处理挑战赛1.1. 任务描述具体任务可以到 ‘达观杯’文本智能处理挑战赛官网 查看 任务：建立模型通过长文本数据正文(article)，预测文本对应的类别(class) 数据：  数据包含2个csv文件：  train_set.csv   此数据集用于训练模型，每一行对应一篇文章。文章分别在“字”和“词”的级别上做了脱敏处理。共有四列：   第一列是文">
 <meta name="twitter:image" content="http://yoursite.com/images/InAction-MachineLearning-XGS-sklearn-lr-1.png">
 
 
@@ -361,6 +359,14 @@
 
       
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
     </ul>
   
 
@@ -369,6 +375,27 @@
 
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -476,7 +503,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
+                <time title="修改时间：2019-04-05 12:58:22" itemprop="dateModified" datetime="2019-04-05T12:58:22+08:00">2019-04-05</time>
               
             
           </span>
@@ -528,7 +555,7 @@
       
 
       
-        <h2 id="1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"><a href="#1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用" class="headerlink" title="1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"></a>1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用</h2><h3 id="1-1-任务描述"><a href="#1-1-任务描述" class="headerlink" title="1.1. 任务描述"></a>1.1. 任务描述</h3><p>具体任务可以到 <a href="http://www.dcjingsai.com/common/cmpt/%E2%80%9C%E8%BE%BE%E8%A7%82%E6%9D%AF%E2%80%9D%E6%96%87%E6%9C%AC%E6%99%BA%E8%83%BD%E5%A4%84%E7%90%86%E6%8C%91%E6%88%98%E8%B5%9B_%E8%B5%9B%E4%BD%93%E4%B8%8E%E6%95%B0%E6%8D%AE.html" target="_blank" rel="noopener">‘达观杯’文本智能处理挑战赛官网</a> 查看</p>
+        <h2 id="1-logistic回归：“达观杯”文本智能处理挑战赛"><a href="#1-logistic回归：“达观杯”文本智能处理挑战赛" class="headerlink" title="1. logistic回归：“达观杯”文本智能处理挑战赛"></a>1. logistic回归：“达观杯”文本智能处理挑战赛</h2><h3 id="1-1-任务描述"><a href="#1-1-任务描述" class="headerlink" title="1.1. 任务描述"></a>1.1. 任务描述</h3><p>具体任务可以到 <a href="http://www.dcjingsai.com/common/cmpt/%E2%80%9C%E8%BE%BE%E8%A7%82%E6%9D%AF%E2%80%9D%E6%96%87%E6%9C%AC%E6%99%BA%E8%83%BD%E5%A4%84%E7%90%86%E6%8C%91%E6%88%98%E8%B5%9B_%E8%B5%9B%E4%BD%93%E4%B8%8E%E6%95%B0%E6%8D%AE.html" target="_blank" rel="noopener">‘达观杯’文本智能处理挑战赛官网</a> 查看</p>
 <p><strong>任务</strong>：建立模型通过长文本数据正文(article)，预测文本对应的类别(class)</p>
 <p>数据：</p>
 <blockquote>
@@ -554,7 +581,7 @@
 <p><img src="/images/InAction-MachineLearning-XGS-sklearn-lr-5.png" alt></p>
 <p><img src="/images/InAction-MachineLearning-XGS-sklearn-lr-6.png" alt></p>
 <p><img src="/images/InAction-MachineLearning-XGS-sklearn-lr-7.png" alt></p>
-<h2 id="2-鸢尾花数据分类：sklearn包中决策树算法类库的使用"><a href="#2-鸢尾花数据分类：sklearn包中决策树算法类库的使用" class="headerlink" title="2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用"></a>2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用</h2><h3 id="2-1-DecisionTreeClassifier实例"><a href="#2-1-DecisionTreeClassifier实例" class="headerlink" title="2.1. DecisionTreeClassifier实例"></a>2.1. DecisionTreeClassifier实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">from itertools import product</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">from sklearn import datasets</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.feature_selection import SelectKBest</span><br><span class="line">from sklearn.feature_selection import chi2</span><br><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 使用自带的iris数据</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, np.arange(0,4)]</span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line"># 划分训练集与测试集</span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(X,y,test_size=0.2,random_state=14)</span><br><span class="line">print(&quot;训练数据集样本总数:%d;测试数据集样本总数:%d&quot; %(x_train.shape[0],x_test.shape[0]))</span><br><span class="line"></span><br><span class="line"># 对数据集进行标准化</span><br><span class="line">ss = MinMaxScaler()</span><br><span class="line">x_train = ss.fit_transform(x_train,y_train)</span><br><span class="line">x_test = ss.transform(x_test)</span><br><span class="line"></span><br><span class="line"># 特征选择：从已有的特征属性中选择出影响目标最大的特征属性</span><br><span class="line"># 常用方法：</span><br><span class="line">#	离散属性：F统计量、卡方系数、互信息mutual_info_classif</span><br><span class="line">#	连续属性：皮尔逊相关系数、F统计量、互信息mutual_info_classif&#125;</span><br><span class="line"># 这里使用离散属性的卡方系数，实现函数为SelectKBest，用SelectKBest方法从四个原始特征属性中选择出最能影响目标的3个特征属性</span><br><span class="line">ch2 = SelectKBest(chi2,k=3) # k默认为10，指定后会返回想要的特征个数</span><br><span class="line">ch2.fit(x_train,y_train)</span><br><span class="line">x_train = ch2.transform(x_train)</span><br><span class="line">x_test = ch2.transform(x_test)</span><br><span class="line"></span><br><span class="line"># 特征降维，这里使用PCA方法</span><br><span class="line">pca = PCA(n_components=2)   # 构建一个PCA对象，设置最终维度为2维。这里为了后边画图方便，将数据维度设置为 2，一般用默认不设置就可以</span><br><span class="line">x_train = pca.fit_transform(x_train) # 训练与转换，也可以拆分成两步</span><br><span class="line">x_test = pca.transform(x_test)</span><br><span class="line"></span><br><span class="line"># 训练模型</span><br><span class="line">#	criterion：指定特征选择标准，可以使用&quot;gini&quot;或者&quot;entropy&quot;，前者代表基尼系数，后者代表信息增益</span><br><span class="line">#	max_depth：限制树的最大深度4</span><br><span class="line">clf = DecisionTreeClassifier(criterion=&quot;entropy&quot;,max_depth=4)</span><br><span class="line">clf.fit(X, y) # 拟合模型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 画图</span><br><span class="line">x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line"># 生成网格采样点</span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),</span><br><span class="line">                     np.arange(y_min, y_max, 0.1))</span><br><span class="line"></span><br><span class="line">Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">Z = Z.reshape(xx.shape)</span><br><span class="line"></span><br><span class="line">plt.contourf(xx, yy, Z, alpha=0.4)</span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y, alpha=0.8)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="2-决策树：鸢尾花数据分类"><a href="#2-决策树：鸢尾花数据分类" class="headerlink" title="2. 决策树：鸢尾花数据分类"></a>2. 决策树：鸢尾花数据分类</h2><h3 id="2-1-DecisionTreeClassifier实例"><a href="#2-1-DecisionTreeClassifier实例" class="headerlink" title="2.1. DecisionTreeClassifier实例"></a>2.1. DecisionTreeClassifier实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">from itertools import product</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">from sklearn import datasets</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.feature_selection import SelectKBest</span><br><span class="line">from sklearn.feature_selection import chi2</span><br><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 使用自带的iris数据</span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, np.arange(0,4)]</span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line"># 划分训练集与测试集</span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(X,y,test_size=0.2,random_state=14)</span><br><span class="line">print(&quot;训练数据集样本总数:%d;测试数据集样本总数:%d&quot; %(x_train.shape[0],x_test.shape[0]))</span><br><span class="line"></span><br><span class="line"># 对数据集进行标准化</span><br><span class="line">ss = MinMaxScaler()</span><br><span class="line">x_train = ss.fit_transform(x_train,y_train)</span><br><span class="line">x_test = ss.transform(x_test)</span><br><span class="line"></span><br><span class="line"># 特征选择：从已有的特征属性中选择出影响目标最大的特征属性</span><br><span class="line"># 常用方法：</span><br><span class="line">#	离散属性：F统计量、卡方系数、互信息mutual_info_classif</span><br><span class="line">#	连续属性：皮尔逊相关系数、F统计量、互信息mutual_info_classif&#125;</span><br><span class="line"># 这里使用离散属性的卡方系数，实现函数为SelectKBest，用SelectKBest方法从四个原始特征属性中选择出最能影响目标的3个特征属性</span><br><span class="line">ch2 = SelectKBest(chi2,k=3) # k默认为10，指定后会返回想要的特征个数</span><br><span class="line">ch2.fit(x_train,y_train)</span><br><span class="line">x_train = ch2.transform(x_train)</span><br><span class="line">x_test = ch2.transform(x_test)</span><br><span class="line"></span><br><span class="line"># 特征降维，这里使用PCA方法</span><br><span class="line">pca = PCA(n_components=2)   # 构建一个PCA对象，设置最终维度为2维。这里为了后边画图方便，将数据维度设置为 2，一般用默认不设置就可以</span><br><span class="line">x_train = pca.fit_transform(x_train) # 训练与转换，也可以拆分成两步</span><br><span class="line">x_test = pca.transform(x_test)</span><br><span class="line"></span><br><span class="line"># 训练模型</span><br><span class="line">#	criterion：指定特征选择标准，可以使用&quot;gini&quot;或者&quot;entropy&quot;，前者代表基尼系数，后者代表信息增益</span><br><span class="line">#	max_depth：限制树的最大深度4</span><br><span class="line">clf = DecisionTreeClassifier(criterion=&quot;entropy&quot;,max_depth=4)</span><br><span class="line">clf.fit(X, y) # 拟合模型</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 画图</span><br><span class="line">x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1</span><br><span class="line">y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1</span><br><span class="line"># 生成网格采样点</span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),</span><br><span class="line">                     np.arange(y_min, y_max, 0.1))</span><br><span class="line"></span><br><span class="line">Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">Z = Z.reshape(xx.shape)</span><br><span class="line"></span><br><span class="line">plt.contourf(xx, yy, Z, alpha=0.4)</span><br><span class="line">plt.scatter(X[:, 0], X[:, 1], c=y, alpha=0.8)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p><img src="/images/InAction-MachineLearning-XGS-sklearn-decision-tree-1.png" alt></p>
 <h3 id="2-2-可视化决策树"><a href="#2-2-可视化决策树" class="headerlink" title="2.2. 可视化决策树"></a>2.2. 可视化决策树</h3><p>scikit-learn中决策树的可视化一般需要安装graphviz，主要包括graphviz的安装和python的graphviz插件的安装</p>
 <blockquote>
@@ -573,7 +600,7 @@
 <p>可视化决策树的代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from IPython.display import Image  </span><br><span class="line">from sklearn import tree</span><br><span class="line">import pydotplus </span><br><span class="line">dot_data = tree.export_graphviz(clf, out_file=None, </span><br><span class="line">                         feature_names=iris.feature_names,  </span><br><span class="line">                         class_names=iris.target_names,  </span><br><span class="line">                         filled=True, rounded=True,  </span><br><span class="line">                         special_characters=True)  </span><br><span class="line">graph = pydotplus.graph_from_dot_data(dot_data)  </span><br><span class="line">Image(graph.create_png())</span><br></pre></td></tr></table></figure>
 <p><img src="/images/InAction-MachineLearning-XGS-sklearn-decision-tree-2.png" alt></p>
-<h2 id="3-sklearn中测试数据：sklearn包中SVM算法库的使用"><a href="#3-sklearn中测试数据：sklearn包中SVM算法库的使用" class="headerlink" title="3. sklearn中测试数据：sklearn包中SVM算法库的使用"></a>3. sklearn中测试数据：sklearn包中SVM算法库的使用</h2><h3 id="3-1-SVM相关知识点回顾"><a href="#3-1-SVM相关知识点回顾" class="headerlink" title="3.1. SVM相关知识点回顾"></a>3.1. SVM相关知识点回顾</h3><h4 id="3-1-1-SVM与SVR"><a href="#3-1-1-SVM与SVR" class="headerlink" title="3.1.1. SVM与SVR"></a>3.1.1. SVM与SVR</h4><ul>
+<h2 id="3-SVM：sklearn中测试数据"><a href="#3-SVM：sklearn中测试数据" class="headerlink" title="3. SVM：sklearn中测试数据"></a>3. SVM：sklearn中测试数据</h2><h3 id="3-1-SVM相关知识点回顾"><a href="#3-1-SVM相关知识点回顾" class="headerlink" title="3.1. SVM相关知识点回顾"></a>3.1. SVM相关知识点回顾</h3><h4 id="3-1-1-SVM与SVR"><a href="#3-1-1-SVM与SVR" class="headerlink" title="3.1.1. SVM与SVR"></a>3.1.1. SVM与SVR</h4><ul>
 <li><p><strong>SVM分类算法</strong></p>
 <p>  其原始形式是：</p>
 <p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-SVM-1.png" alt></p>
@@ -666,11 +693,9 @@
 <h3 id="3-3-编程实现"><a href="#3-3-编程实现" class="headerlink" title="3.3. 编程实现"></a>3.3. 编程实现</h3><ol>
 <li><p>生成测试数据</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import make_circles</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line"></span><br><span class="line"># 生成一些随机数据用于后续分类</span><br><span class="line">X, y = make_circles(noise=0.2, factor=0.5, random_state=1) # 生成时加入了一些噪声</span><br><span class="line">X = StandardScaler().fit_transform(X) # 把数据归一化</span><br></pre></td></tr></table></figure>
+<p> 生成的随机数据可视化结果如下：</p>
+<p> <img src="/images/InAction-MachineLearning-XGS-sklearn-SVM-5.png" alt></p>
 </li>
-</ol>
-<pre><code>生成的随机数据可视化结果如下：
-</code></pre><p><img src="/images/InAction-MachineLearning-XGS-sklearn-SVM-5.png" alt></p>
-<ol start="2">
 <li><p>调参</p>
 <p> 接着采用网格搜索的策略进行RBF核函数参数搜索</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line">grid = GridSearchCV(SVC(), param_grid=&#123;&quot;C&quot;:[0.1, 1, 10], &quot;gamma&quot;: [1, 0.1, 0.01]&#125;, cv=4) # 总共有9种参数组合的搜索空间</span><br><span class="line">grid.fit(X, y)</span><br><span class="line">print(&quot;The best parameters are %s with a score of %0.2f&quot;</span><br><span class="line">      % (grid.best_params_, grid.best_score_))</span><br><span class="line"></span><br><span class="line">输出为：</span><br><span class="line">The best parameters are &#123;&apos;C&apos;: 10, &apos;gamma&apos;: 0.1&#125; with a score of 0.91</span><br></pre></td></tr></table></figure>
@@ -708,7 +733,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="4-sklearn包中朴素贝叶斯库的使用"><a href="#4-sklearn包中朴素贝叶斯库的使用" class="headerlink" title="4.sklearn包中朴素贝叶斯库的使用"></a>4.sklearn包中朴素贝叶斯库的使用</h2><h3 id="4-1-朴素贝叶斯相关知识点回顾"><a href="#4-1-朴素贝叶斯相关知识点回顾" class="headerlink" title="4.1. 朴素贝叶斯相关知识点回顾"></a>4.1. 朴素贝叶斯相关知识点回顾</h3><h4 id="4-1-1-什么是朴素贝叶斯分类器"><a href="#4-1-1-什么是朴素贝叶斯分类器" class="headerlink" title="4.1.1. 什么是朴素贝叶斯分类器"></a>4.1.1. 什么是朴素贝叶斯分类器</h4><p>判别式模型（discriminative models)：像决策树、BP神经网络、支持向量机等，都可以归入判别式模型，它们都是直接学习出输出Y与特征X的关系，如：</p>
+<h2 id="4-朴素贝叶斯"><a href="#4-朴素贝叶斯" class="headerlink" title="4.朴素贝叶斯"></a>4.朴素贝叶斯</h2><h3 id="4-1-朴素贝叶斯相关知识点回顾"><a href="#4-1-朴素贝叶斯相关知识点回顾" class="headerlink" title="4.1. 朴素贝叶斯相关知识点回顾"></a>4.1. 朴素贝叶斯相关知识点回顾</h3><h4 id="4-1-1-什么是朴素贝叶斯分类器"><a href="#4-1-1-什么是朴素贝叶斯分类器" class="headerlink" title="4.1.1. 什么是朴素贝叶斯分类器"></a>4.1.1. 什么是朴素贝叶斯分类器</h4><p>判别式模型（discriminative models)：像决策树、BP神经网络、支持向量机等，都可以归入判别式模型，它们都是直接学习出输出Y与特征X的关系，如：</p>
 <ul>
 <li>决策函数 Y=f(X)</li>
 <li>条件概率 P(Y|X)</li>
@@ -721,15 +746,15 @@
 <p>如何对P(X,Y)进行建模？</p>
 <blockquote>
 <p>假如我们的分类模型样本是：</p>
-<p>(x<sup>(1)</sup><sub>1</sub>,x<sup>(1)</sup><sub>2</sub>,…x<sup>(1)</sup><sub>n</sub>,y<sub>1</sub>), (x<sup>(2)</sup><sub>1</sub>,x<sup>(2)</sup><sub>2</sub>,…x<sup>(2)</sup><sub>n</sub>,y<sub>2</sub>),…(x<sup>(m)</sup><sub>1</sub>,x<sup>(m)</sup><sub>2</sub>, …, x<sup>(m)</sup><sub>n</sub>,y<sub>m</sub>)</p>
+<p>$(x_1^{(1)},x_2^{(1)},…,x_n^{(1)},y_1),(x_1^{(2)},x_2^{(2)},…,x_n^{(2)},y_2),…,(x_1^{(m)},x_2^{(m)},…,x_n^{(m)},y_m)$</p>
 <p>则</p>
-<p>P(X, Y) = P(Y) * P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y ) </p>
+<p>$$P(X,Y)=P(Y)P(X=(x_1,x_2,…,x_n)|Y)$$</p>
 <p>其中</p>
-<p>P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y )  =  P( x<sub>1</sub> | Y) * P( x<sub>2</sub> | Y, x<sub>1</sub>) * … P( x<sub>n</sub> | Y, x<sub>1</sub>, … , x<sub>n-1</sub>)</p>
+<p>$$P(X=(x_1,x_2,…,x_n)|Y)=P(X_1|Y)P(X_2|Y,X_1)…P(X_n|Y,x_1,X_2,…,x_{n-1})$$</p>
 </blockquote>
 <p>这是一个超级复杂的有n个维度的条件分布，很难求出</p>
 <p>朴素贝叶斯模型在这里做了一个大胆的假设，即X的n个维度之间相互独立，这样就可以得出：</p>
-<p>P( X = (x<sub>1</sub>, x<sub>2</sub>, …, x<sub>n</sub>) | Y ) = P( x<sub>1</sub> | Y) * P( x<sub>2</sub> | Y) * … * P( x<sub>n</sub> | Y) </p>
+<p>$$P(X=(x_1,x_2,…,x_n)|Y)=P(X_1|Y)P(X_2|Y)…P(X_n|Y)$$</p>
 <h4 id="4-1-2-朴素贝叶斯推断"><a href="#4-1-2-朴素贝叶斯推断" class="headerlink" title="4.1.2. 朴素贝叶斯推断"></a>4.1.2. 朴素贝叶斯推断</h4><p><img src="/images/InAction-MachineLearning-XGS-sklearn-naive-bayes-1.png" alt></p>
 <h4 id="4-1-3-朴素贝叶斯学习"><a href="#4-1-3-朴素贝叶斯学习" class="headerlink" title="4.1.3. 朴素贝叶斯学习"></a>4.1.3. 朴素贝叶斯学习</h4><p>需要从训练样本中学习到以下两个参数：</p>
 <ul>
@@ -791,7 +816,7 @@
 <p>其中，x <sub>i</sub> 只能取0或1</p>
 <p>BernoulliNB一共有4个参数，其中3个参数的名字和意义和MultinomialNB完全相同</p>
 <p>唯一增加的一个参数是binarize，这个参数主要是用来帮BernoulliNB处理二项分布的。如果不输入，则BernoulliNB认为每个数据特征都已经是二元的。否则的话，小于binarize的会归为一类，大于binarize的会归为另外一类</p>
-<h2 id="5-手写数字识别：sklearn包中神经网络库的使用"><a href="#5-手写数字识别：sklearn包中神经网络库的使用" class="headerlink" title="5. 手写数字识别：sklearn包中神经网络库的使用"></a>5. 手写数字识别：sklearn包中神经网络库的使用</h2><h3 id="5-1-神经网络相关知识点回顾"><a href="#5-1-神经网络相关知识点回顾" class="headerlink" title="5.1. 神经网络相关知识点回顾"></a>5.1. 神经网络相关知识点回顾</h3><h4 id="5-1-1-感知机：神经网络的最小单元"><a href="#5-1-1-感知机：神经网络的最小单元" class="headerlink" title="5.1.1. 感知机：神经网络的最小单元"></a>5.1.1. 感知机：神经网络的最小单元</h4><p>神经网络中最基本的成分是神经元（neuron）模型，最常见的模型是M-P神经元模型，也可以称为感知机（Perceptron）</p>
+<h2 id="5-神经网络（sklearn）：手写数字识别"><a href="#5-神经网络（sklearn）：手写数字识别" class="headerlink" title="5. 神经网络（sklearn）：手写数字识别"></a>5. 神经网络（sklearn）：手写数字识别</h2><h3 id="5-1-神经网络相关知识点回顾"><a href="#5-1-神经网络相关知识点回顾" class="headerlink" title="5.1. 神经网络相关知识点回顾"></a>5.1. 神经网络相关知识点回顾</h3><h4 id="5-1-1-感知机：神经网络的最小单元"><a href="#5-1-1-感知机：神经网络的最小单元" class="headerlink" title="5.1.1. 感知机：神经网络的最小单元"></a>5.1.1. 感知机：神经网络的最小单元</h4><p>神经网络中最基本的成分是神经元（neuron）模型，最常见的模型是M-P神经元模型，也可以称为感知机（Perceptron）</p>
 <p><img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-1.png" alt></p>
 <p>若对生物学有一点基础的了解，就可以知道上面构造的简化的M-P神经元模型几乎完全吻合生物学上的定义：</p>
 <blockquote>
@@ -815,8 +840,10 @@
 <li><p>对于线性可分的分类任务，感知机完全等价于logistic回归分类器</p>
 </li>
 <li><p>对于线性不可分问题，logistic回归可以构造额外的高阶多项式：</p>
-<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-4.png" alt></p>
-<p>  <img src="/images/InAction-MachineLearning-XGS-sklearn-neural-network-5.png" alt></p>
+  <p align="center">&lt;img src=./picture/InAction-MachineLearning-XGS-sklearn-neural-network-4.png height=40 /&gt;</p>
+
+  <p align="center">&lt;img src=./picture/InAction-MachineLearning-XGS-sklearn-neural-network-5.png width=300 /&gt;</p>
+
 <p>  本质上是将原始特征空间中线性不可分的样本向高维特征空间进行映射，使得它们在新的高维特征空间中线性可分</p>
 <p>  而感知器无法进行高维空间的映射，只能基于原始特征空间寻找线性判别边界，因此感知机在面对简单的非线性可分问题是，往往无法得到理想的判别面</p>
 </li>
@@ -969,6 +996,174 @@
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line"></span><br><span class="line">mlp = MLPClassifier()</span><br><span class="line">mlp_clf__tuned_parameters = &#123;&quot;hidden_layer_sizes&quot;: [(100,), (100, 30)],</span><br><span class="line">                                 &quot;solver&quot;: [&apos;adam&apos;, &apos;sgd&apos;, &apos;lbfgs&apos;],</span><br><span class="line">                                 &quot;max_iter&quot;: [20],</span><br><span class="line">                                 &quot;verbose&quot;: [True]</span><br><span class="line">                                 &#125;</span><br><span class="line">estimator = GridSearchCV(mlp, mlp_clf__tuned_parameters, n_jobs=6)</span><br><span class="line">estimator.fit(X_training, y_training)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h2 id="6-特征选择-特征降维：sklearn包中feature-selection模块的使用"><a href="#6-特征选择-特征降维：sklearn包中feature-selection模块的使用" class="headerlink" title="6. 特征选择/特征降维：sklearn包中feature_selection模块的使用"></a>6. 特征选择/特征降维：sklearn包中feature_selection模块的使用</h2><h3 id="6-1-相关知识回顾"><a href="#6-1-相关知识回顾" class="headerlink" title="6.1. 相关知识回顾"></a>6.1. 相关知识回顾</h3><h4 id="6-1-1-特征降维"><a href="#6-1-1-特征降维" class="headerlink" title="6.1.1. 特征降维"></a>6.1.1. 特征降维</h4><h4 id="6-1-2-特征选择"><a href="#6-1-2-特征选择" class="headerlink" title="6.1.2. 特征选择"></a>6.1.2. 特征选择</h4><h5 id="6-1-2-1-特征选择的一般解决思路"><a href="#6-1-2-1-特征选择的一般解决思路" class="headerlink" title="6.1.2.1. 特征选择的一般解决思路"></a>6.1.2.1. 特征选择的一般解决思路</h5><p>目标：从初始特征集合中选取一个包含所有重要信息的特征子集</p>
+<p>可用策略:</p>
+<blockquote>
+<ul>
+<li><p>（1）找到该领域懂业务的专家，让他们给一些建议。比如我们需要解决一个药品疗效的分类问题，那么先找到领域专家，向他们咨询哪些因素（特征）会对该药品的疗效产生影响，较大影响的和较小影响的都要。这些特征就是我们的特征的第一候选集</p>
+</li>
+<li><p>（2）若没有任何领域知识作为先验假设</p>
+<ul>
+<li><p>方差筛选：最简单的方法，方差越大的特征，那么我们可以认为它是比较有用的。如果方差较小，比如小于1，那么这个特征可能对我们的算法作用没有那么大。最极端的，如果某个特征方差为0，即所有的样本该特征的取值都是一样的，那么它对我们的模型训练没有任何作用，可以直接舍弃；</p>
+</li>
+<li><p>遍历所有可能的子集——计算上不可行；</p>
+</li>
+<li><p>产生一个“候选子集”，评价出它的好坏，基于评价结果产生下一个候选子集，再对其进行评价…这个过程持续下去，直到无法再找到更好的候选子集为止——这就是我们所说的一般的特征选择问题的处理策略；</p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>那么这就产生了两个问题：</p>
+<blockquote>
+<ul>
+<li><p>如何根据评价结果获取下一个候选特征子集？——子集搜索</p>
+</li>
+<li><p>如何评价候选特征子集的好坏？——子集评价</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><p><strong>子集搜索</strong></p>
+<p>  （1）给定特征结合${a_1,a_2,…,a_d}$，可将每个特征看作一个候选子集，对这d个候选单特征子集进行评价，假定${a_2}$最优，将${a_2}$作为第一轮的选定子集；</p>
+<p>  （2）在上一轮的选定子集中加入一个特征，构成包含两个特征的候选子集</p>
+<p>  假定在这d-1个候选两特征子集中${a_2,a_4}$最优，且由于${a_2}$，于是将${a_2,a_4}$作为本轮的选定子集；</p>
+<p>  （3）假定在第k+1轮时，最优的候选特征子集不如上一轮的选定集，则停止生产候选子集，并将上一轮的k特征子集作为特征选择结果</p>
+<p>  以上逐渐增加相关特征的策略称为 <strong>“前向”搜索</strong> ，与它相对于的还有 <strong>“反向”搜索</strong> 和 <strong>“双向”搜索</strong></p>
+<p>  注意：上述策略都是贪心的，因为它们都仅考虑了使本轮选定集最优</p>
+</li>
+<li><p><strong>子集评价</strong></p>
+<p>  给定数据集D，假定D中第i类样本所占的比例为$p_i(i=1,2,…,|y|)$，为了后面方便进行讨论，假定样本属性均为离散型</p>
+<p>  对于属性子集A，假定根据其取值将D分成V个子集${D^1,D^2,…,D^V}$，每个子集中的样本在A上取值相同</p>
+<p>  属性子集A的信息增益：</p>
+<p>  $$Gain(A)=Ent(D)-\sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)$$</p>
+<p>  其中信息熵定义为：</p>
+<p>  $$Ent(D)=-\sum_{k=1}^{|y|}p_klog_2p_k$$</p>
+<p>  信息熵增益越大，意味着特征子集A包含的有助于分类的信息越多</p>
+</li>
+</ul>
+<h5 id="6-1-2-2-具体的几种特征选择类型"><a href="#6-1-2-2-具体的几种特征选择类型" class="headerlink" title="6.1.2.2. 具体的几种特征选择类型"></a>6.1.2.2. 具体的几种特征选择类型</h5><p>特征选择方法有很多，一般分为三类：</p>
+<ul>
+<li><p><strong>过滤式选择</strong></p>
+<p>  过滤式选择：先对数据集进行特征选择，它按照特征的发散性或者相关性指标对各个特征进行评分，设定评分阈值或者待选择阈值的个数，选择合适特征然后再训练学习器——特征选择过程与后续学习器无关</p>
+<p>  相当于：先用特征选择过程对初始特征进行“过滤”，再用过滤后的特征来训练模型</p>
+<p>  方差筛选就是过滤法的一种</p>
+<p>  一个经典的过滤式特征选择方法为Relief（Relevant Features）方法：</p>
+<blockquote>
+<blockquote>
+<p>该方法设计了一个“相关性统计量”来度量特征的重要性，该统计量是一个向量，其每一个分量对于一个初始特征，而特征子集的重要性则由子集中每个特征所对应的相关统计量之和来决定</p>
+</blockquote>
+<p>Relief的关键是如何确定相关统计量的：</p>
+<blockquote>
+<p>给定训练集${(x_1,y_1),(x_2,y_2),…,(x_m,y_m)}$，对每个示例$x_i$，Relief先在$x_i$的同类样本中寻找其最近邻$x_{i,nh}$，称为“猜中近邻”(near-hit)，再从$x_i$的异类样本中寻找其最近邻$x_{i,nm}$，称为“猜错近邻”(near-miss)</p>
+<p>相关统计量对应于属性j的分量为：</p>
+<p>$$\delta^j=\sum_i[-diff(x_i^j,x_{i,nh}^j)^2+diff(x_i^j,x_{i,nm}^j)^2]$$</p>
+<p>其中$diff(x_a^j,x_b^j)$的取值取决于属性j的类型：</p>
+<ul>
+<li>离散型：$x_a^j=x_b^j$时，$diff(x_a^j,x_b^j)=0$，否则为1；</li>
+<li>连续型：$diff(x_a^j,x_b^j)=|x_a^j-x_b^j|$</li>
+</ul>
+</blockquote>
+<p>理解Relief相关统计量的意义：</p>
+<blockquote>
+<p>若$x_i$与其猜中近邻$x_{i,nh}$在属性j上的距离小于$x_i$与其猜错近邻$x_{i,nm}$的距离，则说明该属性对于区分同类样本与异类样本是有益的，于是增大j的统计量；</p>
+<p>反之，说明属性j起负面作用，生与死减小j对于的统计量</p>
+</blockquote>
+<p>以上说的是Relief对于二分类问题的情况，其扩展变体Relief-F能处理多分类问题，由于篇幅有限，此处略去</p>
+</blockquote>
+<p>  其实不同过滤式选择方法主要的差别在于“相关统计量”的选择，其他常用的统计量和它们的适用场景：</p>
+<ul>
+<li><p><strong>相关系数</strong>：主要用于输出连续值的监督学习算法中。分别计算所有训练集中各个特征与输出值之间的相关系数，设定一个阈值，选择相关系数较大的部分特征；</p>
+</li>
+<li><p><strong>假设检验</strong>：比如卡方检验。卡方检验可以检验某个特征分布和输出值分布之间的相关性，它比粗暴的方差法好用。</p>
+<p>  在sklearn中，使用chi2这个类来做卡方检验得到所有特征的卡方值与显著性水平P临界值，我们可以给定卡方值阈值， 选择卡方值较大的部分特征。</p>
+<p>  除了卡方检验，我们还可以使用F检验和t检验，它们都是使用假设检验的方法，只是使用的统计分布不是卡方分布，而是F分布和t分布而已。在sklearn中，有F检验的函数<code>f_classif</code>和<code>f_regression</code>，分别在分类和回归特征选择时使用。</p>
+</li>
+<li><p><strong>互信息</strong>：从信息熵的角度分析各个特征和输出值之间的关系评分</p>
+<p>  互信息值越大，说明该特征和输出值之间的相关性越大，越需要保留。在sklearn中，可以使用<code>mutual_info_classif</code>(分类)和<code>mutual_info_regression</code>(回归)来计算各个输入特征和输出值之间的互信息。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>包裹式选择</strong></p>
+<p>  包裹式选择：直接把最终将要使用的学习器的性能作为特征子集的评价准则</p>
+<p>  即，为给定的学习器选择最有利于其性能、“量身定做”的特征子集</p>
+<p>  其特点：</p>
+<blockquote>
+<ul>
+<li><p>由于包裹式特征选择方法直接针对给定学习器进行优化，因此从最终性能来看，它比过滤式特征选择要好；</p>
+</li>
+<li><p>特征选择过程中需多次训练学习器，因此其计算开销通常比过滤式大得多；</p>
+</li>
+</ul>
+</blockquote>
+<p>  最常用的包装法是<strong>递归消除特征法</strong>(recursive feature elimination,以下简称RFE)。递归消除特征法使用一个机器学习模型来进行多轮训练，每轮训练后，消除若干权值系数的对应的特征，再基于新的特征集进行下一轮训练。在sklearn中，可以使用RFE函数来选择特征。</p>
+<p>  以经典的SVM-RFE算法来讨论这个特征选择的思路：</p>
+<blockquote>
+<p>这个算法以支持向量机来做RFE的机器学习模型选择特征</p>
+<p>它在第一轮训练的时候，会选择所有的特征来训练，得到了分类的超平面$wx+b=0$后，如果有n个特征，那么RFE-SVM会选择出$w$中分量的平方值$w^2_i$最小的那个序号i对应的特征，将其排除</p>
+<p>在第二轮的时候，特征数就剩下n-1个了，我们继续用这n-1个特征和输出值来训练SVM，同样的，去掉$w^2_i$最小的那个序号i对应的特征。以此类推，直到剩下的特征数满足我们的需求为止。</p>
+</blockquote>
+</li>
+<li><p><strong>嵌入式选择——基于$L_1$正则化</strong></p>
+<p>  嵌入式特征选择：将特征选择与学习器训练过程融合为一体，两者在同一个优化过程中完成，即在学习训练过程中自动地进行了特征选择</p>
+<p>  对于简单的线性回归问题，它的优化目标一般为最小化平方误差：</p>
+<p>  $$\min_\omega \, \sum_{i=1}^m(y_i-\omega^Tx_i)$$</p>
+<p>  当样本特征多而样本数又相对较少时，很容易陷入过拟合，为了缓解过拟合，需要对上面的优化目标引入最终项</p>
+<p>  若使用L2范数正则化则有</p>
+<p>  $$\min_\omega \, \sum_{i=1}^m(y_i-\omega^Tx_i)-\lambda||\omega||_2^2\quad(岭回归）$$</p>
+<p>  若使用L1范数则有</p>
+<p>  $$\min_\omega \, \sum_{i=1}^m(y_i-\omega^Tx_i)-\lambda||\omega||_1\quad(LASSO）$$</p>
+<p>  L1和L2范数都能降低过拟合的风险，而L1范数还会带来一个额外的好处：跟容易获得“稀疏”（sparse）解，即它求得的$\omega$会有更少的非零分量</p>
+</li>
+</ul>
+<h4 id="6-1-3-构造高级特征"><a href="#6-1-3-构造高级特征" class="headerlink" title="6.1.3. 构造高级特征"></a>6.1.3. 构造高级特征</h4><p>在我们拿到已有的特征后，我们还可以根据需要寻找到更多的高级特征</p>
+<p>比如有车的路程特征和时间间隔特征，我们就可以得到车的平均速度这个二级特征。根据车的速度特征，我们就可以得到车的加速度这个三级特征，根据车的加速度特征，我们就可以得到车的加加速度这个四级特征……也就是说，高级特征可以一直寻找下去</p>
+<p>在Kaggle之类的算法竞赛中，高分团队主要使用的方法除了集成学习算法，剩下的主要就是在高级特征上面做文章。所以寻找高级特征是模型优化的必要步骤之一</p>
+<p>寻找高级特征最常用的方法有：</p>
+<blockquote>
+<ul>
+<li><p>若干项特征加和： 我们假设你希望根据每日销售额得到一周销售额的特征。你可以将最近的7天的销售额相加得到</p>
+</li>
+<li><p>若干项特征之差： 假设你已经拥有每周销售额以及每月销售额两项特征，可以求一周前一月内的销售额</p>
+</li>
+<li><p>若干项特征乘积： 假设你有商品价格和商品销量的特征，那么就可以得到销售额的特征</p>
+</li>
+<li><p>若干项特征除商： 假设你有每个用户的销售额和购买的商品件数，那么就是得到该用户平均每件商品的销售额</p>
+</li>
+</ul>
+</blockquote>
+<p>寻找高级特征的方法远不止于此，它需要你根据你的业务和模型需要而得，而不是随便的两两组合形成高级特征，这样容易导致特征爆炸，反而没有办法得到较好的模型</p>
+<h3 id="6-2-功能实现"><a href="#6-2-功能实现" class="headerlink" title="6.2. 功能实现"></a>6.2. 功能实现</h3><p>在 <code>sklearn.feature_selection</code> 模块中的类可以用来对样本集进行 feature selection（特征选择）和 dimensionality reduction（降维）</p>
+<h4 id="6-2-1-特征降维"><a href="#6-2-1-特征降维" class="headerlink" title="6.2.1. 特征降维"></a>6.2.1. 特征降维</h4><h4 id="6-2-2-特征选择"><a href="#6-2-2-特征选择" class="headerlink" title="6.2.2. 特征选择"></a>6.2.2. 特征选择</h4><h5 id="6-2-2-1-移除低方差特征"><a href="#6-2-2-1-移除低方差特征" class="headerlink" title="6.2.2.1. 移除低方差特征"></a>6.2.2.1. 移除低方差特征</h5><p><code>VarianceThreshold</code> 是特征选择的一个简单基本方法，它会移除所有那些方差不满足一些阈值的特征。默认情况下，它将会移除所有的零方差特征，即那些在所有的样本上的取值均不变的特征。</p>
+<p>例如，假设我们有一个特征是布尔值的数据集，我们想要移除那些在整个数据集中特征值为0或者为1的比例超过80%的特征。布尔特征是伯努利（ Bernoulli ）随机变量，变量的方差为</p>
+<p>$$Var[X] = p(1 - p)$$</p>
+<p>因此，我们可以使用阈值 <code>.8 * (1 - .8)</code> 进行选择:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import VarianceThreshold</span><br><span class="line">X = [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0, 1, 1], [0, 1, 0], [0, 1, 1]]</span><br><span class="line">sel = VarianceThreshold(threshold=(.8 * (1 - .8)))</span><br><span class="line">sel.fit_transform(X)</span><br><span class="line"></span><br><span class="line">特征选择结果如下：</span><br><span class="line"></span><br><span class="line">array([[0, 1],</span><br><span class="line"> [1, 0],</span><br><span class="line"> [0, 0],</span><br><span class="line"> [1, 1],</span><br><span class="line"> [1, 0],</span><br><span class="line"> [1, 1]])</span><br></pre></td></tr></table></figure>
+<h5 id="6-2-2-2-单变量特征选择"><a href="#6-2-2-2-单变量特征选择" class="headerlink" title="6.2.2.2. 单变量特征选择"></a>6.2.2.2. 单变量特征选择</h5><p>单变量的特征选择是通过基于单变量的统计测试来选择最好的特征，因此它实际采用的特征选择策略是<strong>过滤式特征选择方法中的Relief方法</strong></p>
+<blockquote>
+<ul>
+<li><p><code>SelectKBest</code> 移除那些除了评分最高的 K 个特征之外的所有特征</p>
+</li>
+<li><p><code>SelectPercentile</code> 移除除了用户指定的最高得分百分比之外的所有特征</p>
+<p>  对每个特征应用常见的单变量统计测试: 假阳性率（false positive rate） SelectFpr, 伪发现率（false discovery rate） SelectFdr , 或者族系误差（family wise error） SelectFwe 。</p>
+</li>
+<li><code>GenericUnivariateSelect</code> 允许使用可配置方法来进行单变量特征选择。它允许超参数搜索评估器来选择最好的单变量特征。</li>
+</ul>
+</blockquote>
+<p>例如下面的实例，我们可以使用 x<sup>2</sup> 检验样本集来选择最好的两个特征：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.datasets import load_iris</span><br><span class="line">from sklearn.feature_selection import SelectKBest</span><br><span class="line">from sklearn.feature_selection import chi2</span><br><span class="line">iris = load_iris()</span><br><span class="line">X, y = iris.data, iris.target</span><br><span class="line">X.shape</span><br><span class="line"># 输出为：(150, 4)</span><br><span class="line">X_new = SelectKBest(chi2, k=2).fit_transform(X, y)</span><br><span class="line">X_new.shape</span><br><span class="line"># 输出为：(150, 2)</span><br></pre></td></tr></table></figure>
+<p>对于回归问题和分类问题，适用的统计量是不一样的：</p>
+<blockquote>
+<ul>
+<li>对于回归: <code>f_regression</code> , <code>mutual_info_regression</code></li>
+<li>对于分类: <code>chi2</code> , <code>f_classif</code> , <code>mutual_info_classif</code></li>
+</ul>
+</blockquote>
+<p>注意：不要使用一个回归评分函数来处理分类问题，你会得到无用的结果</p>
+<h5 id="6-2-2-3-递归式特征消除"><a href="#6-2-2-3-递归式特征消除" class="headerlink" title="6.2.2.3. 递归式特征消除"></a>6.2.2.3. 递归式特征消除</h5><p>给定一个外部的估计器，可以对特征赋予一定的权重（比如，线性模型的相关系数），<code>recursive feature elimination ( RFE )</code> 通过考虑越来越小的特征集合来递归的选择特征。</p>
+<p>首先，评估器在初始的特征集合上面训练并且每一个特征的重要程度是通过一个 <code>coef_</code> 属性 或者 <code>feature_importances_</code> 属性来获得。 然后，从当前的特征集合中移除最不重要的特征。在特征集合上不断的重复递归这个步骤，直到最终达到所需要的特征数量为止。 RFECV 在一个交叉验证的循环中执行 RFE 来找到最优的特征数量</p>
 <hr>
 <p>参考资料：</p>
 <p>(1) <a href="https://github.com/MLjian/TextClassificationImplement" target="_blank" rel="noopener">【GitHub】MLjian/TextClassificationImplement</a></p>
@@ -987,6 +1182,10 @@
 <p>(14) <a href="http://sklearn.apachecn.org/#/docs/18" target="_blank" rel="noopener">scikit-learn中文网《神经网络模型（有监督）》</a></p>
 <p>(15) <a href="https://blog.csdn.net/weixin_38278334/article/details/83023958" target="_blank" rel="noopener">啊噗不是阿婆主《sklearn 神经网络MLPclassifier参数详解》</a></p>
 <p>(16) <a href="https://www.jianshu.com/p/d4fd9c52a915" target="_blank" rel="noopener">多问Why.简书《SkLearn之MLP》</a></p>
+<p>(17) 周志华《机器学习：第11章 特征选择与稀疏学习》</p>
+<p>(18) <a href="https://www.cnblogs.com/pinard/p/9032759.html" target="_blank" rel="noopener">刘建平Pinard《特征工程之特征选择》</a></p>
+<p>(19) <a href="http://sklearn.apachecn.org/#/docs/14" target="_blank" rel="noopener">sklearn中文文档：特征选择</a></p>
+<p>(20) <a href="https://scikit-learn.org/stable/modules/feature_selection.html" target="_blank" rel="noopener">sklearn英文文档：1.13. Feature selection</a></p>
 
       
     </div>
@@ -1305,7 +1504,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-“达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用"><span class="nav-text">1. “达观杯”文本智能处理挑战赛：sklearn包中logistic算法的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-任务描述"><span class="nav-text">1.1. 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编程实现"><span class="nav-text">1.2. 编程实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-sklearn包中logistic算法的使用"><span class="nav-text">1.3. sklearn包中logistic算法的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-鸢尾花数据分类：sklearn包中决策树算法类库的使用"><span class="nav-text">2. 鸢尾花数据分类：sklearn包中决策树算法类库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DecisionTreeClassifier实例"><span class="nav-text">2.1. DecisionTreeClassifier实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可视化决策树"><span class="nav-text">2.2. 可视化决策树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sklearn中测试数据：sklearn包中SVM算法库的使用"><span class="nav-text">3. sklearn中测试数据：sklearn包中SVM算法库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SVM相关知识点回顾"><span class="nav-text">3.1. SVM相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-SVM与SVR"><span class="nav-text">3.1.1. SVM与SVR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-核函数"><span class="nav-text">3.1.2. 核函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sklearn中SVM相关库的简介"><span class="nav-text">3.2. sklearn中SVM相关库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-分类库与回归库"><span class="nav-text">3.2.1. 分类库与回归库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-高斯核调参"><span class="nav-text">3.2.2. 高斯核调参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-1-需要调节的参数"><span class="nav-text">3.2.2.1. 需要调节的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-2-调参方法：网格搜索"><span class="nav-text">3.2.2.2. 调参方法：网格搜索</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-编程实现"><span class="nav-text">3.3. 编程实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-sklearn包中朴素贝叶斯库的使用"><span class="nav-text">4.sklearn包中朴素贝叶斯库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-朴素贝叶斯相关知识点回顾"><span class="nav-text">4.1. 朴素贝叶斯相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-什么是朴素贝叶斯分类器"><span class="nav-text">4.1.1. 什么是朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-朴素贝叶斯推断"><span class="nav-text">4.1.2. 朴素贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-朴素贝叶斯学习"><span class="nav-text">4.1.3. 朴素贝叶斯学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-sklearn中朴素贝叶斯类库的简介"><span class="nav-text">4.2. sklearn中朴素贝叶斯类库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-GaussianNB类"><span class="nav-text">4.2.1. GaussianNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-MultinomialNB类"><span class="nav-text">4.2.2. MultinomialNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-BernoulliNB类"><span class="nav-text">4.2.3. BernoulliNB类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-手写数字识别：sklearn包中神经网络库的使用"><span class="nav-text">5. 手写数字识别：sklearn包中神经网络库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-神经网络相关知识点回顾"><span class="nav-text">5.1. 神经网络相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-感知机：神经网络的最小单元"><span class="nav-text">5.1.1. 感知机：神经网络的最小单元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-神经网络的学习：BackPropagation算法"><span class="nav-text">5.1.2. 神经网络的学习：BackPropagation算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-1-标准BP算法"><span class="nav-text">5.1.2.1. 标准BP算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-2-累积BP算法"><span class="nav-text">5.1.2.2. 累积BP算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-sklearn中神经网络库的简介"><span class="nav-text">5.2. sklearn中神经网络库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-MLPClassifier"><span class="nav-text">5.2.1. MLPClassifier</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-编程实现"><span class="nav-text">5.3. 编程实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-logistic回归：“达观杯”文本智能处理挑战赛"><span class="nav-text">1. logistic回归：“达观杯”文本智能处理挑战赛</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-任务描述"><span class="nav-text">1.1. 任务描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-编程实现"><span class="nav-text">1.2. 编程实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-sklearn包中logistic算法的使用"><span class="nav-text">1.3. sklearn包中logistic算法的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-决策树：鸢尾花数据分类"><span class="nav-text">2. 决策树：鸢尾花数据分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-DecisionTreeClassifier实例"><span class="nav-text">2.1. DecisionTreeClassifier实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-可视化决策树"><span class="nav-text">2.2. 可视化决策树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-SVM：sklearn中测试数据"><span class="nav-text">3. SVM：sklearn中测试数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-SVM相关知识点回顾"><span class="nav-text">3.1. SVM相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-SVM与SVR"><span class="nav-text">3.1.1. SVM与SVR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-核函数"><span class="nav-text">3.1.2. 核函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-sklearn中SVM相关库的简介"><span class="nav-text">3.2. sklearn中SVM相关库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-分类库与回归库"><span class="nav-text">3.2.1. 分类库与回归库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-高斯核调参"><span class="nav-text">3.2.2. 高斯核调参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-1-需要调节的参数"><span class="nav-text">3.2.2.1. 需要调节的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-2-调参方法：网格搜索"><span class="nav-text">3.2.2.2. 调参方法：网格搜索</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-编程实现"><span class="nav-text">3.3. 编程实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-朴素贝叶斯"><span class="nav-text">4.朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-朴素贝叶斯相关知识点回顾"><span class="nav-text">4.1. 朴素贝叶斯相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-什么是朴素贝叶斯分类器"><span class="nav-text">4.1.1. 什么是朴素贝叶斯分类器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-朴素贝叶斯推断"><span class="nav-text">4.1.2. 朴素贝叶斯推断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-朴素贝叶斯学习"><span class="nav-text">4.1.3. 朴素贝叶斯学习</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-sklearn中朴素贝叶斯类库的简介"><span class="nav-text">4.2. sklearn中朴素贝叶斯类库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-GaussianNB类"><span class="nav-text">4.2.1. GaussianNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-MultinomialNB类"><span class="nav-text">4.2.2. MultinomialNB类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-BernoulliNB类"><span class="nav-text">4.2.3. BernoulliNB类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-神经网络（sklearn）：手写数字识别"><span class="nav-text">5. 神经网络（sklearn）：手写数字识别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-神经网络相关知识点回顾"><span class="nav-text">5.1. 神经网络相关知识点回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-感知机：神经网络的最小单元"><span class="nav-text">5.1.1. 感知机：神经网络的最小单元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-神经网络的学习：BackPropagation算法"><span class="nav-text">5.1.2. 神经网络的学习：BackPropagation算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-1-标准BP算法"><span class="nav-text">5.1.2.1. 标准BP算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-2-累积BP算法"><span class="nav-text">5.1.2.2. 累积BP算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-sklearn中神经网络库的简介"><span class="nav-text">5.2. sklearn中神经网络库的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-MLPClassifier"><span class="nav-text">5.2.1. MLPClassifier</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-编程实现"><span class="nav-text">5.3. 编程实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-特征选择-特征降维：sklearn包中feature-selection模块的使用"><span class="nav-text">6. 特征选择/特征降维：sklearn包中feature_selection模块的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-相关知识回顾"><span class="nav-text">6.1. 相关知识回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-1-特征降维"><span class="nav-text">6.1.1. 特征降维</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-2-特征选择"><span class="nav-text">6.1.2. 特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-2-1-特征选择的一般解决思路"><span class="nav-text">6.1.2.1. 特征选择的一般解决思路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-2-2-具体的几种特征选择类型"><span class="nav-text">6.1.2.2. 具体的几种特征选择类型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-3-构造高级特征"><span class="nav-text">6.1.3. 构造高级特征</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-功能实现"><span class="nav-text">6.2. 功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-1-特征降维"><span class="nav-text">6.2.1. 特征降维</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-2-特征选择"><span class="nav-text">6.2.2. 特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-2-1-移除低方差特征"><span class="nav-text">6.2.2.1. 移除低方差特征</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-2-2-单变量特征选择"><span class="nav-text">6.2.2.2. 单变量特征选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-2-3-递归式特征消除"><span class="nav-text">6.2.2.3. 递归式特征消除</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1473,6 +1672,326 @@
 
 
   
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
 
 
 
@@ -1487,6 +2006,43 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
   
 
 
