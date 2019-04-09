@@ -111,6 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png">
 <meta property="og:image" content="http://yoursite.com/images/T-cell-sequencing-in-cancers-colorectal-cancer-2.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-2.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-3.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-4.png">
@@ -120,7 +121,7 @@
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png">
-<meta property="og:updated_time" content="2019-04-05T05:12:00.253Z">
+<meta property="og:updated_time" content="2019-04-09T12:56:23.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习在生物信息学中的应用">
 <meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
@@ -459,7 +460,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-05 13:12:00" itemprop="dateModified" datetime="2019-04-05T13:12:00+08:00">2019-04-05</time>
+                <time title="修改时间：2019-04-09 20:56:23" itemprop="dateModified" datetime="2019-04-09T20:56:23+08:00">2019-04-09</time>
               
             
           </span>
@@ -526,7 +527,7 @@
 <p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-workflow.png" alt></p>
 <ul>
 <li><p>特征选择：鉴定表型相关的TCRβs</p>
-<p>  使用Fisher精确检验（单尾检验，具体实现过程请查看文末 <a href="#2-1-Fisher检验筛选CMV阳性（CMV+）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a>）：</p>
+<p>  使用Fisher精确检验（单尾检验，具体实现过程请查看文末 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a>）：</p>
 <p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png" alt></p>
 <p>  Fisher检验的阈值设为：$P&lt;1\times 10^{-4}$，FDR&lt;0.14（该FDR的计算方法见文末 <a href="#3-FDR的计算方法">*3. FDR的计算方法</a> ），且富集在CMV<sup>+</sup>样本中，从而得到与CMV<sup>+</sup>相关的CDR3克隆集合，共有164个</p>
 <p>  通过下面的TCRβ克隆在两组中的发生率的散点图可以明显地看到，筛出的表型相关的TCRβ克隆的确显著地表达在CMV+组中</p>
@@ -579,7 +580,7 @@
 <blockquote>
 <ul>
 <li><p>beta分布的均值</p>
-  <p align="center">&lt;img src=./picture/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png height=70 /&gt;</p>
+<p>  <img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png" alt></p>
 </li>
 <li><p>这个分布主要落在了(0.2,0.35)间，这是从经验中得出的合理的范围</p>
 </li>
@@ -622,7 +623,7 @@
 <p>用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Rscript FisherTestForMatrix.R &lt;profile matrix&gt; &lt;1|0&gt; &lt;group info|regx&gt; &lt;2 interested group&gt; &lt;pval&gt;</span><br></pre></td></tr></table></figure>
 <p>具体的参数说明，请查看脚本的注释信息</p>
-<h4 id="2-2-绘制表型负荷相关散点图"><a href="#2-2-绘制表型负荷相关散点图" class="headerlink" title="*2.2. 绘制表型负荷相关散点图"></a>*2.2. 绘制表型负荷相关散点图</h4><h5 id="2-2-1-训练集"><a href="#2-2-1-训练集" class="headerlink" title="*2.2.1. 训练集"></a>*2.2.1. 训练集</h5><p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV+）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
+<h4 id="2-2-绘制表型负荷相关散点图"><a href="#2-2-绘制表型负荷相关散点图" class="headerlink" title="*2.2. 绘制表型负荷相关散点图"></a>*2.2. 绘制表型负荷相关散点图</h4><h5 id="2-2-1-训练集"><a href="#2-2-1-训练集" class="headerlink" title="*2.2.1. 训练集"></a>*2.2.1. 训练集</h5><p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
 <p>画出的表型负荷相关散点图如下：</p>
 <p><img src="/images/App-ML-in-Bioinfo-supplementary-PhenotypeBurdenDot_0.05_A-B.png" alt></p>
 <h5 id="2-2-2-测试集"><a href="#2-2-2-测试集" class="headerlink" title="*2.2.2. 测试集"></a>*2.2.2. 测试集</h5><p>测试集的表型负荷相关散点图需要基于训练集的结果，需要执行另外的操作</p>
@@ -646,7 +647,7 @@
 <h4 id="2-2-TCRβ在两组间分布偏好性的散点图"><a href="#2-2-TCRβ在两组间分布偏好性的散点图" class="headerlink" title="*2.2. TCRβ在两组间分布偏好性的散点图"></a>*2.2. TCRβ在两组间分布偏好性的散点图</h4><p>就是画这幅图：</p>
 <p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
 <p>注意：这幅图的横纵坐标都进行了log10变换</p>
-<p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV+）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
+<p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
 <p>画出的散点图如下：</p>
 <p><img src="/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png" alt></p>
 <h3 id="3-FDR的计算方法"><a href="#3-FDR的计算方法" class="headerlink" title="*3. FDR的计算方法"></a>*3. FDR的计算方法</h3><h4 id="3-1-回顾那些统计检验方法"><a href="#3-1-回顾那些统计检验方法" class="headerlink" title="*3.1. 回顾那些统计检验方法"></a>*3.1. 回顾那些统计检验方法</h4><h5 id="3-1-1-T-test与Moderated-t-Test"><a href="#3-1-1-T-test与Moderated-t-Test" class="headerlink" title="*3.1.1. T-test与Moderated t-Test"></a>*3.1.1. T-test与Moderated t-Test</h5><p>t-test的统计量：</p>
