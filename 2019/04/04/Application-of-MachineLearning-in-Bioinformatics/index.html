@@ -97,7 +97,7 @@
 
 
   <meta name="description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
-<meta name="keywords" content="Bioinformatics">
+<meta name="keywords" content="Machine-Learning,Bioinformatics">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习在生物信息学中的应用">
 <meta property="og:url" content="http://yoursite.com/2019/04/04/Application-of-MachineLearning-in-Bioinformatics/index.html">
@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png">
-<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-7.png">
 <meta property="og:image" content="http://yoursite.com/images/T-cell-sequencing-in-cancers-colorectal-cancer-2.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-2.png">
@@ -121,7 +121,7 @@
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png">
-<meta property="og:updated_time" content="2019-04-09T12:56:23.112Z">
+<meta property="og:updated_time" content="2019-04-11T17:14:38.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习在生物信息学中的应用">
 <meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
@@ -460,7 +460,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-09 20:56:23" itemprop="dateModified" datetime="2019-04-09T20:56:23+08:00">2019-04-09</time>
+                <time title="修改时间：2019-04-12 01:14:38" itemprop="dateModified" datetime="2019-04-12T01:14:38+08:00">2019-04-12</time>
               
             
           </span>
@@ -537,20 +537,70 @@
 <p>  一个样本的表型负荷（phenotype burden）被定义为：</p>
 <blockquote>
 <p>该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例</p>
+<p>若阳性表型相关的克隆的集合记为CDR，样本i的unique克隆集合记为CDR<sub>i</sub>，则它的表型负荷为：</p>
+<p>$$PB_i=\frac{||CDR_i \cap CDR||}{||CDR_i||}$$</p>
+<p>其中$||·||$表示集合<code>·</code>中元素的数量</p>
 </blockquote>
+<p>  下图是将上面的表型负荷计算公式中的分子与分母分别作为纵轴和横轴，画成二维的散点图</p>
 <p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png" alt></p>
+<p>  可以明显地看出两类样本在这个层面上来看，有很好的区分度</p>
+</li>
+<li><p>基于二项分布的贝叶斯判别模型</p>
+<p>  基本思想：</p>
+<blockquote>
+<p>对于$CMV^+$相关TCR数为$k’$，total unique TCR数为$n’$的样本，认为它一个概率为它的表型负荷$\theta’$（$\theta’$服从Beta分布），$n=n’$, $k=k’$的二项分布（伯努利分布），根据贝叶斯思想，构造最优贝叶斯分类器，即</p>
+<p>$$h(k’,n’)=arg \max_{x \in {+,\,-}} p(c=x \mid k’,\,n’)$$</p>
+<p>其中</p>
+<p>$$p(c=x \mid k’,\,n’)=\frac{p(k’ \mid n’,\,c)p(c)}{p(k’)}$$</p>
+<p>而$p(k’)$是一个常数，对分类器的结果没有影响，可以省略</p>
+</blockquote>
+<p>  那么就需要根据训练集估计：</p>
+<ul>
+<li>类先验概率$p(c)$</li>
+<li><p>类条件概率（似然）$p(k’ \mid n’,\,c)$</p>
+<p><strong>（1）首先根据概率图模型推出单个样本的概率表示公式</strong></p>
+<p>概率图模型如下：</p>
+<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-7.png" alt></p>
+<p>则对于j样本，我们可以算出它的 $\theta_i$ 的后验分布：</p>
+<p>$$p(\theta_i \mid y_{ij},\,\alpha_i,\,\beta_i)=\frac{p(\theta_i \mid \alpha_i,\,\beta_i)p(y_{ij} \mid \theta_i)}{p(y_{ij})}$$</p>
+<p>其中，</p>
+<blockquote>
+<ul>
+<li>$p(y_{ij})$：表示事件$(k_{ij} \mid n_{ij})$发生的概率，即$p(k_{ij}\mid n_{ij},\,c_i)$</li>
+<li>$p(y_{ij} \mid \theta_i)$：表示$Binomial(k_{ij} \mid n_{ij},\,\theta_i)=\left(\begin{matrix}n_{ij}\ k_{ij}\end{matrix}\right)\theta_i^{k_{ij}}(1-\theta_i)^{n_{ij}-k_{}ij}$</li>
+<li>$p(\theta_i \mid \alpha_i,\,\beta_i)$：表示$\theta_i$的先验分布$Beta(\theta_i\mid\alpha_i,\,\beta_i)$</li>
+</ul>
+</blockquote>
+<p>对上面的公式进一步推导</p>
+<p>$$\begin{aligned}<br>p(\theta_i \mid y_{ij},\,\alpha_i,\,\beta_i) &amp;=\frac{p(\theta_i \mid \alpha_i,\,\beta_i)p(y_{ij} \mid \theta_i)}{p(y_{ij})}\\<br>&amp;=\frac{1}{p(y_{ij})}Beta(\theta_i \mid \alpha_i,\,\beta_i)Binomial(k_{ij}\mid n_{ij},\,\theta_i) \\<br>&amp;=\frac{1}{p(y_{ij})} \quad {\frac{1}{B(\alpha_i,\,\beta_i)}\theta_i^{\alpha_i-1}(1-\theta_i)^{\beta_i-1}} \quad {\left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right)\theta_i^{k_{ij}}(1-\theta_i)^{n_{ij}-k_{ij}}} \\<br>&amp;=\frac{1}{p(y_{ij})} \quad \frac{1}{B(\alpha_i,\,\beta_i)} \left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right) \theta_i^{(\alpha_i+k_{ij})-1}(1-\theta_i)^{(\beta_i+n_{ij}-k_{ij})-1} \\<br>&amp;=\frac{1}{p(y_{ij})} \quad  \frac{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})}{B(\alpha_i,\,\beta_i)} \left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right) \frac{1}{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})} \theta_i^{(\alpha_i+k_{ij})-1}(1-\theta_i)^{(\beta_i+n_{ij}-k_{ij})-1} \\<br>&amp;=\frac{1}{p(y_{ij})} \quad  \frac{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})}{B(\alpha_i,\,\beta_i)} \left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right) \quad Beta(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})<br>\end{aligned}<br>$$</p>
+<p>根据Beta分布的先验分布的，已知</p>
+<p>$$p(\theta_i \mid y_{ij},\,\alpha_i,\,\beta_i)=Beta(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})$$</p>
+<p>因此</p>
+<p>$$p(k_{ij}\mid n_{ij},\,c_i)=p(y_{ij})=\left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right) \frac{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})}{B(\alpha_i,\,\beta_i)} $$</p>
+<p>这样我们就得到单个样本的概率表示公式，其中$B(·)$是Beta函数，从上面的表达式中，我们可以看出$p(k_{ij}\mid n_{ij},\,c_i)$是$\alpha_i$和$\beta_i$的函数</p>
+<p><strong>（2）优化每个组的表型负荷 $\theta_i$ 的先验分布的两个参数 $\alpha_i$ 和 $\theta_i$——最大似然法</strong></p>
+<p>我们要最大化$c_i$组的样本集合它们的联合概率：</p>
+<p>$$<br>\begin{aligned}<br>p(k_i \mid n_i,\,c_i) &amp;=\prod_{j,j \in c_i} \left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right) \frac{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})}{B(\alpha_i,\,\beta_i)}\\<br>&amp;= \prod_{j,j \in c_i} \left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right) \quad \prod_{j,j \in c_i} \frac{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})}{B(\alpha_i,\,\beta_i)}<br>\end{aligned}<br>$$</p>
+<p>其中，$\prod_{j,\,j \in c_i} \left(\begin{matrix}n_{ij}\\ k_{ij}\end{matrix}\right)$是常数，可以省略，则</p>
+<p>$$p(k_i \mid n_i,\,c_i)=\prod_{j,j \in c_i} \frac{B(\alpha_i+k_{ij},\,\beta_i+n_{ij}-k_{ij})}{B(\alpha_i,\,\beta_i)}$$</p>
+<p>对它取对数，得到</p>
+<p>$$l(\alpha_i,\,\beta_i)=\log p(k_i \mid n_i,\,c_i) \\ = \sum_{j,\,j \in c_i} \log B(\alpha_i+k_{ij}, \, \beta_i+n_{ij}-k_{ij})-N_i\log B(\alpha_i, \, \beta_i)$$</p>
+<p>其中，$N_i$是属于$c_i$组的样本数</p>
+<p>因此优化目标为：</p>
+<p>$$(\alpha_i^*,\beta_i^*)=arg \, \max\limits_{\alpha_i,\,\beta_i}l(\alpha_i,\,\beta_i)$$</p>
+<p>$l(\alpha_i,\,\beta_i)$分别对$\alpha_i$和$\beta_i$求偏导</p>
+<p>$$\frac{\partial l}{\partial \alpha_i}=-N_i(\psi(\alpha_i)-\psi(\alpha_i+\beta_i))+\sum_{j,\,j \in c_i}(\psi(\alpha_i+k_{ij})-\psi(\alpha_i+\beta_i+n_{ij}))$$</p>
+<p>$$\frac{\partial l}{\partial \beta_i}=-N_i(\psi(\beta_i)-\psi(\alpha_i+\beta_i))+\sum_{j,\,j \in c_i}(\psi(\beta_i+n_{ij}-k_{ij})-\psi(\alpha_i+\beta_i+n_{ij}))$$</p>
+<p>其中，$\psi(·)$是伽马函数</p>
+<p>使用梯度上升（gradient ascent）法来求解优化目标，其中梯度的公式为：</p>
+<p>$$\alpha_i := \alpha_i+\alpha\frac{\partial l}{\partial \alpha_i}\\ \beta_i := \beta_i+\alpha\frac{\partial l}{\partial \beta_i}$$</p>
+<p>最终得到的解记为$\alpha_i^*$和$\beta_i^*$，其中</p>
+<p>$$<br>\alpha_+^*=4.0,\quad \beta_+^*=51,820.1\\<br>\alpha_-^*=26.7,\quad \beta_-^*=2,814,963.8<br>$$</p>
+<p>（3）根据训练好的分类器对新样本进行分类</p>
+<p>分类器为</p>
+<p>$$<br>\begin{aligned}<br>h(k’,n’) &amp;= arg \max_{x \in \{CMV^+,\,CMV^-\}} p(c=x \mid n’,k’) \\<br>&amp;=arg \max_{x \in \{CMV^+,\,CMV^-\}} p(k’ \mid n’, c=x)p(c=x) \\<br>&amp;=arg \max_{x \in \{CMV^+,\,CMV^-\}}\left(\begin{matrix}n’ \\ k’\end{matrix}\right)\frac{B(\alpha_x^*+k’,\,\beta_x^*+n’-k’)}{B(\alpha_x^*,\,\beta_x^*)}\frac{N_x}{N}<br>\end{aligned}<br>$$</p>
 </li>
 </ul>
-<ul>
-<li><p>基于单特征的贝叶斯判别模型</p>
-<p>  首先，鉴定出那些在CMV感染状态表现为阳性的（phenotype-positive）患者中出现明显克隆扩张的TCRβs，称为阳性表型相关性TCRβs克隆。使用Fisher精确检验：</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png" alt></p>
-<p>  由于表型负荷的取值范围为 (0,1)，其符合β二项分布（简称为β分布）</p>
-<p>  然后分别对表型阳性和表型阴性两组样本，利用Beta分别（补充知识——<a href="#beta-distribution">Beta分布</a>）估计出各组的表型负荷的概率密度分布，分别记作 $\beta_+ (\alpha_+,\beta_+)$和$\beta_- (\alpha_-,\beta_-)$</p>
-<p>  $$P(x|c_+) \sim \beta_+ (\alpha_+,\beta_+) \ P(x|c_-) \sim \beta_- (\alpha_-,\beta_-)$$</p>
-<p>  对于一个新的样本可以计算出它来自表型阳性组和表型阴性组的后验概率：</p>
-<p>  $$P(c_+|x_i)=P(c_+)P(x_i|c_+)\ P(c_-|x_i)=P(c_-)P(x_i|c_-)$$</p>
-<p>  若$P(c_+|x_i)&gt;P(c_-|x_i)$，则判断为阳性组，否则为阴性组</p>
 </li>
 </ul>
 <h2 id="2-SC3：单细胞表达谱的无监督聚类"><a href="#2-SC3：单细胞表达谱的无监督聚类" class="headerlink" title="2. SC3：单细胞表达谱的无监督聚类"></a>2. SC3：单细胞表达谱的无监督聚类</h2><p>该聚类方法名为SC3（Single-Cell Consensus Clustering）</p>
@@ -709,7 +759,26 @@
 <p>最后算出它的P值：</p>
 <p>$$P=\frac{\# \{d_i \ge d,i=1,2,…,n\}}{n} $$</p>
 <p>之所以不用t检验的统计量查表法，是因为Moderated t-Test的统计量已经不再符合某种统计分布了，而且这样算出来的P值也具有一定的统计意义</p>
-<h4 id="3-2-多重假设检验的必要性"><a href="#3-2-多重假设检验的必要性" class="headerlink" title="*3.2. 多重假设检验的必要性"></a>*3.2. 多重假设检验的必要性</h4><ul>
+<h4 id="3-2-多重假设检验的必要性"><a href="#3-2-多重假设检验的必要性" class="headerlink" title="*3.2. 多重假设检验的必要性"></a>*3.2. 多重假设检验的必要性</h4><p>统计学中的假设检验的基本思路是：</p>
+<blockquote>
+<p>设立零假设（null hypothesis）$H_0$，以及与零假设$H_0$相对应的非零假设（alternative hypothesis， or reject null hypothesis）$H_1$，在假设$H_0$成立的前提下，计算出$H_0$发生的概率，若$H_0$的发生概率很低，基于小概率事件几乎不可能发生，所以可以拒绝零假设</p>
+</blockquote>
+<p>但是这些传统的假设检验方法研究的对象，都是一次试验</p>
+<p>在一次试验中（注意：是一次试验， 即single test），0.05 或0.01的cutoff足够严格了(想象一下，一个口袋有100个球，95个白的，5个红的, 只让你摸一次，你能摸到红的可能性是多大？)</p>
+<p>但是对于多次试验，又称多重假设检验，再使用p值是不恰当的，下面来分析一下为什么：</p>
+<p>大家都知道墨菲定律：如果事情有变坏的可能，不管这种可能性有多小，它总会发生</p>
+<p>用统计的语言去描述墨菲定律：</p>
+<blockquote>
+<p>在数理统计中，有一条重要的统计规律：假设某意外事件在一次实验（活动）中发生的概率为p（p&gt;0），则在n次实验（活动）中至少有一次发生的概率为 $p_n=1-(1-p)^n$</p>
+<p>由此可见，无论概率p多么小（即小概率事件），当n越来越大时，$p_n$越来越接近1</p>
+</blockquote>
+<p>这和我们的一句俗语非常吻合：常在河边走，哪有不湿鞋；夜路走多了，总能碰见鬼</p>
+<p>在多重假设检验中，我们一般关注的不再是每一次假设检验的准确性，而是控制在作出的多个统计推断中犯错误的概率，即False Discover Rate（FDR），这对于医院的诊断情景下尤其重要：</p>
+<blockquote>
+<p>假如有一种诊断艾滋病(AIDS)的试剂，试验验证其准确性为99%（每100次诊断就有一次false positive）。对于一个被检测的人（single test)）来说，这种准确性够了；但对于医院 （multiple test)）来说，这种准确性远远不够</p>
+<p>因为每诊断10 000个个体，就会有100个人被误诊为艾滋病(AIDS)，每一个误诊就意味着一个潜在的医疗事故和医疗纠纷，对于一些大型医院，一两个月的某一项诊断的接诊数就能达到这个级别，如果按照这个误诊率，医院恐怕得关门，所以医院需要严格控制误诊的数量，宁可错杀一万也不能放过一个，因为把一个没病的病人误判为有病，总比把一个有病的病人误判为没病更保险一些</p>
+</blockquote>
+<ul>
 <li><p>100 independent genes. (We have 100 hypotheses to test)</p>
 </li>
 <li><p>No significant differences in gene expression between 2 classes (H0 is true). Thus, the probability that a particular test (say, for gene 1) is declared significant at level 0.05 is exactly 0.05. (Probability of reject H0  in one test if H0 is true = 0.05)</p>
@@ -836,14 +905,31 @@
 <p>对于给定的$\alpha \in (0,1)$，设函数$y=\frac{\alpha}{m}x \quad (x=1,2,…,m)$，画出这条线，另外对于每个基因，它在图上的坐标为$(rank(p_{(k)}^{(i)}),p_{(k)}^{(i)})=(k,p_{(k)}^{(i)})$，图如下：</p>
 <p><img src="/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png" alt></p>
 <p>通过设置$\alpha$可以改变图中直线的斜率，$\alpha$越大，则直线的斜率越大，落在直线下方的点就越多，通过FDR检验的基因也就越多，反之，直线的斜率越小，落在直线下方的点就越少，通过FDR检验的基因也就越少</p>
+<h5 id="3-4-2-Bonferroni-校正"><a href="#3-4-2-Bonferroni-校正" class="headerlink" title="*3.4.2. Bonferroni 校正"></a>*3.4.2. Bonferroni 校正</h5><p>Bonferroni 校正的基本思想：</p>
+<blockquote>
+<p>如果在同一数据集上同时检验n个独立的假设，那么用于每一假设的统计显著水平，应为仅检验一个假设时的显著水平的1/n</p>
+<p>举个例子：如要在同一数据集上检验两个独立的假设，显著水平设为常见的0.05，此时用于检验该两个假设应使用更严格的0.025，即0.05* (1/2)</p>
+</blockquote>
+<p>序列化的 Bonferroni 校正步骤：</p>
+<blockquote>
+<p>对k个独立的检验，在给定的显著性水平α下，把每个检验对应的 P 值从小到大排列</p>
+<p>$$p_{(1)} \le p_{(2)} \le … \le p_{(k)}$$</p>
+<p>首先看最小的 P 值 $p_{(1)}$，如果$p_{(1)} \le \frac{\alpha}{k}$，就认为对应的检验在总体上（table wide）α水平上显著；如果不是，就认为所有的检验都不显著；</p>
+<p>当且仅当 $p_{(1)} \le \frac{\alpha}{k}$ 时，再来看第二个P值$p_{(2)}$。如果$p_{(2)} \le \frac{\alpha}{k-1}$，就认为在总体水平上对应的检验在α水平上是显著的；</p>
+<p>之后再进行下一个P值……一直进行这个过程，直到 $p_{(i)} \le \frac{\alpha}{k-i+1}$不成立；下结论i和以后的检验都不显著</p>
+</blockquote>
 <hr>
 <p>参考资料：</p>
 <p>(1)  Emerson R O , Dewitt W S , Vignali M , et al. Immunosequencing identifies signatures of cytomegalovirus exposure history and HLA-mediated effects on the T cell repertoire[J]. Nature Genetics, 2017, 49(5):659-665.</p>
-<p>(2) <a href="https://blog.csdn.net/sunmenggmail/article/details/17153053" target="_blank" rel="noopener">CSDN·chivalry《二项分布和Beta分布》</a></p>
-<p>(3) <a href="https://blog.csdn.net/a358463121/article/details/52562940" target="_blank" rel="noopener">CSDN·Jie Qiao《带你理解beta分布》</a></p>
-<p>(4) Kiselev, V. Y. et al. SC3: consensus clustering of single-cell RNA-seq data[J]. Nat. Methods 14, 483–486 (2017).</p>
-<p>(5)  Storey, J.D. &amp; Tibshirani, R. Statistical signifcance for genomewide studies.Proc. Natl. Acad. Sci. USA 100, 9440–9445 (2003)</p>
-<p>(6) 国科大研究生课程《生物信息学》，陈小伟《基因表达分析》</p>
+<p>(2) Kiselev, V. Y. et al. SC3: consensus clustering of single-cell RNA-seq data[J]. Nat. Methods 14, 483–486 (2017).</p>
+<p>(3) <a href="https://blog.csdn.net/sunmenggmail/article/details/17153053" target="_blank" rel="noopener">CSDN·chivalry《二项分布和Beta分布》</a></p>
+<p>(4) <a href="https://blog.csdn.net/a358463121/article/details/52562940" target="_blank" rel="noopener">CSDN·Jie Qiao《带你理解beta分布》</a></p>
+<p>(5) <a href="https://www.datalearner.com/blog/1051505532393058" target="_blank" rel="noopener">贝塔分布（Beta Distribution）简介及其应用</a></p>
+<p>(6) <a href="https://www.statlect.com/probability-distributions/beta-distribution" target="_blank" rel="noopener">StatLect《Beta distribution》</a></p>
+<p>(7)  Storey, J.D. &amp; Tibshirani, R. Statistical signifcance for genomewide studies.Proc. Natl. Acad. Sci. USA 100, 9440–9445 (2003)</p>
+<p>(8) 国科大研究生课程《生物信息学》，陈小伟《基因表达分析》</p>
+<p>(9) <a href="http://blog.sina.com.cn/s/blog_4af3f0d20100bzx9.html" target="_blank" rel="noopener">新浪博客·菜鸟《Bonferroni 校正》</a></p>
+<p>(10) <a href="https://www.jianshu.com/p/a262cf3d18b9" target="_blank" rel="noopener">简书·Honglei_Ren《多重检验中的FDR错误控制方法与p-value的校正及Bonferroni校正》</a></p>
 
       
     </div>
@@ -866,6 +952,8 @@
     <footer class="post-footer">
       
         <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine-Learning</a>
           
             <a href="/tags/Bioinformatics/" rel="tag"># Bioinformatics</a>
           
@@ -1158,7 +1246,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-根据免疫组库TCRβ预测病人的CMV感染状态"><span class="nav-text">1. 根据免疫组库TCRβ预测病人的CMV感染状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SC3：单细胞表达谱的无监督聚类"><span class="nav-text">2. SC3：单细胞表达谱的无监督聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-GATK的VQSR"><span class="nav-text">2. GATK的VQSR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beta分布"><span class="nav-text">*1. beta分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是beta分布"><span class="nav-text">*1.1. 什么是beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-理解beta分布"><span class="nav-text">*1.2. 理解beta分布</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-重复NG免疫组库TCRβ文章的图"><span class="nav-text">*2. 重复NG免疫组库TCRβ文章的图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><span class="nav-text">*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-绘制表型负荷相关散点图"><span class="nav-text">*2.2. 绘制表型负荷相关散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-训练集"><span class="nav-text">*2.2.1. 训练集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-测试集"><span class="nav-text">*2.2.2. 测试集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-TCRβ在两组间分布偏好性的散点图"><span class="nav-text">*2.2. TCRβ在两组间分布偏好性的散点图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FDR的计算方法"><span class="nav-text">*3. FDR的计算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-回顾那些统计检验方法"><span class="nav-text">*3.1. 回顾那些统计检验方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-1-T-test与Moderated-t-Test"><span class="nav-text">*3.1.1. T-test与Moderated t-Test</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-多重假设检验的必要性"><span class="nav-text">*3.2. 多重假设检验的必要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-如何计算FDR？"><span class="nav-text">*3.3. 如何计算FDR？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-Benjamini-Hochberg-procedure-BH"><span class="nav-text">*3.3.1. Benjamini-Hochberg procedure (BH)</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-根据免疫组库TCRβ预测病人的CMV感染状态"><span class="nav-text">1. 根据免疫组库TCRβ预测病人的CMV感染状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SC3：单细胞表达谱的无监督聚类"><span class="nav-text">2. SC3：单细胞表达谱的无监督聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-GATK的VQSR"><span class="nav-text">2. GATK的VQSR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beta分布"><span class="nav-text">*1. beta分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是beta分布"><span class="nav-text">*1.1. 什么是beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-理解beta分布"><span class="nav-text">*1.2. 理解beta分布</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-重复NG免疫组库TCRβ文章的图"><span class="nav-text">*2. 重复NG免疫组库TCRβ文章的图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><span class="nav-text">*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-绘制表型负荷相关散点图"><span class="nav-text">*2.2. 绘制表型负荷相关散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-训练集"><span class="nav-text">*2.2.1. 训练集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-测试集"><span class="nav-text">*2.2.2. 测试集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-TCRβ在两组间分布偏好性的散点图"><span class="nav-text">*2.2. TCRβ在两组间分布偏好性的散点图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FDR的计算方法"><span class="nav-text">*3. FDR的计算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-回顾那些统计检验方法"><span class="nav-text">*3.1. 回顾那些统计检验方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-1-T-test与Moderated-t-Test"><span class="nav-text">*3.1.1. T-test与Moderated t-Test</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-多重假设检验的必要性"><span class="nav-text">*3.2. 多重假设检验的必要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-如何计算FDR？"><span class="nav-text">*3.3. 如何计算FDR？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-Benjamini-Hochberg-procedure-BH"><span class="nav-text">*3.3.1. Benjamini-Hochberg procedure (BH)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-2-Bonferroni-校正"><span class="nav-text">*3.4.2. Bonferroni 校正</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
