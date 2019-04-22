@@ -381,6 +381,197 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/Biopython-Note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/22/Biopython-Note/" class="post-title-link" itemprop="url">Biopython学习笔记</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-22 22:24:18 / 修改时间：22:31:06" itemprop="dateCreated datePublished" datetime="2019-04-22T22:24:18+08:00">2019-04-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              
+1. 序列读入与输出序列的读入与输出通过Bio.SeqIO模块实现，它旨在提供一个简单的接口，实现对各种不同格式序列文件进行统一的处理
+主要是基于对SeqRecord对象的操作，该对象包含一个 Seq 对象）和注释信息（如序列ID和描述信息）
+SeqRecord对象本质上就是一个字典：
+
+
+Seq键：保存序列组成
+ID键：保存序列ID
+description键：保存序列的描述信息
+  ……
+
+
+
+1.1. 解析/读取序列
+（1）基本用法
+  SeqIO.parse( [FILE|HANDLE] , filetype)
+
+第一个参数是一个文件名或者一个句柄（ handle ，推荐）
+第二个参数是一个小写字母字符串，用于指定序列格式（我们并不推测文件格式！），支持的文件格式
+Bio.SeqIO.parse() 函数返回一个 SeqRecord 对象迭代器（ iterator ），迭代器通常用在循环中
+from Bio import SeqIOfor seq_record in SeqIO.parse("ls_orchid.gbk", "genbank"):	print seq_recor
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/22/Biopython-Note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/InAction-ML-XGS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2111,195 +2302,6 @@ $$\begin{ca
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/30/Markdown-LaTexMath/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/30/Markdown-LaTexMath/" class="post-title-link" itemprop="url">Markdown+LaTex Math</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-03-30 16:06:57" itemprop="dateCreated datePublished" datetime="2019-03-30T16:06:57+08:00">2019-03-30</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前后端技术/" itemprop="url" rel="index"><span itemprop="name">前后端技术</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              实践出一整套便于互联网传播分享的数学公式跨平台编辑、跨环境显示是非常有必要的，如果还是停留在Word或PDF时代，那数学就会被限制在文档或图片里而无法通过最流行的网页方式进行传播，而且Word、PDF等文件处理软件里的数学公式编辑既麻烦，而且最重要的是与编程脱节。
-数学公式的编辑与显示常用的文本编辑用Markdown就能高效地完成，但是Markdown有一个实现不了的功能——编辑数学公式，当然也不是说完全不能解决，折中一下，编辑成图片，以图片形式插入也行，但这毕竟不太高效和方便，也不利于传播，而在出版界用得比较多的LaTex语法虽然在数字的编辑上有一套成熟的解决方案，LaTex math，但是在普通文本的编辑上，它的语法格式与Markdown相比又显得太过复杂
-那么，有没有一种方法，可以分别将Markdown的文本编辑优势和LaTex的数学公式编辑优势相互结合起来呢？
-有，就是Markdown+LaTex
-与LaTex文档的比较
-
-虽然很多数学学术论文整个文档就像使用Markdown一样是直接使用的LaTex语法来编辑的，但是仔细比对之后发现直接用LaTex语法来写整个文档来，它的效果
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/30/Markdown-LaTexMath/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2349,7 +2351,7 @@ $$\begin{ca
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2451,7 +2453,13 @@ $$\begin{ca
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3015,9 +3023,9 @@ $$\begin{ca
   
     
       
-        
-      
     
+      
+        
       
     
       
