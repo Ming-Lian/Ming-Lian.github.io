@@ -96,22 +96,26 @@
 
 
 
-  <meta name="description" content="1. 从文本分类的角度理解奇异值分解(SVD)1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值">
+  <meta name="description" content="1. 奇异值分解 (SVD) 及其应用1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值 维基百科">
 <meta name="keywords" content="读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《数学之美》阅读笔记">
 <meta property="og:url" content="http://yoursite.com/2019/04/06/Beauty-Mathmatics-Note/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="1. 从文本分类的角度理解奇异值分解(SVD)1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值">
+<meta property="og:description" content="1. 奇异值分解 (SVD) 及其应用1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值 维基百科">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-SVD-1.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-SVD-2.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-SVD-2.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-RecoSys-measure-similarity.png">
-<meta property="og:updated_time" content="2019-04-07T10:37:19.759Z">
+<meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-4.png">
+<meta property="og:updated_time" content="2019-04-22T07:36:10.778Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《数学之美》阅读笔记">
-<meta name="twitter:description" content="1. 从文本分类的角度理解奇异值分解(SVD)1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值">
+<meta name="twitter:description" content="1. 奇异值分解 (SVD) 及其应用1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值 维基百科">
 <meta name="twitter:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-SVD-1.png">
 
 
@@ -447,7 +451,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-07 18:37:19" itemprop="dateModified" datetime="2019-04-07T18:37:19+08:00">2019-04-07</time>
+                <time title="修改时间：2019-04-22 15:36:10" itemprop="dateModified" datetime="2019-04-22T15:36:10+08:00">2019-04-22</time>
               
             
           </span>
@@ -499,7 +503,7 @@
       
 
       
-        <h2 id="1-从文本分类的角度理解奇异值分解-SVD"><a href="#1-从文本分类的角度理解奇异值分解-SVD" class="headerlink" title="1. 从文本分类的角度理解奇异值分解(SVD)"></a>1. 从文本分类的角度理解奇异值分解(SVD)</h2><h3 id="1-1-SVD算法"><a href="#1-1-SVD算法" class="headerlink" title="1.1. SVD算法"></a>1.1. SVD算法</h3><p>矩阵A可以如下分解成三个矩阵的乘积：</p>
+        <h2 id="1-奇异值分解-SVD-及其应用"><a href="#1-奇异值分解-SVD-及其应用" class="headerlink" title="1. 奇异值分解 (SVD) 及其应用"></a>1. 奇异值分解 (SVD) 及其应用</h2><h3 id="1-1-SVD算法"><a href="#1-1-SVD算法" class="headerlink" title="1.1. SVD算法"></a>1.1. SVD算法</h3><p>矩阵A可以如下分解成三个矩阵的乘积：</p>
 <p>$$<br>A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}<br>$$</p>
 <p>其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵</p>
 <blockquote>
@@ -527,7 +531,42 @@
 <p>$$B’_{3 \times 3}=\begin{bmatrix}4 &amp; 0 &amp; 0 \\ 0 &amp; 3 &amp; 0 \\ 0 &amp; 0 &amp; \sqrt{5} \end{bmatrix}$$</p>
 <p>那么想对应地，X保留前n列，Y保留前n行</p>
 </blockquote>
-<h3 id="1-2-理解SVD分解所得三个矩阵的含义"><a href="#1-2-理解SVD分解所得三个矩阵的含义" class="headerlink" title="1.2. 理解SVD分解所得三个矩阵的含义"></a>1.2. 理解SVD分解所得三个矩阵的含义</h3><p>用一个打矩阵来表示成千上万篇文章和几十上百万个词的关联性</p>
+<h3 id="1-2-如何求出SVD分解后的U-Σ-V这三个矩阵？"><a href="#1-2-如何求出SVD分解后的U-Σ-V这三个矩阵？" class="headerlink" title="1.2. 如何求出SVD分解后的U,Σ,V这三个矩阵？"></a>1.2. 如何求出SVD分解后的U,Σ,V这三个矩阵？</h3><p>对于下面表示形式的奇异值分解</p>
+<p>$$A=U \Sigma V^T$$</p>
+<p>如果我们将A的转置和A做矩阵乘法，那么会得到n×n的一个方阵$A^TA$。既然$A^TA$是方阵，那么我们就可以进行特征分解，得到的特征值和特征向量满足下式</p>
+<p>$$(A^TA)v_i = \lambda_i v_i$$</p>
+<p>这样我们就可以得到矩阵$A^TA$的n个特征值和对应的n个特征向量v了。将ATA的所有特征向量张成一个n×n的矩阵V，就是我们SVD公式里面的$V$矩阵了。一般我们将V中的每个特征向量叫做A的<strong>右奇异向量</strong></p>
+<p>如果我们将A和A的转置做矩阵乘法，那么会得到m×m的一个方阵$AA^T$。既然$AA^T$是方阵，那么我们就可以进行特征分解，得到的特征值和特征向量满足下式：</p>
+<p>$$(AA^T)u_i = \lambda_i u_i$$</p>
+<p>这样我们就可以得到矩阵$AA^T$的m个特征值和对应的m个特征向量u了。将AAT的所有特征向量张成一个m×m的矩阵U，就是我们SVD公式里面的$U$矩阵了。一般我们将U中的每个特征向量叫做A的<strong>左奇异向量</strong></p>
+<p>U和V我们都求出来了，现在就剩下奇异值矩阵$\Sigma$没有求出了</p>
+<p>由于$\Sigma$除了对角线上是奇异值其他位置都是0，那我们只需要求出每个奇异值$\sigma$就可以了</p>
+<p>由于</p>
+<p>$$A=U\Sigma V^T \Rightarrow AV=U\Sigma V^TV \Rightarrow AV=U\Sigma \Rightarrow  Av_i = \sigma_i u_i  \Rightarrow  \sigma_i =  Av_i / u_i$$</p>
+<p>这样我们可以求出我们的每个奇异值，进而求出奇异值矩阵$\Sigma$</p>
+<p>那么为什么说$A^TA$的特征向量组成的就是我们SVD中的$V$矩阵，而$AA^T$的特征向量组成的就是我们SVD中的$U$矩阵？</p>
+<blockquote>
+<p>以$V$矩阵的证明为例</p>
+<p>$$A=U\Sigma V^T \Rightarrow A^T=V\Sigma^T U^T \Rightarrow A^TA = V\Sigma^T U^TU\Sigma V^T = V\Sigma^2V^T$$</p>
+<p>上式证明使用了：$U^TU=I$, $\Sigma^T\Sigma=\Sigma^2$</p>
+<p>可以看出$A^TA$的特征向量组成的的确就是我们SVD中的$V$矩阵。类似的方法可以得到$AA^T$的特征向量组成的就是我们SVD中的$U$矩阵</p>
+<p>进一步我们还可以看出我们的特征值矩阵等于奇异值矩阵的平方，也就是说特征值和奇异值满足如下关系：</p>
+<p>$$\sigma_i = \sqrt{\lambda_i}$$</p>
+<p>这样就可以不用 $\sigma_i=Av_i/u_i$ 来计算奇异值，也可以通过求出$A^TA$的特征值取平方根来求奇异值</p>
+</blockquote>
+<h3 id="1-3-SVD的一些性质"><a href="#1-3-SVD的一些性质" class="headerlink" title="1.3. SVD的一些性质"></a>1.3. SVD的一些性质</h3><p>对于奇异值,它跟我们特征分解中的特征值类似，在奇异值矩阵中也是按照<strong>从大到小排列</strong>，而且<strong>奇异值的减少特别的快</strong>，在很多情况下，前10%甚至1%的奇异值的和就占了全部的奇异值之和的99%以上的比例</p>
+<p>也就是说，我们也可以用最大的k个的奇异值和对应的左右奇异向量来近似描述矩阵</p>
+<p>$$A_{m \times n} = U_{m \times m}\Sigma_{m \times n} V^T_{n \times n} \approx U_{m \times k}\Sigma_{k \times k} V^T_{k \times n}$$</p>
+<p>由于这个重要的性质，SVD可以用于</p>
+<ul>
+<li><p>PCA降维，来做数据压缩和去噪；</p>
+</li>
+<li><p>推荐算法，将用户和喜好对应的矩阵做特征分解，进而得到隐含的用户需求来做推荐；</p>
+</li>
+<li><p>NLP中的算法，比如潜在语义索引（LSI）</p>
+</li>
+</ul>
+<h3 id="1-4-理解SVD分解所得三个矩阵的含义"><a href="#1-4-理解SVD分解所得三个矩阵的含义" class="headerlink" title="1.4. 理解SVD分解所得三个矩阵的含义"></a>1.4. 理解SVD分解所得三个矩阵的含义</h3><p>用一个打矩阵来表示成千上万篇文章和几十上百万个词的关联性</p>
 <p>在这个矩阵中，每行表示一个词，每列表示一篇文章，如果有M篇文章，N个词，则可以得到一个MxN的矩阵：</p>
 <p>$$<br>A=<br>\begin{bmatrix}<br>a_{11} &amp; a_{12} &amp; … &amp; a_{1M} \\<br>a_{21} &amp; a_{22} &amp; … &amp; a_{2M} \\<br>… &amp; … \\<br>a_{N1} &amp; a_{N2} &amp; … &amp; a_{NM} \\<br>\end{bmatrix}<br>$$</p>
 <p>其中$a_{ij}$表示的是第j篇文章的第i个词的加权词频（比如用词的TF-IDF）。一般来说这个矩阵会非常非常大</p>
@@ -554,6 +593,16 @@
 <p>  则第一个词的语义类与第一个主题相关，而第二个主题相关性较弱，而第二个词的语义类则相反</p>
 </li>
 </ul>
+<h3 id="1-5-SVD用于PCA降维"><a href="#1-5-SVD用于PCA降维" class="headerlink" title="1.5. SVD用于PCA降维"></a>1.5. SVD用于PCA降维</h3><p>用PCA降维，需要找到样本协方差矩阵$X^TX$的最大的d个特征向量，然后用这最大的d个特征向量张成的矩阵来做低维投影降维。可以看出，在这个过程中需要先求出协方差矩阵$X^TX$，当样本数多样本特征数也多的时候，这个计算量是很大的</p>
+<p>回顾上面SVD的计算过程，我们可以发现：求$X^TX$的d个最大的特征值对应的特征向量张成的矩阵，其实相当于对$X$进行奇异值分解得到右奇异矩阵$V$</p>
+<p>SVD有个好处，有一些SVD的实现算法可以不求先求出协方差矩阵$X^TX$，也能求出我们的右奇异矩$V$。也就是说，我们的PCA算法可以不用做特征分解，而是做SVD来完成，这个方法在样本量很大的时候很有效</p>
+<p>实际上，scikit-learn的PCA算法的背后真正的实现就是用的SVD，而不是我们我们认为的暴力特征分解</p>
+<p>另一方面，注意到PCA仅仅使用了我们SVD的右奇异矩阵，没有使用左奇异矩阵，那么左奇异矩阵有什么用呢？</p>
+<blockquote>
+<p>假设我们的样本是m×n的矩阵X，如果我们通过SVD找到了矩阵$XX^T$最大的d个特征向量张成的m×d维矩阵$U$，则我们如果进行如下处理：</p>
+<p>$$X_{d \times n}’ = U_{d \times m}^TX_{m \times n}$$</p>
+<p>可以得到一个d×n的矩阵$X’$，这个矩阵和我们原来的m×n维样本矩阵X相比，行数从m减到了d，可见对行数进行了压缩。也就是说，<strong>左奇异矩阵可以用于行数的压缩</strong>。相对的，<strong>右奇异矩阵可以用于列数即特征维度的压缩</strong>，也就是我们的PCA降维。</p>
+</blockquote>
 <h2 id="2-关键词权重的科学度量TF-IDF"><a href="#2-关键词权重的科学度量TF-IDF" class="headerlink" title="2. 关键词权重的科学度量TF-IDF"></a>2. 关键词权重的科学度量TF-IDF</h2><p>以短语“原子能的应用”为例，可以拆分成三个关键词：“原子能”、“的”和“应用”</p>
 <p>主要思想：词出现次数较多的网页应该比它们出现较少的网页相关性高</p>
 <blockquote>
@@ -646,10 +695,83 @@
 <p>  这样问题就变成了第一种分类情况了</p>
 </li>
 </ul>
+<h2 id="5-加密算法"><a href="#5-加密算法" class="headerlink" title="5. 加密算法"></a>5. 加密算法</h2><h3 id="5-1-对称性加密与非对称性加密"><a href="#5-1-对称性加密与非对称性加密" class="headerlink" title="5.1. 对称性加密与非对称性加密"></a>5.1. 对称性加密与非对称性加密</h3><p>假设一个形象理解的场景：</p>
+<blockquote>
+<p>考试时，超模君通过小天给学渣表妹传递答案</p>
+</blockquote>
+<ul>
+<li><p><strong>对称性加密</strong></p>
+<p>  <img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-1.png" alt></p>
+</li>
+<li><p><strong>非对称性加密</strong></p>
+<p>  <img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-2.png" alt></p>
+<p>  加密和解密规则：</p>
+<blockquote>
+<p>考试前超模君找到表妹，给了她一张纸片，纸片上有20行数，每行有4个数字，4个数字为乱序的1、2、3、4（如下图所示）</p>
+<p><img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-3.png" alt></p>
+<p>超模君考试时传递的小纸条中第一个数字X1表示纸片中X1行里的第x1个数字，第二个数字X2开始表示下一行中的第X2个数。例如，超模君的纸条上数字为2123，那么根据上面的纸片从第二行开始找数字，得到答案2、4、2、2（下图所示）</p>
+<p><img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-4.png" alt></p>
+</blockquote>
+<p>  非对称性加密与对称性加密最大的区别就在于非对称性加密拥<strong>有两把钥匙，分别为私匙和公匙</strong>，其中只有公匙会传播出去，而私匙只会在自己手中，不会传播到外界</p>
+</li>
+</ul>
+<h3 id="5-2-RSA加密算法"><a href="#5-2-RSA加密算法" class="headerlink" title="5.2. RSA加密算法"></a>5.2. RSA加密算法</h3><h4 id="5-2-1-加密解密原理"><a href="#5-2-1-加密解密原理" class="headerlink" title="5.2.1. 加密解密原理"></a>5.2.1. 加密解密原理</h4><p>RSA算法是1977年由三位麻省理工学院教授——罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出。RSA就是他们三人姓氏开头字母拼在一起组成的</p>
+<p>RSA算法过程：</p>
+<ul>
+<li><p>如何得到公匙$e$和匙$d$</p>
+<blockquote>
+<p>(1) 找出两个质数，一个是$p$，另一个是$q$</p>
+<p>(2) 做一个乘法：$n=p\times q$</p>
+<p>(3) 取一个函数：$\psi(n)=(p-1)\times(q-1)$</p>
+<p>(4) 找出公匙$e$和匙$d$</p>
+<p>$$\begin{cases}1&lt;e&lt;\psi(n) \\ e和\psi(n)需要互质 \\ e·d除以\psi(n)余数为1 \end{cases}$$</p>
+</blockquote>
+</li>
+<li><p>如何加密和解密</p>
+<p>  假设传输的信息的数字为$m$，接下来我们就可以得到加密公式：</p>
+<p>  $$c=m^e \% n$$</p>
+<p>  其中$\%$为取余运算</p>
+<p>  c就是我们发送出去的加密后的数字</p>
+<p>  再来看看解密的公式：</p>
+<p>  $$m=c^d\%n$$</p>
+<p>  这个余数就是我们传输的信息——m</p>
+</li>
+</ul>
+<p>举个例子：</p>
+<blockquote>
+<p>(1) 找出两个质数，一个是7，另一个是13</p>
+<p>(2) $n=p\times q=7 \times 13=91$</p>
+<p>(3) $\psi(n)=(p-1)\times(q-1)=6 \times 12=72$</p>
+<p>(4) 找出公匙$e$和匙$d$：$\begin{cases}e=5 \\ d=29\end{cases}$</p>
+<p>(5) 假设我们要加密的数字是$m=4$</p>
+<p>(6) 加密：$m^e \div n=4^5 \div 91…23$</p>
+<p>(7) 解密：$c^d \div n=23^29 \div 91…4$</p>
+</blockquote>
+<h4 id="5-2-2-安全性分析"><a href="#5-2-2-安全性分析" class="headerlink" title="5.2.2. 安全性分析"></a>5.2.2. 安全性分析</h4><p>为什么RSA算法是安全的（目前来说）？</p>
+<p>在传输的过程中，$e$（公匙）、$n$（质数乘积）、$c$（余数）是可以被黑客窃听到的，但参考上面加密公式可以知道 $d$（私匙）和 $\psi(n)$ 没有参与加密过程，所以窃听者并不知道$d$和$\psi(n)$</p>
+<p>那么窃听者能不能通过e、n、c算出私匙d呢？</p>
+<p>$$<br>\begin{cases}<br>(e · d)\,\%\,\psi(n)=1 &amp; (1)\\<br>\psi(n) = (p-1)(q-1) &amp; (2)\\<br>n=p·q &amp; (3)<br>\end{cases}<br>$$</p>
+<p>看看用这3个公式黑客能不能算出私匙d：</p>
+<blockquote>
+<p>假设黑客已经监听到了：</p>
+<p>$$e=5,\quad c=23,\quad n=p·q=91$$</p>
+<p>根据公式(1)知：</p>
+<p>$$5·d\,\%\,\psi(n)=1$$</p>
+<p>要想求出$d$就得知道$\psi(n)$，而$\psi(n) = (p-1)(q-1)$</p>
+<p>因此要想知道$\psi(n)$，就得知道$p$和$q$，而黑客已经知道了</p>
+<p>$$n=p·q=91$$</p>
+<p>所以只需要对$n$进行<strong>质因式分解</strong>，可以得到</p>
+<p>$$p=7,\quad q=13$$</p>
+</blockquote>
+<p>从上面的分析中可以看出，破解私匙的关键的一步是对$n$进行因式分解，虽然上面举的例子中的因式分解很简单，分分钟就能被破解，但是在实际使用中的$n$是一个很大的数——1024位的二进制数字，换算成十进制约为308位</p>
+<p>目前还没有公式可以对这么大的一个数进行<strong>质因式分解</strong>，想硬解就需要用<strong>穷举法</strong>一个个的试出p、q</p>
+<p>那么，用普通计算机进行穷举需要花费多久的时间呢？答案是<strong>整整一年</strong></p>
 <hr>
 <p>参考资料：</p>
 <p>(1) 吴军《数学之美（第二版）》</p>
-<p>(2) <a href="https://c.m.163.com/news/a/DAKB3SMV05118DFD.html?spss=newsapp&amp;spsw=2&amp;spssid=9374de12adb09dad3dbb52df65782186" target="_blank" rel="noopener">网易云音乐首次披露推荐算法: 让单身狗犹如过情人节的日推原来是这样生成的</a></p>
+<p>(2) <a href="https://www.cnblogs.com/pinard/p/6251584.html" target="_blank" rel="noopener">刘建平Pinard《奇异值分解(SVD)原理与在降维中的应用》</a></p>
+<p>(3) <a href="https://c.m.163.com/news/a/DAKB3SMV05118DFD.html?spss=newsapp&amp;spsw=2&amp;spssid=9374de12adb09dad3dbb52df65782186" target="_blank" rel="noopener">网易云音乐首次披露推荐算法: 让单身狗犹如过情人节的日推原来是这样生成的</a></p>
+<p>(4) <a href="https://mp.weixin.qq.com/s/D_i3l8mQBxAQFjw79REy6g" target="_blank" rel="noopener">超级数学建模《区区6位密码，凭什么守护我的百万家产？ 》</a></p>
 
       
     </div>
@@ -956,7 +1078,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-从文本分类的角度理解奇异值分解-SVD"><span class="nav-text">1. 从文本分类的角度理解奇异值分解(SVD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SVD算法"><span class="nav-text">1.1. SVD算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-理解SVD分解所得三个矩阵的含义"><span class="nav-text">1.2. 理解SVD分解所得三个矩阵的含义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关键词权重的科学度量TF-IDF"><span class="nav-text">2. 关键词权重的科学度量TF-IDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-推荐系统的奥秘"><span class="nav-text">3. 推荐系统的奥秘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-基于用户数据：协同过滤算法"><span class="nav-text">3.1. 基于用户数据：协同过滤算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-基于内容：摆脱协同过滤算法对用户数据的过分依赖"><span class="nav-text">3.2. 基于内容：摆脱协同过滤算法对用户数据的过分依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-相似度到底是怎么算出来的？"><span class="nav-text">3.3. 相似度到底是怎么算出来的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-用余弦相似度进行文本分类"><span class="nav-text">4. 用余弦相似度进行文本分类</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-奇异值分解-SVD-及其应用"><span class="nav-text">1. 奇异值分解 (SVD) 及其应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SVD算法"><span class="nav-text">1.1. SVD算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-如何求出SVD分解后的U-Σ-V这三个矩阵？"><span class="nav-text">1.2. 如何求出SVD分解后的U,Σ,V这三个矩阵？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-SVD的一些性质"><span class="nav-text">1.3. SVD的一些性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-理解SVD分解所得三个矩阵的含义"><span class="nav-text">1.4. 理解SVD分解所得三个矩阵的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-SVD用于PCA降维"><span class="nav-text">1.5. SVD用于PCA降维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关键词权重的科学度量TF-IDF"><span class="nav-text">2. 关键词权重的科学度量TF-IDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-推荐系统的奥秘"><span class="nav-text">3. 推荐系统的奥秘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-基于用户数据：协同过滤算法"><span class="nav-text">3.1. 基于用户数据：协同过滤算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-基于内容：摆脱协同过滤算法对用户数据的过分依赖"><span class="nav-text">3.2. 基于内容：摆脱协同过滤算法对用户数据的过分依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-相似度到底是怎么算出来的？"><span class="nav-text">3.3. 相似度到底是怎么算出来的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-用余弦相似度进行文本分类"><span class="nav-text">4. 用余弦相似度进行文本分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-加密算法"><span class="nav-text">5. 加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-对称性加密与非对称性加密"><span class="nav-text">5.1. 对称性加密与非对称性加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-RSA加密算法"><span class="nav-text">5.2. RSA加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-加密解密原理"><span class="nav-text">5.2.1. 加密解密原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-安全性分析"><span class="nav-text">5.2.2. 安全性分析</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
