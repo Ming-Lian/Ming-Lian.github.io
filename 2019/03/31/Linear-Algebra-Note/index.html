@@ -96,13 +96,13 @@
 
 
 
-  <meta name="description" content="理解向量与向量空间理解矩阵与矩阵乘法矩阵表示法和矩阵乘法规则是怎么来的？求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp; + &amp;amp; 0.587G &amp;">
+  <meta name="description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp">
 <meta name="keywords" content="线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性代数学习笔记">
 <meta property="og:url" content="http://yoursite.com/2019/03/31/Linear-Algebra-Note/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="理解向量与向量空间理解矩阵与矩阵乘法矩阵表示法和矩阵乘法规则是怎么来的？求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp; + &amp;amp; 0.587G &amp;">
+<meta property="og:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-01.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-02.png">
@@ -110,10 +110,19 @@
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-04.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-05.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-06.png">
-<meta property="og:updated_time" content="2019-04-04T02:15:43.123Z">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-07.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-08.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-09.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-10.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-11.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-12.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-13.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-14.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-15.png">
+<meta property="og:updated_time" content="2019-04-22T02:00:59.743Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性代数学习笔记">
-<meta name="twitter:description" content="理解向量与向量空间理解矩阵与矩阵乘法矩阵表示法和矩阵乘法规则是怎么来的？求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp; + &amp;amp; 0.587G &amp;">
+<meta name="twitter:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp">
 <meta name="twitter:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-01.png">
 
 
@@ -449,7 +458,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
+                <time title="修改时间：2019-04-22 10:00:59" itemprop="dateModified" datetime="2019-04-22T10:00:59+08:00">2019-04-22</time>
               
             
           </span>
@@ -501,7 +510,7 @@
       
 
       
-        <h2 id="理解向量与向量空间"><a href="#理解向量与向量空间" class="headerlink" title="理解向量与向量空间"></a>理解向量与向量空间</h2><h2 id="理解矩阵与矩阵乘法"><a href="#理解矩阵与矩阵乘法" class="headerlink" title="理解矩阵与矩阵乘法"></a>理解矩阵与矩阵乘法</h2><h3 id="矩阵表示法和矩阵乘法规则是怎么来的？"><a href="#矩阵表示法和矩阵乘法规则是怎么来的？" class="headerlink" title="矩阵表示法和矩阵乘法规则是怎么来的？"></a>矩阵表示法和矩阵乘法规则是怎么来的？</h3><h4 id="求解线性方程组：高斯消元法"><a href="#求解线性方程组：高斯消元法" class="headerlink" title="求解线性方程组：高斯消元法"></a>求解线性方程组：高斯消元法</h4><p>电视的转播过程是这样的：</p>
+        <h2 id="1-理解向量与向量空间"><a href="#1-理解向量与向量空间" class="headerlink" title="1. 理解向量与向量空间"></a>1. 理解向量与向量空间</h2><h2 id="2-理解矩阵与矩阵乘法"><a href="#2-理解矩阵与矩阵乘法" class="headerlink" title="2. 理解矩阵与矩阵乘法"></a>2. 理解矩阵与矩阵乘法</h2><h3 id="2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><a href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？" class="headerlink" title="2.1. 矩阵表示法和矩阵乘法规则是怎么来的？"></a>2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</h3><h4 id="2-1-1-求解线性方程组：高斯消元法"><a href="#2-1-1-求解线性方程组：高斯消元法" class="headerlink" title="2.1.1. 求解线性方程组：高斯消元法"></a>2.1.1. 求解线性方程组：高斯消元法</h4><p>电视的转播过程是这样的：</p>
 <p><img src="/images/Linear-Algebra-understand-matrix-01.png" alt></p>
 <p>因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要</p>
 <p>$$YCrCb \to^{转换} RGB$$</p>
@@ -512,7 +521,7 @@
 <p><img src="/images/Linear-Algebra-understand-matrix-02.png" alt></p>
 <p>得到最终结果：</p>
 <p>$$<br>\begin{cases}<br>x &amp; + &amp; 0 &amp; + &amp; 0 &amp; = &amp; \frac{e_3}{a_{11}} \\<br>0 &amp; + &amp; y &amp; + &amp; 0 &amp; = &amp; \frac{f_3}{b_{22}} \\<br>0 &amp; + &amp; 0 &amp; + &amp; z &amp; = &amp; \frac{g_3}{c_{33}}<br>\end{cases}<br>$$</p>
-<h4 id="简化线性方程组的表示——得到原始的矩阵定义"><a href="#简化线性方程组的表示——得到原始的矩阵定义" class="headerlink" title="简化线性方程组的表示——得到原始的矩阵定义"></a>简化线性方程组的表示——得到原始的矩阵定义</h4><p>当然，解线性方程组使用高斯消元法，基本上就是最优的求解方法，但是整个求解过程若按照上面这样去表示，表示起来是比较复杂的</p>
+<h4 id="2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><a href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义" class="headerlink" title="2.1.2. 简化线性方程组的表示——得到原始的矩阵定义"></a>2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</h4><p>当然，解线性方程组使用高斯消元法，基本上就是最优的求解方法，但是整个求解过程若按照上面这样去表示，表示起来是比较复杂的</p>
 <p>因此有一个英国的数学家叫<strong>阿瑟·凯莱</strong>就提出用矩阵去表示线性方程组，以及线性方程组的求解过程</p>
 <p>以一个简单的线性方程组为例进行说明：</p>
 <p>$$<br>\begin{cases}<br>x &amp; + &amp; 2y &amp; = &amp; 3 \\<br>3x &amp; + &amp; 4y &amp; = &amp; 5<br>\end{cases}<br>$$</p>
@@ -521,7 +530,7 @@
 <p>称为系数矩阵，而把等号右边的数字一起提出来：</p>
 <p>$$<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 3 \\<br>3 &amp; 4 &amp; 5<br>\end{bmatrix}<br>$$</p>
 <p>称为<strong>增广矩阵</strong></p>
-<h4 id="用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><a href="#用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义" class="headerlink" title="用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"></a>用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</h4><p>还是以上面提到的方程组为例进行说明</p>
+<h4 id="2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><a href="#2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义" class="headerlink" title="2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"></a>2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</h4><p>还是以上面提到的方程组为例进行说明</p>
 <p>高斯消元法的目标是进行下面形式的转换：</p>
 <p>$$<br>\begin{cases}<br>x &amp; + &amp; 2y &amp; = &amp; 3 \\<br>3x &amp; + &amp; 4y &amp; = &amp; 5<br>\end{cases}<br>\to<br>\begin{cases}<br>x &amp; + &amp; 0y &amp; = &amp; ? \\<br>0 &amp; + &amp; y &amp; = &amp; ?<br>\end{cases}<br>$$</p>
 <p>用矩阵表示就是：</p>
@@ -549,6 +558,77 @@
 <p>凯莱规定，把第一行运算的结果放在第一行，第二行的结果放在第二行，即</p>
 <p><img src="/images/Linear-Algebra-understand-matrix-05.png" alt></p>
 <p><img src="/images/Linear-Algebra-understand-matrix-06.png" alt></p>
+<h4 id="2-1-5-矩阵乘法的行观点和列观点"><a href="#2-1-5-矩阵乘法的行观点和列观点" class="headerlink" title="2.1.5. 矩阵乘法的行观点和列观点"></a>2.1.5. 矩阵乘法的行观点和列观点</h4><p>首先，需要说明一下矩阵乘法的合法性：</p>
+<blockquote>
+<ul>
+<li>$m\times n$ 的矩阵只能和 $n\times p$ 的矩阵相乘；</li>
+<li>相乘后的矩阵大小为 $m\times p$</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>行观点</p>
+<p>  $$xA=y$$</p>
+<p>  <img src="/images/Linear-Algebra-understand-matrix-07.png" alt></p>
+<p>  称为A右乘x</p>
+</li>
+<li><p>列观点</p>
+<p>  $$Ax=y$$</p>
+<p>  <img src="/images/Linear-Algebra-understand-matrix-08.png" alt></p>
+<p>  称为A左乘x</p>
+</li>
+</ul>
+<h3 id="2-2-矩阵乘法的几何意义"><a href="#2-2-矩阵乘法的几何意义" class="headerlink" title="2.2. 矩阵乘法的几何意义"></a>2.2. 矩阵乘法的几何意义</h3><p>矩阵函数是一个向量空间向另一个向量空间的映射</p>
+<p>例（一）</p>
+<p>$$<br>A=<br>\begin{bmatrix}<br>1 &amp; -1 \\<br>1 &amp; 1<br>\end{bmatrix}<br>\quad<br>x=<br>\begin{bmatrix}<br>x_1 \\<br>x_2<br>\end{bmatrix}<br>\quad<br>y=<br>\begin{bmatrix}<br>y_1 \\<br>y_2<br>\end{bmatrix}<br>$$</p>
+<p>$$Ax=y$$</p>
+<p>则为从$\mathbb{R}^2 \Rightarrow \mathbb{R}^2$</p>
+<p>例（二）</p>
+<p>$$<br>\begin{bmatrix}<br>1 &amp; -1 \\<br>1 &amp; 1 \\<br>1 &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>x_1 \\<br>x_2<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>y_1 \\<br>y_2 \\<br>y_3<br>\end{bmatrix}<br>$$</p>
+<p>则为从$\mathbb{R}^2 \Rightarrow \mathbb{R}^3$</p>
+<h4 id="2-2-1-基的变换"><a href="#2-2-1-基的变换" class="headerlink" title="2.2.1. 基的变换"></a>2.2.1. 基的变换</h4><h5 id="2-2-1-1-矩阵映射法则——基的变换"><a href="#2-2-1-1-矩阵映射法则——基的变换" class="headerlink" title="2.2.1.1. 矩阵映射法则——基的变换"></a>2.2.1.1. 矩阵映射法则——基的变换</h5><p>在$\mathbb{R}^2$的向量空间中，它的自然基（笛卡尔坐标系）为：</p>
+<p>$$\vec i=\begin{bmatrix} 1 \\ 0 \end{bmatrix}\quad \vec j=\begin{bmatrix} 0 \\ 1 \end{bmatrix}$$</p>
+<p>令 $A=\begin{bmatrix} 1 &amp; -1 \\ 1 &amp; 1 \end{bmatrix}$</p>
+<p>自然基下向量 $a=\begin{bmatrix} 1 \\ 1 \end{bmatrix}=1 \vec i+1 \vec j$</p>
+<p>则 $Aa=b$ 根据矩阵乘法</p>
+<p>$$<br>Aa=<br>\begin{bmatrix}<br>1 &amp; -1 \\<br>1 &amp; 1<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 \\<br>1<br>\end{bmatrix}<br>=<br>1\begin{bmatrix} 1 \\ 1 \end{bmatrix} + 1\begin{bmatrix} -1 \\ 1 \end{bmatrix}<br>=<br>\begin{bmatrix} 0 \\ 2 \end{bmatrix}<br>=b<br>$$</p>
+<p>为了看起来更清晰，我们令</p>
+<p>$$\vec c_1 = \begin{bmatrix} 1 \\ 1 \end{bmatrix} \quad \vec c_2 = \begin{bmatrix} -1 \\ 1 \end{bmatrix}$$</p>
+<p>则 $A=[\vec c_1 \quad \vec c_2]$，因此$Aa=b$可以表示成以下形式：</p>
+<p>$$<br>a = 1 \vec i + \vec j \quad \begin{matrix} A \\ \rightarrow \end{matrix} \quad b = 1 \vec c_1 + 1 \vec c_2<br>$$</p>
+<p>从上面很容易能看出，这个矩阵的乘法规则就是：保持系数不变，但是自然基被矩阵列向量给替换了</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-09.png" alt></p>
+<p>从几何上感受一下</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-10.png" alt></p>
+<h5 id="2-2-1-2-基变换的一个实例——旋转矩阵"><a href="#2-2-1-2-基变换的一个实例——旋转矩阵" class="headerlink" title="2.2.1.2. 基变换的一个实例——旋转矩阵"></a>2.2.1.2. 基变换的一个实例——旋转矩阵</h5><p>通过旋转矩阵$\begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta\end{bmatrix}$，可以让$\mathbb{R}^2$中的x旋转$\theta$角得到y</p>
+<p>来理解一下旋转矩阵是怎么做到的</p>
+<p>单位圆中，与x轴夹角为$\theta$的向量表示如下：</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-11.png" alt></p>
+<p>则</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-12.png" alt></p>
+<p>再看看另一个正交向量的旋转</p>
+<p>根据三角公式有</p>
+<p>$$<br>\begin{cases}<br>-\sin\theta = \cos(\frac \pi2 + \theta) \\<br>\cos\theta = \sin(\frac \pi2 + \theta)<br>\end{cases}<br>$$</p>
+<p>则向量 $\begin{bmatrix} -\sin\theta \\ \cos\theta \end{bmatrix}$表示的是有y轴夹角为$\theta$的向量，则</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-13.png" alt></p>
+<p>结合之前对映射法则的讲解，就可以理解旋转矩阵了：</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-14.png" alt></p>
+<blockquote>
+<p>旋转矩阵的原理，就是通过旋转基来实现的</p>
+</blockquote>
+<h4 id="2-2-2-点积——向新基的投影"><a href="#2-2-2-点积——向新基的投影" class="headerlink" title="2.2.2. 点积——向新基的投影"></a>2.2.2. 点积——向新基的投影</h4><p>还是使用上面用到的例子</p>
+<p>$$A=\begin{bmatrix} 1 &amp; -1 \\ 1 &amp; 1 \end{bmatrix} \quad a=\begin{bmatrix} 1 \\ 1 \end{bmatrix}$$</p>
+<p>令 $\vec c_1 = [1 \quad -1 ]$，$\vec c_2 = [1 \quad 1 ]$，则$A=\begin{bmatrix} - \vec c_1 -  \\ - \vec c_2 - \end{bmatrix}$</p>
+<p>则</p>
+<p>$$<br>Aa=<br>\begin{bmatrix} - \vec c_1 - \\ - \vec c_2 - \end{bmatrix} [\vec a]<br>=<br>\begin{bmatrix} \vec c_1 \vec a \\ \vec c_2 \vec a \end{bmatrix}<br>$$</p>
+<p>而我们知道，两个向量之间的点积运算规则为：</p>
+<p>$$\vec a · \vec b = |\vec a|·|\vec b|·\cos&lt;\vec a,\vec b&gt;$$</p>
+<p>即，$\vec a$ 的长度与 $\vec b$ 在 $\vec a$ 上的投影长度的乘积</p>
+<p>从几何上感受一下</p>
+<p><img src="/images/Linear-Algebra-understand-matrix-15.png" alt></p>
+<p>因此，从点积的角度来理解矩阵乘法的几何意义为（这里只讨论矩阵左乘，即为$Ax$形式的矩阵乘法）：</p>
+<blockquote>
+<p>将$m\times n$的矩阵A看作是$m$个$n$维行向量，这就是新的基，然后将一个在自然基下的$n$维向量$x$向这个新基“投影”（分别向新基的$m$个基向量“投影”，注意这里的“投影”与我们通常所说的投影有些不同：投影后还要将两者的长度相乘），得到这个向量在新基张成的向量空间的新坐标$y$</p>
+</blockquote>
 <hr>
 <p>参考资料：</p>
 <p>(1) 微信公众号·马同学高等数学《图解线性代数》</p>
@@ -858,7 +938,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#理解向量与向量空间"><span class="nav-text">理解向量与向量空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解矩阵与矩阵乘法"><span class="nav-text">理解矩阵与矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵表示法和矩阵乘法规则是怎么来的？"><span class="nav-text">矩阵表示法和矩阵乘法规则是怎么来的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#求解线性方程组：高斯消元法"><span class="nav-text">求解线性方程组：高斯消元法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简化线性方程组的表示——得到原始的矩阵定义"><span class="nav-text">简化线性方程组的表示——得到原始的矩阵定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><span class="nav-text">用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解向量与向量空间"><span class="nav-text">1. 理解向量与向量空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-理解矩阵与矩阵乘法"><span class="nav-text">2. 理解矩阵与矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><span class="nav-text">2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-求解线性方程组：高斯消元法"><span class="nav-text">2.1.1. 求解线性方程组：高斯消元法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><span class="nav-text">2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><span class="nav-text">2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-5-矩阵乘法的行观点和列观点"><span class="nav-text">2.1.5. 矩阵乘法的行观点和列观点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-矩阵乘法的几何意义"><span class="nav-text">2.2. 矩阵乘法的几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-基的变换"><span class="nav-text">2.2.1. 基的变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-1-矩阵映射法则——基的变换"><span class="nav-text">2.2.1.1. 矩阵映射法则——基的变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-2-基变换的一个实例——旋转矩阵"><span class="nav-text">2.2.1.2. 基变换的一个实例——旋转矩阵</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-点积——向新基的投影"><span class="nav-text">2.2.2. 点积——向新基的投影</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
