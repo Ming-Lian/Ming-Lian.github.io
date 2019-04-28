@@ -96,13 +96,13 @@
 
 
 
-  <meta name="description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
+  <meta name="description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：   讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现">
 <meta name="keywords" content="Bioinformatics,Machine-Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习在生物信息学中的应用">
 <meta property="og:url" content="http://yoursite.com/2019/04/04/Application-of-MachineLearning-in-Bioinformatics/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
+<meta property="og:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：   讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-workflow.png">
@@ -122,10 +122,10 @@
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png">
-<meta property="og:updated_time" content="2019-04-15T09:24:22.454Z">
+<meta property="og:updated_time" content="2019-04-28T11:52:39.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习在生物信息学中的应用">
-<meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：  讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现的">
+<meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：   讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现">
 <meta name="twitter:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png">
 
 
@@ -461,7 +461,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-15 17:24:22" itemprop="dateModified" datetime="2019-04-15T17:24:22+08:00">2019-04-15</time>
+                <time title="修改时间：2019-04-28 19:52:39" itemprop="dateModified" datetime="2019-04-28T19:52:39+08:00">2019-04-28</time>
               
             
           </span>
@@ -516,7 +516,8 @@
         <h2 id="1-根据免疫组库TCRβ预测病人的CMV感染状态"><a href="#1-根据免疫组库TCRβ预测病人的CMV感染状态" class="headerlink" title="1. 根据免疫组库TCRβ预测病人的CMV感染状态"></a>1. 根据免疫组库TCRβ预测病人的CMV感染状态</h2><p>这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV<sub>-</sub>)和289例CMV阳性(CMV<sub>+</sub>)</p>
 <p>外部验证用到了120个样本（cohort 2）</p>
 <p>该机器学习的任务为：</p>
-<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-4.png" alt></p>
+
 <p>讨论 TCRβ 免疫组的数据特点：</p>
 <blockquote>
 <ul>
@@ -525,14 +526,16 @@
 <li>对于一个给定的TCR，它对给定抗原肽的结合亲和力会受到HLA类型的调控，因此原始的用于判别分析的特征集合还受到隐变量——HLA类型的影响；</li>
 </ul>
 </blockquote>
-<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-workflow.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-workflow.png" alt></p>
+
 <ul>
 <li><p>特征选择：鉴定表型相关的TCRβs</p>
 <p>  使用Fisher精确检验（单尾检验，具体实现过程请查看文末 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a>）：</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png" alt></p>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-3.png" alt></p>
+
 <p>  Fisher检验的阈值设为：$P&lt;1\times 10^{-4}$，FDR&lt;0.14（该FDR的计算方法见文末 <a href="#3-FDR的计算方法">*3. FDR的计算方法</a>，且阈值的选择问题本质上是一个模型选择问题 (model selection) ，该问题会在这部分靠后的位置进行讨论），且富集在CMV<sup>+</sup>样本中，从而得到与CMV<sup>+</sup>相关的CDR3克隆集合，共有164个</p>
 <p>  通过下面的TCRβ克隆在两组中的发生率的散点图可以明显地看到，筛出的表型相关的TCRβ克隆的确显著地表达在CMV+组中</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
 </li>
 <li><p>计算表型负荷（phenotype burden）</p>
 <p>  一个样本的表型负荷（phenotype burden）被定义为：</p>
@@ -543,7 +546,8 @@
 <p>其中$||·||$表示集合<code>·</code>中元素的数量</p>
 </blockquote>
 <p>  下图是将上面的表型负荷计算公式中的分子与分母分别作为纵轴和横轴，画成二维的散点图</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png" alt></p>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-6.png" alt></p>
+
 <p>  可以明显地看出两类样本在这个层面上来看，有很好的区分度</p>
 </li>
 <li><p>基于二项分布的贝叶斯判别模型</p>
@@ -561,7 +565,8 @@
 <li><p>类条件概率（似然）$p(k’ \mid n’,\,c)$</p>
 <p><strong>（1）首先根据概率图模型推出单个样本的概率表示公式</strong></p>
 <p>概率图模型如下：</p>
-<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-7.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-7.png" alt></p>
+
 <p>则对于j样本，我们可以算出它的 $\theta_i$ 的后验分布：</p>
 <p>$$p(\theta_i \mid y_{ij},\,\alpha_i,\,\beta_i)=\frac{p(\theta_i \mid \alpha_i,\,\beta_i)p(y_{ij} \mid \theta_i)}{p(y_{ij})}$$</p>
 <p>其中，</p>
@@ -614,7 +619,8 @@
 <p>从而得到上面的优化目标</p>
 </blockquote>
 <p>最后得到的分类器的性能非常高</p>
-<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-8.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-8.png" alt></p>
+
 </li>
 </ul>
 </li>
@@ -627,7 +633,8 @@
 <li><strong>k-means聚类后</strong>：特征工程构造出来的一系列新特征集合，基于这些新特征集合通过k-means聚类能得到一系列不同的聚类结果，尝试对这些聚类结果总结出consensus clustering</li>
 </ul>
 </blockquote>
-<p><img src="/images/T-cell-sequencing-in-cancers-colorectal-cancer-2.png" alt></p>
+<p align="center"><img src="/images/T-cell-sequencing-in-cancers-colorectal-cancer-2.png" alt></p>
+
 <p>本人比较好奇的地方是：<strong>怎么从一系列不同的聚类结果中总结出consensus clustering？</strong></p>
 <blockquote>
 <p>使用CSPA算法（cluster-based similarity partitioning algorithm）</p>
@@ -646,29 +653,34 @@
 <blockquote>
 <ul>
 <li><p>beta分布的均值</p>
-<p>  <img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png" alt></p>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-1.png" alt></p>
 </li>
 <li><p>这个分布主要落在了(0.2,0.35)间，这是从经验中得出的合理的范围</p>
 </li>
 </ul>
 </blockquote>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-2.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-2.png" alt></p>
+
 <p align="center">Beta(81, 219)</p>
 
 <p>在这个例子里，我们的x轴就表示各个击球率的取值，x对应的y值就是这个击球率所对应的概率密度。也就是说beta分布可以看作一个概率的概率密度分布。</p>
 <p>那么有了先验信息后，现在我们考虑一个运动员只打一次球，那么他现在的数据就是“1中；1击”。这时候我们就可以更新我们的分布了，让这个曲线做一些移动去适应我们的新信息，移动的方法很简单</p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-3.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-3.png" alt></p>
+
 <p>其中α0和β0是一开始的参数，在这里是81和219。所以在这一例子里，α增加了1（击中了一次）。β没有增加(没有漏球)。这就是我们的新的beta分布 Beta(81+1,219)，我们跟原来的比较一下：</p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-4.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-4.png" alt></p>
+
 <p>可以看到这个分布其实没多大变化，这是因为只打了1次球并不能说明什么问题。但是如果我们得到了更多的数据，假设一共打了300次，其中击中了100次，200次没击中，那么这一新分布就是 Beta(81+100,219+200) ： </p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-5.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-knowledge-beta-distribution-5.png" alt></p>
+
 <p>注意到这个曲线变得更加尖，并且平移到了一个右边的位置，表示比平均水平要高</p>
 <p>有趣的现象：</p>
 <blockquote>
 <p>根据这个新的beta分布，我们可以得出他的数学期望为：αα+β=82+10082+100+219+200=.303 ，这一结果要比直接的估计要小 100100+200=.333 。你可能已经意识到，我们事实上就是在这个运动员在击球之前可以理解为他已经成功了81次，失败了219次这样一个先验信息。</p>
 </blockquote>
 <h3 id="2-重复NG免疫组库TCRβ文章的图"><a href="#2-重复NG免疫组库TCRβ文章的图" class="headerlink" title="*2. 重复NG免疫组库TCRβ文章的图"></a>*2. 重复NG免疫组库TCRβ文章的图</h3><h4 id="2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆" class="headerlink" title="*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆"></a>*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</h4><p>目的是得到类似下面的结果：</p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-redraw-pictures-for-NGpapre-1.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-redraw-pictures-for-NGpapre-1.png" alt></p>
+
 <p>提供的输入：</p>
 <blockquote>
 <ul>
@@ -691,7 +703,8 @@
 <p>具体的参数说明，请查看脚本的注释信息</p>
 <h4 id="2-2-绘制表型负荷相关散点图"><a href="#2-2-绘制表型负荷相关散点图" class="headerlink" title="*2.2. 绘制表型负荷相关散点图"></a>*2.2. 绘制表型负荷相关散点图</h4><h5 id="2-2-1-训练集"><a href="#2-2-1-训练集" class="headerlink" title="*2.2.1. 训练集"></a>*2.2.1. 训练集</h5><p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
 <p>画出的表型负荷相关散点图如下：</p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-PhenotypeBurdenDot_0.05_A-B.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-PhenotypeBurdenDot_0.05_A-B.png" alt></p>
+
 <h5 id="2-2-2-测试集"><a href="#2-2-2-测试集" class="headerlink" title="*2.2.2. 测试集"></a>*2.2.2. 测试集</h5><p>测试集的表型负荷相关散点图需要基于训练集的结果，需要执行另外的操作</p>
 <p>需要提供的输入：</p>
 <blockquote>
@@ -711,11 +724,13 @@
 <p>用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Rscript PhenotypeBurden2TestCohort.R &lt;profile matrix&gt; &lt;1|0&gt; &lt;group info|regx&gt; &lt;2 interested group&gt; &lt;pval&gt; &lt;stat&gt;</span><br></pre></td></tr></table></figure>
 <h4 id="2-2-TCRβ在两组间分布偏好性的散点图"><a href="#2-2-TCRβ在两组间分布偏好性的散点图" class="headerlink" title="*2.2. TCRβ在两组间分布偏好性的散点图"></a>*2.2. TCRβ在两组间分布偏好性的散点图</h4><p>就是画这幅图：</p>
-<p><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png" alt></p>
+
 <p>注意：这幅图的横纵坐标都进行了log10变换</p>
 <p>在上一步 <a href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆">*2.1. Fisher检验筛选CMV阳性（CMV<sup>+</sup>）相关克隆</a> 的操作中会同时得到这张图</p>
 <p>画出的散点图如下：</p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png" alt></p>
+
 <h3 id="3-FDR的计算方法"><a href="#3-FDR的计算方法" class="headerlink" title="*3. FDR的计算方法"></a>*3. FDR的计算方法</h3><h4 id="3-1-回顾那些统计检验方法"><a href="#3-1-回顾那些统计检验方法" class="headerlink" title="*3.1. 回顾那些统计检验方法"></a>*3.1. 回顾那些统计检验方法</h4><h5 id="3-1-1-T-test与Moderated-t-Test"><a href="#3-1-1-T-test与Moderated-t-Test" class="headerlink" title="*3.1.1. T-test与Moderated t-Test"></a>*3.1.1. T-test与Moderated t-Test</h5><p>t-test的统计量：</p>
 <p>$$<br>t= \frac{\overline X_1(i)-\overline X_2(i)}{S(i)}<br>$$</p>
 <p>Moderated t-Test的统计量：</p>
@@ -919,7 +934,8 @@
 <p>即，根据该基因p值的排序对它进行放大，越靠前放大的比例越大，越靠后放大的比例越小，排序最靠后的基因的p值不放大，等于它本身</p>
 <p>我们也可以从可视化的角度来看待这个问题：</p>
 <p>对于给定的$\alpha \in (0,1)$，设函数$y=\frac{\alpha}{m}x \quad (x=1,2,…,m)$，画出这条线，另外对于每个基因，它在图上的坐标为$(rank(p_{(k)}^{(i)}),p_{(k)}^{(i)})=(k,p_{(k)}^{(i)})$，图如下：</p>
-<p><img src="/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png" alt></p>
+<p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png" alt></p>
+
 <p>通过设置$\alpha$可以改变图中直线的斜率，$\alpha$越大，则直线的斜率越大，落在直线下方的点就越多，通过FDR检验的基因也就越多，反之，直线的斜率越小，落在直线下方的点就越少，通过FDR检验的基因也就越少</p>
 <h5 id="3-4-2-Bonferroni-校正"><a href="#3-4-2-Bonferroni-校正" class="headerlink" title="*3.4.2. Bonferroni 校正"></a>*3.4.2. Bonferroni 校正</h5><p>Bonferroni 校正的基本思想：</p>
 <blockquote>
@@ -1068,7 +1084,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1105,8 +1121,6 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
-                    
-                      
                     
                       
                     

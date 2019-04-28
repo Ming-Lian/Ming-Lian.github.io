@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-2.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-3.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-4.png">
-<meta property="og:updated_time" content="2019-04-22T07:36:10.778Z">
+<meta property="og:updated_time" content="2019-04-28T11:48:34.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《数学之美》阅读笔记">
 <meta name="twitter:description" content="1. 奇异值分解 (SVD) 及其应用1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值 维基百科">
@@ -451,7 +451,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-22 15:36:10" itemprop="dateModified" datetime="2019-04-22T15:36:10+08:00">2019-04-22</time>
+                <time title="修改时间：2019-04-28 19:48:34" itemprop="dateModified" datetime="2019-04-28T19:48:34+08:00">2019-04-28</time>
               
             
           </span>
@@ -671,7 +671,8 @@
 <p>基于内容的推荐算法更像是对协同过滤算法以上缺陷的一种补充——<strong>假如没有大量用户数据，或者想听冷门歌曲，我们就只能从音乐本身寻找答案了</strong></p>
 <p>前面提到，可以根据歌曲的不同维度的属性去构造一个特征向量去描述它，但是可供选择的属性实在是太多了，因此需要构造的特征向量维度过大——可以利用深度学习建立基于音频的推荐模型，通过特征的embedding和降维方法，把这么多特征映射到低维变量空间里</p>
 <h3 id="3-3-相似度到底是怎么算出来的？"><a href="#3-3-相似度到底是怎么算出来的？" class="headerlink" title="3.3. 相似度到底是怎么算出来的？"></a>3.3. 相似度到底是怎么算出来的？</h3><p>可以拥有描述相似度的统计量为：欧式距离和余弦相似度</p>
-<p><img src="/images/Beauty-of-Mathmatics-Note-RecoSys-measure-similarity.png" alt></p>
+<p align="center"><img src="/images/Beauty-of-Mathmatics-Note-RecoSys-measure-similarity.png" alt></p>
+
 <p>可以看出，在上图中，如果固定B，让A沿着直线OA方向移动，在移动过程中，AB的余弦夹角始终保持不变，而两点之间的绝对距离一直在变化</p>
 <p>这种差异使得在使用它们进行相似度描述时，要考虑数据的特性：</p>
 <blockquote>
@@ -708,9 +709,10 @@
 <p>  加密和解密规则：</p>
 <blockquote>
 <p>考试前超模君找到表妹，给了她一张纸片，纸片上有20行数，每行有4个数字，4个数字为乱序的1、2、3、4（如下图所示）</p>
-<p><img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-3.png" alt></p>
+<p align="center"><img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-3.png" alt></p>
+
 <p>超模君考试时传递的小纸条中第一个数字X1表示纸片中X1行里的第x1个数字，第二个数字X2开始表示下一行中的第X2个数。例如，超模君的纸条上数字为2123，那么根据上面的纸片从第二行开始找数字，得到答案2、4、2、2（下图所示）</p>
-<p><img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-4.png" alt></p>
+<p align="center"><img src="/images/Beauty-of-Mathmatics-Note-encryption-algorithm-4.png" alt></p>
 </blockquote>
 <p>  非对称性加密与对称性加密最大的区别就在于非对称性加密拥<strong>有两把钥匙，分别为私匙和公匙</strong>，其中只有公匙会传播出去，而私匙只会在自己手中，不会传播到外界</p>
 </li>
@@ -892,7 +894,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -929,8 +931,6 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
-                    
-                      
                     
                       
                     
