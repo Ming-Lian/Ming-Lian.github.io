@@ -107,9 +107,11 @@
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-introduction-1.png">
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-introduction-2.png">
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-introduction-3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-minimize-PCR-bias-1.png">
+<meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-minimize-PCR-bias-2.png">
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-01.png">
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-02.jpg">
-<meta property="og:updated_time" content="2019-04-28T11:45:37.276Z">
+<meta property="og:updated_time" content="2019-04-29T07:56:26.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="免疫组库测序：从入门到进阶">
 <meta name="twitter:description" content="背景介绍TCR与BCR的结构：           TCR与APC的互作：   (a)(b) TCR与APC的互作; (c)T细胞中的VDJ基因重排  CDR3区域：   互补决定区域（complementarity determining region 3 (CDR3) domain），一般长度为45nt，有VJ junction形式（TCR-α）和VDJ junction形式（TCR-β）">
@@ -431,12 +433,24 @@
                 
               
 
-              <time title="创建时间：2019-04-28 19:37:18 / 修改时间：19:45:37" itemprop="dateCreated datePublished" datetime="2019-04-28T19:37:18+08:00">2019-04-28</time>
+              <time title="创建时间：2019-04-28 19:37:18" itemprop="dateCreated datePublished" datetime="2019-04-28T19:37:18+08:00">2019-04-28</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-29 15:56:26" itemprop="dateModified" datetime="2019-04-29T15:56:26+08:00">2019-04-29</time>
               
             
           </span>
@@ -583,7 +597,113 @@
 <h2 id="缩小多重PCR引入的PCR-bias"><a href="#缩小多重PCR引入的PCR-bias" class="headerlink" title="缩小多重PCR引入的PCR bias"></a>缩小多重PCR引入的PCR bias</h2><p>一般PCR仅应用一对引物，通过PCR扩增产生一个核酸片段，而多重PCR (multiplex PCR)，又称多重引物PCR或复合PCR，它是在同一PCR反应体系里加上二对以上引物，同时扩增出多个核酸片段的PCR反应，其反应原理，反应试剂和操作过程与一般PCR相同·</p>
 <p>在免疫组库建库的过程中一般都采用针对V和J基因的多套引物进行PCR扩增，即使用的是多重PCR方法，与普通PCT相比，多重PCR明显会带来更大程度的PCR bias，所以为了保证下游分析的可靠性，进行PCR bias的修正是非常有必要的</p>
 <p>Wei Zhang等提出了一种进行PCR bias修正的方法：</p>
-<p>该方法基于这样一个前提假设：multiplex PCR过程中，克隆的扩增效率仅受到以下两个因素的影响——模板的浓度和多重引物的效率</p>
+<p>该方法基于这样一个前提假设：multiplex PCR过程中，克隆的扩增效率仅受到以下两个因素的影响——<strong>模板的浓度</strong>和<strong>多重引物的效率</strong></p>
+<p>基于上面的假设，研究人员做了以下实验来探究这些因素之间的关系：</p>
+<p>按照下表列出来的引物对应克隆配比，将33套PCR引物（足量）加入到3对样本中</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Plasmid No.</th>
+<th style="text-align:center">V gene</th>
+<th style="text-align:center">J gene</th>
+<th style="text-align:center">Plasmidmix 1-1*</th>
+<th style="text-align:center">Plasmidmix 1-2*</th>
+<th style="text-align:center">Plasmidmix 2-1*</th>
+<th style="text-align:center">Plasmidmix 2-2*</th>
+<th style="text-align:center">Plasmidmix 3-1*</th>
+<th style="text-align:center">Plasmidmix 3-2*</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">C-01</td>
+<td style="text-align:center">TRBV10-1</td>
+<td style="text-align:center">TRBJ2-7</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">100000</td>
+<td style="text-align:center">100000</td>
+</tr>
+<tr>
+<td style="text-align:center">C-02</td>
+<td style="text-align:center">TRBV10-2/3</td>
+<td style="text-align:center">TRBJ2-7</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">1000</td>
+<td style="text-align:center">1000</td>
+<td style="text-align:center">1000</td>
+<td style="text-align:center">1000</td>
+</tr>
+<tr>
+<td style="text-align:center">C-03</td>
+<td style="text-align:center">TRBV11-1/2/3</td>
+<td style="text-align:center">TRBJ1-3</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">100000</td>
+<td style="text-align:center">100000</td>
+</tr>
+<tr>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+<td style="text-align:center">……</td>
+</tr>
+<tr>
+<td style="text-align:center">C-33</td>
+<td style="text-align:center">TRBV9</td>
+<td style="text-align:center">TRBJ1-2</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:center">100</td>
+<td style="text-align:center">100</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:center">10000</td>
+</tr>
+</tbody>
+</table>
+<p>注：$\text{Plasmidmix}_{i-j} , (i\in \{1,2,3\},j\in\{1,2\})$表示第i个样本对中的第j个样本</p>
+<p>可以看出同一个样本对中的两个样本，它们的每一对引物对应克隆的浓度配比都是一样的，因此，每一个克隆有三种不同的浓度</p>
+<p>它的校正思路为：</p>
+<blockquote>
+<p>（1）进行克隆浓度的校正。先排除引物效率的影响，即选定某一种克隆（则与它对应的PCR引物也唯一确定了，也就排除了不同引物的效率的影响了），使用不同的克隆浓度，分析克隆浓度对PCR bias（表现为不同浓度导致扩增后observed frequency的不同）的影响，构建回归模型来定量描述克隆浓度与PCR bias的关系；</p>
+<p>（2）进行引物效率的校正。先排除克隆浓度的影响，即选择克隆浓度相同的那些克隆放在一起分析，这些克隆浓度相同，但是所对应的PCR引物不同，则在前面的前提假设下，导致PCR bias（表现为不同PCR引物导致扩增后observed frequency的不同）的因素只有引物的效率，因可以据此分析引物效率队PCR bias的影响</p>
+</blockquote>
+<ul>
+<li><p><strong>先进行浓度的校正</strong></p>
+<p>  为了控制潜在变量的影响，将相同浓度的克隆合并到一个相同的组进行研究，因此可以聚成5个浓度的组（总共有5种可选浓度，则理论上总共有$\left( \begin{matrix} 5 \ 3 \end{matrix}\right)=10$种可能，但是实际上只用到了里面的5种）：10_2E4_1E5、1000_2E4、100_1000_2E4、100_1E4_2E4 和 10_1E4_2E4 （可以看出是$i\_j\_k(i&lt;j&lt;k)$形式，它是某个克隆的3个浓度）</p>
+<p>  以10_2E4_1E5组为例，说明依据浓度进行的方法：</p>
+<p>  先计算在这组中浓度期望分别为10、2E4和1E5的克隆实际浓度的均值</p>
+<p>  $$\mu(j)=\frac 1n \sum_{i=1}^nf(i,j) \quad j\in\{10; 2E4; 1E5\}$$</p>
+<p>  然后对每个克隆i，寻找它对应的浓度校正系数$k_i\in(0,+\infty)$使得校正后的浓度与实际浓度的均值$\mu(j)$最小，即</p>
+<p>  $$k_i^*=arg \min_{k_i\in(0,+\infty)}\sum_{j\in\{10,2E4,1E5\}}|f(i,j)k_i-\mu(j)|$$</p>
+<p>  则克隆$i$校正之后的浓度为</p>
+<p>  $$f_{norm}(i,j)=f(i,j)k_i^*$$</p>
+<p>  这里得到的是每组中每个克隆的校正结果，下面要依据每一组都具有的浓度2E4为基准，将5个组的校正结果相结合，并进行拟合得到克隆浓度与PCR bias的回归模型：</p>
+<p>  $$y=0.60636\log_{1.8}x+1 $$</p>
+</li>
+<li><p><strong>接着分析引物效率的影响</strong></p>
+<p>  为了排除克隆浓度的影响，将所有样本中浓度相同的克隆聚成相同的组，则共得到6个组：10、100、1E3、1E4、2E4 和 1E5</p>
+  <p align="center"><img src="/images/immuSeq-paper-survey-minimize-PCR-bias-1.png" alt></p>
+
+<p>  从上面的图可以看出，相同浓度的克隆，不同的对应引物的扩增效率存在较大的差异，表现为Observed frequency的较大波动，而浓度为2E4的那些克隆相对来说波动较小，即不同引物带来的扩增效率差异比较小</p>
+<p>  那么应该如何进行校正呢？</p>
+<p>  下图是整个多重PCR bias校正的总流程图</p>
+  <p align="center"><img src="/images/immuSeq-paper-survey-minimize-PCR-bias-2.png" alt></p>
+
+
+</li>
+</ul>
 <h2 id="健康个体的免疫组库"><a href="#健康个体的免疫组库" class="headerlink" title="健康个体的免疫组库"></a>健康个体的免疫组库</h2><ul>
 <li><p><strong>TCR的多样性/克隆种类</strong></p>
 <p>  TCR β的CDR3序列，长度为45bp，其最大可能的容量为4<sup>45</sup>，考虑一些已知的限制因素，它理论上的多样性也能达到10<sup>11</sup>，然而实际上T细胞在胸腺成熟的过程中要经历两个选择过程：</p>
