@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-minimize-PCR-bias-2.png">
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-01.png">
 <meta property="og:image" content="http://yoursite.com/images/immuSeq-paper-survey-02.jpg">
-<meta property="og:updated_time" content="2019-04-29T07:56:26.029Z">
+<meta property="og:updated_time" content="2019-04-30T13:47:22.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="免疫组库测序：从入门到进阶">
 <meta name="twitter:description" content="背景介绍TCR与BCR的结构：           TCR与APC的互作：   (a)(b) TCR与APC的互作; (c)T细胞中的VDJ基因重排  CDR3区域：   互补决定区域（complementarity determining region 3 (CDR3) domain），一般长度为45nt，有VJ junction形式（TCR-α）和VDJ junction形式（TCR-β）">
@@ -450,7 +450,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-29 15:56:26" itemprop="dateModified" datetime="2019-04-29T15:56:26+08:00">2019-04-29</time>
+                <time title="修改时间：2019-04-30 21:47:22" itemprop="dateModified" datetime="2019-04-30T21:47:22+08:00">2019-04-30</time>
               
             
           </span>
@@ -698,6 +698,13 @@
 
 <p>  从上面的图可以看出，相同浓度的克隆，不同的对应引物的扩增效率存在较大的差异，表现为Observed frequency的较大波动，而浓度为2E4的那些克隆相对来说波动较小，即不同引物带来的扩增效率差异比较小</p>
 <p>  那么应该如何进行校正呢？</p>
+<p>  对于引物效率差异导致的PCR bias的校正目标很明确，就是消除PCR bias，即使相同浓度的克隆扩增出相近的observed freqency，表现在上面的图上就是曲线波动比较小，类似于2E4那条曲线</p>
+<p>  $$<br>  r(i,j)=<br>  \begin{cases}<br>  \frac{f(i,j)l}{f(i,2E4)} \quad if \, f(i,j)l &gt; f(i,2E4) \\<br>   \\<br>  \frac{f(i,2E4)}{f(i,j)l} \quad if \, f(i,j)l &lt; f(i,2E4)<br>  \end{cases}<br>  $$</p>
+<p>  其中，$l\in(0,+\infty),j\in{10, 100, 1E3, 1E4, 2E4, 1E5}$</p>
+<p>  对于$j$浓度的组要找到合适的校正系数$l_k$使得该组的PCR bias最小化，即</p>
+<p>  $$l_j^*=arg \min_{l_j\in (0,+\infty)} \sum_{i=1}^n r(i,j)$$</p>
+<p>  则对引物效率进行校正后的clone frequency为</p>
+<p>  $$f_{norm}(i,j)=f(i,j)l_j^*$$</p>
 <p>  下图是整个多重PCR bias校正的总流程图</p>
   <p align="center"><img src="/images/immuSeq-paper-survey-minimize-PCR-bias-2.png" alt></p>
 
@@ -976,9 +983,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
