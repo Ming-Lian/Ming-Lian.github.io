@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-2.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-3.png">
 <meta property="og:image" content="http://yoursite.com/images/Beauty-of-Mathmatics-Note-encryption-algorithm-4.png">
-<meta property="og:updated_time" content="2019-04-28T11:48:34.699Z">
+<meta property="og:updated_time" content="2019-05-01T07:46:39.415Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《数学之美》阅读笔记">
 <meta name="twitter:description" content="1. 奇异值分解 (SVD) 及其应用1.1. SVD算法矩阵A可以如下分解成三个矩阵的乘积： $$A_{MN}=X_{MM} \times B_{MN} \times Y_{NN}$$ 其中X是一个酉矩阵 (Unitary Matrix)，Y则是一个酉矩阵的共轭矩阵  与其共轭矩阵转置相乘等于单位阵的矩阵是酉矩阵，因此酉矩阵及其共轭矩阵都是方阵  B是一个对角阵，即只有对角线上是非0值 维基百科">
@@ -451,7 +451,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-28 19:48:34" itemprop="dateModified" datetime="2019-04-28T19:48:34+08:00">2019-04-28</time>
+                <time title="修改时间：2019-05-01 15:46:39" itemprop="dateModified" datetime="2019-05-01T15:46:39+08:00">2019-05-01</time>
               
             
           </span>
@@ -768,6 +768,53 @@
 <p>从上面的分析中可以看出，破解私匙的关键的一步是对$n$进行因式分解，虽然上面举的例子中的因式分解很简单，分分钟就能被破解，但是在实际使用中的$n$是一个很大的数——1024位的二进制数字，换算成十进制约为308位</p>
 <p>目前还没有公式可以对这么大的一个数进行<strong>质因式分解</strong>，想硬解就需要用<strong>穷举法</strong>一个个的试出p、q</p>
 <p>那么，用普通计算机进行穷举需要花费多久的时间呢？答案是<strong>整整一年</strong></p>
+<h2 id="6-信息指纹"><a href="#6-信息指纹" class="headerlink" title="6. 信息指纹"></a>6. 信息指纹</h2><p>任何一段信息（包括文字、语言、视频、图片等），都可以对应一个不太长的随机数，作为区别这段信息和其他信息的指纹</p>
+<p>只要算法设计得好，任何段信息的指纹都很难重复</p>
+<h3 id="6-1-应用场景一：爬虫重复项的检查"><a href="#6-1-应用场景一：爬虫重复项的检查" class="headerlink" title="6.1. 应用场景一：爬虫重复项的检查"></a>6.1. 应用场景一：爬虫重复项的检查</h3><p>使用网络爬虫进行网页抓取时，为了防止重复下载同一个网页，需要在散列表中记录访问过的网站 (URL)</p>
+<p>但是如果在散列表中以字符串的形式直接存储网址，即小孩内存空间，又浪费查找时间：</p>
+<blockquote>
+<p>现在的网址一般都很长，比如在 百度上查找“吴军 数学之美”，对应的网址长度在100个字符以上</p>
+<p>假设网址的平均长度为100个字符，目前互联网上有5000亿这个数量级的网页，那么存储这些网址本身就至少需要50TB。考虑到散列表的存储效率一般在50%左右，所以实际上所需内存在100TB以上</p>
+<p>另外。即使这么多的网址放到内存中，由于网址长度不固定，以字符串的形式查找，效率很低</p>
+</blockquote>
+<p>因此，若能找到一个函数，将这5000亿个网址随机映射到128位二进制数上，也就是16个字节的空间，那么内存的需求量就降至原来的 1/6 不到，且这些与网址相对应的指纹长度相同，直接进行整数比较就可以进行快速的查找——空间复杂度和时间复杂度都得到了显著性的降低</p>
+<h3 id="6-2-应用场景二：集合相同的判定"><a href="#6-2-应用场景二：集合相同的判定" class="headerlink" title="6.2. 应用场景二：集合相同的判定"></a>6.2. 应用场景二：集合相同的判定</h3><p>在网页搜索中，有时需要判断两个查询用词是否相同（次序可能不同），比如“北京 中关村 星巴克”和“星巴克 中关村 北京”，它们的用词就完全相同</p>
+<p>这其实是一个集合一致性的判断问题</p>
+<p>解决这个问题的方法有很多：</p>
+<blockquote>
+<ul>
+<li><p>（1）笨办法：对集合中的元素一一做比较，时间复杂度为$O(N^2)$</p>
+</li>
+<li><p>（2）稍微好一些：先排序，然后顺序比较，时间复杂度为$O(N\log N)$</p>
+</li>
+<li><p>（3）跟（2）效果差不多：将第一个集合放在一个散列里，然后拿第二个集合的元素一一和散列中的元素做比较，时间复杂度为$O(N)$，已经达到最佳，但是额外使用了$O(N)$的空间</p>
+</li>
+</ul>
+</blockquote>
+<p>最高效的方法是计算这两个集合的指纹，然后直接进行比较</p>
+<p>我们定义一个集合$S=\{e_1,e_2,…,e_n\}$的信息指纹为</p>
+<p>$$FP(S)=FP(e_1)+FP(e_2)+…+FP(e_n)$$</p>
+<p>加法交换律保证了集合的指纹的不因元素出现的次序而改变，如果两个集合的元素相同，则它们的信息指纹也相同——当然可能存在集合不同而指纹相同的情况，但是概率比较小，可以忽略</p>
+<h3 id="6-3-应用场景三：判断集合基本相同"><a href="#6-3-应用场景三：判断集合基本相同" class="headerlink" title="6.3. 应用场景三：判断集合基本相同"></a>6.3. 应用场景三：判断集合基本相同</h3><p>想象一个这样的场景：</p>
+<blockquote>
+<p>一个人用不同的邮箱账号对同一组几乎相同的人群群发垃圾邮件，你现在获得了这两个账户的群发邮件列表，需要根据两个的各种的群发列表来判断它们的一致性，基本相同，则可以做出这样的判断：这两次群发很可能是由同一个人发起的，只是用了不同的邮箱账号而已</p>
+</blockquote>
+<p>那么，如何快速判断两个集合是否基本相同呢？</p>
+<p>可以分别从两个账号群发的接收邮箱清单中按照相同的规则随机挑选几个邮箱地址，然后比较它们的指纹，如果它们的指纹相同，则很可能它们的群发邮箱清单基本相同</p>
+<p>因为我们比较的是两个集合基本相同，所以有可能抽样构造出来的指纹是不完全一样的，因此需要我们的指纹具有一点的容错能力</p>
+<p>这个功能可以引申到另外一个更常见的应用场景——判断一篇文章是否抄袭了另一篇文章</p>
+<blockquote>
+<p>其实这个问题和生物信息学上比较两个基因组（比如人的基因组和猩猩的基因组）是否同源是一个问题</p>
+<p>如果把两篇文章从比头到尾（类似于生物信息学上的双序列的全局比对），计算时间太长，也没有必要，因为抄袭的文章一般来说不会完全照搬，而是会在原文的基础上进行语段的顺序的调整（对应到生物学上就是，两个物种有一个相同的祖先，它们都是在祖先基因组的基础上进行基因组重排变异才得到各自现在的基因组），因此若进行全局比对，那么会得出比较大的差异</p>
+<p>对于这个问题，我们生物信息学上采用的方法是进行共线性分析：</p>
+<blockquote>
+<p>先找出两个基因组中同源的基因区块（称为block），对应到集合比较问题上，就是把两个集合中的相同/相似元素对应起来；然后再比较两个基因组同源区块在基因组上的排列顺序的一致性，又称为共线性，一般进化距离比较相近的两个物种，比如人和猩猩，它们的基因组间保持了很高的大片段的共线性区域，即共线性保持得很好，而进化距离比较远的两个物种，比如相对于与猩猩，人和老鼠的进化距离就比较远，那么共线性程度肯定没有猩猩的高，因此通过共线性就可以判断出物种在进化上亲缘关系的远近了</p>
+<p>对于集合比较问题，在得到原始的对应关系后，不需要像生物学上去比较两个集合元素的排列顺序，只需要比较对应元素的有无即可</p>
+</blockquote>
+<p>因此从生物学上我们得到了启发，最好的做法是：将每一篇文章切成小的片段，假设两篇文章分别拆分出m和n个小片段，然后对这每一个小片段计算它们的指纹，那么原来的两个集合相似性比较的问题，现在变成了$m\times n$个小集合的对应两两比较的问题</p>
+<p>只要比较这些指纹，就可以找到大段相同的文字，最后根据时间的先后，判定原创和抄袭</p>
+<p>那么如何对每个小片段计算它们的指纹呢？</p>
+</blockquote>
 <hr>
 <p>参考资料：</p>
 <p>(1) 吴军《数学之美（第二版）》</p>
@@ -994,10 +1041,6 @@
                     
                       
                     
-                      
-                    
-                      
-                    
                     <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
@@ -1082,7 +1125,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-奇异值分解-SVD-及其应用"><span class="nav-text">1. 奇异值分解 (SVD) 及其应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SVD算法"><span class="nav-text">1.1. SVD算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-如何求出SVD分解后的U-Σ-V这三个矩阵？"><span class="nav-text">1.2. 如何求出SVD分解后的U,Σ,V这三个矩阵？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-SVD的一些性质"><span class="nav-text">1.3. SVD的一些性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-理解SVD分解所得三个矩阵的含义"><span class="nav-text">1.4. 理解SVD分解所得三个矩阵的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-SVD用于PCA降维"><span class="nav-text">1.5. SVD用于PCA降维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关键词权重的科学度量TF-IDF"><span class="nav-text">2. 关键词权重的科学度量TF-IDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-推荐系统的奥秘"><span class="nav-text">3. 推荐系统的奥秘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-基于用户数据：协同过滤算法"><span class="nav-text">3.1. 基于用户数据：协同过滤算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-基于内容：摆脱协同过滤算法对用户数据的过分依赖"><span class="nav-text">3.2. 基于内容：摆脱协同过滤算法对用户数据的过分依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-相似度到底是怎么算出来的？"><span class="nav-text">3.3. 相似度到底是怎么算出来的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-用余弦相似度进行文本分类"><span class="nav-text">4. 用余弦相似度进行文本分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-加密算法"><span class="nav-text">5. 加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-对称性加密与非对称性加密"><span class="nav-text">5.1. 对称性加密与非对称性加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-RSA加密算法"><span class="nav-text">5.2. RSA加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-加密解密原理"><span class="nav-text">5.2.1. 加密解密原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-安全性分析"><span class="nav-text">5.2.2. 安全性分析</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-奇异值分解-SVD-及其应用"><span class="nav-text">1. 奇异值分解 (SVD) 及其应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SVD算法"><span class="nav-text">1.1. SVD算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-如何求出SVD分解后的U-Σ-V这三个矩阵？"><span class="nav-text">1.2. 如何求出SVD分解后的U,Σ,V这三个矩阵？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-SVD的一些性质"><span class="nav-text">1.3. SVD的一些性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-理解SVD分解所得三个矩阵的含义"><span class="nav-text">1.4. 理解SVD分解所得三个矩阵的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-SVD用于PCA降维"><span class="nav-text">1.5. SVD用于PCA降维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关键词权重的科学度量TF-IDF"><span class="nav-text">2. 关键词权重的科学度量TF-IDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-推荐系统的奥秘"><span class="nav-text">3. 推荐系统的奥秘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-基于用户数据：协同过滤算法"><span class="nav-text">3.1. 基于用户数据：协同过滤算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-基于内容：摆脱协同过滤算法对用户数据的过分依赖"><span class="nav-text">3.2. 基于内容：摆脱协同过滤算法对用户数据的过分依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-相似度到底是怎么算出来的？"><span class="nav-text">3.3. 相似度到底是怎么算出来的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-用余弦相似度进行文本分类"><span class="nav-text">4. 用余弦相似度进行文本分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-加密算法"><span class="nav-text">5. 加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-对称性加密与非对称性加密"><span class="nav-text">5.1. 对称性加密与非对称性加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-RSA加密算法"><span class="nav-text">5.2. RSA加密算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-加密解密原理"><span class="nav-text">5.2.1. 加密解密原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-安全性分析"><span class="nav-text">5.2.2. 安全性分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-信息指纹"><span class="nav-text">6. 信息指纹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-应用场景一：爬虫重复项的检查"><span class="nav-text">6.1. 应用场景一：爬虫重复项的检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-应用场景二：集合相同的判定"><span class="nav-text">6.2. 应用场景二：集合相同的判定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-应用场景三：判断集合基本相同"><span class="nav-text">6.3. 应用场景三：判断集合基本相同</span></a></li></ol></li></ol></div>
             
 
           </div>
