@@ -96,28 +96,27 @@
 
 
 
-  <meta name="description" content="pod文档使用pod文档可以实现程序usage说明 12345678910111213=head1 part1	doc in part1=head2 part2	doc in part2...=cut	# pod文档结束的标志 注意：每个=标签上下必须隔一行，否则就会错误解析。 用pod2doc $0可以将程序中的文档打印出来，不过一般用在程序内部，当程序参数设定错误时打印pod文档： 1die">
-<meta name="keywords" content="Perl">
+  <meta name="description" content="1. 理解极大似然估计和EM算法1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系 写在最前面的结论： 极大似然估计和EM算法都是对于概率模型而言的 极大似然是对概率模型参数学习优化目标的一种定义 EM算法是用于求解极大似然估计的一种迭代逼近的算法  机器学习的一大重要任务：  根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计  那么对于上面的任务，一种有">
+<meta name="keywords" content="Machine-Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Perl进阶笔记">
-<meta property="og:url" content="http://yoursite.com/2019/04/01/Perl-Advanced/index.html">
+<meta property="og:title" content="理解机器学习">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/Understand-MachineLearning/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="pod文档使用pod文档可以实现程序usage说明 12345678910111213=head1 part1	doc in part1=head2 part2	doc in part2...=cut	# pod文档结束的标志 注意：每个=标签上下必须隔一行，否则就会错误解析。 用pod2doc $0可以将程序中的文档打印出来，不过一般用在程序内部，当程序参数设定错误时打印pod文档： 1die">
+<meta property="og:description" content="1. 理解极大似然估计和EM算法1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系 写在最前面的结论： 极大似然估计和EM算法都是对于概率模型而言的 极大似然是对概率模型参数学习优化目标的一种定义 EM算法是用于求解极大似然估计的一种迭代逼近的算法  机器学习的一大重要任务：  根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计  那么对于上面的任务，一种有">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/Advanced-Perl-SAM-NMtag.png">
-<meta property="og:image" content="http://yoursite.com/images/Advanced-Perl-lh-code.png">
-<meta property="og:updated_time" content="2019-04-04T02:15:43.170Z">
+<meta property="og:image" content="http://yoursite.com/images/Understand-MachineLearning-MLE-EM-1.png">
+<meta property="og:updated_time" content="2019-05-03T06:38:49.735Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Perl进阶笔记">
-<meta name="twitter:description" content="pod文档使用pod文档可以实现程序usage说明 12345678910111213=head1 part1	doc in part1=head2 part2	doc in part2...=cut	# pod文档结束的标志 注意：每个=标签上下必须隔一行，否则就会错误解析。 用pod2doc $0可以将程序中的文档打印出来，不过一般用在程序内部，当程序参数设定错误时打印pod文档： 1die">
-<meta name="twitter:image" content="http://yoursite.com/images/Advanced-Perl-SAM-NMtag.png">
+<meta name="twitter:title" content="理解机器学习">
+<meta name="twitter:description" content="1. 理解极大似然估计和EM算法1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系 写在最前面的结论： 极大似然估计和EM算法都是对于概率模型而言的 极大似然是对概率模型参数学习优化目标的一种定义 EM算法是用于求解极大似然估计的一种迭代逼近的算法  机器学习的一大重要任务：  根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计  那么对于上面的任务，一种有">
+<meta name="twitter:image" content="http://yoursite.com/images/Understand-MachineLearning-MLE-EM-1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/01/Perl-Advanced/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/Understand-MachineLearning/">
 
 
 
@@ -127,7 +126,7 @@
   };
 </script>
 
-  <title>Perl进阶笔记 | Lianm's Blog</title>
+  <title>理解机器学习 | Lianm's Blog</title>
   
 
 
@@ -385,7 +384,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/Perl-Advanced/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/Understand-MachineLearning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lianm">
@@ -402,7 +401,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Perl进阶笔记
+          <h1 class="post-title" itemprop="name headline">理解机器学习
 
               
             
@@ -428,24 +427,12 @@
                 
               
 
-              <time title="创建时间：2019-04-01 13:41:38" itemprop="dateCreated datePublished" datetime="2019-04-01T13:41:38+08:00">2019-04-01</time>
+              <time title="创建时间：2019-05-03 14:33:29 / 修改时间：14:38:49" itemprop="dateCreated datePublished" datetime="2019-05-03T14:33:29+08:00">2019-05-03</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
               
             
           </span>
@@ -462,7 +449,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
 
                 
                 
@@ -497,107 +484,67 @@
       
 
       
-        <h2 id="pod文档"><a href="#pod文档" class="headerlink" title="pod文档"></a>pod文档</h2><p>使用pod文档可以实现程序usage说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">=head1 part1</span><br><span class="line"></span><br><span class="line">	doc in part1</span><br><span class="line"></span><br><span class="line">=head2 part2</span><br><span class="line"></span><br><span class="line">	doc in part2</span><br><span class="line"></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line">=cut	# pod文档结束的标志</span><br></pre></td></tr></table></figure>
-<p>注意：每个=标签上下必须隔一行，否则就会错误解析。</p>
-<p>用<code>pod2doc $0</code>可以将程序中的文档打印出来，不过一般用在程序内部，当程序参数设定错误时打印pod文档：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">die `pod2doc $0` if (...);</span><br></pre></td></tr></table></figure>
-<h2 id="Getopt-Long"><a href="#Getopt-Long" class="headerlink" title="Getopt::Long"></a>Getopt::Long</h2><p>首先需要在脚本开头加上对该模块的引用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use Getopt::Long;</span><br></pre></td></tr></table></figure>
-<p>使用GetOptions函数承接传递的参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">my ($var1,$var2,$var3,$var4); # 若使用&quot;use strict&quot;模式，则需要提前定义变量</span><br><span class="line">GetOptions(</span><br><span class="line">	&quot;i:s&quot;=&gt;\$var1,</span><br><span class="line">	&quot;o:s&quot;=&gt;\$var2,</span><br><span class="line">	&quot;n:i&quot;=&gt;\$var3,</span><br><span class="line">	&quot;m:i&quot;=&gt;\$var4</span><br><span class="line">	);</span><br></pre></td></tr></table></figure>
-<h2 id="perl单行"><a href="#perl单行" class="headerlink" title="perl单行"></a>perl单行</h2><p>执行<code>perl -h</code>可以查看perl的所有参数使用说明，使用perl单行需要使用到<code>-e</code>参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -e &apos;print &quot;hello world!\n&quot;&apos;</span><br></pre></td></tr></table></figure>
-<p>perl单行常用的场景为进行文本的逐行读取并操作，即隐式地开启<code>while(&lt;&gt;)</code>，需要使用<code>-n</code>参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">perl -ne</span><br><span class="line">	&apos;BEGIN&#123;&#125;</span><br><span class="line">	...</span><br><span class="line">	END&#123;&#125;&apos;</span><br><span class="line">filename</span><br></pre></td></tr></table></figure>
-<p>BEGIN 和 END 区块根据需要进行添加</p>
-<p>若需要在逐行读取的同时，自动将行中的元素打散 (split)，默认以<code>\s</code>（空字符，即空格或制表符）作为分割符，则需要使用<code>-a</code>参数，相当于在执行了<code>@F = split $_</code>，打散后的元素会保存在<code>@F</code>中</p>
-<h2 id="使用Hash遇到的坑"><a href="#使用Hash遇到的坑" class="headerlink" title="使用Hash遇到的坑"></a>使用Hash遇到的坑</h2><p>在编写perl脚本的过程中，我们常常会将读入文件一行中的某两项（一行可能有多列，列与列之间用制表符<code>\t</code>隔开）作为相对应的两项，分别作为Hash的键（key)和值（value)，由于Hash这种数据结构要求key是唯一，而value可以重复，因此一般将唯一的那一项作为key，另一项作为value</p>
-<p>但是，由于字符串首末端空字符的存在会导致一个意想不到的情况：</p>
-<p>创建了两个Hash，让它们的key是一一对应的，而各自存储的value不同，当时在某些key字符串首末端混入了空字符，例如Hash1有一个key为<code>&quot;KEY&quot;</code>，Hash2有一个key为<code>&quot;KEY &quot;</code>，它们本来应该是一样的，但是由于空字符的存在，它们现在不一样了</p>
-<p>这时候的解决方法是在构建Hash之前，不论实际的字符串的首末端有没有空字符串，都尝试将这些空字符串去掉：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 假设读入的文件只有用制表符隔开的两列</span><br><span class="line">while(&lt;IN&gt;)&#123;</span><br><span class="line">	chomp;</span><br><span class="line">	@recorder = split /\t/;</span><br><span class="line">	$recorder[0] =~ s/(^\s+)|(\s+$)//g;	# 去除开头和末尾的空字符串</span><br><span class="line">	$recorder[1] =~ s/(^\s+)|(\s+$)//g;	# 去除开头和末尾的空字符串</span><br><span class="line">	$hash&#123;$recorder[0]&#125; = $recorder[1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Hash中的排序操作"><a href="#Hash中的排序操作" class="headerlink" title="Hash中的排序操作"></a>Hash中的排序操作</h2><p>对key进行排序</p>
-<p>其基本的语法结构为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort &lt;排序规则&gt; &lt;排序对象&gt;</span><br></pre></td></tr></table></figure>
-<p>若要对keys进行排序则排序对象就是keys，所以最后一项要写成<code>keys %hash</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 按value排序</span><br><span class="line">## 对hash的keys按hash value排序（按ASCII码排序）</span><br><span class="line">sort &#123; $hash&#123;$a&#125; cmp $hash&#123;$b&#125; &#125; keys %hash</span><br><span class="line">## 对hash的keys按hash value排序（按数字大小排序）</span><br><span class="line">sort &#123; $hash&#123;$a&#125; &lt;=&gt; $hash&#123;$b&#125; &#125; keys %hash</span><br><span class="line"></span><br><span class="line"># 按key排序</span><br><span class="line"># 对hash的keys按hash key排序</span><br><span class="line">sort &#123;$a&lt;=&gt;$b&#125; keys %hash</span><br></pre></td></tr></table></figure>
-<h2 id="安装Perl模块"><a href="#安装Perl模块" class="headerlink" title="安装Perl模块"></a>安装Perl模块</h2><p>查看perl模块的安装目录，主要就是@INC这个默认变量 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -e &apos;&#123;print &quot;$_\n&quot; foreach @INC&#125;&apos;</span><br></pre></td></tr></table></figure>
-<p>若要临时添加perl模块的安装目录，则在perl脚本中shebang（<code>#!/usr/bin/perl</code>）后紧接着添加<code>push(@INC,&quot;...&quot;);</code>命令，若是在perl单行中，则写成<code>BEGIN{push(@INC,&quot;...&quot;);}</code></p>
-<p>若是要永久添加perl模块的安装目录，则修改PERL5LIB环境变量即可：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PERL5LIB=/PATH/TO/LIB</span><br></pre></td></tr></table></figure>
-<p>查看已安装的Perl模块：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 查看系统中安装的Perl模块</span><br><span class="line">find  `perl -e &apos;print &quot;@INC&quot;&apos;` -name &apos;*.pm&apos;</span><br><span class="line"># 查看当前环境下所有的模块（一般为用户自己安装的）</span><br><span class="line">instmodsh</span><br></pre></td></tr></table></figure>
-<p>查询单个perl模块的安装路径：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perldoc -l Getopt::Long</span><br></pre></td></tr></table></figure>
-<p>查看安装的perl模块的版本号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -MGetopt::Long -e &apos;print Getopt::Long-&gt;VERSION. &quot;\n&quot;&apos;</span><br></pre></td></tr></table></figure>
-<p>装Perl模块有两种方法</p>
-<ul>
-<li>自动安装 (使用CPAN模块自动完成下载、编译、安装的全过程)</li>
-<li>手工安装 (去CPAN网站下载所需要的模块，手工编译、安装)</li>
-</ul>
-<h3 id="使用CPAN模块自动安装"><a href="#使用CPAN模块自动安装" class="headerlink" title="使用CPAN模块自动安装"></a>使用CPAN模块自动安装</h3><p>首先你得已经安装了CPAN，若没有执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install perl-CPAN</span><br></pre></td></tr></table></figure>
-<p>安装前需要先联上网，<strong>有无root权限均可</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -MCPAN -e shell</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cpan&gt;help</span><br><span class="line">cpan&gt;m</span><br><span class="line">cpan&gt;install Net::Server</span><br><span class="line">cpan&gt;quit</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>查询：cpan[1]&gt; d /模块名字或者部分名字/</li>
-</ul>
-<p>查询结果中会给出所有含有模块名字或者部分名字的模块，选择您所需要的模块进行下载</p>
-<ul>
-<li>下载安装：cpan[1]&gt; install 模块名字</li>
-</ul>
-<p>同时会自动安装很多依赖的模块，非常方便。</p>
-</blockquote>
-<h3 id="手工安装"><a href="#手工安装" class="headerlink" title="手工安装"></a>手工安装</h3><blockquote>
-<p>一般情况下不推荐这种安装方式，但是总是会有<strong>迫不得已</strong>的时候，而且尝试这种方式，能加深对perl模块的理解。</p>
-</blockquote>
-<p>比如从 CPAN下载了Net-Server模块0.97版的压缩文件Net-Server-0.97.tar.gz，假设放在/usr/local/src/下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">tar xvzf Net-Server-0.97.tar.gz</span><br><span class="line">cd Net-Server-0.97</span><br><span class="line">perl Makefile.PL</span><br><span class="line">make test</span><br></pre></td></tr></table></figure>
-<p>如果测试结果报告<code>all test ok</code>，你就可以放心地安装编译好的模块了。</p>
-<h3 id="非root用户的另一个解决方案"><a href="#非root用户的另一个解决方案" class="headerlink" title="非root用户的另一个解决方案"></a>非root用户的另一个解决方案</h3><p>手动下载local::lib, 这个perl模块，然后自己安装在指定目录，也是能解决模块的问题！</p>
-<p>下载之后解压，进入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl Makefile.PL --bootstrap=~/.perl ##这里设置你想把模块放置的目录</span><br><span class="line">make test &amp;&amp; make install</span><br><span class="line">echo &apos;eval $(perl -I$HOME/.perl/lib/perl5 -Mlocal::lib=$HOME/.perl)&apos; &gt;&gt; ~/.bashrc ##目录与前面要一致</span><br></pre></td></tr></table></figure>
-<p>等待几个小时即可！！！</p>
-<p>添加好环境变量之后，就可以用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -MCPAN -Mlocal::lib -e &apos;CPAN::install(LWP)&apos;</span><br></pre></td></tr></table></figure>
-<p>或有更简单的写法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpanm --local-lib=~/perl5 local::lib &amp;&amp; eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)</span><br></pre></td></tr></table></figure>
-<h2 id="循环匹配"><a href="#循环匹配" class="headerlink" title="循环匹配"></a>循环匹配</h2><p>在李恒的github博客 <a href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity" target="_blank" rel="noopener">On the definition of sequence identity</a> 当中看到这样一个Perl单行代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -ane &apos;if(/NM:i:(\d+)/)&#123;$n=$1;$l=0;$l+=$1 while/(\d+)[MID]/g;print(($l-$n)/$l,&quot;\n&quot;)&#125;&apos;</span><br></pre></td></tr></table></figure>
-<p>这行代码的目的是为了计算SAM文件中每条记录BLAST identity</p>
-<blockquote>
-<p>BLAST identity是根据你比对到的碱基除去比对所涉及到的columns数目，换句话来说就是比对涉及到所有的碱基数目</p>
-<p>例如这样的双序列比对：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; Ref+:  1 CCAGTGTGGCCGATaCCCcagGTtgGC-ACGCATCGTTGCCTTGGTAAGC 49</span><br><span class="line">&gt;          |||||||||||||| |||   ||  || ||||||||||||||||||||||</span><br><span class="line">&gt; Qry+:  1 CCAGTGTGGCCGATgCCC---GT--GCtACGCATCGTTGCCTTGGTAAGC 45</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>它们的BLAST identity就是<code>43/50=86%</code></p>
-</blockquote>
-<p>那么要计算SAM文件中每条reads的BLAST identity，总长可以通过叠加CIGAR中对应的<code>M/I/D</code>的数目得到，比对到的碱基数目等于总长减去NMtag（比对不上的碱基位置的标记）</p>
-<p><img src="/images/Advanced-Perl-SAM-NMtag.png" alt></p>
-<p>李恒的这行代码中有一部分一开始没有读懂，就是下图红框中的那部分：</p>
-<p><img src="/images/Advanced-Perl-lh-code.png" alt></p>
-<p>其实这是一种简写方式，正规完整且更容易读懂的形式可以写成下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 这里为了更好看，添加了适当的换行和缩进</span><br><span class="line"></span><br><span class="line">$ perl -ane \</span><br><span class="line">&apos;if(/NM:i:(\d+)/)&#123;</span><br><span class="line">	$n=$1;</span><br><span class="line">	$l=0;</span><br><span class="line">	while(/(\d+)[MID]/g)&#123;</span><br><span class="line">		$l+=$1;</span><br><span class="line">	&#125;</span><br><span class="line">	print(($l-$n)/$l,&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&apos;</span><br></pre></td></tr></table></figure>
-<p><code>while(/(\d+)[MID]/g)</code>中的正则表达式<code>/(\d+)[MID]/g</code>，引起了我极大的好奇：它是在正则表达式后面添加了一个<code>g</code>字符，即开启了全局匹配，又由于是在<code>while( )</code>中进行的正则匹配，等于是开启了循环匹配，即对于CIGAR字符串<code>18M3D22M</code>，正则表达式<code>/(\d+)[MID]/g</code>，先会匹配上<code>18M</code>，然后会匹配上<code>3D</code>，最后匹配上<code>22M</code></p>
-<p>很有意思的用法</p>
-<h2 id="chomp带来空行匹配的失败"><a href="#chomp带来空行匹配的失败" class="headerlink" title="chomp带来空行匹配的失败"></a>chomp带来空行匹配的失败</h2><p>我常用正则表达式<code>/^\s+$/</code>来进行文件中空行的匹配</p>
-<p>在用perl单行进行文本处理，我喜欢用一个固定的格式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -ne &apos;chomp;...&apos; &lt;input&gt;</span><br></pre></td></tr></table></figure>
-<p>chomp在这里的作用是在每读入一行后，去除末尾的换行符</p>
-<p>此时如果你要匹配的空行是<code>/^\n/</code>形式的，即这行只有一个换行符，被chomp处理过之后这一行就变成了<code>/^$/</code>形式的空字符的行，此时如果再用正则表达式<code>/^\s+$/</code>进行匹配，就会匹配失败</p>
-<p><strong>那么遇到这种情况应该怎么匹配呢？</strong></p>
-<p>使用<code>/^\s?$/</code>即可，元字符<code>?</code>的作用是匹配前面的字符0到多次</p>
+        <h2 id="1-理解极大似然估计和EM算法"><a href="#1-理解极大似然估计和EM算法" class="headerlink" title="1. 理解极大似然估计和EM算法"></a>1. 理解极大似然估计和EM算法</h2><h3 id="1-1-搞懂极大似然估计与EM算法定义及理清它们间的关系"><a href="#1-1-搞懂极大似然估计与EM算法定义及理清它们间的关系" class="headerlink" title="1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系"></a>1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系</h3><hr>
+<p>写在最前面的结论：</p>
+<p>极大似然估计和EM算法都是对于概率模型而言的</p>
+<p>极大似然是对概率模型参数学习优化目标的一种定义</p>
+<p>EM算法是用于求解极大似然估计的一种迭代逼近的算法</p>
 <hr>
+<p>机器学习的一大重要任务：</p>
+<blockquote>
+<p>根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计</p>
+</blockquote>
+<p>那么对于上面的任务，一种有效的实现途径就是使用<strong>概率模型</strong></p>
+<p>概率模型的本质是，将机器学习任务归结为计算变量的概率，其核心是基于可观测变量推断出位置变量的条件分布</p>
+<blockquote>
+<p>假定所关心的变量的集合为Y，可观测变量集合为O，不可观测变量集合为I，则完全变量$U={O,I}$，且$Y\subset U$</p>
+<p>则基于概率模型的机器任务可以形式化地表示为</p>
+<p>$$Y^*=arg \max_Y P(Y \mid O,\theta)$$</p>
+<p>即，对于已经训练好的模型$\theta$，给定一组观测值O，且已知感兴趣的未知变量Y的可能取值范围，计算出所以可能的$P(Y \mid O,\theta)$，那个概率最大的Y就是模型给出的判断</p>
+</blockquote>
+<p>那么，如何从预先给出的训练数据集学习出概率模型的参数$\theta$呢？</p>
+<p>（1）定义优化目标——<strong>极大似然估计</strong></p>
+<p>一般使用<strong>极大似然估计</strong></p>
+<p>极大似然估计 (maximize likelihood estimation, MLE)：</p>
+<blockquote>
+<p>在概率模型中，给定观测数据作$O$为模型的训练样本，训练出对应的概率模型，即得到模型的参数$\theta$，使得基于此模型的产生观测数据的条件概率（称为似然）$P(O\mid \theta)$最大化</p>
+<p>所以极大似然估计是概率模型的一种优化方法，可以表示为</p>
+<p>$$\theta^*=arg \max_{\theta}P(O \mid \theta)$$</p>
+</blockquote>
+<p>前面已经提到了，在概率模型中，有时既含有可观测变量 (observable variable) O，又含有隐藏变量或潜在变量(latent variable) I</p>
+<ul>
+<li><p>若只含有观测变量</p>
+<p>  比如，贝叶斯分类器，可以不仅观测到每个样本的features（假设所有的与模型相关的features都被观测到了），还可以知道每个样本所属的类别，则没有隐变量，即$U={O,I},而I=\emptyset,则U=O$</p>
+<p>  则此时，给定数据，可以直接用极大似然估计法来估计模型参数</p>
+<p>  $$\theta^*=arg \max_Y P(O \mid \theta)$$</p>
+</li>
+<li><p>若含有隐变量</p>
+<p>  比如，隐马尔可夫模型 (hidden markov model, HMM)</p>
+<p>  <img src="/images/Understand-MachineLearning-MLE-EM-1.png" alt></p>
+<p>  则此时的优化目标仍然是极大似然估计(MLE)，但是是含有隐变量的极大似然估计，即</p>
+<p>  $$\theta^*=arg \max_Y P(O \mid \theta)=arg \max_Y \sum_I P(O,I\mid \theta)$$</p>
+</li>
+</ul>
+<p>（2）求解优化目标</p>
+<p>上面我们已经谈论了概率模型参数学习的一般步骤的第一步，即用极大似然估计来定义我们的优化目标</p>
+<p>且对于可观测数据的不同，把极大似然估计分成了两种情况，即观测数据是完全数据$O \subseteq U$的情况，和观测数据是不完全数据$O\subsetneq U$的情况</p>
+<p>$$<br>\theta^*=<br>\begin{cases}<br>arg \max_Y P(O \mid \theta) , &amp;  if \quad O \subseteq U \\<br>arg \max_Y \sum_I P(O,I\mid \theta), &amp; if \quad O\subsetneq U<br>\end{cases}<br>$$</p>
+<p>而对于完全数据和不完全数据，极大似然估计的求解难度是不一样的：</p>
+<blockquote>
+<ul>
+<li><p>对于完全数据，它的优化目标中只含有待求解的$\theta$，使用常规的优化目标求解法即可，例如梯度下降、拟牛顿法，或者直接导数法也可以；</p>
+</li>
+<li><p>对于不完全数据，其中有隐变量I的干扰，所以要想直接求解$\theta$是无法做到的</p>
+</li>
+</ul>
+</blockquote>
+<p>那么怎么解决含有隐含变量的极大似然估计？</p>
+<p>这便是EM算法要做的事</p>
+<h3 id="1-2-EM算法的优化思想"><a href="#1-2-EM算法的优化思想" class="headerlink" title="1.2. EM算法的优化思想"></a>1.2. EM算法的优化思想</h3><h3 id="1-3-类比损失函数最小化与梯度下降法"><a href="#1-3-类比损失函数最小化与梯度下降法" class="headerlink" title="1.3. 类比损失函数最小化与梯度下降法"></a>1.3. 类比损失函数最小化与梯度下降法</h3><hr>
 <p>参考资料：</p>
-<p>(1) <a href="http://www.bio-info-trainee.com/2451.html" target="_blank" rel="noopener">生信菜鸟团：perl模块安装大全</a></p>
-<p>(2) <a href="#http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">Heng Li’s blog: On the definition of sequence identity</a></p>
-<p>(3) <a href="https://www.jianshu.com/p/9539f44ecf61" target="_blank" rel="noopener">【简书】生信杂谈：怎样定义sequences比对的相似度？</a></p>
+<p>(1) 周志华《机器学习》第14章《概率图模型》</p>
+<p>(2) 李航《统计学习方法》第9章《EM算法》</p>
+<p>(3) 吴军《数学之美》第5章《隐马尔科夫模型》和第27章《上帝的算法——期望最大化算法》</p>
 
       
     </div>
@@ -621,7 +568,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Perl/" rel="tag"># Perl</a>
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine-Learning</a>
           
         </div>
       
@@ -634,8 +581,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/01/Math-Subject-per-Week/" rel="next" title="每周一道初中数学题">
-                <i class="fa fa-chevron-left"></i> 每周一道初中数学题
+              <a href="/2019/04/30/Math-Knowledge-from-Supermodeling/" rel="next" title="超模君的数学干货">
+                <i class="fa fa-chevron-left"></i> 超模君的数学干货
               </a>
             
           </div>
@@ -643,10 +590,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/02/Raspi-User-Guid-Note/" rel="prev" title="学习笔记：树莓派用户指南（第3版）">
-                学习笔记：树莓派用户指南（第3版） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -902,7 +845,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pod文档"><span class="nav-text">pod文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getopt-Long"><span class="nav-text">Getopt::Long</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perl单行"><span class="nav-text">perl单行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Hash遇到的坑"><span class="nav-text">使用Hash遇到的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash中的排序操作"><span class="nav-text">Hash中的排序操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Perl模块"><span class="nav-text">安装Perl模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用CPAN模块自动安装"><span class="nav-text">使用CPAN模块自动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手工安装"><span class="nav-text">手工安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非root用户的另一个解决方案"><span class="nav-text">非root用户的另一个解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环匹配"><span class="nav-text">循环匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chomp带来空行匹配的失败"><span class="nav-text">chomp带来空行匹配的失败</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解极大似然估计和EM算法"><span class="nav-text">1. 理解极大似然估计和EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-搞懂极大似然估计与EM算法定义及理清它们间的关系"><span class="nav-text">1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-EM算法的优化思想"><span class="nav-text">1.2. EM算法的优化思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-类比损失函数最小化与梯度下降法"><span class="nav-text">1.3. 类比损失函数最小化与梯度下降法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1404,6 +1347,43 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
   
 
 
