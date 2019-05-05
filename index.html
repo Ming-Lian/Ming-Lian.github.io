@@ -381,6 +381,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/05/Understand-Variants-Calling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/05/Understand-Variants-Calling/" class="post-title-link" itemprop="url">深入理解基因组变异检测(variants calling)</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-05 16:49:59 / 修改时间：16:55:00" itemprop="dateCreated datePublished" datetime="2019-05-05T16:49:59+08:00">2019-05-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              1. 背景知识
+变异检测的常规步骤：
+
+
+将一个或多个样本的reads比对到参考基因组；
+SNP calling：检出变异位点；
+genotype calling：鉴定出个体的每个变异位点的基因型 (genotype)；
+
+
+影响变异检测准确性的因素：
+
+
+base-calling 的错误率；
+比对 (alignment) 的错误率；
+低覆盖度的测序 (low-coverage sequencing, &lt;5× per site per individual, on average)，这使得：对于二倍体个体的两条同源染色体的某个位点，有很大概率只采样到其中一条染色体；
+
+
+变异检测的准确率会影响到下游的分析，包括：
+
+
+鉴定罕见变异 (rare mutations)
+评估 allele 频率
+相关性分析 (association mapping)
+
+
+一个提高准确率的策略是进行靶向深度测序（sequence target regions deeply (at &gt;20× coverage)）
+但是，随着大样本检测需求的增加，中覆盖度 (5-20X) 或 低覆盖度 (&lt;5X
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/05/Understand-Variants-Calling/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/Understand-MachineLearning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1578,7 +1775,7 @@ $$A_{4 \times 5}=\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 0 &amp; 2 \\0 &amp; 0 &a
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-28 19:52:39" itemprop="dateModified" datetime="2019-04-28T19:52:39+08:00">2019-04-28</time>
+                <time title="修改时间：2019-05-05 16:57:59" itemprop="dateModified" datetime="2019-05-05T16:57:59+08:00">2019-05-05</time>
               
             
           </span>
@@ -2092,210 +2289,11 @@ $ wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh$ bas
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/02/Raspi-User-Guid-Note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/02/Raspi-User-Guid-Note/" class="post-title-link" itemprop="url">学习笔记：树莓派用户指南（第3版）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-02 09:54:34" itemprop="dateCreated datePublished" datetime="2019-04-02T09:54:34+08:00">2019-04-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-04 10:15:43" itemprop="dateModified" datetime="2019-04-04T10:15:43+08:00">2019-04-04</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              Linux系统管理GUI与控制台切换加载GUI： startx
-控制台：Ctrl+Alt+F1
-使用外部存储设备1. 查看已连接驱动器列表： sudo fdisk -l
-/dev/sdXN中，X是驱动器号，N是分区编号
-2. 创建挂载点： sudo mkdir /media/externaldrive
-3. 开放用户访问权限： 
-# 设置该文件夹所归属的组chgrp -R group /media/externaldrive# 给组分配该文件夹的写权限chmod -R g+w /media/externaldrive
-4. 挂载USB存储设备：
-mount /dev/sdXN /media/externaldrive -o=rw
-磁盘物理分布第一个分区很小，为VFAT格式，与Windows使用的分区一致，可被windows识别。该分区挂载在/boot目录下
-第二个分区大很多，是EXT4格式（Linux原生文件系统）
-软件管理
-更新apt缓存： apt-get update
-
-查找软件： apt-cache search keyword
-
-安装软件： apt-get install ap
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/02/Raspi-User-Guid-Note/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2340,7 +2338,7 @@ mount /dev/sdXN /media/externaldrive -o=rw
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
