@@ -105,7 +105,8 @@
 <meta property="og:description" content="1. 理解极大似然估计和EM算法1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系 写在最前面的结论： 极大似然估计和EM算法都是对于概率模型而言的 极大似然是对概率模型参数学习优化目标的一种定义 EM算法是用于求解极大似然估计的一种迭代逼近的算法  机器学习的一大重要任务：  根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计  那么对于上面的任务，一种有">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/Understand-MachineLearning-MLE-EM-1.png">
-<meta property="og:updated_time" content="2019-05-03T06:38:49.735Z">
+<meta property="og:image" content="http://yoursite.com/images/Understand-MachineLearning-MLE-EM-2.png">
+<meta property="og:updated_time" content="2019-05-12T09:44:35.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解机器学习">
 <meta name="twitter:description" content="1. 理解极大似然估计和EM算法1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系 写在最前面的结论： 极大似然估计和EM算法都是对于概率模型而言的 极大似然是对概率模型参数学习优化目标的一种定义 EM算法是用于求解极大似然估计的一种迭代逼近的算法  机器学习的一大重要任务：  根据一些已观察到的证据（例如训练样本）来对感兴趣的未知变量（例如类别标记）进行估计  那么对于上面的任务，一种有">
@@ -427,12 +428,24 @@
                 
               
 
-              <time title="创建时间：2019-05-03 14:33:29 / 修改时间：14:38:49" itemprop="dateCreated datePublished" datetime="2019-05-03T14:33:29+08:00">2019-05-03</time>
+              <time title="创建时间：2019-05-03 14:33:29" itemprop="dateCreated datePublished" datetime="2019-05-03T14:33:29+08:00">2019-05-03</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-12 17:44:35" itemprop="dateModified" datetime="2019-05-12T17:44:35+08:00">2019-05-12</time>
               
             
           </span>
@@ -540,11 +553,127 @@
 </blockquote>
 <p>那么怎么解决含有隐含变量的极大似然估计？</p>
 <p>这便是EM算法要做的事</p>
-<h3 id="1-2-EM算法的优化思想"><a href="#1-2-EM算法的优化思想" class="headerlink" title="1.2. EM算法的优化思想"></a>1.2. EM算法的优化思想</h3><h3 id="1-3-类比损失函数最小化与梯度下降法"><a href="#1-3-类比损失函数最小化与梯度下降法" class="headerlink" title="1.3. 类比损失函数最小化与梯度下降法"></a>1.3. 类比损失函数最小化与梯度下降法</h3><hr>
+<h3 id="1-2-盘一盘优化目标求解的那些小九九"><a href="#1-2-盘一盘优化目标求解的那些小九九" class="headerlink" title="1.2. 盘一盘优化目标求解的那些小九九"></a>1.2. 盘一盘优化目标求解的那些小九九</h3><p><strong>读者背景知识：线性回归、逻辑回归、SVM、最大熵模型、拉格朗日乘子法</strong></p>
+<p>说在前面的废话：</p>
+<blockquote>
+<p>前面已经讲清楚了最大似然估计(MLE)与EM算法的关系，按照计划，是要讨论EM算法求解优化问题的思想的</p>
+<p>不过细想，优化目标求解问题其实就那么几种，而EM算法只不过是其中某种大类求解策略下的一种具体实现而已，一个是道，一个是术，道的高度是大于术的，讲清楚了道，则一通百通，术便不再是问题</p>
+<p>所以，这一节，我就给大家理一理那些优化目标求解问题中的几大求解策略</p>
+</blockquote>
+<h4 id="1-2-1-两种优化目标：有约束与无约束"><a href="#1-2-1-两种优化目标：有约束与无约束" class="headerlink" title="1.2.1. 两种优化目标：有约束与无约束"></a>1.2.1. 两种优化目标：有约束与无约束</h4><p>首先，大家要知道，优化目标按照是否有额外的约束条件可以分为以下两种情况：</p>
+<ul>
+<li><p><strong>无约束的最优化问题</strong></p>
+<p>  这种情况是最常见的，也是比较容易求解的优化问题</p>
+<p>  比如：</p>
+<p>  （1）线性回归的损失函数最小化目标（又称为最小二乘法）：</p>
+<p>  $$\min_w \frac 12 \sum_{i=1}^m(h(x_i)-y_i)^2$$</p>
+<p>  如果再在原始最小二乘法损失函数的基础上加上正则化项，又变成了新的优化目标：</p>
+<p>  $$\min_w \frac 12 \sum_{i=1}^m(h(x_i)-y_i)^2+\lambda\sum_{j=1}^n|w_i|\quad LASSO$$</p>
+<p>  $$\min_w \frac 12 \sum_{i=1}^m(h(x_i)-y_i)^2+\lambda\sum_{j=1}^n|w_i|_2^2\quad \text{岭回归}$$</p>
+<p>  其中，$\lambda$是正则化项的系数，用于权衡模型结构风险与经验风险的比重，可以看到LASS回归于岭回归的差别仅仅在于使用的正则化项而已，LASS使用的是L1正则化，岭回归使用的是L2正则化</p>
+<p>  （2）逻辑回归的最大对数似然估计：</p>
+<p>  $$<br>  \begin{aligned}<br>  &amp;\max_w \log\prod_{i=1}^m P(y_i \mid x_i) \\<br>  &amp;= \log\prod_{i=1}^m P(y_i=1 \mid x_i)^{y_i}P(y_i=0 \mid x_i)^{1-y_i} \\<br>  &amp;= \sum_{i=1}^m y_i\log P(y_i=1 \mid x_i)+(1-y_i)\log(1-P(y_i=1 \mid x_i))<br>  \end{aligned}<br>  $$</p>
+<p>  其中，</p>
+<p>  $$<br>  h(x)=P(y=1\mid x)=\frac{1}{1+e^{wx}}\\<br>  P(y=0\mid x)=1-P(y=1\mid x)=\frac{e^{wx}}{1+e^{wx}}<br>  $$</p>
+<p>  则，优化目标可以写成：</p>
+<p>  $$\max_w \sum_{i=1}^m y_i\log h(x_i)+(1-y_i)\log(1-h(x_i))$$</p>
+</li>
+<li><p><strong>有约束的最优化问题</strong></p>
+<p>  这一类优化问题除了有目标函数项，还有其他约束项</p>
+<p>  比如：</p>
+<p>  （1）支持向量机的最大化几何间隔 (max margin)</p>
+<p>  它的优化目标为最大化几何间隔，即</p>
+<p>  $$\max_w r=\frac {\hat r}{||W||}$$</p>
+<p>  <img src="/images/Understand-MachineLearning-MLE-EM-2.png" alt></p>
+<p>  其中，$r$是样本集合在样本空间的几何间隔（几何间隔：样本点到分界面的垂直距离），$\hat r$是函数间隔，几何间隔与函数间隔满足$r=\hat r/||W||$，$W$是分界超平面的系数向量，SVM的目标就是要让上图中的r最大化</p>
+<p>  但是，这个优化目标还要满足额外的约束条件：</p>
+<p>  $$r^{(i)}\ge r$$</p>
+<p>  其中，$r^{(i)}$表示每个样本各自的几何间隔，很显然几何的几何间隔肯定要大于等于每个样本各自的几何间隔</p>
+<p>  另外，根据几何间隔的定义，可以把上面的约束条件写成：</p>
+<p>  $$y_i\frac{W^Tx_i}{||W||}\ge \frac{\hat r}{||W||}\quad \Rightarrow y_i(W^Tx_i)\ge \hat r$$</p>
+<p>  则，完整的优化目标可以写成：</p>
+<p>  $$<br>  \max_W \frac{\hat r}{||W||} \\<br>  s.t. \quad y_i(W^Tx_i)\ge \hat r \quad i=1,2,…,m<br>  $$</p>
+<p>  为了简化优化目标，我们限定$\hat r=1$，则完整的优化目标可以写成：</p>
+<p>  $$<br>  \max_W \frac{1}{||W||} \\<br>  s.t. \quad y_i(W^Tx_i)\ge 1 \quad i=1,2,…,m<br>  $$</p>
+<p>  而我们习惯将优化目标写成最小化形式，所以，可以进一步改写成：</p>
+<p>  $$<br>  \min_W \frac 12 ||W|| \\<br>  s.t. \quad 1-y_i(W^Tx_i)\le 0 \quad i=1,2,…,m<br>  $$</p>
+<p>  （2）最大熵模型的极大化模型的熵</p>
+<p>  对于给定的训练集$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$以及特征函数$f_i(x,y),\, i=1,2,…,n$，最大熵模型的学习等价于约束最优化问题：</p>
+<p>  $$\max_{P\in C} H(P)=-\sum_{x,y} \hat P(x)P(y\mid x)\log P(y \mid x) \\<br>  s.t. \quad E_P(f_i)=E_{\hat P}(f_i), \, i=1,2,…,n \\<br>  \sum_y P(y \mid x)=1<br>  $$</p>
+<p>  其中，$C$是满足约束条件的模型空间，$\hat P(x)$是训练样本的边际分布$P(x)$的经验分布，$E_{\hat P}(f)$是经验分布$\hat P(X,Y)$的期望值，$E_P(f)$是模型$P(y \mid x)$与经验分布$\hat P(X,Y)$的期望值，即</p>
+<p>  $$E_{\hat P}(f)=\sum_{x,y} \hat P(x,y)f(x,y)$$</p>
+<p>  $$E_P(f)=\sum_{x,y} \hat P(x)P(y \mid x)f(x,y)$$</p>
+</li>
+</ul>
+<p>对于上面谈到的两类优化目标，第一类无约束优化目标，它可以之间使用我们常用的最优化问题的求解方法（具体内容在后面展开）进行解决，而第二类，即有约束优化目标，则不能进行直接求解，需要先将它<strong>转化为无约束优化目标</strong>，然后再用求解无约束优化目标的方法进行求解</p>
+<p>那么，如何将有约束优化目标转化为无约束优化目标呢？</p>
+<p>需要使用<strong>拉格朗日乘子法</strong></p>
+<blockquote>
+<p>对于以下一般形式的带约束的优化问题（即有等式约束，又有不等式约束）</p>
+<p>$$\min_w f(w) \\ s.t. \quad g_i(w) \le 0, \, i=1,2,…,k \\ h_i(w)=0, \, i=1,2,…,l$$</p>
+<p>引入拉格朗日乘子$\alpha_1,\alpha_2,…,\alpha_k,\beta_1,\beta_2,…,\beta_l$，定义拉格朗日函数$L(w,\alpha,\beta)$：</p>
+<p>$$L(w,\alpha,\beta)=f(w)+\sum_{i=1}^k \alpha_i g_i(w) + \sum_{i=1}^l \beta_i h_i(w)$$</p>
+<p>则，在引入拉格朗日乘子法后，原先有约束优化问题就转化成了下面的无约束优化问题：</p>
+<p>$$\min_w max_{\alpha&gt;0,\beta} L(w,\alpha,\beta)$$</p>
+<p>至于为什么$f(w)$会等于$max_{\alpha&gt;0,\beta} L(w,\alpha,\beta)$，由于文章篇幅有限，这里就不展开证明了</p>
+</blockquote>
+<h4 id="1-2-2-两种求解策略"><a href="#1-2-2-两种求解策略" class="headerlink" title="1.2.2. 两种求解策略"></a>1.2.2. 两种求解策略</h4><p><strong>读者知识背景：线性代数</strong></p>
+<p>下面来讨论一下怎么求解优化问题</p>
+<p>其实，任它优化问题千变万化，求解起来无非就是两种策略：</p>
+<blockquote>
+<ul>
+<li>标准方程法 (Normal equation method)</li>
+<li>迭代法 (iteration)</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>标准方程法</p>
+<p>  它的基本思想其实非常简单，即假设目标函数是一个凸函数，那么它在定义域上的最优解一般来说，是在其极值点取到，那么我们就可以对目标函数求偏导数，且令各个偏导数的值为0，从而找出极值点，也就获得了最优解</p>
+<p>  比如，对于线性回归问题，其优化目标（不进行正则化）为：</p>
+<p>  $$\min_w \frac 12 \sum_{i=1}^m(h(x_i)-y_i)^2$$</p>
+<p>  即</p>
+<p>  $$\min_w \frac 12 \sum_{i=1}^m(W^Tx_i-y_i)^2$$</p>
+<p>  记$f(W)=\frac 12 \sum_{i=1}^m(W^Tx_i-y_i)^2$</p>
+<p>  为了方便后面的推导，用向量化形式来表示：</p>
+<p>  $$f(W)=\frac 12 [XW-Y]^T[XW-Y]$$</p>
+<p>  其中，</p>
+<p>  $$W=(w_0,w_1,…,w_n)^T$$</p>
+<p>  $$X=<br>  \begin{bmatrix}<br>  -x_1- \\<br>  -x_2- \\<br>  … \\<br>  -x_m-<br>  \end{bmatrix}<br>  $$</p>
+<p>  $$Y=(y_1,y_2,…,y_m)^T$$</p>
+<p>  则对模型参数的每一项求偏导数，得到</p>
+<p>  $$<br>  \begin{aligned}<br>  \Delta_W f(W) &amp;= \frac 12 \Delta_W [XW-Y]^T[XW-Y] \\<br>  &amp;= \frac 12 \Delta_W (W^TX^TXW - W^TX^TY - Y^TXW+Y^TY) \\<br>  &amp;= \frac 12 \Delta_W tr(W^TX^TXW - W^TX^TY - Y^TXW+Y^TY) \\<br>  &amp;= \frac 12 \Delta_W tr(WW^TX^TX - Y^TWX - Y^TXW)<br>  \end{aligned}<br>  $$</p>
+<p>  而</p>
+<p>  $$<br>  \Delta_W tr(WW^TX^TX)=X^TXWI + X^TXWI \\<br>  \Delta_W tr(Y^TXW)=X^TY<br>  $$</p>
+<p>  因此</p>
+<p>  $$\Delta_W f(W)=\frac 12 [X^TXW + X^TXW - X^TY- X^TY]=X^TXW-X^TY$$</p>
+<p>  所以，$X^TXW=X^TY \Rightarrow W=(X^TX)^{-1}Y$</p>
+<p>  上面的推导过程，涉及到比较深的线性代数的知识，尤其是关于矩阵的迹相关的知识，看不懂没有关系，上面讲这么多只是想说明，可以通过对目标函数求导并让导数为0来得到解</p>
+</li>
+<li><p>迭代法</p>
+<p>  像我们最熟悉的梯度下降法以及牛顿法或拟牛顿法都属于迭代求解的方法，包括我们下一节要进一步讨论的EM算法也属于迭代法</p>
+<p>  它们的基本思想为：</p>
+<blockquote>
+<p>与标准方程法<strong>一步到位</strong>获得最优解的策略不同，迭代法先找一个随机解做为起始的当前解，然后对当前解进行迭代更新，保证每一次迭代后得到的新解朝着最优化的方向前进，即</p>
+<p>若最优化目标为：</p>
+<p>$$\min_W f(W)$$</p>
+<p>则找到一种解的更新方法，实现$W\to W+\delta$，保证</p>
+<p>$$f(W_{i+1})\le f(W_i)$$</p>
+<p>不断迭代，直到目标函数不再朝着优化目标改变为止，即解已经收敛了，此时的解W即为最优解</p>
+<p>不过<strong>迭代法不能保证收敛到的解是全局最优，它很可能落到局部最优位置</strong></p>
+</blockquote>
+<p>  区别具体的迭代法的，是它们各自所采用的参数更新的方法</p>
+<p>  比如梯度下降法的参数更新的方法为：</p>
+<p>  $$W \to W - \alpha \Delta f(W)$$</p>
+</li>
+</ul>
+<h3 id="1-3-EM算法的优化思想"><a href="#1-3-EM算法的优化思想" class="headerlink" title="1.3. EM算法的优化思想"></a>1.3. EM算法的优化思想</h3><h3 id="1-4-类比损失函数最小化与梯度下降法"><a href="#1-4-类比损失函数最小化与梯度下降法" class="headerlink" title="1.4. 类比损失函数最小化与梯度下降法"></a>1.4. 类比损失函数最小化与梯度下降法</h3><hr>
 <p>参考资料：</p>
-<p>(1) 周志华《机器学习》第14章《概率图模型》</p>
-<p>(2) 李航《统计学习方法》第9章《EM算法》</p>
-<p>(3) 吴军《数学之美》第5章《隐马尔科夫模型》和第27章《上帝的算法——期望最大化算法》</p>
+<p>(1) 周志华《机器学习》</p>
+<p>(2) 李航《统计学习方法》</p>
+<p>(3) 吴军《数学之美》</p>
+<p>(4) 兰艳艳《SVM算法》，国科大《模式识别与机器学习》课程</p>
+<p>(5) 吴恩达《斯坦福大学·机器学习》公开课</p>
+<p>(6) 机械工业出版社《机器学习实战：基于Scikit-Learn和TensorFlow》</p>
 
       
     </div>
@@ -853,7 +982,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解极大似然估计和EM算法"><span class="nav-text">1. 理解极大似然估计和EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-搞懂极大似然估计与EM算法定义及理清它们间的关系"><span class="nav-text">1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-EM算法的优化思想"><span class="nav-text">1.2. EM算法的优化思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-类比损失函数最小化与梯度下降法"><span class="nav-text">1.3. 类比损失函数最小化与梯度下降法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解极大似然估计和EM算法"><span class="nav-text">1. 理解极大似然估计和EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-搞懂极大似然估计与EM算法定义及理清它们间的关系"><span class="nav-text">1.1. 搞懂极大似然估计与EM算法定义及理清它们间的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-盘一盘优化目标求解的那些小九九"><span class="nav-text">1.2. 盘一盘优化目标求解的那些小九九</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-两种优化目标：有约束与无约束"><span class="nav-text">1.2.1. 两种优化目标：有约束与无约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-两种求解策略"><span class="nav-text">1.2.2. 两种求解策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-EM算法的优化思想"><span class="nav-text">1.3. EM算法的优化思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-类比损失函数最小化与梯度下降法"><span class="nav-text">1.4. 类比损失函数最小化与梯度下降法</span></a></li></ol></li></ol></div>
             
 
           </div>
