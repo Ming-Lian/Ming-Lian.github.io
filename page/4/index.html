@@ -381,6 +381,202 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Andrew-Ng-Coursera-Homework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/07/Andrew-Ng-Coursera-Homework/" class="post-title-link" itemprop="url">Andrew NG Coursera 课程编程作业</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-07 23:56:50" itemprop="dateCreated datePublished" datetime="2019-02-07T23:56:50+08:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-04 10:15:42" itemprop="dateModified" datetime="2019-04-04T10:15:42+08:00">2019-04-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              使用课程推荐的Octave进行编程实现，可以将Octave理解为开源版本的MATLAB
+Ex1: Linear Regression
+读入数据
+ data = load(&apos;ex1data1.txt&apos;); % 导入的数据文件为用逗号隔开的两列，第一列为x，第二列为yX = data(:, 1);y = data(:, 2);% 可以尝试绘图% figure;plot(x,y);m = length(y);
+ 数据分布图如下：
+ 
+
+梯度下降前的数据预处理与设置
+ X = [ones(m,1),data(:,1)]; % 添加x0列，都设为1theta = zeros(2,1); % 初始化θ值% 梯度下降的一些设置信息iterations = 1500; % 迭代次数alpha = 0.01; % 学习率α
+
+计算损失函数
+ 线性回归的损失函数为：
+ 
+ % 定义一个函数computeCost来计算损失函数function J = computeCost(X, y, theta)	m = length(y);	predictions = X*theta; % 计算预测
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/07/Andrew-Ng-Coursera-Homework/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Advanced-knowledge-of-SAM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -792,7 +988,7 @@ https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1458,6 +1654,8 @@ https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md
 
   
   
+    
+      
     
       
     
