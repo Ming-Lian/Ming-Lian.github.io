@@ -122,7 +122,13 @@
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-TCRbeta-classification-5.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png">
 <meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png">
-<meta property="og:updated_time" content="2019-05-16T03:58:38.241Z">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-1.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-2.png">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-6.jpg">
+<meta property="og:updated_time" content="2019-05-17T15:29:33.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习在生物信息学中的应用">
 <meta name="twitter:description" content="1. 根据免疫组库TCRβ预测病人的CMV感染状态这个项目用到了641个样本（cohort 1），包括352 例CMV阴性(CMV-)和289例CMV阳性(CMV+) 外部验证用到了120个样本（cohort 2） 该机器学习的任务为：   讨论 TCRβ 免疫组的数据特点：   可能出现的TCRβ的集合非常大，而单个样本只能从中检测到稀疏的少数几个； 一个新样本中很可能会出现训练样本集合中未出现">
@@ -461,7 +467,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-16 11:58:38" itemprop="dateModified" datetime="2019-05-16T11:58:38+08:00">2019-05-16</time>
+                <time title="修改时间：2019-05-17 23:29:33" itemprop="dateModified" datetime="2019-05-17T23:29:33+08:00">2019-05-17</time>
               
             
           </span>
@@ -731,7 +737,49 @@
 <p>画出的散点图如下：</p>
 <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary_TCRβ_incidence_bias.0.05.A-B.png" alt></p>
 
-<h3 id="3-FDR的计算方法"><a href="#3-FDR的计算方法" class="headerlink" title="*3. FDR的计算方法"></a>*3. FDR的计算方法</h3><h4 id="3-1-回顾那些统计检验方法"><a href="#3-1-回顾那些统计检验方法" class="headerlink" title="*3.1. 回顾那些统计检验方法"></a>*3.1. 回顾那些统计检验方法</h4><h5 id="3-1-1-T-test与Moderated-t-Test"><a href="#3-1-1-T-test与Moderated-t-Test" class="headerlink" title="*3.1.1. T-test与Moderated t-Test"></a>*3.1.1. T-test与Moderated t-Test</h5><p>t-test的统计量：</p>
+<h3 id="3-求解NG免疫组库TCRβ文章的最优化问题"><a href="#3-求解NG免疫组库TCRβ文章的最优化问题" class="headerlink" title="*3. 求解NG免疫组库TCRβ文章的最优化问题"></a>*3. 求解NG免疫组库TCRβ文章的最优化问题</h3><h4 id="3-1-先验分布Beta分布的参数估计"><a href="#3-1-先验分布Beta分布的参数估计" class="headerlink" title="*3.1. 先验分布Beta分布的参数估计"></a>*3.1. 先验分布Beta分布的参数估计</h4><p>上文中我们已经确定优化目标为</p>
+<p>$$<br>(\alpha_i^*,\beta_i^*)=arg \, \max\limits_{\alpha_i,\,\beta_i}l(\alpha_i,\,\beta_i) \\<br>s.t. \quad \alpha,\beta \in \mathbb{R}_+<br>$$</p>
+<p>其中，</p>
+<p>$$l(\alpha_i,\,\beta_i)=\log p(k_i \mid n_i,\,c_i) \\ = \sum_{j,\,j \in c_i} \log B(\alpha_i+k_{ij}, \, \beta_i+n_{ij}-k_{ij})-N_i\log B(\alpha_i, \, \beta_i)$$</p>
+<p>它对$\alpha$和$\beta$的偏导数分别为</p>
+<p>$$\frac{\partial l}{\partial \alpha_i}=-N_i(\psi(\alpha_i)-\psi(\alpha_i+\beta_i))+\sum_{j,\,j \in c_i}(\psi(\alpha_i+k_{ij})-\psi(\alpha_i+\beta_i+n_{ij}+k_{ij}))$$</p>
+<p>$$\frac{\partial l}{\partial \beta_i}=-N_i(\psi(\beta_i)-\psi(\alpha_i+\beta_i))+\sum_{j,\,j \in c_i}(\psi(\beta_i+n_{ij}-k_{ij})-\psi(\alpha_i+\beta_i+n_{ij}+k_{ij}))$$</p>
+<p>因此可以用梯度上升法来进行求解</p>
+<p>$$\alpha_i := \alpha_i+\alpha\frac{\partial l}{\partial \alpha_i} \\ \beta_i := \beta_i+\alpha\frac{\partial l}{\partial \beta_i}$$</p>
+<p>先要解决一个问题：怎么用python计算Beta函数和diagama函数？</p>
+<blockquote>
+<p>可以使用<code>Scipy</code>软件包的<code>scipy.special</code>库来实现特殊函数的计算</p>
+<p><code>special</code>库中的特殊函数都是<strong>超越函数</strong>，所谓超越函数是指变量之间的关系不能用有限次加、减、乘、除、乘方、开方 运算表示的函数。如初等函数中的三角函数、反三角函数与对数函数、指数函数都是初等超越函数，一般来说非初等函数都是超越函数</p>
+<blockquote>
+<p>初等函数：指由基本初等函数经过有限次四则运算与复合运算所得到的函数</p>
+</blockquote>
+<p>下面我们对<code>scipy.special</code>中的部分常用函数进行说明：</p>
+<ul>
+<li><p>$\Gamma$ (gamma)函数</p>
+<p>  $\Gamma$ 函数，也称伽玛函数，是由欧拉积分定义的函数，称为第二欧拉积分，是阶乘函数在实数域与复数域上的扩展，当 $Re(z)&gt;0$ 时，$\Gamma$ 函数可以定义为：</p>
+<p>  $$\Gamma(z)=\int_0^{\infty}\frac{t^{z-1}}{e^t}dt$$</p>
+<p>  在<code>scipy.special</code>中使用<code>scipy.special.gamma(z)</code>实现$\Gamma$函数的计算，如果对于精度有更高要求，可以使用采用对数坐标的<code>scipy.special.gammaln(z)</code>函数进行计算</p>
+</li>
+<li><p>B函数</p>
+<p>  B函数的B是大写的希腊字母$\beta$而不是大写英文字母</p>
+<p>  B函数又称为第一类欧拉积分，第二欧拉积分则是大名鼎鼎的伽马函数，B函数的表达式和伽马函数相关</p>
+<p>  $$B(m,n)=\frac{\Gamma(m)\Gamma(n)}{\Gamma(m+n)}$$</p>
+<p>  在<code>scipy.special</code>中使用<code>scipy.special.beta(a,b)</code>实现B函数的计算，如果对于精度有更高要求，可以使用采用对数坐标的<code>scipy.special.betaln(a,b)</code>函数进行计算</p>
+</li>
+<li><p>$\psi$ (digamma)函数</p>
+<p>  Digamma函数是伽马函数的对数的导数，记为</p>
+<p>  $$\psi(x)=\frac{d \ln \Gamma(x)}{dx}=\frac{\Gamma’(x)}{\Gamma(x)}$$</p>
+<p>  在<code>scipy.special</code>中使用<code>scipy.special.digamma(z)</code>实现digamma函数的计算</p>
+</li>
+<li><p>Bessel（贝塞尔）函数</p>
+<p>  在介绍贝塞尔函数之前，先对贝塞尔方程进行说明，一般来说，我们将形如</p>
+<p>  $$x^2\frac{d^2y}{dx^2}+x\frac{dy}{dx}+(x^2-\alpha^2)y=0$$</p>
+<p>  的二阶线性常微分方程称为贝塞尔方程，而贝塞尔方程的标准解函数y(x)就是贝塞尔函数</p>
+<p>  其中，参数$\alpha$被称为对应贝塞尔函数的阶</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="4-FDR的计算方法"><a href="#4-FDR的计算方法" class="headerlink" title="*4. FDR的计算方法"></a>*4. FDR的计算方法</h3><h4 id="4-1-回顾那些统计检验方法"><a href="#4-1-回顾那些统计检验方法" class="headerlink" title="*4.1. 回顾那些统计检验方法"></a>*4.1. 回顾那些统计检验方法</h4><h5 id="4-1-1-T-test与Moderated-t-Test"><a href="#4-1-1-T-test与Moderated-t-Test" class="headerlink" title="*4.1.1. T-test与Moderated t-Test"></a>*4.1.1. T-test与Moderated t-Test</h5><p>t-test的统计量：</p>
 <p>$$<br>t= \frac{\overline X_1(i)-\overline X_2(i)}{S(i)}<br>$$</p>
 <p>Moderated t-Test的统计量：</p>
 <p>$$<br>d= \frac{\overline X_1(i)-\overline X_2(i)}{S(i)+S_0}<br>$$</p>
@@ -790,7 +838,7 @@
 <p>最后算出它的P值：</p>
 <p>$$P=\frac{\# \{d_i \ge d,i=1,2,…,n\}}{n} $$</p>
 <p>之所以不用t检验的统计量查表法，是因为Moderated t-Test的统计量已经不再符合某种统计分布了，而且这样算出来的P值也具有一定的统计意义</p>
-<h4 id="3-2-多重假设检验的必要性"><a href="#3-2-多重假设检验的必要性" class="headerlink" title="*3.2. 多重假设检验的必要性"></a>*3.2. 多重假设检验的必要性</h4><p>统计学中的假设检验的基本思路是：</p>
+<h4 id="4-2-多重假设检验的必要性"><a href="#4-2-多重假设检验的必要性" class="headerlink" title="*4.2. 多重假设检验的必要性"></a>*4.2. 多重假设检验的必要性</h4><p>统计学中的假设检验的基本思路是：</p>
 <blockquote>
 <p>设立零假设（null hypothesis）$H_0$，以及与零假设$H_0$相对应的非零假设（alternative hypothesis， or reject null hypothesis）$H_1$，在假设$H_0$成立的前提下，计算出$H_0$发生的概率，若$H_0$的发生概率很低，基于小概率事件几乎不可能发生，所以可以拒绝零假设</p>
 </blockquote>
@@ -818,7 +866,7 @@
 </li>
 </ul>
 <p>$$1-(1-0.05)^{100}\approx 0.994$$</p>
-<h4 id="3-3-如何计算FDR？"><a href="#3-3-如何计算FDR？" class="headerlink" title="*3.3. 如何计算FDR？"></a>*3.3. 如何计算FDR？</h4><p>统计检验的混淆矩阵：</p>
+<h4 id="4-3-如何计算FDR？"><a href="#4-3-如何计算FDR？" class="headerlink" title="*4.3. 如何计算FDR？"></a>*4.3. 如何计算FDR？</h4><p>统计检验的混淆矩阵：</p>
 <table>
 <thead>
 <tr>
@@ -870,7 +918,7 @@
 </ul>
 </li>
 </ul>
-<h5 id="3-3-1-Benjamini-Hochberg-procedure-BH"><a href="#3-3-1-Benjamini-Hochberg-procedure-BH" class="headerlink" title="*3.3.1. Benjamini-Hochberg procedure (BH)"></a>*3.3.1. Benjamini-Hochberg procedure (BH)</h5><p>对于m个独立的假设检验，它们的P-value分别为：$p_i,i=1,2,…,m$</p>
+<h5 id="4-3-1-Benjamini-Hochberg-procedure-BH"><a href="#4-3-1-Benjamini-Hochberg-procedure-BH" class="headerlink" title="*4.3.1. Benjamini-Hochberg procedure (BH)"></a>*4.3.1. Benjamini-Hochberg procedure (BH)</h5><p>对于m个独立的假设检验，它们的P-value分别为：$p_i,i=1,2,…,m$</p>
 <p>（1）按照升序的方法对这些P-value进行排序，得到：</p>
 <p>$$p_{(1)} \le p_{(2)} \le … \le p_{(m)}$$</p>
 <p>（2）对于给定是统计显著性值$\alpha \in (0,1)$，找到最大的k，使得</p>
@@ -937,7 +985,7 @@
 <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-calculate-FDR.png" alt></p>
 
 <p>通过设置$\alpha$可以改变图中直线的斜率，$\alpha$越大，则直线的斜率越大，落在直线下方的点就越多，通过FDR检验的基因也就越多，反之，直线的斜率越小，落在直线下方的点就越少，通过FDR检验的基因也就越少</p>
-<h5 id="3-4-2-Bonferroni-校正"><a href="#3-4-2-Bonferroni-校正" class="headerlink" title="*3.4.2. Bonferroni 校正"></a>*3.4.2. Bonferroni 校正</h5><p>Bonferroni 校正的基本思想：</p>
+<h5 id="4-4-2-Bonferroni-校正"><a href="#4-4-2-Bonferroni-校正" class="headerlink" title="*4.4.2. Bonferroni 校正"></a>*4.4.2. Bonferroni 校正</h5><p>Bonferroni 校正的基本思想：</p>
 <blockquote>
 <p>如果在同一数据集上同时检验n个独立的假设，那么用于每一假设的统计显著水平，应为仅检验一个假设时的显著水平的1/n</p>
 <p>举个例子：如要在同一数据集上检验两个独立的假设，显著水平设为常见的0.05，此时用于检验该两个假设应使用更严格的0.025，即0.05* (1/2)</p>
@@ -950,6 +998,74 @@
 <p>当且仅当 $p_{(1)} \le \frac{\alpha}{k}$ 时，再来看第二个P值$p_{(2)}$。如果$p_{(2)} \le \frac{\alpha}{k-1}$，就认为在总体水平上对应的检验在α水平上是显著的；</p>
 <p>之后再进行下一个P值……一直进行这个过程，直到 $p_{(i)} \le \frac{\alpha}{k-i+1}$不成立；下结论i和以后的检验都不显著</p>
 </blockquote>
+<h3 id="5-如何在Python中实现几种主要的概率分布"><a href="#5-如何在Python中实现几种主要的概率分布" class="headerlink" title="*5. 如何在Python中实现几种主要的概率分布"></a>*5. 如何在Python中实现几种主要的概率分布</h3><p>用 <a href="https://docs.scipy.org/doc/scipy-0.14.0/reference/index.html" target="_blank" rel="noopener"><code>scipy</code>模块</a> 可以实现这些概率分布，具体实现方法请参考文章 <a href="http://python.jobbole.com/81321/" target="_blank" rel="noopener">如何在Python中实现这五类强大的概率分布</a></p>
+<p>常见的概率分布包括离散概率分布和连续概率分布</p>
+<p>离散概率分布也称为概率质量函数（probability mass function, pmf）</p>
+<p>连续概率分布也称为概率密度函数（probability density function, pdf）</p>
+<p>离散分布有：</p>
+<blockquote>
+<ul>
+<li>二项分布 (Binomial Distribution)</li>
+<li>泊松分布 (Poisson Distribution)</li>
+</ul>
+</blockquote>
+<p>连续分布有：</p>
+<blockquote>
+<ul>
+<li>正态分布 (Normal Distribution)</li>
+<li>B分布 (Beta Distribution)</li>
+<li>指数分布（Exponential Distribution）</li>
+</ul>
+</blockquote>
+<ul>
+<li><p><strong>二项分布</strong></p>
+<p>  $$P(X=k)=\left(\begin{matrix}n \ k\end{matrix}\right) p^k(1-p)^{n-k}$$</p>
+<p>  $$E(X)=np,\quad Var(X)=np(1-p)$$</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">10</span></span><br><span class="line">p = <span class="number">0.3</span></span><br><span class="line">k = np.arange(<span class="number">0</span>, <span class="number">21</span>)</span><br><span class="line">binomial = stats.binom.pmf(k, n, p)</span><br><span class="line"></span><br><span class="line">plt.plt(k, binomial, <span class="string">'o-'</span>)</span><br><span class="line">plt.title(<span class="string">'Binomial: n=%i p=%.2f'</span>%(n, p), fontsize=<span class="number">20</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Number of success'</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Probability of success'</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-1.png" alt></p>
+
+<p>  可以使用<code>.rvs</code>函数模拟一个二项随机变量，其中参数<code>size</code>指定你要进行模拟的次数。让Python返回10000个参数为n和p的二项式随机变量。输出这些随机变量的平均值和标准差，然后画出所有的随机变量的直方图</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">binom_sim = stats.binom.rvs(n=<span class="number">10</span>, p=<span class="number">0.3</span>, size=<span class="number">10000</span>)</span><br><span class="line">print(<span class="string">'Mean: %f'</span>%np.mean(binom_sim))</span><br><span class="line">print(<span class="string">'SD: %f'</span>%np.std(binom_sim))</span><br><span class="line">plt.hist(binom_sim, bins=<span class="number">10</span>, density=<span class="keyword">True</span>)</span><br><span class="line">plt.xlabel(<span class="string">'X'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'density'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-2.png" alt></p>
+
+<p>  由于绘图部分的代码基本相同，所以下面部分只展示数据生成的代码</p>
+</li>
+<li><p><strong>泊松分布</strong></p>
+<p>  $$P(X=k)=\frac{\lambda^ke^{-\lambda}}{k!}$$</p>
+<p>  $$E(X)=\lambda,\quad Var(X)=\lambda$$</p>
+<p>  考虑平均每天发生2起事故的例子：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rate = <span class="number">2</span></span><br><span class="line">n = np.arange(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">y = stats.poisson.pmf(n, rate)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟泊松分布</span></span><br><span class="line">data = stats.poisson.rvs(mu=<span class="number">2</span>, loc=<span class="number">0</span>, size=<span class="number">1000</span>)</span><br><span class="line">print(<span class="string">'Mean: %f'</span>%np.mean(data))</span><br><span class="line">print(<span class="string">'SD: %f'</span>%np.std(data, ddof=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-3.jpg" alt></p>
+
+
+</li>
+</ul>
+<ul>
+<li><p><strong>正太分布</strong> (Normal Distribution)</p>
+<p>  $$P(x \mid \mu,\sigma)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$</p>
+<p>  $$E(X)=\mu,\quad Var(X)=\sigma^2$$</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mu = <span class="number">0</span></span><br><span class="line">sigma = <span class="number">1</span></span><br><span class="line">x = np.arange(<span class="number">-5</span>, <span class="number">5</span>, <span class="number">0.1</span>)</span><br><span class="line">y = stats.norm.pdf(x, <span class="number">0</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-4.jpg" alt></p>
+</li>
+<li><p><strong>$\beta$分布</strong></p>
+<p>  β分布是一个取值在 [0, 1] 之间的连续分布，它由两个形态参数 α 和 β 的取值所刻画</p>
+<p>  $$<br>  \begin{aligned}<br>  &amp;P(x\mid \alpha,\beta) \\<br>  &amp;=\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1} \\<br>  &amp;=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1} \quad x\in[0,1],\,\alpha&gt;0,\beta&gt;0<br>  \end{aligned}<br>  $$</p>
+<p>  $$E(X)=\frac{\alpha}{\alpha+\beta},\quad Var(X)=\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$$</p>
+<p>  贝叶斯分析中大量使用了$\beta$分布</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">0.5</span></span><br><span class="line">b = <span class="number">0.5</span></span><br><span class="line">x = np.arange(<span class="number">0.01</span>, <span class="number">1</span>, <span class="number">0.01</span>)</span><br><span class="line">y = stats.beta.pdf(x, a, b)</span><br></pre></td></tr></table></figure>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-5.jpg" alt></p>
+
+<p>  当将参数都设为1时，该分布为均匀分布</p>
+</li>
+<li><p><strong>指数分布</strong> (Exponential Distribution)</p>
+<p>  指数分布是一种连续概率分布，用于表示独立随机事件发生的时间间隔。比如旅客进入机场的时间间隔、打进客服中心电话的时间间隔、中文维基百科新条目出现的时间间隔等等</p>
+<p>  $$P(x\mid \lambda)=\lambda e^{-\lambda x} \quad x\in[0,\infty),\,\lambda&gt;0$$</p>
+<p>  $$E(X)=1/\lambda,\quad Var(X)=1/\lambda^2$$</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lambda</span> = <span class="number">0.5</span></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">15</span>, <span class="number">0.1</span>)</span><br><span class="line">y = stats.expon.pdf(x, <span class="keyword">lambda</span>)</span><br><span class="line"><span class="comment"># y = lambda * exp(-lambda * x)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟</span></span><br><span class="line">data = stats.expon.rvs(scale=<span class="number">2</span>, size=<span class="number">1000</span>) <span class="comment"># scale表示λ的倒数</span></span><br><span class="line">print(<span class="string">'Mean: %f'</span>%np.mean(data))</span><br><span class="line">print(<span class="string">'SD: %f'</span>%np.std(data， ddof=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+  <p align="center"><img src="/images/App-ML-in-Bioinfo-supplementary-plot-pmf-or-pdf-6.jpg" alt></p>
+
+</li>
+</ul>
 <hr>
 <p>参考资料：</p>
 <p>(1)  Emerson R O , Dewitt W S , Vignali M , et al. Immunosequencing identifies signatures of cytomegalovirus exposure history and HLA-mediated effects on the T cell repertoire[J]. Nature Genetics, 2017, 49(5):659-665.</p>
@@ -958,10 +1074,14 @@
 <p>(4) <a href="https://blog.csdn.net/a358463121/article/details/52562940" target="_blank" rel="noopener">CSDN·Jie Qiao《带你理解beta分布》</a></p>
 <p>(5) <a href="https://www.datalearner.com/blog/1051505532393058" target="_blank" rel="noopener">贝塔分布（Beta Distribution）简介及其应用</a></p>
 <p>(6) <a href="https://www.statlect.com/probability-distributions/beta-distribution" target="_blank" rel="noopener">StatLect《Beta distribution》</a></p>
-<p>(7)  Storey, J.D. &amp; Tibshirani, R. Statistical signifcance for genomewide studies.Proc. Natl. Acad. Sci. USA 100, 9440–9445 (2003)</p>
-<p>(8) 国科大研究生课程《生物信息学》，陈小伟《基因表达分析》</p>
-<p>(9) <a href="http://blog.sina.com.cn/s/blog_4af3f0d20100bzx9.html" target="_blank" rel="noopener">新浪博客·菜鸟《Bonferroni 校正》</a></p>
-<p>(10) <a href="https://www.jianshu.com/p/a262cf3d18b9" target="_blank" rel="noopener">简书·Honglei_Ren《多重检验中的FDR错误控制方法与p-value的校正及Bonferroni校正》</a></p>
+<p>(7) <a href="https://www.jianshu.com/p/6c742912047f" target="_blank" rel="noopener">简书·殉道者之花火《Python机器学习及分析工具：Scipy篇》</a></p>
+<p>(8) <a href="https://docs.scipy.org/doc/scipy/reference/" target="_blank" rel="noopener">Scipy官方文档</a></p>
+<p>(9) <a href="https://wizardforcel.gitbooks.io/scipy-lecture-notes/content/" target="_blank" rel="noopener">SciPy Lecture Note中文版</a></p>
+<p>(10)  Storey, J.D. &amp; Tibshirani, R. Statistical signifcance for genomewide studies.Proc. Natl. Acad. Sci. USA 100, 9440–9445 (2003)</p>
+<p>(11) 国科大研究生课程《生物信息学》，陈小伟《基因表达分析》</p>
+<p>(12) <a href="http://blog.sina.com.cn/s/blog_4af3f0d20100bzx9.html" target="_blank" rel="noopener">新浪博客·菜鸟《Bonferroni 校正》</a></p>
+<p>(13) <a href="https://www.jianshu.com/p/a262cf3d18b9" target="_blank" rel="noopener">简书·Honglei_Ren《多重检验中的FDR错误控制方法与p-value的校正及Bonferroni校正》</a></p>
+<p>(14) <a href="https://www.cnblogs.com/wt869054461/p/5936038.html" target="_blank" rel="noopener">如何在Python中实现这五类强大的概率分布</a></p>
 
       
     </div>
@@ -1272,7 +1392,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-根据免疫组库TCRβ预测病人的CMV感染状态"><span class="nav-text">1. 根据免疫组库TCRβ预测病人的CMV感染状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SC3：单细胞表达谱的无监督聚类"><span class="nav-text">2. SC3：单细胞表达谱的无监督聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-GATK的VQSR"><span class="nav-text">3. GATK的VQSR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beta分布"><span class="nav-text">*1. beta分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是beta分布"><span class="nav-text">*1.1. 什么是beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-理解beta分布"><span class="nav-text">*1.2. 理解beta分布</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-重复NG免疫组库TCRβ文章的图"><span class="nav-text">*2. 重复NG免疫组库TCRβ文章的图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><span class="nav-text">*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-绘制表型负荷相关散点图"><span class="nav-text">*2.2. 绘制表型负荷相关散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-训练集"><span class="nav-text">*2.2.1. 训练集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-测试集"><span class="nav-text">*2.2.2. 测试集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-TCRβ在两组间分布偏好性的散点图"><span class="nav-text">*2.3. TCRβ在两组间分布偏好性的散点图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FDR的计算方法"><span class="nav-text">*3. FDR的计算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-回顾那些统计检验方法"><span class="nav-text">*3.1. 回顾那些统计检验方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-1-T-test与Moderated-t-Test"><span class="nav-text">*3.1.1. T-test与Moderated t-Test</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-多重假设检验的必要性"><span class="nav-text">*3.2. 多重假设检验的必要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-如何计算FDR？"><span class="nav-text">*3.3. 如何计算FDR？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-Benjamini-Hochberg-procedure-BH"><span class="nav-text">*3.3.1. Benjamini-Hochberg procedure (BH)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-2-Bonferroni-校正"><span class="nav-text">*3.4.2. Bonferroni 校正</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-根据免疫组库TCRβ预测病人的CMV感染状态"><span class="nav-text">1. 根据免疫组库TCRβ预测病人的CMV感染状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SC3：单细胞表达谱的无监督聚类"><span class="nav-text">2. SC3：单细胞表达谱的无监督聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-GATK的VQSR"><span class="nav-text">3. GATK的VQSR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-beta分布"><span class="nav-text">*1. beta分布</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是beta分布"><span class="nav-text">*1.1. 什么是beta分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-理解beta分布"><span class="nav-text">*1.2. 理解beta分布</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-重复NG免疫组库TCRβ文章的图"><span class="nav-text">*2. 重复NG免疫组库TCRβ文章的图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Fisher检验筛选CMV阳性（CMV-）相关克隆"><span class="nav-text">*2.1. Fisher检验筛选CMV阳性（CMV+）相关克隆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-绘制表型负荷相关散点图"><span class="nav-text">*2.2. 绘制表型负荷相关散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-训练集"><span class="nav-text">*2.2.1. 训练集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-测试集"><span class="nav-text">*2.2.2. 测试集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-TCRβ在两组间分布偏好性的散点图"><span class="nav-text">*2.3. TCRβ在两组间分布偏好性的散点图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-求解NG免疫组库TCRβ文章的最优化问题"><span class="nav-text">*3. 求解NG免疫组库TCRβ文章的最优化问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-先验分布Beta分布的参数估计"><span class="nav-text">*3.1. 先验分布Beta分布的参数估计</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-FDR的计算方法"><span class="nav-text">*4. FDR的计算方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-回顾那些统计检验方法"><span class="nav-text">*4.1. 回顾那些统计检验方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-1-T-test与Moderated-t-Test"><span class="nav-text">*4.1.1. T-test与Moderated t-Test</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-多重假设检验的必要性"><span class="nav-text">*4.2. 多重假设检验的必要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-如何计算FDR？"><span class="nav-text">*4.3. 如何计算FDR？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-1-Benjamini-Hochberg-procedure-BH"><span class="nav-text">*4.3.1. Benjamini-Hochberg procedure (BH)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-2-Bonferroni-校正"><span class="nav-text">*4.4.2. Bonferroni 校正</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-如何在Python中实现几种主要的概率分布"><span class="nav-text">*5. 如何在Python中实现几种主要的概率分布</span></a></li></ol></li></ol></div>
             
 
           </div>
