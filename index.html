@@ -381,6 +381,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/Mathmatic-Principle-in-CNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/30/Mathmatic-Principle-in-CNN/" class="post-title-link" itemprop="url">CNN的数学原理</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-30 20:25:12 / 修改时间：20:29:50" itemprop="dateCreated datePublished" datetime="2019-05-30T20:25:12+08:00">2019-05-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              1. 传统神经网络架构及其存在的问题
+
+当我们基于一个有限的固定特征集合解决分类问题的时候，上图这种传统架构的神经网络是奏效的
+但是当处理照片的时候，问题变得更加复杂：
+
+最简单的做法是，我们把每个像素的亮度视作一个单独的特征，然后将它作为密集网络的输入传递进去
+如果我们这么做，为了让它能够应付一张典型的智能手机照片，我们的网络必须包含数千万甚至上亿的神经元（尤其是神经网络的输入层的神经元数量庞大），神经网络越庞大意味着计算和存储开销就越大，别说是普通智能手机了，就是高配的PC机也hold不住
+为了减小计算和存储开销，可以将照片缩小，但是我们也会在这个过程中损失有价值的信息
+
+有没有一种方法可以在用神经网络处理图像数据时，既能尽可能多的利用数据，同时还能减少必需的计算量和参数
+这就是CNN了
+2. 数字照片的数据结构图像实际上就是巨大的数字矩阵，每个数字代表的是一个单独像素的亮度
+在 RGB 模型中，彩色图片是由 3 个这样的矩阵组成的，每个矩阵对应着 3 个颜色通道（红、绿、蓝）中的一个，在黑白图像（专业说法为灰度模式）中，我们仅使用一个矩阵
+每个矩阵都存储着 0 到 255 的数值
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/05/30/Mathmatic-Principle-in-CNN/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/29/Understand-Math-MTX/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -426,12 +610,24 @@
                 
               
 
-              <time title="创建时间：2019-05-29 00:18:02 / 修改时间：00:23:27" itemprop="dateCreated datePublished" datetime="2019-05-29T00:18:02+08:00">2019-05-29</time>
+              <time title="创建时间：2019-05-29 00:18:02" itemprop="dateCreated datePublished" datetime="2019-05-29T00:18:02+08:00">2019-05-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-30 20:20:34" itemprop="dateModified" datetime="2019-05-30T20:20:34+08:00">2019-05-30</time>
               
             
           </span>
@@ -2168,185 +2364,6 @@ from Bio import SeqIOfor seq_record in SeqIO.parse("ls_orchid.gbk", "genbank"):	
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/InAction-ML-XGS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lianm">
-      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lianm's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/15/InAction-ML-XGS/" class="post-title-link" itemprop="url">西瓜书带学训练营·实战任务</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-15 16:57:28 / 修改时间：17:10:39" itemprop="dateCreated datePublished" datetime="2019-04-15T16:57:28+08:00">2019-04-15</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine-Learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              1. 线性回归1.1. 目标函数与损失函数$$\hat y = \theta_0+\theta_1x_1+…+\theta_nx_n$$
-写成向量化的形式为：
-$$h_{\theta}=\theta^TX$$
-优化目标为最小化均方差 (MSE)：
-$$\min_{\theta} MSE(\theta)=\frac 12 \sum_{i=1}^m (\theta^TX^{(i)}-y^{(i)})^2$$
-1.2. 标准方程求解用标准方程法得到线性回归问题的闭式解，表达式为
-$$\theta^*=(X^TX)^{-1}X^Ty$$
-可以使用Numpy中的线性代数模块 np.linalg 进行求解
-import numpy as npimport matplotlib.pyplot as plt# 构成原始表达式为 y=4+3x 直线，加上高斯噪声X = 2*np.random.rand(100,1)y = 4 + 3*X + np.random.rand(100,1)# 用标准方程法进行求解X_b = np.c_[np.ones(100,1),X]theta_best = np.lina
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/15/InAction-ML-XGS/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2396,7 +2413,7 @@ import numpy as npimport matplotlib.pyplot as plt# 构成原始表达式为 y=4+
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2500,7 +2517,11 @@ import numpy as npimport matplotlib.pyplot as plt# 构成原始表达式为 y=4+
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
