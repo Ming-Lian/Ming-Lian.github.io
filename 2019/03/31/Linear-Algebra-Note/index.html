@@ -96,13 +96,13 @@
 
 
 
-  <meta name="description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp">
+  <meta name="description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：   因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;am">
 <meta name="keywords" content="数学,线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性代数学习笔记">
 <meta property="og:url" content="http://yoursite.com/2019/03/31/Linear-Algebra-Note/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp">
+<meta property="og:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：   因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;am">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-01.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-02.png">
@@ -114,15 +114,55 @@
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-08.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-09.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-10.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-16.gif">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-17.gif">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-18.gif">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-11.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-12.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-13.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-14.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-15.png">
-<meta property="og:updated_time" content="2019-04-30T09:43:19.080Z">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-1.gif">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-2.gif">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-4.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-5.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-6.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-quadratic-forms-7.gif">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-4.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-5.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-6.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-7.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-8.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-9.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-10.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-11.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-12.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-13.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-affine-transformation-14.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-4.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-5.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-6.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-7.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-8.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-9.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-10.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-11.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-4.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-5.png">
+<meta property="og:updated_time" content="2019-06-09T15:45:14.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性代数学习笔记">
-<meta name="twitter:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：  因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;amp">
+<meta name="twitter:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：   因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;am">
 <meta name="twitter:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-01.png">
 
 
@@ -458,7 +498,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-30 17:43:19" itemprop="dateModified" datetime="2019-04-30T17:43:19+08:00">2019-04-30</time>
+                <time title="修改时间：2019-06-09 23:45:14" itemprop="dateModified" datetime="2019-06-09T23:45:14+08:00">2019-06-09</time>
               
             
           </span>
@@ -511,14 +551,16 @@
 
       
         <h2 id="1-理解向量与向量空间"><a href="#1-理解向量与向量空间" class="headerlink" title="1. 理解向量与向量空间"></a>1. 理解向量与向量空间</h2><h2 id="2-理解矩阵与矩阵乘法"><a href="#2-理解矩阵与矩阵乘法" class="headerlink" title="2. 理解矩阵与矩阵乘法"></a>2. 理解矩阵与矩阵乘法</h2><h3 id="2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><a href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？" class="headerlink" title="2.1. 矩阵表示法和矩阵乘法规则是怎么来的？"></a>2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</h3><h4 id="2-1-1-求解线性方程组：高斯消元法"><a href="#2-1-1-求解线性方程组：高斯消元法" class="headerlink" title="2.1.1. 求解线性方程组：高斯消元法"></a>2.1.1. 求解线性方程组：高斯消元法</h4><p>电视的转播过程是这样的：</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-01.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-01.png" alt></p>
+
 <p>因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要</p>
 <p>$$YCrCb \to^{转换} RGB$$</p>
 <p>这种信号编码方式的转换本质上就是在解方程组：</p>
 <p>$$<br>\begin{cases}<br>0.299R &amp; + &amp; 0.587G &amp; + &amp; 0.114B &amp; = &amp; Y \\<br>0.500R &amp; - &amp; 0.419G &amp; - &amp; 0.081B &amp; + &amp; 128 &amp; = &amp; Cr \\<br>-0.169R &amp; - &amp; 0.331G &amp; + &amp; 0.500B &amp; + &amp; 128 &amp; = &amp; Cb<br>\end{cases}<br>$$</p>
 <p>那么如何解这个线性方程组呢？</p>
 <p>我们大家都学过的一种比较通用的方法就是<strong>高斯消元法</strong></p>
-<p><img src="/images/Linear-Algebra-understand-matrix-02.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-02.png" alt></p>
+
 <p>得到最终结果：</p>
 <p>$$<br>\begin{cases}<br>x &amp; + &amp; 0 &amp; + &amp; 0 &amp; = &amp; \frac{e_3}{a_{11}} \\<br>0 &amp; + &amp; y &amp; + &amp; 0 &amp; = &amp; \frac{f_3}{b_{22}} \\<br>0 &amp; + &amp; 0 &amp; + &amp; z &amp; = &amp; \frac{g_3}{c_{33}}<br>\end{cases}<br>$$</p>
 <h4 id="2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><a href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义" class="headerlink" title="2.1.2. 简化线性方程组的表示——得到原始的矩阵定义"></a>2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</h4><p>当然，解线性方程组使用高斯消元法，基本上就是最优的求解方法，但是整个求解过程若按照上面这样去表示，表示起来是比较复杂的</p>
@@ -552,12 +594,16 @@
 <li>第二行改变，即：$r_2’=-3r_1+r_2$</li>
 </ul>
 <p>首先第一行不变，即</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-03.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-03.png" alt></p>
+
 <p>其次，第二行改变，即</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-04.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-04.png" alt></p>
+
 <p>凯莱规定，把第一行运算的结果放在第一行，第二行的结果放在第二行，即</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-05.png" alt></p>
-<p><img src="/images/Linear-Algebra-understand-matrix-06.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-05.png" alt></p>
+
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-06.png" alt></p>
+
 <h4 id="2-1-5-矩阵乘法的行观点和列观点"><a href="#2-1-5-矩阵乘法的行观点和列观点" class="headerlink" title="2.1.5. 矩阵乘法的行观点和列观点"></a>2.1.5. 矩阵乘法的行观点和列观点</h4><p>首先，需要说明一下矩阵乘法的合法性：</p>
 <blockquote>
 <ul>
@@ -568,12 +614,14 @@
 <ul>
 <li><p>行观点</p>
 <p>  $$xA=y$$</p>
-<p>  <img src="/images/Linear-Algebra-understand-matrix-07.png" alt></p>
+  <p align="center"><img src="/images/Linear-Algebra-understand-matrix-07.png" alt></p>
+
 <p>  称为A右乘x</p>
 </li>
 <li><p>列观点</p>
 <p>  $$Ax=y$$</p>
-<p>  <img src="/images/Linear-Algebra-understand-matrix-08.png" alt></p>
+  <p align="center"><img src="/images/Linear-Algebra-understand-matrix-08.png" alt></p>
+
 <p>  称为A左乘x</p>
 </li>
 </ul>
@@ -596,22 +644,36 @@
 <p>则 $A=[\vec c_1 \quad \vec c_2]$，因此$Aa=b$可以表示成以下形式：</p>
 <p>$$<br>a = 1 \vec i + \vec j \quad \begin{matrix} A \\ \rightarrow \end{matrix} \quad b = 1 \vec c_1 + 1 \vec c_2<br>$$</p>
 <p>从上面很容易能看出，这个矩阵的乘法规则就是：保持系数不变，但是自然基被矩阵列向量给替换了</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-09.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-09.png" alt></p>
+
 <p>从几何上感受一下</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-10.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-10.png" alt></p>
+
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-16.gif" alt></p>
+
+<p>再将向量用自然基表示</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-17.gif" alt></p>
+
+<p>整体来说，就是基改变，导致向量的坐标发生变化：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-18.gif" alt></p>
+
 <h5 id="2-2-1-2-基变换的一个实例——旋转矩阵"><a href="#2-2-1-2-基变换的一个实例——旋转矩阵" class="headerlink" title="2.2.1.2. 基变换的一个实例——旋转矩阵"></a>2.2.1.2. 基变换的一个实例——旋转矩阵</h5><p>通过旋转矩阵$\begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta\end{bmatrix}$，可以让$\mathbb{R}^2$中的x旋转$\theta$角得到y</p>
 <p>来理解一下旋转矩阵是怎么做到的</p>
 <p>单位圆中，与x轴夹角为$\theta$的向量表示如下：</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-11.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-11.png" alt></p>
+
 <p>则</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-12.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-12.png" alt></p>
+
 <p>再看看另一个正交向量的旋转</p>
 <p>根据三角公式有</p>
 <p>$$<br>\begin{cases}<br>-\sin\theta = \cos(\frac \pi2 + \theta) \\<br>\cos\theta = \sin(\frac \pi2 + \theta)<br>\end{cases}<br>$$</p>
 <p>则向量 $\begin{bmatrix} -\sin\theta \\ \cos\theta \end{bmatrix}$表示的是有y轴夹角为$\theta$的向量，则</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-13.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-13.png" alt></p>
+
 <p>结合之前对映射法则的讲解，就可以理解旋转矩阵了：</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-14.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-14.png" alt></p>
+
 <blockquote>
 <p>旋转矩阵的原理，就是通过旋转基来实现的</p>
 </blockquote>
@@ -624,14 +686,235 @@
 <p>$$\vec a · \vec b = |\vec a|·|\vec b|·\cos&lt;\vec a,\vec b&gt;$$</p>
 <p>即，$\vec a$ 的长度与 $\vec b$ 在 $\vec a$ 上的投影长度的乘积</p>
 <p>从几何上感受一下</p>
-<p><img src="/images/Linear-Algebra-understand-matrix-15.png" alt></p>
+<p align="center"><img src="/images/Linear-Algebra-understand-matrix-15.png" alt></p>
+
 <p>因此，从点积的角度来理解矩阵乘法的几何意义为（这里只讨论矩阵左乘，即为$Ax$形式的矩阵乘法）：</p>
 <blockquote>
 <p>将$m\times n$的矩阵A看作是$m$个$n$维行向量，这就是新的基，然后将一个在自然基下的$n$维向量$x$向这个新基“投影”（分别向新基的$m$个基向量“投影”，注意这里的“投影”与我们通常所说的投影有些不同：投影后还要将两者的长度相乘），得到这个向量在新基张成的向量空间的新坐标$y$</p>
 </blockquote>
+<h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="2-二次型"><a href="#2-二次型" class="headerlink" title="*2. 二次型"></a>*2. 二次型</h3><h4 id="2-1-二次函数的特点及它的矩阵表示"><a href="#2-1-二次函数的特点及它的矩阵表示" class="headerlink" title="*2.1. 二次函数的特点及它的矩阵表示"></a>*2.1. 二次函数的特点及它的矩阵表示</h4><p>首先，二次函数（方程）的特点：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-1.gif" alt></p>
+
+
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-2.gif" alt></p>
+
+<p>从上面可以看出：对于二次函数或者二次方程，二次部分是主要部分，往往研究二次这部分就够了</p>
+<p>为了不失一般性，将含有n个变量的二次齐次函数记作：</p>
+<p>$$f(x_1,x_2,…,x_n)=a_{11}x_1^n + a_{22}x_2^n + … + a_{nn}x_n^n + 2a_{12}x_1x_2 + 2a_{13}x_1x_3 + … + 2a_{n-1,n}x_{n-1}x_n$$</p>
+<p>实际上我们可以通过矩阵来表示二次型：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-3.png" alt></p>
+
+<p>更一般的，$ax^2+2bxy+cy^2$可以写作：</p>
+<p>$$<br>\begin{bmatrix}<br>x &amp; y<br>\end{bmatrix}<br>\begin{bmatrix}<br>a &amp; b \\<br>b &amp; c<br>\end{bmatrix}<br>\begin{bmatrix}<br>x \\<br>y<br>\end{bmatrix}<br>=1<br>$$</p>
+<p>可以写成更线代的形式：</p>
+<p>$$<br>\begin{cases}<br>\begin{bmatrix}<br>x &amp; y<br>\end{bmatrix}<br>\begin{bmatrix}<br>a &amp; b \\<br>b &amp; c<br>\end{bmatrix}<br>\begin{bmatrix}<br>x \\<br>y<br>\end{bmatrix}<br>=1 \\<br>X =<br>\begin{bmatrix}<br>x \\<br>y<br>\end{bmatrix} \\<br>A =<br>\begin{bmatrix}<br>a &amp; b \\<br>b &amp; c<br>\end{bmatrix}<br>\end{cases}<br>\Rightarrow<br>X^TAX<br>$$</p>
+<h4 id="2-2-通过矩阵来研究的好处"><a href="#2-2-通过矩阵来研究的好处" class="headerlink" title="*2.2. 通过矩阵来研究的好处"></a>*2.2. 通过矩阵来研究的好处</h4><p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-4.png" alt></p>
+
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-5.png" alt></p>
+
+<p>原来椭圆和圆之间是线性关系呐（通过矩阵变换就可以从圆变为椭圆）</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-6.png" alt></p>
+
+<p>双曲线和圆之间也是线性关系（准确的说是仿射的）</p>
+<p>其实圆、椭圆、双曲线之间关系很紧密的，统称为圆锥曲线，都是圆锥体和平面的交线</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-quadratic-forms-7.gif" alt></p>
+
+<p>从上面动图可看出，一个平面在圆锥体上运动，可以得到圆、椭圆、双曲线，这也是它们之间具有线性关系的来源（平面的运动是线性的、或者是仿射的）</p>
+<h3 id="3-仿射变换"><a href="#3-仿射变换" class="headerlink" title="*3. 仿射变换"></a>*3. 仿射变换</h3><h4 id="3-1-什么是仿射变换？"><a href="#3-1-什么是仿射变换？" class="headerlink" title="*3.1. 什么是仿射变换？"></a>*3.1. 什么是仿射变换？</h4><p>简单来说，“仿射变换”就是：“线性变换”+“平移”</p>
+<ul>
+<li><p><strong>线性变换</strong></p>
+<p>  线性变换从几何直观有三个要点：</p>
+<blockquote>
+<ul>
+<li><p>变换前是直线的，变换后依然是直线；</p>
+</li>
+<li><p>直线比例保持不变；</p>
+</li>
+<li><p>变换前是原点的，变换后依然是原点；</p>
+</li>
+</ul>
+</blockquote>
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-1.png" alt></p>
+
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-2.png" alt></p>
+
+<p>  最基本的线性变换包括：旋转、推移</p>
+<p>  这种变换是怎么实现的呢？以旋转变换为例：</p>
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-3.png" alt></p>
+
+<p>  线性变换是通过矩阵乘法来实现的</p>
+</li>
+<li><p><strong>仿射变换</strong></p>
+<p>  仿射变换从几何直观只有两个要点：</p>
+<blockquote>
+<ul>
+<li><p>变换前是直线的，变换后依然是直线；</p>
+</li>
+<li><p>直线比例保持不变；</p>
+</li>
+</ul>
+</blockquote>
+<p>  少了原点保持不变这一条</p>
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-4.png" alt></p>
+
+<p>  因此，平移不再是线性变化了，而是仿射变化</p>
+<p>  仿射变换是怎么用代数来表示的？</p>
+<p>  线性变换是通过矩阵乘法来实现的，仿射变换不能光通过矩阵乘法来实现，还得有加法</p>
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-5.png" alt></p>
+
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-6.png" alt></p>
+
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-7.png" alt></p>
+
+  <p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-8.png" alt></p>
+
+</li>
+</ul>
+<h4 id="3-2-通过线性变换来完成仿射变换"><a href="#3-2-通过线性变换来完成仿射变换" class="headerlink" title="*3.2. 通过线性变换来完成仿射变换"></a>*3.2. 通过线性变换来完成仿射变换</h4><p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-9.png" alt></p>
+
+<p>那么怎样形象理解这种线性变换呢？</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-10.png" alt></p>
+
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-11.png" alt></p>
+
+<p>这样我就可以在三维空间下通过$\begin{bmatrix} A &amp; \vec b \\ 0 &amp; 1 \end{bmatrix}$这个线性变换来操作平面上的二维正方形，完成仿射变换：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-12.png" alt></p>
+
+<p>我们平移到需要的位置的时候：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-13.png" alt></p>
+
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-affine-transformation-14.png" alt></p>
+
+<h3 id="4-理解矩阵特征值和特征向量"><a href="#4-理解矩阵特征值和特征向量" class="headerlink" title="*4. 理解矩阵特征值和特征向量"></a>*4. 理解矩阵特征值和特征向量</h3><p>如果把矩阵看作是运动，对于运动而言，最重要的当然就是运动的速度和方向，那么</p>
+<ul>
+<li>特征值就是运动的速度；</li>
+<li>特征向量就是运动的方向；</li>
+</ul>
+<p>既然运动最重要的两方面都被描述了，特征值、特征向量自然可以称为运动（即矩阵）的特征</p>
+<h4 id="4-1-几何意义"><a href="#4-1-几何意义" class="headerlink" title="*4.1. 几何意义"></a>*4.1. 几何意义</h4><p>在$\vec i \quad \vec j$下面有个$\vec v$：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-1.png" alt></p>
+
+<p>随便左乘一个矩阵$A$，图像看上去没有什么特殊的：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-2.png" alt></p>
+
+<p>我调整下$\vec v$的方向，图像看上去有点特殊了：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-3.png" alt></p>
+
+<p>可以观察到，调整后的 $\vec v$ 和 $A\vec v$ 在同一根直线上，只是$A\vec v$的长度相对$\vec v$的长度变长了</p>
+<p>此时，我们就称 $\vec v$ 是的特征向量，而$A\vec v$的长度是$\vec v$的长度的 $\lambda$ 倍，就是特征值</p>
+<p>从而，特征值与特征向量的定义式就是这样的：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-4.png" alt></p>
+
+<p>其实之前的$A$不止一个特征向量，还有一个特征向量：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-5.png" alt></p>
+
+<p>容易从相对于$\vec v$是变长了还是缩短看出，这两个特征向量对应的特征值，一个大于1，一个小于1</p>
+<p>从特征向量和特征值的定义式还可以看出，特征向量所在直线上的向量都是特征向量：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-6.png" alt></p>
+
+<h4 id="4-2-特征值、特征向量与运动的关系"><a href="#4-2-特征值、特征向量与运动的关系" class="headerlink" title="*4.2. 特征值、特征向量与运动的关系"></a>*4.2. 特征值、特征向量与运动的关系</h4><p>从调色谈起</p>
+<blockquote>
+<p>我有一管不知道颜色的颜料，而且这管颜料有点特殊，我不能直接挤出来看颜色，只能通过调色来观察：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-7.png" alt></p>
+
+<p>多次反复混合后：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-8.png" alt></p>
+
+<p>反复混合之后，这管颜料的特征就凸显了出来，所以我们判断，这管颜料应该是蓝色</p>
+</blockquote>
+<p>一般来说，矩阵我们可以看作某种运动，而二维向量可以看作平面上的一个点（或者说一个箭头）。对于点我们是可以观察的，但是运动我们是不能直接观察的</p>
+<p>就好像，跑步这个动作，我们不附加到具体的某个事物上是观察不到的，我们只能观察到：人跑步、猪跑步、老虎跑步……，然后从中总结出跑步的特点</p>
+<p>就好像之前举的不能直接观察的颜料一样，要观察矩阵所代表的运动，需要把它附加到向量上才观察的出来：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-9.png" alt></p>
+
+<p>上面只对一个向量 $\vec v$ 进行了一次矩阵乘法，似乎还看不出什么。但是如果我反复运用矩阵乘法的话：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-10.png" alt></p>
+
+<p>就像之前颜料混合一样，反复运用矩阵乘法，矩阵所代表的运动的最明显的特征，即速度最大的方向，就由最大特征值对应的特征向量展现了出来</p>
+<p>烧一壶斐波那契的水</p>
+<blockquote>
+<p>比如说我想烧一壶水，水的温度按照斐波那契数列升高，即下一秒的温度 $T_{t+1}$ 与当前温度 $T_t$ 以及上一秒的温度 $T_{t-1}$ 的关系为：</p>
+<p>$$T_{t+1}=T_t+T_{t-1}$$</p>
+<p>要继续计算下去，我只需要 $T_t$ 以及 $T_{t-1}$ 就可以继续算下去。因此我可以写成下面的式子：</p>
+<p>$$\begin{bmatrix}T_{t+1} \\ T_t\end{bmatrix}=\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0\end{bmatrix}\begin{bmatrix}T_t \\ T_{t-1}\end{bmatrix}$$</p>
+<p>因此烧水这个运动我们可以抽象为矩阵$A=\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 0\end{bmatrix}$，反复进行这个运动就可以烧开这壶水</p>
+<p>根据斐波那契数列，让我们从点$\begin{bmatrix} 1 \\ 1\end{bmatrix}$开始</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-understand-eigenvalue-eigenvector-11.png" alt></p>
+</blockquote>
+<h3 id="5-相似矩阵"><a href="#5-相似矩阵" class="headerlink" title="*5. 相似矩阵"></a>*5. 相似矩阵</h3><h4 id="5-1-相似矩阵的定义及其几何意义"><a href="#5-1-相似矩阵的定义及其几何意义" class="headerlink" title="*5.1. 相似矩阵的定义及其几何意义"></a>*5.1. 相似矩阵的定义及其几何意义</h4><p>根据前面对线性变换的理解，对于线性变换 $A\vec x=y$，从几何上来观察，本质上就是将原始向量 $\vec x$ 的基替换成矩阵$A$列向量组成的基，从而得到原始向量在新的线性空间的表示，然后在新线性空间下用标准正交基表示出来</p>
+<p>在代数来来看，<strong>线性变换可以通过指定基下的矩阵 $A$ 来表示</strong></p>
+<p>那么基于上面的结论，我们给出<strong>相似矩阵</strong>的定义：</p>
+<blockquote>
+<p>同一线性变换，在<strong>不同基</strong>下的矩阵，成为相似矩阵</p>
+</blockquote>
+<p>那怎么得到不同基下的矩阵呢？</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-similar-matrix-1.png" alt></p>
+
+<p>对上图的解释：</p>
+<blockquote>
+<ul>
+<li><p>左右两个图所处的是同一给向量空间，只不过对这同一个向量空间分别用了不太的基去表示而已</p>
+</li>
+<li><p>有两个基：$\{\vec i, \vec j\}$和 $\{\vec {i’}, \vec {j’}\}$</p>
+</li>
+<li><p>$V_1 \to V_2$可以通过 $P^{-1}$ 转换</p>
+</li>
+<li><p>$V_2 \to V_2$可以通过 $P$ 转换</p>
+</li>
+</ul>
+</blockquote>
+<p>整个转换的核心，就是上图正中的文字：</p>
+<blockquote>
+<p>在 $V_2$ 下的向量 $\vec {v’}$ 通过矩阵 $P$ 变为$V_1$下的 $\vec v$，记为 $P\vec {v’}$，接着 $\vec v$ 在 $V_1$ 下通过矩阵 $A$ 完成线性变换，记作 $AP\vec {v’}$，最后通过 $P^{-1}$ 从 $V_1$ 变回下 $V_2$ 的点，即 $P^{-1}AP\vec {v’}$</p>
+</blockquote>
+<p>综上，我们可以有：</p>
+<p>$$B\vec {v’}=P^{-1}AP\vec {v’}$$</p>
+<p>相当于</p>
+<p>$$B=P^{-1}AP$$</p>
+<p>那么 $B$ 和 $A$ 互为相似矩阵，而矩阵 $P$ 实现的是坐标基的变换，将自然基下的矩阵 $A$ 变换为 $P$ 矩阵列向量表示的基 $\{\vec {i’}, \vec {j’}\}$ 下的矩阵 $B$</p>
+<p>如何推出矩阵 $P$ 呢？</p>
+<blockquote>
+<p>首先我们空间中的一点，比如说点</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-similar-matrix-2.png" alt></p>
+
+<p>不论有没有基，这个点都是客观存在的</p>
+<p>然后，我们给出点 $m$ 在 $\vec {i’},\vec {j’}$ 的坐标 $\vec {v’}$</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-similar-matrix-3.png" alt></p>
+
+<p>为了表示 $\vec v’$ 是 $\vec {i’},\vec {j’}$ 下的坐标，我们写成这样：</p>
+<p>$$\vec {v’} = \begin{pmatrix} a \\ b \end{pmatrix}=a\vec {i’} + b\vec {j’}$$</p>
+<p>如果我们知道了 $\vec {i’},\vec {j’}$ 在 $\vec i,\vec j$ 下的坐标：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-similar-matrix-4.png" alt></p>
+
+<p>那么有：</p>
+<p>$$\vec {v’} = a\vec {i’} + b\vec {j’} = a(c\vec i + d\vec j) + b(e\vec i + f\vec j)$$</p>
+<p>此时，点 $m$ 的坐标，已经变到了 $\vec i,\vec j$ 下 的 $\vec v$：</p>
+<p align="center"><img src="/images/Linear-Algebra-supplimentary-similar-matrix-5.png" alt></p>
+
+<p>继续往下推：</p>
+<p>$$\vec v = a(c\vec i + d\vec j) + b(e\vec i + f\vec j) = \begin{pmatrix}c &amp; e \\ d &amp; f\end{pmatrix}\begin{pmatrix}a \\ b\end{pmatrix}=(\vec i’ \quad \vec j’)\vec v’=P\vec v’$$</p>
+<p>所以其实就是：</p>
+<p>$$P=(\vec {i’} \quad \vec {j’})$$</p>
+<p>也就是说，在 $\{\vec {i’}, \vec {j’}\}$ 下的向量 $\vec {v’}$，通过左乘其基向量组成的矩阵 $P$，可以得到其在标准正交基 $\{\vec i, \vec j\}$ 的表示</p>
+<p>从矩阵乘法的几何意义的角度也可以从中看出一些端倪：</p>
+<p>$\vec v=P\vec {v’}$其实实现的是：</p>
+<p>$$\vec {v’}=a\vec {i’}+b\vec{j’} \quad \begin{matrix}P=\{\vec{i’},\vec{j’}\} \\ \to \end{matrix} \quad a\vec {i’}+b\vec{j’} \quad \begin{matrix} 用自然基表示 \\ \to \end{matrix} \quad  a(c\vec i + d\vec j) + b(e\vec i + f\vec j)$$</p>
+</blockquote>
+<h4 id="5-2-相似矩阵有什么用？"><a href="#5-2-相似矩阵有什么用？" class="headerlink" title="*5.2. 相似矩阵有什么用？"></a>*5.2. 相似矩阵有什么用？</h4><p>比如这个 $A$ 矩阵：</p>
+<p>$$A=\begin{pmatrix}2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}$$</p>
+<p>可以这样分解：</p>
+<p>$$B=P^{-1}AP=\begin{pmatrix}3 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}$$</p>
+<p>其中</p>
+<p>$$P=P^{-1}=\begin{pmatrix}-\frac{\sqrt{2}}{2} &amp; \frac{\sqrt{2}}{2} \\ \frac{\sqrt{2}}{2} &amp; \frac{\sqrt{2}}{2}\end{pmatrix}$$</p>
+<p>$B$ 就是对角矩阵，看上去就很清爽，所以说<strong>相似变换就是坐标转换，转换到一个更方便计算的简单坐标系</strong></p>
 <hr>
 <p>参考资料：</p>
 <p>(1) 微信公众号·马同学高等数学《图解线性代数》</p>
+<p>(2) <a href="https://www.matongxue.com/madocs/555.html" target="_blank" rel="noopener">马同学《如何理解矩阵乘法？》</a></p>
+<p>(3) <a href="https://www.matongxue.com/madocs/271.html" target="_blank" rel="noopener">马同学《如何理解二次型？》</a></p>
+<p>(4) <a href="https://www.matongxue.com/madocs/244.html" target="_blank" rel="noopener">马同学《如何通俗地讲解「仿射变换」这个概念？》</a></p>
+<p>(5) <a href="https://www.matongxue.com/madocs/228.html" target="_blank" rel="noopener">马同学《如何理解矩阵特征值和特征向量？》</a></p>
+<p>(6) <a href="https://www.matongxue.com/madocs/491.html" target="_blank" rel="noopener">马同学《如何理解相似矩阵？》</a></p>
 
       
     </div>
@@ -946,7 +1229,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解向量与向量空间"><span class="nav-text">1. 理解向量与向量空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-理解矩阵与矩阵乘法"><span class="nav-text">2. 理解矩阵与矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><span class="nav-text">2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-求解线性方程组：高斯消元法"><span class="nav-text">2.1.1. 求解线性方程组：高斯消元法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><span class="nav-text">2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><span class="nav-text">2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-5-矩阵乘法的行观点和列观点"><span class="nav-text">2.1.5. 矩阵乘法的行观点和列观点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-矩阵乘法的几何意义"><span class="nav-text">2.2. 矩阵乘法的几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-基的变换"><span class="nav-text">2.2.1. 基的变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-1-矩阵映射法则——基的变换"><span class="nav-text">2.2.1.1. 矩阵映射法则——基的变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-2-基变换的一个实例——旋转矩阵"><span class="nav-text">2.2.1.2. 基变换的一个实例——旋转矩阵</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-点积——向新基的投影"><span class="nav-text">2.2.2. 点积——向新基的投影</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解向量与向量空间"><span class="nav-text">1. 理解向量与向量空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-理解矩阵与矩阵乘法"><span class="nav-text">2. 理解矩阵与矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><span class="nav-text">2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-求解线性方程组：高斯消元法"><span class="nav-text">2.1.1. 求解线性方程组：高斯消元法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><span class="nav-text">2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><span class="nav-text">2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-5-矩阵乘法的行观点和列观点"><span class="nav-text">2.1.5. 矩阵乘法的行观点和列观点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-矩阵乘法的几何意义"><span class="nav-text">2.2. 矩阵乘法的几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-基的变换"><span class="nav-text">2.2.1. 基的变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-1-矩阵映射法则——基的变换"><span class="nav-text">2.2.1.1. 矩阵映射法则——基的变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-2-基变换的一个实例——旋转矩阵"><span class="nav-text">2.2.1.2. 基变换的一个实例——旋转矩阵</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-点积——向新基的投影"><span class="nav-text">2.2.2. 点积——向新基的投影</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-二次型"><span class="nav-text">*2. 二次型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-二次函数的特点及它的矩阵表示"><span class="nav-text">*2.1. 二次函数的特点及它的矩阵表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-通过矩阵来研究的好处"><span class="nav-text">*2.2. 通过矩阵来研究的好处</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-仿射变换"><span class="nav-text">*3. 仿射变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-什么是仿射变换？"><span class="nav-text">*3.1. 什么是仿射变换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-通过线性变换来完成仿射变换"><span class="nav-text">*3.2. 通过线性变换来完成仿射变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-理解矩阵特征值和特征向量"><span class="nav-text">*4. 理解矩阵特征值和特征向量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-几何意义"><span class="nav-text">*4.1. 几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-特征值、特征向量与运动的关系"><span class="nav-text">*4.2. 特征值、特征向量与运动的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-相似矩阵"><span class="nav-text">*5. 相似矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-相似矩阵的定义及其几何意义"><span class="nav-text">*5.1. 相似矩阵的定义及其几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-相似矩阵有什么用？"><span class="nav-text">*5.2. 相似矩阵有什么用？</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
