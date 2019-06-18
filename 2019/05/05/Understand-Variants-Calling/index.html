@@ -97,7 +97,7 @@
 
 
   <meta name="description" content="1. 背景知识 变异检测的常规步骤：   将一个或多个样本的reads比对到参考基因组； SNP calling：检出变异位点； genotype calling：鉴定出个体的每个变异位点的基因型 (genotype)；   影响变异检测准确性的因素：   base-calling 的错误率； 比对 (alignment) 的错误率； 低覆盖度的测序 (low-coverage sequencin">
-<meta name="keywords" content="NGS,Bioinformatics">
+<meta name="keywords" content="Bioinformatics,NGS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解基因组变异检测(variants calling)">
 <meta property="og:url" content="http://yoursite.com/2019/05/05/Understand-Variants-Calling/index.html">
@@ -746,9 +746,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/NGS/" rel="tag"># NGS</a>
-          
             <a href="/tags/Bioinformatics/" rel="tag"># Bioinformatics</a>
+          
+            <a href="/tags/NGS/" rel="tag"># NGS</a>
           
         </div>
       
@@ -798,7 +798,8 @@
   
     <div class="comments" id="comments">
       
-        <div id="gitment-container"></div>
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display: none"></div>
       
     </div>
 
@@ -852,7 +853,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -881,7 +882,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -964,7 +967,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1249,7 +1254,11 @@
   }
 
   
-    renderGitment();
+    function showGitment() {
+      document.getElementById('gitment-display-button').style.display = 'none';
+      document.getElementById('gitment-container').style.display = 'block';
+      renderGitment();
+    }
   
 </script>
 

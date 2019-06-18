@@ -692,7 +692,8 @@
   
     <div class="comments" id="comments">
       
-        <div id="gitment-container"></div>
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display: none"></div>
       
     </div>
 
@@ -746,7 +747,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -775,7 +776,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -858,7 +861,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1143,7 +1148,11 @@
   }
 
   
-    renderGitment();
+    function showGitment() {
+      document.getElementById('gitment-display-button').style.display = 'none';
+      document.getElementById('gitment-container').style.display = 'block';
+      renderGitment();
+    }
   
 </script>
 

@@ -96,14 +96,23 @@
 
 
 
-  <meta name="description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：   因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;am">
+  <meta name="description" content="1. 理解向量与向量空间1.1. 向量及向量的运算法则向量的表示方式：  将有向线段的起点与终点分别表示为字母$A$、$B$。则向量表示为$\overrightarrow{AB}$，头上的箭头方向表示由A指向$B$； 只要长短相同、方向一致，向量就相等，否则不等：  在数学中，始终把向量的起点放在原点O，那么就可以用终点的坐标来表示向量，则   $$\vec u=(m,n)$$ 向量的运算法则：">
 <meta name="keywords" content="数学,线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性代数学习笔记">
 <meta property="og:url" content="http://yoursite.com/2019/03/31/Linear-Algebra-Note/index.html">
 <meta property="og:site_name" content="Lianm&#39;s Blog">
-<meta property="og:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：   因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;am">
+<meta property="og:description" content="1. 理解向量与向量空间1.1. 向量及向量的运算法则向量的表示方式：  将有向线段的起点与终点分别表示为字母$A$、$B$。则向量表示为$\overrightarrow{AB}$，头上的箭头方向表示由A指向$B$； 只要长短相同、方向一致，向量就相等，否则不等：  在数学中，始终把向量的起点放在原点O，那么就可以用终点的坐标来表示向量，则   $$\vec u=(m,n)$$ 向量的运算法则：">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-3.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-4.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-5.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-6.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-7.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-8.png">
+<meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-9.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-01.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-02.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-03.png">
@@ -159,11 +168,11 @@
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-3.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-4.png">
 <meta property="og:image" content="http://yoursite.com/images/Linear-Algebra-supplimentary-similar-matrix-5.png">
-<meta property="og:updated_time" content="2019-06-09T15:45:14.091Z">
+<meta property="og:updated_time" content="2019-06-18T16:16:47.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性代数学习笔记">
-<meta name="twitter:description" content="1. 理解向量与向量空间2. 理解矩阵与矩阵乘法2.1. 矩阵表示法和矩阵乘法规则是怎么来的？2.1.1. 求解线性方程组：高斯消元法电视的转播过程是这样的：   因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要 $$YCrCb \to^{转换} RGB$$ 这种信号编码方式的转换本质上就是在解方程组： $$\begin{cases}0.299R &amp;am">
-<meta name="twitter:image" content="http://yoursite.com/images/Linear-Algebra-understand-matrix-01.png">
+<meta name="twitter:description" content="1. 理解向量与向量空间1.1. 向量及向量的运算法则向量的表示方式：  将有向线段的起点与终点分别表示为字母$A$、$B$。则向量表示为$\overrightarrow{AB}$，头上的箭头方向表示由A指向$B$； 只要长短相同、方向一致，向量就相等，否则不等：  在数学中，始终把向量的起点放在原点O，那么就可以用终点的坐标来表示向量，则   $$\vec u=(m,n)$$ 向量的运算法则：">
+<meta name="twitter:image" content="http://yoursite.com/images/Linear-Algebra-understand-vector-and-linear-space-1.png">
 
 
 
@@ -498,7 +507,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-09 23:45:14" itemprop="dateModified" datetime="2019-06-09T23:45:14+08:00">2019-06-09</time>
+                <time title="修改时间：2019-06-19 00:16:47" itemprop="dateModified" datetime="2019-06-19T00:16:47+08:00">2019-06-19</time>
               
             
           </span>
@@ -563,7 +572,189 @@
       
 
       
-        <h2 id="1-理解向量与向量空间"><a href="#1-理解向量与向量空间" class="headerlink" title="1. 理解向量与向量空间"></a>1. 理解向量与向量空间</h2><h2 id="2-理解矩阵与矩阵乘法"><a href="#2-理解矩阵与矩阵乘法" class="headerlink" title="2. 理解矩阵与矩阵乘法"></a>2. 理解矩阵与矩阵乘法</h2><h3 id="2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><a href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？" class="headerlink" title="2.1. 矩阵表示法和矩阵乘法规则是怎么来的？"></a>2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</h3><h4 id="2-1-1-求解线性方程组：高斯消元法"><a href="#2-1-1-求解线性方程组：高斯消元法" class="headerlink" title="2.1.1. 求解线性方程组：高斯消元法"></a>2.1.1. 求解线性方程组：高斯消元法</h4><p>电视的转播过程是这样的：</p>
+        <h2 id="1-理解向量与向量空间"><a href="#1-理解向量与向量空间" class="headerlink" title="1. 理解向量与向量空间"></a>1. 理解向量与向量空间</h2><h3 id="1-1-向量及向量的运算法则"><a href="#1-1-向量及向量的运算法则" class="headerlink" title="1.1. 向量及向量的运算法则"></a>1.1. 向量及向量的运算法则</h3><p>向量的表示方式：</p>
+<blockquote>
+<p>将有向线段的起点与终点分别表示为字母$A$、$B$。则向量表示为$\overrightarrow{AB}$，头上的箭头方向表示由A指向$B$；</p>
+<p>只要长短相同、方向一致，向量就相等，否则不等：</p>
+</blockquote>
+<p>在数学中，始终把向量的起点放在原点O，那么就可以用终点的坐标来表示向量，则</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-1.png" alt></p>
+
+<p>$$\vec u=(m,n)$$</p>
+<p>向量的运算法则：</p>
+<ul>
+<li><p>向量加法</p>
+<p>  $$\vec a=\begin{pmatrix}a_1\\a_2\\ .\\ .\\ .\\a_n\end{pmatrix}\quad \vec b=\begin{pmatrix}b_1\\b_2\\ .\\ .\\ .\\b_n\end{pmatrix}$$</p>
+<p>  $$\vec a + vec b=\begin{pmatrix}a_1\\a_2\\ .\\ .\\ .\\a_n\end{pmatrix} + \begin{pmatrix}b_1\\b_2\\ .\\ .\\ .\\b_n\end{pmatrix}=\begin{pmatrix}a_1+b_1\\a_2+b_2\\ .\\ .\\ .\\a_n+b_n\end{pmatrix}$$</p>
+</li>
+<li><p>数乘</p>
+<p>  数乘的几何意义：对$\vec u$进行缩放</p>
+<p>  $$k\vec a=k\begin{pmatrix}a_1\\a_2\\ .\\ .\\ .\\a_n\end{pmatrix}=\begin{pmatrix}ka_1\\ka_2\\ .\\ .\\ .\\ka_n\end{pmatrix}$$</p>
+</li>
+</ul>
+<p>一道证明题：</p>
+<blockquote>
+<p>A、B、O为三角形的三个顶点，M为AB的中点，证明：</p>
+<p>$$\overrightarrow{OM}=\frac 12(\overrightarrow{OA}+\overrightarrow{OB})$$</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-2.png" alt></p>
+
+<p>证明：</p>
+<p>$$\overrightarrow{OM}=\overrightarrow{OA}+\overrightarrow{AM}\\ \overrightarrow{OM}=\overrightarrow{OB}+\overrightarrow{BM}\\ 2\overrightarrow{OM}=\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{AM}+\overrightarrow{BM}$$</p>
+<p>则</p>
+<p>$$\overrightarrow{OM}=\frac 12(\overrightarrow{OA}+\overrightarrow{OB})$$</p>
+</blockquote>
+<h3 id="1-2-线性表示与线性相关"><a href="#1-2-线性表示与线性相关" class="headerlink" title="1.2. 线性表示与线性相关"></a>1.2. 线性表示与线性相关</h3><p>向量组：</p>
+<blockquote>
+<p>若干同维数的列向量（或者同维数的行向量）所组成的几何，如：</p>
+<p>$$\{R,G,B\}=\left\{\begin{pmatrix}255\\0\\0\end{pmatrix},\begin{pmatrix}0\\255\\0\end{pmatrix},\begin{pmatrix}0\\0\\255\end{pmatrix} \right\}$$</p>
+</blockquote>
+<p>线性表示与线性组合：</p>
+<blockquote>
+<p>给定向量组A:$\boldsymbol{a_1},\boldsymbol{a_2},…\boldsymbol{a_m}$和向量$\boldsymbol{b_{}}$，如果存在一组实数$k_1,k_2,…k_m$，使：</p>
+<p>$$\boldsymbol{b_{}}=k_1\boldsymbol{a_1}+k_2\boldsymbol{a_2}+…+k_m\boldsymbol{a_m}$$</p>
+<p>则称向量$\boldsymbol{b_{}}$能由向量组A$\color{Salmon}{线性表示}$，也可以说向量$\boldsymbol{b_{}}$是向量组A的$\color{Salmon}{线性组合}$</p>
+</blockquote>
+<p>线性无关与线性相关：</p>
+<blockquote>
+<p>给定向量组$A:a_1,a_2,…a_m$，如果存在不全为零的实数$k_1,k_2,…k_m$，使：</p>
+<p>$$k_1a_1+k_2a_2+…+k_ma_m=0$$</p>
+<p>则称向量组A是<strong>线性相关</strong>的，否则称它为<strong>线性无关</strong></p>
+</blockquote>
+<h3 id="1-3-向量空间的定义及其特点"><a href="#1-3-向量空间的定义及其特点" class="headerlink" title="1.3. 向量空间的定义及其特点"></a>1.3. 向量空间的定义及其特点</h3><p>向量空间应该包含以下的特点：</p>
+<ul>
+<li><p>包含向量；</p>
+</li>
+<li><p>向量的“运动”依然在空间中；</p>
+</li>
+</ul>
+<p><strong>（1）包含向量</strong></p>
+<p>向量组就包含向量：</p>
+<p>$$V=\{\boldsymbol{v_1},\boldsymbol{v_2},\cdots,\boldsymbol{v_n}\}$$</p>
+<p>并且向量组可以保证内部的向量维数相同</p>
+<p><strong>（2）向量的“运动”依然在空间中</strong></p>
+<p>向量的“运动”，在此处指的是，数乘和加法。因为数乘和加法不会改变向量的维数</p>
+<p>“向量的运动依然在空间中”，翻译成数学语言就是：</p>
+<blockquote>
+<p>某向量组V，从中随便选两个向量：</p>
+<p>$$\boldsymbol{v_1}\in V,\quad \boldsymbol{v_2}\in V$$</p>
+<p>如果进行数乘和加法的“运动”，结果依然在V中，即：</p>
+<p>$$\boldsymbol{v_1}+\boldsymbol{v_2}\in V\qquad k\boldsymbol{v_1}\in V$$</p>
+<p>那么V就是向量空间</p>
+</blockquote>
+<p>练习：</p>
+<blockquote>
+<p>向量组：</p>
+<p>$$V=\{(x,y)\mid x^2+y^2 \le 1\}$$</p>
+<p>表示如下区域的所有的点：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-3.png" alt></p>
+
+<p>那么$V$是一个向量空间吗？</p>
+<p>答：$V$不是一个向量空间，因为随便从V中选出两个向量：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-4.png" alt></p>
+
+<p>相加得到的向量已经超出这个区域了：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-5.png" alt></p>
+</blockquote>
+<p>向量空间的严格定义：</p>
+<blockquote>
+<p>设V为一向量组，如果V非空，且V对于向量的加法及数乘两种运算封闭，那么就称V为<strong>向量空间</strong></p>
+<p>所谓封闭，是指在V中向量进行数乘和加减，其结果依然在V中。具体的说，就是:</p>
+<ul>
+<li><p>若$\boldsymbol{a}\in V,\boldsymbol{b}\in V$，则$\boldsymbol{a}+\boldsymbol{b} \in V$</p>
+</li>
+<li><p>若$\boldsymbol{a}\in V,k\in \mathbb{R}$，则$k\boldsymbol{a} \in V$</p>
+</li>
+</ul>
+</blockquote>
+<p>思考：是否向量空间必须包含零向量？</p>
+<blockquote>
+<p>对</p>
+<p>假设V为由n维向量构成的向量空间。任取其中两向量$\boldsymbol{u_1}$、$\boldsymbol{u_2}$，有：</p>
+<p>$$0\boldsymbol{u_1}+0\boldsymbol{u_2}=(0,0,\cdots,0)$$</p>
+<p>因此向量空间必含零向量</p>
+</blockquote>
+<p>子空间：</p>
+<blockquote>
+<p>向量空间并不一定是$\mathbb{R^n}$，也可以是它们的子集</p>
+<p>比如$\mathbb{R^3}$中的一个点，一根直线，或者一个面</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-6.png" alt></p>
+
+<p>注意，子空间一定要包含零向量</p>
+</blockquote>
+<p>练习：</p>
+<blockquote>
+<p>针对向量组：</p>
+<p>$$V=\{(x_1,x_2,0)|x_{1,2,}\in\mathbb{R}\}$$</p>
+<p>V是向量空间，但既不是$\mathbb{R^2}$也不是$\mathbb{R^3}$</p>
+<p>因为：</p>
+<ul>
+<li>V中元素由三维向量构成，因此不是$\mathbb{R^2}$</li>
+<li>V并不包含所有的三维向量，因此也不是$\mathbb{R^3}$</li>
+</ul>
+</blockquote>
+<h3 id="1-4-向量空间的基"><a href="#1-4-向量空间的基" class="headerlink" title="1.4. 向量空间的基"></a>1.4. 向量空间的基</h3><h4 id="1-4-1-前期准备知识"><a href="#1-4-1-前期准备知识" class="headerlink" title="1.4.1. 前期准备知识"></a>1.4.1. 前期准备知识</h4><h5 id="1-4-1-1-张量空间定义"><a href="#1-4-1-1-张量空间定义" class="headerlink" title="1.4.1.1. 张量空间定义"></a>1.4.1.1. 张量空间定义</h5><p>向量组的所有线性组合构成的向量空间<strong>张成空间</strong>，在数学中是如下描述的：</p>
+<blockquote>
+<p>某向量组$\{\boldsymbol{v_1},\boldsymbol{v_2},…,\boldsymbol{v_p}\}$，其所有线性组合构成的集合称为向量组$\{\boldsymbol{v_1},\boldsymbol{v_2},…,\boldsymbol{v_p}\}$的<strong>张成空间</strong>，记为$span(\boldsymbol{v_1},\boldsymbol{v_2},…,\boldsymbol{v_p})$，即：</p>
+<p>$$span(\boldsymbol{v_1},\boldsymbol{v_2},…,\boldsymbol{v_p})=\{k_1\boldsymbol{v_1}+k_2\boldsymbol{v_2}+…+k_p\boldsymbol{v_p},k_{1,2,…,p}\in\mathbb{R}\}$$</p>
+<p>我们也称$span(\boldsymbol{v_1},\boldsymbol{v_2},…,\boldsymbol{v_p})$为向量组$\{\boldsymbol{v_1},\boldsymbol{v_2},…,\boldsymbol{v_p}\}$所<strong>张成</strong></p>
+</blockquote>
+<p>比如，色彩空间其实就是$\{RGB\}$的张成空间：</p>
+<p>$$色彩空间=span(\boldsymbol{R},\boldsymbol{G},\boldsymbol{B})$$</p>
+<p>再比如，向量组$\{\boldsymbol{u}=(1,0,0),\boldsymbol{v}=(0,1,0),\boldsymbol{w}=(0,0,1)\}$</p>
+<p>其张成空间为：</p>
+<p>$$\mathbb{R^3}=span(\boldsymbol{u},\boldsymbol{v},\boldsymbol{w})$$</p>
+<h5 id="1-4-1-2-等价向量组定义"><a href="#1-4-1-2-等价向量组定义" class="headerlink" title="1.4.1.2. 等价向量组定义"></a>1.4.1.2. 等价向量组定义</h5><p>光线混合：RGB $\Rightarrow$ 适用于屏幕显示</p>
+<p>颜料混合：CMY（C-青色，M-洋红，Y-黄色）$\Rightarrow$ 适用于印刷</p>
+<p>不论是电脑屏幕还是印刷的书籍，都可以看到RGB以及CMY这六种颜色：</p>
+<p>$$RGB \quad \leftrightarrow CMY$$</p>
+<p>数学中就说这两种颜色是等价的</p>
+<blockquote>
+<p>设有两个向量组$A:\boldsymbol{a_1},\boldsymbol{a_2},…,\boldsymbol{a_m}$及$B:\boldsymbol{b_1},\boldsymbol{b_2},…\boldsymbol{b_l}$，若B组中的每个向量都能由向量组A线性表示，则称向量组B能由向量组A线性表示</p>
+<p>若向量组A与向量组B能相互线性表示，则称这两个向量组<strong>等价</strong>，也可以说A和B是<strong>等价向量组</strong></p>
+</blockquote>
+<h5 id="1-4-1-3-引出等价空间：张成空间相同-Leftrightarrow-可互相线性表示"><a href="#1-4-1-3-引出等价空间：张成空间相同-Leftrightarrow-可互相线性表示" class="headerlink" title="1.4.1.3. 引出等价空间：张成空间相同 $\Leftrightarrow$ 可互相线性表示"></a>1.4.1.3. 引出等价空间：张成空间相同 $\Leftrightarrow$ 可互相线性表示</h5><p>RGB和CMY是等价的，很显然它们可以张成同一个色彩空间</p>
+<p>更一般的：</p>
+<blockquote>
+<p>有两个向量组：</p>
+<p>$$A=\{\boldsymbol{a_1},\boldsymbol{a_2},…,\boldsymbol{a_n}\},\quad B=\{\boldsymbol{b_1},\boldsymbol{b_2},…,\boldsymbol{b_m}\}$$</p>
+<p>则：</p>
+<p>$$A和B等价\iff span(A)=span(B)$$</p>
+</blockquote>
+<p>等价向量组、张成空间的几何意义：</p>
+<blockquote>
+<p>根据几何知识，交于原点的两条直线可以唯一确定一个平面：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-7.png" alt></p>
+
+<p>在两条直线上各找一个向量：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-8.png" alt></p>
+
+<p>这两个向量可以张成该平面：</p>
+<p>$$span(\boldsymbol{u},\boldsymbol{v})=k_1\boldsymbol{u}+k_2\boldsymbol{v},\quad k_{1,2}\in\mathbb{R}$$</p>
+<p>随便在该平面上找另外两条过原点的直线，并在这两条直线上找两个向量：</p>
+<p align="center"><img src="/images/Linear-Algebra-understand-vector-and-linear-space-9.png" alt></p>
+
+<p>这两根直线决定了同样的平面，所以新找到的两个向量也可以张成该平面：</p>
+<p>$$span(\boldsymbol{w},\boldsymbol{h})=r_1\boldsymbol{w}+r_2\boldsymbol{h},\quad r_{1,2}\in\mathbb{R}$$</p>
+<p>这两个向量组张成的是同一个平面：</p>
+<p>$$span(\boldsymbol{u},\boldsymbol{v})=span(\boldsymbol{w},\boldsymbol{h})$$</p>
+<p>并且这两个向量组可以相互线性表示，即$\{\boldsymbol{u},\boldsymbol{v}\}$与$\{\boldsymbol{w},\boldsymbol{h}\}$等价</p>
+</blockquote>
+<h5 id="1-4-1-4-最大无关组"><a href="#1-4-1-4-最大无关组" class="headerlink" title="1.4.1.4. 最大无关组"></a>1.4.1.4. 最大无关组</h5><blockquote>
+<p>设有向量组A，如果在A中能选出r个向量$\boldsymbol{a_1},\boldsymbol{a_2},…,\boldsymbol{a_r}$满足：</p>
+<ul>
+<li><p>向量组$A_0=\{\boldsymbol{a_1},\boldsymbol{a_2},…,\boldsymbol{a_r}\}$线性无关</p>
+</li>
+<li><p>向量组A中任意r+1个向量（如果A中有r+1个向量的话）都线性相关</p>
+</li>
+</ul>
+<p>那么称向量组$A_0$是向量组A的一个<strong>最大线性无关组</strong>（简称<strong>最大无关组</strong>）</p>
+</blockquote>
+<p>最大无关组的几何意义：</p>
+<blockquote>
+<p>过原点的两条直线可以确定一个平面，在这两条直线上取向量，可以张成该平面，再夺取一条直线就多余了</p>
+<p>因此，在该平面上任取两条不平行的向量，可以得到A的最大无关组$A_0$</p>
+</blockquote>
+<h2 id="2-理解矩阵与矩阵乘法"><a href="#2-理解矩阵与矩阵乘法" class="headerlink" title="2. 理解矩阵与矩阵乘法"></a>2. 理解矩阵与矩阵乘法</h2><h3 id="2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><a href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？" class="headerlink" title="2.1. 矩阵表示法和矩阵乘法规则是怎么来的？"></a>2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</h3><h4 id="2-1-1-求解线性方程组：高斯消元法"><a href="#2-1-1-求解线性方程组：高斯消元法" class="headerlink" title="2.1.1. 求解线性方程组：高斯消元法"></a>2.1.1. 求解线性方程组：高斯消元法</h4><p>电视的转播过程是这样的：</p>
 <p align="center"><img src="/images/Linear-Algebra-understand-matrix-01.png" alt></p>
 
 <p>因此从电视信号线传过来的是YCrCb三个颜色通道的数字信号，此时如果使用的是彩色电视，就需要</p>
@@ -1003,7 +1194,8 @@
   
     <div class="comments" id="comments">
       
-        <div id="gitment-container"></div>
+        <div onclick="showGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+        <div id="gitment-container" style="display: none"></div>
       
     </div>
 
@@ -1057,7 +1249,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1086,7 +1278,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1169,7 +1363,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1253,7 +1449,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解向量与向量空间"><span class="nav-text">1. 理解向量与向量空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-理解矩阵与矩阵乘法"><span class="nav-text">2. 理解矩阵与矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><span class="nav-text">2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-求解线性方程组：高斯消元法"><span class="nav-text">2.1.1. 求解线性方程组：高斯消元法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><span class="nav-text">2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><span class="nav-text">2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-5-矩阵乘法的行观点和列观点"><span class="nav-text">2.1.5. 矩阵乘法的行观点和列观点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-矩阵乘法的几何意义"><span class="nav-text">2.2. 矩阵乘法的几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-基的变换"><span class="nav-text">2.2.1. 基的变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-1-矩阵映射法则——基的变换"><span class="nav-text">2.2.1.1. 矩阵映射法则——基的变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-2-基变换的一个实例——旋转矩阵"><span class="nav-text">2.2.1.2. 基变换的一个实例——旋转矩阵</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-点积——向新基的投影"><span class="nav-text">2.2.2. 点积——向新基的投影</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-二次型"><span class="nav-text">*2. 二次型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-二次函数的特点及它的矩阵表示"><span class="nav-text">*2.1. 二次函数的特点及它的矩阵表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-通过矩阵来研究的好处"><span class="nav-text">*2.2. 通过矩阵来研究的好处</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-仿射变换"><span class="nav-text">*3. 仿射变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-什么是仿射变换？"><span class="nav-text">*3.1. 什么是仿射变换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-通过线性变换来完成仿射变换"><span class="nav-text">*3.2. 通过线性变换来完成仿射变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-理解矩阵特征值和特征向量"><span class="nav-text">*4. 理解矩阵特征值和特征向量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-几何意义"><span class="nav-text">*4.1. 几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-特征值、特征向量与运动的关系"><span class="nav-text">*4.2. 特征值、特征向量与运动的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-相似矩阵"><span class="nav-text">*5. 相似矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-相似矩阵的定义及其几何意义"><span class="nav-text">*5.1. 相似矩阵的定义及其几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-相似矩阵有什么用？"><span class="nav-text">*5.2. 相似矩阵有什么用？</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-理解向量与向量空间"><span class="nav-text">1. 理解向量与向量空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-向量及向量的运算法则"><span class="nav-text">1.1. 向量及向量的运算法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-线性表示与线性相关"><span class="nav-text">1.2. 线性表示与线性相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-向量空间的定义及其特点"><span class="nav-text">1.3. 向量空间的定义及其特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-向量空间的基"><span class="nav-text">1.4. 向量空间的基</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-前期准备知识"><span class="nav-text">1.4.1. 前期准备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-1-1-张量空间定义"><span class="nav-text">1.4.1.1. 张量空间定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-1-2-等价向量组定义"><span class="nav-text">1.4.1.2. 等价向量组定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-1-3-引出等价空间：张成空间相同-Leftrightarrow-可互相线性表示"><span class="nav-text">1.4.1.3. 引出等价空间：张成空间相同 $\Leftrightarrow$ 可互相线性表示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-1-4-最大无关组"><span class="nav-text">1.4.1.4. 最大无关组</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-理解矩阵与矩阵乘法"><span class="nav-text">2. 理解矩阵与矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-矩阵表示法和矩阵乘法规则是怎么来的？"><span class="nav-text">2.1. 矩阵表示法和矩阵乘法规则是怎么来的？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-求解线性方程组：高斯消元法"><span class="nav-text">2.1.1. 求解线性方程组：高斯消元法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-简化线性方程组的表示——得到原始的矩阵定义"><span class="nav-text">2.1.2. 简化线性方程组的表示——得到原始的矩阵定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义"><span class="nav-text">2.1.3. 用矩阵的表示方法表示高斯消元法解线性方程组的过程——得到矩阵乘法的原始定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-5-矩阵乘法的行观点和列观点"><span class="nav-text">2.1.5. 矩阵乘法的行观点和列观点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-矩阵乘法的几何意义"><span class="nav-text">2.2. 矩阵乘法的几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-基的变换"><span class="nav-text">2.2.1. 基的变换</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-1-矩阵映射法则——基的变换"><span class="nav-text">2.2.1.1. 矩阵映射法则——基的变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-2-基变换的一个实例——旋转矩阵"><span class="nav-text">2.2.1.2. 基变换的一个实例——旋转矩阵</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-点积——向新基的投影"><span class="nav-text">2.2.2. 点积——向新基的投影</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-二次型"><span class="nav-text">*2. 二次型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-二次函数的特点及它的矩阵表示"><span class="nav-text">*2.1. 二次函数的特点及它的矩阵表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-通过矩阵来研究的好处"><span class="nav-text">*2.2. 通过矩阵来研究的好处</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-仿射变换"><span class="nav-text">*3. 仿射变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-什么是仿射变换？"><span class="nav-text">*3.1. 什么是仿射变换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-通过线性变换来完成仿射变换"><span class="nav-text">*3.2. 通过线性变换来完成仿射变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-理解矩阵特征值和特征向量"><span class="nav-text">*4. 理解矩阵特征值和特征向量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-几何意义"><span class="nav-text">*4.1. 几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-特征值、特征向量与运动的关系"><span class="nav-text">*4.2. 特征值、特征向量与运动的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-相似矩阵"><span class="nav-text">*5. 相似矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-相似矩阵的定义及其几何意义"><span class="nav-text">*5.1. 相似矩阵的定义及其几何意义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-相似矩阵有什么用？"><span class="nav-text">*5.2. 相似矩阵有什么用？</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1454,7 +1650,11 @@
   }
 
   
-    renderGitment();
+    function showGitment() {
+      document.getElementById('gitment-display-button').style.display = 'none';
+      document.getElementById('gitment-container').style.display = 'block';
+      renderGitment();
+    }
   
 </script>
 
