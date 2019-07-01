@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[《生信与机器学习兴趣小组》第二次分享讨论/打卡贴]]></title>
+    <url>%2F2019%2F07%2F01%2FBioinfo-ML-Club-2nd%2F</url>
+    <content type="text"><![CDATA[主题：入门机器学习的数学基础：线性代数（一）上期答疑 BWT算法 连特异性建库 本期内容 矩阵与矩阵乘法法制的来源 矩阵左乘向量的几何意义 矩阵的秩与映射类型的关系（大家反映这部分没听懂，所以下一期答疑部分会重讲） 注意： 请在下方评论栏里以张贴笔记（文字或图片均可）的形式参与本期的讨论]]></content>
+      <categories>
+        <category>Club</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[《生信与机器学习兴趣小组》第一次分享讨论贴]]></title>
     <url>%2F2019%2F06%2F19%2FBioinfo-ML-Club-1st%2F</url>
-    <content type="text"><![CDATA[1：RNA-seq与基因芯片相比有什么优势？ 2：三种常规的建库策略 3：先打断再逆转录好，还是先逆转录再打断好？ 4：Illumina测序仪给的碱基质量Phred Quality，它的P值是怎么算出来的？ 5：为什么会经常出现序列两端质量偏低的现象？ 6：测序仪给的碱基质量给出的碱基质量评估靠谱吗？ 7：跑完FastQC，拿到若干项质控统计报告，我应该重点关注哪些？ 8：那些转录组比对软件的原理是什么样的？ 8.1：综述序列比对算法8.1.1：Brute force approach 8.1.2：Dynamic Programing（DP, 动态规划） 8.1.3：Hash based alignment algorithmn 8.1.4：Burrow and Wheeler Transform(BWT) 8.2：回到转录组序列比对问题8.2.1：Exon first approach 8.2.2：Seed-extend approach]]></content>
+    <content type="text"><![CDATA[主题：转录组分析里的那些为什么1：RNA-seq与基因芯片相比有什么优势？ 2：三种常规的建库策略 3：先打断再逆转录好，还是先逆转录再打断好？ 4：Illumina测序仪给的碱基质量Phred Quality，它的P值是怎么算出来的？ 5：为什么会经常出现序列两端质量偏低的现象？ 6：测序仪给的碱基质量给出的碱基质量评估靠谱吗？ 7：跑完FastQC，拿到若干项质控统计报告，我应该重点关注哪些？ 8：那些转录组比对软件的原理是什么样的？ 8.1：综述序列比对算法8.1.1：Brute force approach 8.1.2：Dynamic Programing（DP, 动态规划） 8.1.3：Hash based alignment algorithmn 8.1.4：Burrow and Wheeler Transform(BWT) 8.2：回到转录组序列比对问题8.2.1：Exon first approach 8.2.2：Seed-extend approach]]></content>
       <categories>
         <category>Club</category>
       </categories>
@@ -248,8 +259,8 @@
         <category>MathIsFunGame</category>
       </categories>
       <tags>
-        <tag>数学</tag>
         <tag>线性代数</tag>
+        <tag>数学</tag>
       </tags>
   </entry>
   <entry>
@@ -337,9 +348,9 @@
       </categories>
       <tags>
         <tag>Bioinformatics</tag>
-        <tag>Python</tag>
         <tag>R</tag>
         <tag>Perl</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -388,9 +399,9 @@
         <category>编程</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>Perl</tag>
         <tag>Shell</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
