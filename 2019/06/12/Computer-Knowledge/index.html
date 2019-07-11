@@ -107,7 +107,10 @@
 <meta property="og:image" content="http://yoursite.com/images/Computer-Knowledge-02.png">
 <meta property="og:image" content="http://yoursite.com/images/Computer-Knowledge-03.png">
 <meta property="og:image" content="http://yoursite.com/images/Computer-Knowledge-04.png">
-<meta property="og:updated_time" content="2019-06-12T09:30:05.848Z">
+<meta property="og:image" content="http://yoursite.com/images/Computer-Knowledge-supplimentary-5G-1.png">
+<meta property="og:image" content="http://yoursite.com/images/Computer-Knowledge-supplimentary-5G-2.png">
+<meta property="og:image" content="http://yoursite.com/images/Computer-Knowledge-supplimentary-5G-3.png">
+<meta property="og:updated_time" content="2019-07-11T06:13:51.276Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机知识">
 <meta name="twitter:description" content="1. 计算机发展历史计算机（computer）俗称电脑，是现代一种用于高速计算的电子计算机器，可以进行数值计算，又可以进行逻辑计算，还具有存储记忆功能。是能够按照程序运行，自动、高速处理海量数据的现代化智能电子设备 人类历史上真正意义的第一台电子计算机于1946年诞生，如今其硬件技术已经发展到第四代  第1代：电子管数字机（1946—1958年）   逻辑元件采用的是真空电子管，主存储器采用汞延迟">
@@ -429,12 +432,24 @@
                 
               
 
-              <time title="创建时间：2019-06-12 17:27:52 / 修改时间：17:30:05" itemprop="dateCreated datePublished" datetime="2019-06-12T17:27:52+08:00">2019-06-12</time>
+              <time title="创建时间：2019-06-12 17:27:52" itemprop="dateCreated datePublished" datetime="2019-06-12T17:27:52+08:00">2019-06-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-11 14:13:51" itemprop="dateModified" datetime="2019-07-11T14:13:51+08:00">2019-07-11</time>
               
             
           </span>
@@ -559,10 +574,50 @@
 <p><strong>3、 集成度高，功能实现容易</strong></p>
 <p>集成度高，体积小，功耗低是数字电路突出的优点之一。电路的设计、维修、维护灵活方便，随着集成电路技术的高速发展，数字逻辑电路的集成度越来越高</p>
 </blockquote>
+<h2 id="补充知识"><a href="#补充知识" class="headerlink" title="补充知识"></a>补充知识</h2><h3 id="1-5G知识"><a href="#1-5G知识" class="headerlink" title="*1. 5G知识"></a>*1. 5G知识</h3><p>国际电联制定的5G愿景：</p>
+<blockquote>
+<ul>
+<li>eMBB（增强型移动宽带）：就是指我们最常见的高速上网业务；</li>
+<li>mMTC（大规模机器类型通信）：用于大规模物联网；</li>
+<li>uRLLC（高可靠低时延通信）：最能体现5G特色的高可靠低时延业务，关于5G的绝大多数瑰丽想象都是基于这一场景；</li>
+</ul>
+</blockquote>
+<p align="center"><img src="/images/Computer-Knowledge-supplimentary-5G-1.png" alt></p>
+
+<p>三大5G愿景的应用现状：</p>
+<blockquote>
+<ul>
+<li><p>5G的eMBB似乎仅是锦上添花，让网速更快一些而已</p>
+</li>
+<li><p>从4G时代引入的NB-IoT和eMTC这两个低功耗广覆盖的物联网技术已经可以满足海量机器互联的需求，但业界对应用和商业模式还在苦苦探索</p>
+</li>
+<li><p>以自动驾驶为代表的低时延高可靠通信的应用，目前还在蹒跚学步，路慢慢其修远</p>
+</li>
+</ul>
+</blockquote>
+<p>NSA组网：</p>
+<blockquote>
+<p align="center"><img src="/images/Computer-Knowledge-supplimentary-5G-2.png" alt></p>
+
+<p>注意看图里面连接手机和4G基站，以及到4G核心网的各有一条实线和一条虚线，而手机到5G基站只有一条实线，5G基站到4G核心网也只有一条实线。这里的虚线代表控制面，实线代表用户面</p>
+<p><strong>控制面</strong>：就是用来发送管理、调度资源所需的信令的通道</p>
+<p><strong>用户面</strong>：直观理解就是发送用户具体的数据通道。用户面和控制面是完全分离的</p>
+<p>在非独立组网下，5G以4G的补充和附庸的地位存在。手机采用双连接的方式同时连到4G和5G基站上，4G基站负责总体控制，5G基站只要在必要的时候分担大的数据流量就行了</p>
+<p>这样就避免了对已经运行的4G核心网做过多的改动，又能利用5G基站的速度快能力强的优势，在5G初期覆盖不连续的时候能提高用户体验，因此得到了业界的广泛青睐</p>
+</blockquote>
+<p>SA组网：</p>
+<blockquote>
+<p align="center"><img src="/images/Computer-Knowledge-supplimentary-5G-3.png" alt></p>
+
+<p>选项2的架构很简单，就是5G基站连接5G核心网，这是5G网络架构的终极形态，可以支持5G的所有应用，当然就包括最富有前景的uRLLC应用</p>
+<p>别看架构简单，要建这样一张连续覆盖的5G网，要新建大量的基站和核心网，代价不菲。想想看，光中国移动就有将近230万个4G站点，要是在建同样大的一张5G网络得花多少钱？</p>
+</blockquote>
 <hr>
 <p>参考资料：</p>
 <p>(1) <a href="https://mp.weixin.qq.com/s/9ePjft6QleS8pRz9AoXlmA" target="_blank" rel="noopener">漫话编程《漫话：如何给女朋友解释为什么计算机只认识0和1？》</a></p>
 <p>(2) <a href="https://blog.csdn.net/booksyhay/article/details/80709192" target="_blank" rel="noopener">booksyhay《第2.5章 使用门电路搭建加法器》</a></p>
+<p>(3) <a href="https://mp.weixin.qq.com/s/J3PgzRoHNSxzSqAnUKfRVg" target="_blank" rel="noopener">你的硬盘是如何储存数据的｜回形针</a></p>
+<p>(4) <a href="https://mp.weixin.qq.com/s/dtHpngFIdQJE_6qpqOt3Sw" target="_blank" rel="noopener">第一批5G手机明年都要禁止入网了，除了华为！</a></p>
 
       
     </div>
@@ -685,7 +740,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -885,7 +940,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-计算机发展历史"><span class="nav-text">1. 计算机发展历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集成电路与数字电路"><span class="nav-text">2. 集成电路与数字电路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-计算机发展历史"><span class="nav-text">1. 计算机发展历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-集成电路与数字电路"><span class="nav-text">2. 集成电路与数字电路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识"><span class="nav-text">补充知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5G知识"><span class="nav-text">*1. 5G知识</span></a></li></ol></li></ol></div>
             
 
           </div>
