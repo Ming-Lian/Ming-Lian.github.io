@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[《生信与机器学习兴趣小组》第四次分享讨论/打卡贴]]></title>
+    <url>%2F2019%2F07%2F22%2FBioinfo-ML-Club-4th%2F</url>
+    <content type="text"><![CDATA[主题：统计机器学习之分类任务入门直播录屏已上传至B站，传送门 本期内容： 机器学习概述 统计机器学习与深度学习 拟合问题与分类问题 一奶同胞的三个分类算法 感知机 SVM 逻辑回归 文字版笔记，点这里 内容包括上述的三种分类器和拉格朗日乘子法 要求参与讨论方式： 在下面的评论栏里贴笔记打卡]]></content>
+      <categories>
+        <category>Club</category>
+      </categories>
+      <tags>
+        <tag>Machine-Learning</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[《生信与机器学习兴趣小组》第三次分享讨论/打卡贴]]></title>
     <url>%2F2019%2F07%2F11%2FBioinfo-ML-Club-3rd%2F</url>
     <content type="text"><![CDATA[主题：入门机器学习的数学基础：线性代数（二）直播录屏已上传至B站，传送门 本期内容 线性代数的学科逻辑 分析线性方程组的解的情况而引出矩阵的秩 解的有无：对于$A\vec x=\vec b$，$\vec b$是否在值域中 $\Rightarrow \quad r([A|b]=r(A)$ 若有解，解的个数：一个or多个 $$\begin{cases}唯一解 \Leftarrow 单射 \Leftarrow 列满秩\\ \quad \\ 多个解 \Leftarrow 非单射 \Leftarrow 列不满秩\end{cases}$$ 若有多个解，求解集：特解+零空间 参与讨论位置$\Downarrow$ 请在下方评论区以张贴笔记（文字或图片均可）的形式参与本期的讨论]]></content>
@@ -359,8 +370,8 @@
       </categories>
       <tags>
         <tag>Bioinformatics</tag>
-        <tag>Python</tag>
         <tag>R</tag>
+        <tag>Python</tag>
         <tag>Perl</tag>
       </tags>
   </entry>
