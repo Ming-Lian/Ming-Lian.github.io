@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[《生信与机器学习兴趣小组》第五次分享讨论/打卡贴]]></title>
+    <url>%2F2019%2F08%2F05%2FBioinfo-ML-Club-5th%2F</url>
+    <content type="text"><![CDATA[主题：机器学习在生物信息学中的应用（一）直播录屏已上传至B站，传送门 本期内容： 上期内容回顾与补充 两个机器学习在生物信息领域应用的例子： 无监督聚类与宏基因组bining 隐马尔科夫（Hidden Markov Model, HMM）与蛋白质保守区块（Block）的识别 要求参与讨论方式： 在下面的评论栏里贴笔记打卡]]></content>
+      <categories>
+        <category>Club</category>
+      </categories>
+      <tags>
+        <tag>Bioinformatics</tag>
+        <tag>Machine-Learning</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[《生信与机器学习兴趣小组》第四次分享讨论/打卡贴]]></title>
     <url>%2F2019%2F07%2F22%2FBioinfo-ML-Club-4th%2F</url>
     <content type="text"><![CDATA[主题：统计机器学习之分类任务入门直播录屏已上传至B站，传送门 本期内容： 机器学习概述 统计机器学习与深度学习 拟合问题与分类问题 一奶同胞的三个分类算法 感知机 SVM 逻辑回归 文字版笔记，点这里 内容包括上述的三种分类器和拉格朗日乘子法 要求参与讨论方式： 在下面的评论栏里贴笔记打卡]]></content>
