@@ -381,6 +381,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/08/call-snp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lianm">
+      <meta itemprop="description" content="中国科学院北京基因组研究所研究生">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lianm's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/08/call-snp/" class="post-title-link" itemprop="url">深入了解snp-calling流程</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-08 00:15:36" itemprop="dateCreated datePublished" datetime="2019-02-08T00:15:36+08:00">2019-02-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-22 22:37:52" itemprop="dateModified" datetime="2019-04-22T22:37:52+08:00">2019-04-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              GATK4流程
+准备配套数据要明确你的参考基因组版本了！！！ b36/b37/hg18/hg19/hg38，记住b37和hg19并不是完全一样的，有些微区别哦！！！
+1、下载hg19
+这个下载地址非常多，常用的就是NCBI，ensembl和UCSC了，但是这里推荐用这个脚本下载（下载源为UCSC）：
+# 一个个地下载hg19的染色体for i in $(seq 1 22) X Y M;do echo $i;wget http://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/chr$&#123;i&#125;.fa.gz;donegunzip *.gz# 用cat按照染色体的顺序拼接起来，因为GATK后面的一些步骤对染色体顺序要求非常变态，如果下载整个hg19，很难保证染色体顺序是1-22，X,Y,Mfor i in $(seq 1 22) X Y M;do cat chr$&#123;i&#125;.fa &gt;&gt; hg19.fasta;donerm -fr chr*.fasta
+BWA: Map to Referen
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/08/call-snp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Andrew-Ng-Coursera-Homework/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -988,7 +1176,7 @@ https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1666,6 +1854,8 @@ https://github.com/Ming-Lian/NGS-analysis/blob/master/Stat-on-RNAseq.md
 
   
   
+    
+      
     
       
     

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[《生信与机器学习兴趣小组》第六次分享讨论贴]]></title>
+    <url>%2F2019%2F08%2F19%2FBioinfo-ML-Club-6th%2F</url>
+    <content type="text"><![CDATA[主题：龙星课程2019干货分享直播录屏还未上传至B站，还没剪好，请稍等 课程完整PPT获取，点这里 直播分享PPT获取，点这里 参考小明的学习笔记，点这里 小伊老师的github，传送门 注意： 请在下方评论栏里以张贴笔记（文字或图片均可）的形式参与本期的讨论]]></content>
+      <categories>
+        <category>Club</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[《生信与机器学习兴趣小组》第五次分享讨论/打卡贴]]></title>
     <url>%2F2019%2F08%2F05%2FBioinfo-ML-Club-5th%2F</url>
     <content type="text"><![CDATA[主题：机器学习在生物信息学中的应用（一）直播录屏已上传至B站，传送门 本期内容： 上期内容回顾与补充 两个机器学习在生物信息领域应用的例子： 无监督聚类与宏基因组bining 隐马尔科夫（Hidden Markov Model, HMM）与蛋白质保守区块（Block）的识别 要求参与讨论方式： 在下面的评论栏里贴笔记打卡]]></content>
@@ -8,8 +16,8 @@
         <category>Club</category>
       </categories>
       <tags>
-        <tag>Bioinformatics</tag>
         <tag>Machine-Learning</tag>
+        <tag>Bioinformatics</tag>
       </tags>
   </entry>
   <entry>
@@ -222,8 +230,8 @@
         <category>Machine-Learning</category>
       </categories>
       <tags>
-        <tag>Bioinformatics</tag>
         <tag>Machine-Learning</tag>
+        <tag>Bioinformatics</tag>
       </tags>
   </entry>
   <entry>
@@ -342,9 +350,9 @@
         <category>Bioinformatics</category>
       </categories>
       <tags>
+        <tag>Machine-Learning</tag>
         <tag>Bioinformatics</tag>
         <tag>NGS</tag>
-        <tag>Machine-Learning</tag>
         <tag>聚类算法</tag>
         <tag>metagenomics</tag>
       </tags>
