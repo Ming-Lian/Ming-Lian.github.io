@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[《生信与机器学习兴趣小组》第七次分享讨论/打卡贴]]></title>
+    <url>%2F2019%2F09%2F03%2FBioinfo-ML-Club-7th%2F</url>
+    <content type="text"><![CDATA[主题：龙星课程数学/算法类重难点精讲直播录屏已上传至B站，请点这里 用泊松分布建模评估测序量与覆盖率之间的关系 补充材料：龙星课程PPT day1:44-52页 看懂Kmer分析图 补充材料：基因组分析简介之K-mer分析 基因组拼接算法：de Bruijn 图的构建与寻找欧拉路径 补充材料：龙星课程PPT day2:38-55页 基于后验概率的变异检测方法 补充材料： （1）本人博客《深入理解基因组变异检测(variants calling)》 中的【2.1. 基于贝叶斯方法】部分 （2）Li H. A statistical framework for SNP calling, mutation discovery, association mapping and population genetical parameter estimation from sequencing data. Bioinformatics. 2011;27(21):2987–2993. （3）龙星课程PPT day1:53-64页 注意： 请在下方评论栏里以张贴笔记（文字或图片均可）的形式参与本期的讨论]]></content>
+      <categories>
+        <category>Club</category>
+      </categories>
+      <tags>
+        <tag>Bioinformatics</tag>
+        <tag>NGS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[《生信与机器学习兴趣小组》第六次分享讨论贴]]></title>
     <url>%2F2019%2F08%2F19%2FBioinfo-ML-Club-6th%2F</url>
     <content type="text"><![CDATA[主题：龙星课程2019干货分享直播录屏还未上传至B站，还没剪好，请稍等 课程完整PPT获取，点这里 直播分享PPT获取，点这里 参考小明的学习笔记，点这里 小伊老师的github，传送门 注意： 请在下方评论栏里以张贴笔记（文字或图片均可）的形式参与本期的讨论]]></content>
@@ -16,8 +28,8 @@
         <category>Club</category>
       </categories>
       <tags>
-        <tag>Machine-Learning</tag>
         <tag>Bioinformatics</tag>
+        <tag>Machine-Learning</tag>
       </tags>
   </entry>
   <entry>
@@ -230,8 +242,8 @@
         <category>Machine-Learning</category>
       </categories>
       <tags>
-        <tag>Machine-Learning</tag>
         <tag>Bioinformatics</tag>
+        <tag>Machine-Learning</tag>
       </tags>
   </entry>
   <entry>
@@ -350,9 +362,9 @@
         <category>Bioinformatics</category>
       </categories>
       <tags>
-        <tag>Machine-Learning</tag>
         <tag>Bioinformatics</tag>
         <tag>NGS</tag>
+        <tag>Machine-Learning</tag>
         <tag>聚类算法</tag>
         <tag>metagenomics</tag>
       </tags>
@@ -390,8 +402,8 @@
       </categories>
       <tags>
         <tag>Bioinformatics</tag>
-        <tag>R</tag>
         <tag>Python</tag>
+        <tag>R</tag>
         <tag>Perl</tag>
       </tags>
   </entry>
